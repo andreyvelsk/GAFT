@@ -19,6 +19,12 @@
             >
               Home
             </NuxtLink>
+            <NuxtLink
+              to="/how-to"
+              class="text-sm font-medium text-gray-400 hover:text-white transition-colors"
+            >
+              How to Add
+            </NuxtLink>
           </nav>
         </div>
       </div>

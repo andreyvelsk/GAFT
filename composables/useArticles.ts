@@ -42,8 +42,8 @@ export const useArticles = () => {
       sortOrder = 'desc',
     } = options
 
-    // Build query for @nuxt/content
-    const query = queryContent<Article>('/')
+    // Build query for @nuxt/content — exclude standalone pages (e.g. how-to guide)
+    const query = queryContent<Article>('/').where({ category: { $ne: 'guide' } })
 
     // Sorting
     switch (sortField) {
