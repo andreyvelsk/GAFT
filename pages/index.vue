@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Article, ArticleMedia, SortField, SortOrder } from '~/composables/useArticles'
+import type { Article, SortField, SortOrder } from '~/composables/useArticles'
 
 const route = useRoute()
 const router = useRouter()
@@ -86,36 +86,45 @@ const totalPages = ref(1)
 
 const { getArticles, filterArticles, paginateArticles, ARTICLES_PER_PAGE } = useArticles()
 
+// Fetch articles via useAsyncData so data is available during SSR/prerender
+const { data: allArticles } = await useAsyncData('articles-list', () =>
+  getArticles({
+    sortField: sortField.value,
+    sortOrder: sortOrder.value
+  })
+)
+
+// Apply client-side filtering & pagination
+function applyFilterAndPaginate() {
+  const raw = allArticles.value ?? []
+  const filtered = filterArticles(raw as Article[], searchQuery.value)
+  totalPages.value = Math.ceil(filtered.length / ARTICLES_PER_PAGE)
+  articles.value = paginateArticles(filtered, currentPage.value, ARTICLES_PER_PAGE)
+}
+
 // Debounced search
 let searchTimeout: ReturnType<typeof setTimeout>
 watch(searchQuery, () => {
   clearTimeout(searchTimeout)
   searchTimeout = setTimeout(() => {
-    loadArticles()
+    currentPage.value = 1
+    applyFilterAndPaginate()
   }, 300)
 })
 
 // Watchers for sort changes
 watch([sortField, sortOrder], () => {
   currentPage.value = 1
-  loadArticles()
+  applyFilterAndPaginate()
 })
 
-// Load articles
-async function loadArticles() {
-  const allArticles = await getArticles({
-    sortField: sortField.value,
-    sortOrder: sortOrder.value
-  })
-  const filtered = filterArticles(allArticles, searchQuery.value)
-  totalPages.value = Math.ceil(filtered.length / ARTICLES_PER_PAGE)
-  articles.value = paginateArticles(filtered, currentPage.value, ARTICLES_PER_PAGE)
-}
+// Apply on initial render
+applyFilterAndPaginate()
 
 // Navigate to page
 function navigateToPage(page: number) {
   currentPage.value = page
-  loadArticles()
+  applyFilterAndPaginate()
 
   // Update URL
   const path = page === 1 ? '/' : `/page/${page}`
@@ -124,11 +133,6 @@ function navigateToPage(page: number) {
   // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
-
-// Initial load
-onMounted(() => {
-  loadArticles()
-})
 
 // SEO
 useHead({
