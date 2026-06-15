@@ -97,16 +97,16 @@ onMounted(() => {
 
 // SEO
 useHead({
-  title: `Page ${pageNumber.value} | Dual Screen Games for AYN Thor`,
+  title: `Page ${pageNumber.value} | Games & Apps for AYN Thor`,
   meta: [
     {
       name: 'description',
-      content: `Dual Screen Games for AYN Thor — page ${pageNumber.value}. Companion app pairings, dual-screen Android ports, and game setups for the AYN Thor handheld.`
+      content: `Games & Apps for AYN Thor — page ${pageNumber.value}. Companion app pairings, dual-screen Android ports, and game setups for the AYN Thor handheld.`
     },
-    { property: 'og:title', content: `Page ${pageNumber.value} | Dual Screen Games for AYN Thor` },
+    { property: 'og:title', content: `Page ${pageNumber.value} | Games & Apps for AYN Thor` },
     {
       property: 'og:description',
-      content: `Dual Screen Games for AYN Thor — page ${pageNumber.value}. Companion app pairings, dual-screen Android ports, and game setups for the AYN Thor handheld.`
+      content: `Games & Apps for AYN Thor — page ${pageNumber.value}. Companion app pairings, dual-screen Android ports, and game setups for the AYN Thor handheld.`
     }
   ]
 })

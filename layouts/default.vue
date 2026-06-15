@@ -7,7 +7,7 @@
           <!-- Logo -->
           <NuxtLink to="/" class="flex items-center gap-2 group">
             <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Dual Screen Games
+              GAFT
             </span>
           </NuxtLink>
 
@@ -34,7 +34,7 @@
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="text-sm text-gray-600">
-            &copy; {{ new Date().getFullYear() }} Dual Screen Games for AYN Thor. Built with
+            &copy; {{ new Date().getFullYear() }} Games & Apps for Thor. Built with
             <a href="https://nuxt.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors">
               Nuxt 3
             </a>

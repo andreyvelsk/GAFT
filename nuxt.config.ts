@@ -49,7 +49,7 @@ export default defineNuxtConfig({
           children: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
-            name: 'Dual Screen Games & Apps for AYN Thor',
+            name: 'Games & Apps for AYN Thor',
             description: 'Curated collection of games and apps that shine on the dual-screen AYN Thor handheld console — from companion app pairings to native dual-screen Android ports.',
             url: 'https://ayn-thor-games.pages.dev'
           })

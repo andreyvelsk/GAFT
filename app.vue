@@ -10,8 +10,8 @@
 useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk
-      ? `${titleChunk} | Dual Screen Games for AYN Thor`
-      : 'Dual Screen Games for AYN Thor — Perfect Pairings & Android Ports'
+      ? `${titleChunk} | Games & Apps for AYN Thor`
+      : 'Games & Apps for AYN Thor — Perfect Pairings & Android Ports'
   }
 })
 </script>

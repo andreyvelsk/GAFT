@@ -5,7 +5,7 @@
       <div class="text-center mb-8">
         <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
           <span class="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Dual Screen Games for AYN Thor
+            Games & Apps For Thor
           </span>
         </h1>
         <p class="text-lg text-gray-400 max-w-2xl mx-auto">
@@ -139,19 +139,19 @@ function navigateToPage(page: number) {
 
 // SEO
 useHead({
-  title: 'Dual Screen Games for AYN Thor — Companion App Pairings & Android Ports',
+  title: 'Games & Apps for AYN Thor — Companion App Pairings & Android Ports',
   meta: [
     {
       name: 'description',
       content: 'Discover games and apps that make the most of the AYN Thor dual-screen design. Companion app pairings, native Android dual-screen ports, and more.'
     },
-    { property: 'og:title', content: 'Dual Screen Games for AYN Thor — Companion App Pairings & Android Ports' },
+    { property: 'og:title', content: 'Games & Apps for AYN Thor — Companion App Pairings & Android Ports' },
     {
       property: 'og:description',
       content: 'Discover games and apps that make the most of the AYN Thor dual-screen design. Companion app pairings, native Android dual-screen ports, and more.'
     },
     { property: 'og:type', content: 'website' },
-    { property: 'og:site_name', content: 'Dual Screen Games for AYN Thor' }
+    { property: 'og:site_name', content: 'Games & Apps for AYN Thor' }
   ]
 })
 </script>
