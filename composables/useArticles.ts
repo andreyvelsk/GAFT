@@ -1,0 +1,113 @@
+export interface ArticleMedia {
+  type: 'image' | 'video'
+  url: string
+}
+
+export interface Article {
+  id: string
+  title: string
+  description: string
+  date: string
+  slug: string
+  category: string
+  media: ArticleMedia[]
+  tags?: string[]
+  status?: string
+  // Rendered article body
+  body?: string
+}
+
+export type SortField = 'date' | 'title' | 'likes'
+export type SortOrder = 'asc' | 'desc'
+
+interface FetchArticlesOptions {
+  sortField?: SortField
+  sortOrder?: SortOrder
+  searchQuery?: string
+  page?: number
+  pageSize?: number
+}
+
+export const useArticles = () => {
+  const ARTICLES_PER_PAGE = 100
+
+  /**
+   * Fetch all articles with sorting and search support
+   */
+  const getArticles = (options: FetchArticlesOptions = {}) => {
+    const {
+      sortField = 'date',
+      sortOrder = 'desc',
+    } = options
+
+    // Build query for @nuxt/content
+    const query = queryContent<Article>('/')
+
+    // Sorting
+    switch (sortField) {
+      case 'date':
+        query.sort({ date: sortOrder === 'asc' ? 1 : -1 })
+        break
+      case 'title':
+        query.sort({ title: sortOrder === 'asc' ? 1 : -1 })
+        break
+      case 'likes':
+        // Likes sorting will work after Firebase integration
+        // Fallback to date sorting for now
+        query.sort({ date: -1 })
+        break
+      default:
+        query.sort({ date: -1 })
+    }
+
+    // Always fetch all articles — client-side filtering and pagination
+    // are handled by the caller for case-insensitive search support
+    return query.find()
+  }
+
+  /**
+   * Filter articles by a case-insensitive search query
+   */
+  const filterArticles = (articles: Article[], searchQuery: string): Article[] => {
+    if (!searchQuery) return articles
+    const lowerQuery = searchQuery.toLowerCase()
+    return articles.filter((article) =>
+      article.title.toLowerCase().includes(lowerQuery) ||
+      article.description.toLowerCase().includes(lowerQuery) ||
+      (article.tags && article.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)))
+    )
+  }
+
+  /**
+   * Paginate an array of articles
+   */
+  const paginateArticles = (articles: Article[], page: number, pageSize: number): Article[] => {
+    const offset = (page - 1) * pageSize
+    return articles.slice(offset, offset + pageSize)
+  }
+
+  /**
+   * Fetch a single article by slug
+   */
+  const getArticle = (slug: string) => {
+    return queryContent<Article>('/')
+      .where({ slug: { $contains: slug } })
+      .findOne()
+  }
+
+  /**
+   * Get total article count
+   */
+  const getArticlesCount = () => {
+    return queryContent<Article>('/').count()
+  }
+
+  return {
+    getArticles,
+    getArticle,
+    getArticlesCount,
+    filterArticles,
+    paginateArticles,
+    ARTICLES_PER_PAGE
+  }
+}

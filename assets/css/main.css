@@ -1,0 +1,289 @@
+/* ===== Theme: Dark Tech-Geek ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* Base Styles */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #11111b;
+  color: #cdd6f4;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1e1e2e;
+}
+::-webkit-scrollbar-thumb {
+  background: #45475a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #585b70;
+}
+
+/* Selection */
+::selection {
+  background: rgba(212, 20, 90, 0.3);
+  color: #fff;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Links */
+a {
+  color: #89b4fa;
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: #b4d0fb;
+}
+
+/* Code blocks */
+code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Transitions */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+/* Article content styles */
+.prose {
+  max-width: 72ch;
+  line-height: 1.75;
+}
+
+.prose h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #f5f5f5;
+}
+
+.prose h2 {
+  font-size: 1.875rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: #f5f5f5;
+  border-bottom: 1px solid #313244;
+  padding-bottom: 0.5rem;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  color: #bac2de;
+}
+
+.prose a {
+  color: #89b4fa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose strong {
+  color: #f5f5f5;
+  font-weight: 600;
+}
+
+.prose ul {
+  list-style-type: disc;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  color: #bac2de;
+}
+
+.prose blockquote {
+  border-left: 4px solid #d4145a;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: #a6adc8;
+  font-style: italic;
+  background: rgba(212, 20, 90, 0.05);
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+.prose code {
+  background: #181825;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  color: #fab387;
+}
+
+.prose pre {
+  background: #181825;
+  border: 1px solid #313244;
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.prose img {
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: #313244;
+  margin: 2rem 0;
+}
+
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  border: 1px solid #313244;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 0.9375rem;
+  display: table;
+}
+
+.prose thead {
+  background: #181825;
+}
+
+.prose th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #cdd6f4;
+  border-bottom: 2px solid #45475a;
+  white-space: nowrap;
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #313244;
+  color: #bac2de;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tbody tr:hover {
+  background: rgba(137, 180, 250, 0.04);
+}
+
+.prose tbody tr {
+  transition: background 0.15s ease;
+}
+
+.prose td a,
+.prose th a {
+  color: #89b4fa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose td strong {
+  color: #f5c2e7;
+  font-weight: 600;
+}
+
+/* Responsive table wrapper */
+@media (max-width: 640px) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Highlight.js / Shiki overrides for dark theme */
+.astro-code,
+.shiki {
+  background-color: #181825 !important;
+  border: 1px solid #313244;
+  border-radius: 12px;
+  padding: 1.25rem !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(137, 180, 250, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(137, 180, 250, 0.6);
+  }
+}
+
+/* Transitions for carousel */
+.carousel-enter-active,
+.carousel-leave-active {
+  transition: all 0.3s ease;
+}
+.carousel-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.carousel-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
