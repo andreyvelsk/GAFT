@@ -4,18 +4,20 @@
     <MediaCarousel v-if="article.media?.length" :media="article.media" />
 
     <!-- Content -->
-    <div class="p-5 flex flex-col grow">
+    <div class="p-5 flex flex-col grow justify-between">
       <!-- Title -->
-      <h3 class="text-lg font-semibold text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">
-        <NuxtLink :to="`/project/${article.slug}`" class="hover:underline decoration-blue-400/30 underline-offset-2">
-          {{ article.title }}
-        </NuxtLink>
-      </h3>
-
-      <!-- Description -->
-      <p class="grow text-sm text-gray-400 mb-4 line-clamp-2">
-        {{ article.description }}
-      </p>
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">
+          <NuxtLink :to="`/project/${article.slug}`" class="hover:underline decoration-blue-400/30 underline-offset-2">
+            {{ article.title }}
+          </NuxtLink>
+        </h3>
+  
+        <!-- Description -->
+        <p class="text-sm text-gray-400 mb-4 line-clamp-2">
+          {{ article.description }}
+        </p>
+      </div>
 
       <!-- Footer -->
       <div class="flex items-center justify-between text-xs text-gray-500">
