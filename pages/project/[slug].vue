@@ -13,9 +13,11 @@
 
     <!-- Article Header -->
     <header class="mb-8">
-      <!-- Category & Date -->
+      <!-- Category & Date & Like -->
       <div class="flex items-center gap-3 mb-4">
         <span class="text-sm text-gray-500">{{ formatDate(article.date) }}</span>
+        <span class="text-gray-700">·</span>
+        <LikeButton :slug="article.slug" variant="inline" />
       </div>
 
       <!-- Title -->

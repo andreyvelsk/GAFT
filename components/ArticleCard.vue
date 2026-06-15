@@ -30,6 +30,9 @@
             {{ formatDate(article.date) }}
           </span>
         </div>
+
+        <!-- Like button -->
+        <LikeButton :slug="article.slug" variant="card" />
       </div>
     </div>
   </article>

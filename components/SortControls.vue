@@ -57,6 +57,10 @@ const sortOptions = [
   {
     value: 'title' as SortField,
     label: 'A-Z'
+  },
+  {
+    value: 'likes' as SortField,
+    label: 'Popular'
   }
 ]
 </script>
