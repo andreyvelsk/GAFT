@@ -73,7 +73,6 @@
 <script setup lang="ts">
 import type { Article, SortField, SortOrder } from '~/composables/useArticles'
 
-const route = useRoute()
 const router = useRouter()
 
 // State
@@ -84,20 +83,24 @@ const currentPage = ref(1)
 const articles = ref<Article[]>([])
 const totalPages = ref(1)
 
-const { getArticles, filterArticles, paginateArticles, ARTICLES_PER_PAGE } = useArticles()
+const { getArticles, filterArticles, sortArticles, paginateArticles, ARTICLES_PER_PAGE } = useArticles()
+const { setArticles, articles: storeArticles } = useArticlesStore()
 
 // Fetch articles via useAsyncData so data is available during SSR/prerender
 const { data: allArticles } = await useAsyncData('articles-list', () =>
-  getArticles({
-    sortField: sortField.value,
-    sortOrder: sortOrder.value
-  })
+  getArticles()
 )
 
-// Apply client-side filtering & pagination
+// Populate the global store so useLikes can update likes in-place
+if (allArticles.value) {
+  setArticles(allArticles.value as Article[])
+}
+
+// Apply client-side filtering & pagination (reads likes from store)
 function applyFilterAndPaginate() {
-  const raw = allArticles.value ?? []
-  const filtered = filterArticles(raw as Article[], searchQuery.value)
+  const raw = (storeArticles.value.length ? storeArticles.value : allArticles.value ?? []) as Article[]
+  const sorted = sortArticles(raw, sortField.value, sortOrder.value)
+  const filtered = filterArticles(sorted, searchQuery.value)
   totalPages.value = Math.ceil(filtered.length / ARTICLES_PER_PAGE)
   articles.value = paginateArticles(filtered, currentPage.value, ARTICLES_PER_PAGE)
 }

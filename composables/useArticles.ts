@@ -15,6 +15,8 @@ export interface Article {
   status?: string
   // Rendered article body
   body?: string
+  // Like count — kept in sync by useLikes via useArticlesStore
+  likes?: number
 }
 
 export type SortField = 'date' | 'title' | 'likes'
@@ -79,6 +81,32 @@ export const useArticles = () => {
   }
 
   /**
+   * Sort articles client-side.
+   * Reads `likes` from each Article (kept in sync by useArticlesStore).
+   */
+  const sortArticles = (
+    list: Article[],
+    sortField: SortField,
+    sortOrder: SortOrder,
+  ): Article[] => {
+    return [...list].sort((a, b) => {
+      let comparison = 0
+      switch (sortField) {
+        case 'date':
+          comparison = new Date(a.date).getTime() - new Date(b.date).getTime()
+          break
+        case 'title':
+          comparison = a.title.localeCompare(b.title)
+          break
+        case 'likes':
+          comparison = (a.likes ?? 0) - (b.likes ?? 0)
+          break
+      }
+      return sortOrder === 'asc' ? comparison : -comparison
+    })
+  }
+
+  /**
    * Paginate an array of articles
    */
   const paginateArticles = (articles: Article[], page: number, pageSize: number): Article[] => {
@@ -107,6 +135,7 @@ export const useArticles = () => {
     getArticle,
     getArticlesCount,
     filterArticles,
+    sortArticles,
     paginateArticles,
     ARTICLES_PER_PAGE
   }

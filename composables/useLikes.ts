@@ -30,6 +30,7 @@ export function useLikes(articleSlug: string) {
 
   let unsubscribe: (() => void) | null = null
   const STORAGE_KEY = 'liked_articles'
+  const { updateLikes } = useArticlesStore()
 
   // ─── localStorage helpers ────────────────────────────────────────────
 
@@ -85,6 +86,8 @@ export function useLikes(articleSlug: string) {
         firestoreLikes.value = 0
       }
       isLoading.value = false
+      // Push into global store so sorting by likes works in real-time
+      updateLikes(slug, firestoreLikes.value)
     })
   }
 
