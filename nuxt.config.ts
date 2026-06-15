@@ -67,7 +67,8 @@ export default defineNuxtConfig({
       firebaseProjectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID || '',
       firebaseStorageBucket: process.env.NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '',
       firebaseMessagingSenderId: process.env.NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '',
-      firebaseAppId: process.env.NUXT_PUBLIC_FIREBASE_APP_ID || ''
+      firebaseAppId: process.env.NUXT_PUBLIC_FIREBASE_APP_ID || '',
+      firebaseMeasurementId: process.env.NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID || ''
     }
   },
 
