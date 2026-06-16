@@ -9,7 +9,7 @@
       <!-- Image -->
       <img
         v-if="currentItem?.type === 'image'"
-        :src="currentItem?.url"
+        :src="resolveUrl(currentItem?.url || '')"
         :alt="`Slide ${currentIndex + 1}`"
         class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
       />
@@ -78,6 +78,8 @@ import type { ArticleMedia } from '~/composables/useArticles'
 const props = defineProps<{
   media: ArticleMedia[]
 }>()
+
+const { resolveUrl } = useResolveUrl()
 
 const {
   currentIndex,
