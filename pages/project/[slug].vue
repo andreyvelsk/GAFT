@@ -68,6 +68,8 @@
 <script setup lang="ts">
 import type { Article } from '~/composables/useArticles'
 
+const { resolveUrl } = useResolveUrl()
+
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -110,7 +112,7 @@ useHead({
     { property: 'og:description', content: article.value?.description || '' },
     {
       property: 'og:image',
-      content: article.value?.media?.[0]?.url || ''
+      content: resolveUrl(article.value?.media?.[0]?.url || '')
     },
     { property: 'og:type', content: 'article' },
     { property: 'article:published_time', content: article.value?.date || '' },

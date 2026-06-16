@@ -6,7 +6,7 @@ slug: "thortranslate"
 category: "app"
 media:
   - type: "image"
-    url: "https://i.redd.it/3nyocs49svng1.jpeg"
+    url: "/content/thortranslate/preview.jpeg"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1rofite/i_made_an_ayn_thor_ingame_translation_app/)

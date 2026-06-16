@@ -6,7 +6,7 @@ slug: "civilization-6"
 category: "companion"
 media:
   - type: "image"
-    url: "https://i.redd.it/ypl47ygr5q6h1.jpeg"
+    url: "/content/civilization-6/preview.jpeg"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u3cn0b/my_civilization_vi_setup_on_the_ayn_thor/)
