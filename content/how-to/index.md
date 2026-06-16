@@ -19,15 +19,15 @@ This guide walks you through the process of adding a new project (game or app) t
 
 ## Step 1 — Fork the Repository
 
-1. Navigate to the [repository on GitHub](https://github.com/andreyvelsk/nuxt-blog).
+1. Navigate to the [repository on GitHub](https://github.com/andreyvelsk/GAFT).
 2. Click the **Fork** button in the top-right corner.
 3. A copy of the repository will be created under your GitHub account.
 
 ## Step 2 — Clone Your Fork
 
 ```bash
-git clone https://github.com/<your-username>/nuxt-blog.git
-cd nuxt-blog
+git clone https://github.com/andreyvelsk/GAFT.git
+cd GAFT
 ```
 
 ## Step 3 — Create a New Branch

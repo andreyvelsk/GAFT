@@ -11,6 +11,9 @@ export default defineNuxtConfig({
 
   content: {
     // @nuxt/content v2 configuration
+    markdown: {
+      anchorLinks: false
+    },
     highlight: {
       theme: 'monokai',
       preload: ['javascript', 'typescript', 'vue', 'css', 'bash', 'json', 'yaml']
