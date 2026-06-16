@@ -19,7 +19,7 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1rs6c7r/setup_gui
 
 - Use only the latest GOG game version — the Steam version does NOT support the Pip-Boy app. Don't forget to check "use Pip-Boy app" in the game menu.
 - You need a Wi-Fi connection to get a network link between the game and the app. There is a project on [GitHub.com](https://github.com/KuriGohan-Kamehameha/Strip-Boy) that bypasses this restriction (not tested).
-- Usage of [Cluster Tune](https://github.com/AurelioB/ClusterTune) may significantly reduce CPU temperature, fan noise and battery drain.
+- Usage of [Cluster Tune](https://github.com/AurelioB/ClusterTune) may significantly reduce CPU temperature, fan noise, and battery drain.
 
 ## Known issues
 
