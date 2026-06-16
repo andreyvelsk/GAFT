@@ -4,15 +4,13 @@
     <MediaCarousel v-if="article.media?.length" :media="article.media" />
 
     <!-- Content -->
-    <div class="p-5 flex flex-col grow justify-between">
+    <div class="p-5 flex flex-col grow justify-between relative">
       <!-- Title -->
       <div>
         <h3 class="text-lg font-semibold text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">
-          <NuxtLink :to="`/project/${article.slug}`" class="hover:underline decoration-blue-400/30 underline-offset-2">
-            {{ article.title }}
-          </NuxtLink>
+          {{ article.title }}
         </h3>
-  
+
         <!-- Description -->
         <p class="text-sm text-gray-400 mb-4 line-clamp-2">
           {{ article.description }}
@@ -31,9 +29,18 @@
           </span>
         </div>
 
-        <!-- Like button -->
-        <LikeButton :slug="article.slug" variant="card" />
+        <!-- Like button (z-30 stays above the overlay link) -->
+        <div class="relative z-30">
+          <LikeButton :slug="article.slug" variant="card" />
+        </div>
       </div>
+
+      <!-- Full-area overlay link covering everything except media -->
+      <NuxtLink
+        :to="`/project/${article.slug}`"
+        class="absolute inset-0 z-20"
+        :aria-label="article.title"
+      />
     </div>
   </article>
 </template>
