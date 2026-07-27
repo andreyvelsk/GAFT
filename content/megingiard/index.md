@@ -5,6 +5,8 @@ date: "2026-06-19 14:44"
 slug: "megingiard"
 category: "companion"
 media:
+  - type: "video"
+    url: "https://www.youtube.com/watch?v=vgs6X9piswA"
   - type: "image"
     url: "/content/megingiard/preview.png"
 ---
