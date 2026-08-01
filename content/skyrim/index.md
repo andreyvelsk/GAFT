@@ -16,6 +16,7 @@ Link to project: [github.com](https://github.com/andreyvelsk/SkyrimWebMonitor)
 
 ## Tips
 - Tested and developed on the latest Steam version
+- Also has **[Enderal SE](http://sureai.net/games/enderal/)** support (tested on latest GOG version)
 - Can be launched as a web app or standard .apk
 - Using [Cluster Tune](https://github.com/AurelioB/ClusterTune) may significantly reduce CPU temperature, fan noise, and battery drain.
 
