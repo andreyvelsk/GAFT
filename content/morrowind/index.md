@@ -6,7 +6,7 @@ slug: "morrowind"
 category: "game"
 media:
   - type: "image"
-    url: "/content/morrowind/preview.jpeg"
+    url: "/content/morrowind/preview.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=kmzqThgJWYY&start=375"
 ---

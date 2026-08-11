@@ -6,7 +6,7 @@ slug: "zelda-link-to-the-past"
 category: "game"
 media:
   - type: "image"
-    url: "/content/zelda-link-to-the-past/preview.png"
+    url: "/content/zelda-link-to-the-past/preview.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1us1t54/zelda_a_link_to_the_past_dual_screen_mod/)

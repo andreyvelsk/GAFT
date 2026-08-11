@@ -6,7 +6,7 @@ slug: "stardew"
 category: "companion"
 media:
   - type: "image"
-    url: "/content/stardew-valley/preview.jpeg"
+    url: "/content/stardew-valley/preview.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1tt6ued/playing_stardew_vallew_at_work_3/)

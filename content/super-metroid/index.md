@@ -6,7 +6,7 @@ slug: "super-metroid"
 category: "game"
 media:
   - type: "image"
-    url: "/content/super-metroid/preview.jpeg"
+    url: "/content/super-metroid/preview.webp"
 ---
 
 source: [reddit](https://www.reddit.com/r/AynThor/comments/1vdopik/super_metroid_dual_screen_mod/)

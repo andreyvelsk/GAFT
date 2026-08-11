@@ -6,7 +6,7 @@ slug: "minecraft"
 category: "companion"
 media:
   - type: "image"
-    url: "/content/minecraft/preview.jpeg"
+    url: "/content/minecraft/preview.webp"
   - type: "video"
     url: "https://www.youtube.com/shorts/oZP2SdNAIPc"
 ---

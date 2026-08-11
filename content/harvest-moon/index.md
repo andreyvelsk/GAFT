@@ -6,7 +6,7 @@ slug: "harvest-moon"
 category: "game"
 media:
   - type: "image"
-    url: "/content/harvest-moon/preview.jpeg"
+    url: "/content/harvest-moon/preview.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1vfwkmy/harvest_moon_64_recomps_android_port_with_dual/)

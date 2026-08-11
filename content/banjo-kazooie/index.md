@@ -6,7 +6,7 @@ slug: "banjo-kazooie"
 category: "game"
 media:
   - type: "image"
-    url: "/content/banjo-kazooie/preview.png"
+    url: "/content/banjo-kazooie/preview.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u5bmr9/banjo_kazooie_port_with_dual_screen_support/)

@@ -8,7 +8,7 @@ media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=vgs6X9piswA"
   - type: "image"
-    url: "/content/megingiard/preview.png"
+    url: "/content/megingiard/preview.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1tlids6/rerelease_source_available_megingiard_a/)

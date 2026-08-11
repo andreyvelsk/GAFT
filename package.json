@@ -6,7 +6,9 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "convert:previews": "node scripts/convert-previews.js",
+    "convert:previews:all": "node scripts/convert-previews.js --all"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.0",

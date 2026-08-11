@@ -6,7 +6,7 @@ slug: "zelda-minish-cap"
 category: "game"
 media:
   - type: "image"
-    url: "/content/zelda-minish-cap/preview.png"
+    url: "/content/zelda-minish-cap/preview.webp"
 ---
 
 ## What's on the panel

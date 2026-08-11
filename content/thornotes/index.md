@@ -6,7 +6,7 @@ slug: "thornotes"
 category: "companion"
 media:
   - type: "image"
-    url: "/content/thornotes/preview.png"
+    url: "/content/thornotes/preview.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u7i7p1/thornotes_yet_another_bottom_screen_companion/)
