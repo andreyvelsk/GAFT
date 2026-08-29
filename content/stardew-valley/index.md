@@ -1,5 +1,5 @@
 ---
-title: "Stardew Valley + Gunther's Library"
+title: "Stardew Valley"
 description: "Native lower-screen companion for Stardew Valley on the AYN Thor: Today, Map, Farm, Journal, Bundles and Calendar pages with touch inventory controls."
 date: "2026-08-29 21:35"
 slug: "stardew"
