@@ -5,7 +5,7 @@ import type { Article, SortField, SortOrder } from '~/composables/useArticles'
  * Search query and sort settings are kept in useState so they survive
  * navigation between '/' and '/page/N'.
  */
-export function useArticlesList(pageNumber: Ref<number>) {
+export async function useArticlesList(pageNumber: Ref<number>) {
   const router = useRouter()
 
   // Shared state — survives navigation between pages
@@ -21,8 +21,9 @@ export function useArticlesList(pageNumber: Ref<number>) {
   const { getArticles, filterArticles, sortArticles, paginateArticles, ARTICLES_PER_PAGE } = useArticles()
   const { setArticles, articles: storeArticles } = useArticlesStore()
 
-  // Fetch articles via useAsyncData so data is available during SSR/prerender
-  const { data: allArticles } = useAsyncData('articles-list', () => getArticles())
+  // Await is REQUIRED: without it SSR renders an empty list while the client
+  // gets data from the payload, causing a hydration mismatch
+  const { data: allArticles } = await useAsyncData('articles-list', () => getArticles())
 
   // Populate the global store so useLikes can update likes in-place
   if (allArticles.value) {
