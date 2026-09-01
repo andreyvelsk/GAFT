@@ -15,6 +15,7 @@
         />
       </svg>
       <input
+        ref="inputEl"
         :value="modelValue"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         type="text"
@@ -37,11 +38,33 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   modelValue: string
 }>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
+
+const inputEl = ref<HTMLInputElement | null>(null)
+
+// Flag shared across page navigations: was the search input focused
+// right before the current component instance was unmounted?
+const searchFocusPending = useState<boolean>('search-focus-pending', () => false)
+
+onBeforeUnmount(() => {
+  if (import.meta.client && document.activeElement === inputEl.value) {
+    searchFocusPending.value = true
+  }
+})
+
+onMounted(() => {
+  if (import.meta.client && searchFocusPending.value) {
+    searchFocusPending.value = false
+    inputEl.value?.focus()
+    // Move the caret to the end of the input
+    const len = props.modelValue.length
+    inputEl.value?.setSelectionRange(len, len)
+  }
+})
 </script>

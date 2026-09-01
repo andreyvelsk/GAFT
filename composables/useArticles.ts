@@ -31,7 +31,7 @@ interface FetchArticlesOptions {
 }
 
 export const useArticles = () => {
-  const ARTICLES_PER_PAGE = 100
+  const ARTICLES_PER_PAGE = 18
 
   /**
    * Fetch all articles with sorting and search support
