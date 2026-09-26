@@ -34,6 +34,12 @@ export const createDraftSchema = z.object({
   slug: z.string().min(1),
 
   /**
+   * Canonical link to the project (repository, store page or official site),
+   * when the post or README provides one.
+   */
+  project_url: z.string().optional(),
+
+  /**
    * Ordered `## <heading>` sections of the page body. Standard headings are
    * `Description` and `Setup guide`; extra sections are allowed.
    */

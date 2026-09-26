@@ -371,6 +371,35 @@ describe('applyPatch', () => {
     });
   });
 
+  it('uses the patch project URL when there is no repository', () => {
+    const applied = applyPatch(
+      makePage(),
+      {
+        project_url: 'https://play.google.com/store/apps/details?id=x',
+        reason: 'store link',
+      },
+      makeEntry({ external_url: 'https://i.redd.it/a.jpg' }),
+      makeContext({ repo: null, release: null, readme: null }),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.sections.projectUrl).toBe(
+      'https://play.google.com/store/apps/details?id=x',
+    );
+  });
+
+  it('preserves the existing project URL when nothing new is provided', () => {
+    const applied = applyPatch(
+      makePage(),
+      { reason: 'no-op' },
+      makeEntry({ external_url: 'https://i.redd.it/a.jpg' }),
+      makeContext({ repo: null, release: null, readme: null }),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.sections.projectUrl).toBe(REPO_URL);
+  });
+
   it('preserves the existing media when the patch omits it', () => {
     const applied = applyPatch(
       makeRichPage(),
@@ -471,6 +500,28 @@ describe('gatherUpdateContext', () => {
     );
 
     expect(context).toEqual({ repo: null, readme: null, release: null });
+  });
+
+  it('finds the repository from a GitHub link in the body', async () => {
+    const fetchImpl = createFetch((url) => {
+      if (url.endsWith('/readme')) {
+        return Promise.resolve(textResponse('# Pixel Navigator\n'));
+      }
+      if (url.endsWith('/releases/latest')) {
+        return Promise.resolve(textResponse('', 404));
+      }
+      return Promise.resolve(jsonResponse(searchItem()));
+    });
+
+    const context = await gatherUpdateContext(
+      makeEntry({
+        external_url: 'https://i.redd.it/a.jpg',
+        selftext: 'Source: https://github.com/ChimeraGaming/PixelNavigator',
+      }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(context.repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
   });
 });
 

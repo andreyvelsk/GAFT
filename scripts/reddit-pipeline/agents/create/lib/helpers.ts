@@ -9,7 +9,12 @@ import {
   type PageInput,
   type PageSection,
 } from '../../../content/template';
-import { formatPageDate, kebabCase } from '../../../shared/lib/helpers';
+import {
+  formatPageDate,
+  githubUrlFromEntry,
+  kebabCase,
+  resolveProjectUrl,
+} from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
@@ -46,6 +51,9 @@ export const CREATE_SYSTEM_PROMPT = [
   '- "description": one or two sentences for the page frontmatter.',
   '- "category": one lowercase word, e.g. "game", "app", "port", "emulator", "tool".',
   '- "slug": a kebab-case slug derived from the project name.',
+  '- "project_url": the canonical link to the project (repository, store page',
+  '  or official site) taken from the post or README. Omit it when there is no',
+  '  such link.',
   '- "sections": an ordered array of {"heading", "body"} objects. Use',
   '  "Description" and "Setup guide" as the standard headings, and add extra',
   '  sections (e.g. "Features", "Supported games", "Known issues") when the',
@@ -126,7 +134,7 @@ export async function gatherCreateContext(
   options: CreateOptions = {},
 ): Promise<CreateContext> {
   const repoOptions = options.repoOptions ?? {};
-  const query = entry.external_url !== '' ? entry.external_url : entry.title;
+  const query = githubUrlFromEntry(entry) || entry.title;
   const repo = await searchRepository(query, repoOptions);
   if (repo === null) {
     return { repo: null, readme: null, release: null };
@@ -170,7 +178,11 @@ export function buildCreatePageInput(
       ),
     };
   });
-  const projectUrl = context.repo?.htmlUrl ?? entry.external_url;
+  const projectUrl = resolveProjectUrl(
+    context.repo?.htmlUrl ?? null,
+    draft.project_url,
+    entry,
+  );
 
   return {
     frontmatter: {

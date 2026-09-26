@@ -18,7 +18,11 @@ import {
   type PageSection,
 } from '../../../content/template';
 import { MEDIA_LIMITS } from '../../../shared/lib/constants';
-import { formatPageDate } from '../../../shared/lib/helpers';
+import {
+  formatPageDate,
+  githubUrlFromEntry,
+  resolveProjectUrl,
+} from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
@@ -69,6 +73,8 @@ export const UPDATE_SYSTEM_PROMPT = [
   'Return a JSON object describing ONLY the fields that must change:',
   '- "title", "description", "category" and "media" (an array of image URLs',
   '  from the post).',
+  '- "project_url": the canonical link to the project (repository, store page',
+  '  or official site), when it changes.',
   '- "sections": the FULL ordered array of {"heading", "body"} objects when the',
   '  page structure or any section changes. Include ALL sections (not only the',
   '  changed ones). Each "body" must contain ONLY the section text — no "## …"',
@@ -209,7 +215,7 @@ export async function gatherUpdateContext(
   options: UpdateOptions = {},
 ): Promise<UpdateContext> {
   const repoOptions = options.repoOptions ?? {};
-  const query = entry.external_url !== '' ? entry.external_url : entry.title;
+  const query = githubUrlFromEntry(entry) || entry.title;
   const repo = await searchRepository(query, repoOptions);
   if (repo === null) {
     return { repo: null, readme: null, release: null };
@@ -298,7 +304,13 @@ export function applyPatch(
     }));
   }
 
-  const projectUrl = context.repo?.htmlUrl ?? currentBody.projectUrl;
+  const resolvedProjectUrl = resolveProjectUrl(
+    context.repo?.htmlUrl ?? null,
+    patch.project_url,
+    entry,
+  );
+  const projectUrl =
+    resolvedProjectUrl !== '' ? resolvedProjectUrl : currentBody.projectUrl;
   const sourceUrl =
     currentBody.sourceUrl !== '' ? currentBody.sourceUrl : entry.permalink;
   const date = readString(data, 'date', formatPageDate(now));

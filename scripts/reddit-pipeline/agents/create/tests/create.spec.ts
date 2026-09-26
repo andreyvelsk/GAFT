@@ -328,6 +328,49 @@ describe('buildCreatePageInput', () => {
     expect(page.sections.projectUrl).toBe('https://example.com/app');
   });
 
+  it('uses the draft project URL when there is no repository', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft({
+        project_url: 'https://play.google.com/store/apps/details?id=x',
+      }),
+      entry: makeEntry({ external_url: 'https://i.redd.it/a.jpg' }),
+      context: makeContext({ repo: null, release: null, readme: null }),
+      mediaUrls: [],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.sections.projectUrl).toBe(
+      'https://play.google.com/store/apps/details?id=x',
+    );
+  });
+
+  it('ignores an image URL as the project link', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft({ project_url: 'https://i.redd.it/a.jpg' }),
+      entry: makeEntry({ external_url: 'https://i.redd.it/a.jpg' }),
+      context: makeContext({ repo: null, release: null, readme: null }),
+      mediaUrls: [],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.sections.projectUrl).toBe('');
+  });
+
+  it('falls back to a non-image external URL', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft(),
+      entry: makeEntry({ external_url: 'https://gitlab.com/user/repo' }),
+      context: makeContext({ repo: null, release: null, readme: null }),
+      mediaUrls: [],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.sections.projectUrl).toBe('https://gitlab.com/user/repo');
+  });
+
   it('normalizes release links inside the generated sections', () => {
     const page = buildCreatePageInput({
       draft: makeDraft({
@@ -389,6 +432,28 @@ describe('gatherCreateContext', () => {
     );
 
     expect(context).toEqual({ repo: null, readme: null, release: null });
+  });
+
+  it('finds the repository from a GitHub link in the body', async () => {
+    const fetchImpl = createFetch((url) => {
+      if (url.endsWith('/readme')) {
+        return Promise.resolve(textResponse('# Pixel Navigator\n'));
+      }
+      if (url.endsWith('/releases/latest')) {
+        return Promise.resolve(textResponse('', 404));
+      }
+      return Promise.resolve(jsonResponse(searchItem()));
+    });
+
+    const context = await gatherCreateContext(
+      makeEntry({
+        external_url: 'https://i.redd.it/a.jpg',
+        selftext: 'Source: https://github.com/ChimeraGaming/PixelNavigator',
+      }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(context.repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
   });
 });
 

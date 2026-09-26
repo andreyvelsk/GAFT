@@ -27,6 +27,9 @@ export const updatePatchSchema = z.object({
   /** New category, when it changes. */
   category: z.string().min(1).optional(),
 
+  /** New canonical project link, when it changes. */
+  project_url: z.string().optional(),
+
   /**
    * Full ordered list of `## <heading>` sections, when the page structure or
    * any section changes. When present it replaces the whole section list.
