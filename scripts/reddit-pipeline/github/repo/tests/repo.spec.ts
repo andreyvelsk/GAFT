@@ -3,9 +3,11 @@ import { describe, expect, it } from 'vitest';
 import type { GitHubSearchItem } from '../../client';
 import {
   findRepo,
+  getRepo,
   latestRelease,
   latestReleaseUrl,
   normalizeName,
+  parseRepoRef,
   parseRepoUrl,
   pickBestMatch,
   readReadme,
@@ -135,6 +137,52 @@ describe('parseRepoUrl', () => {
   });
 });
 
+describe('parseRepoRef', () => {
+  it('resolves a GitHub URL', () => {
+    expect(parseRepoRef('https://github.com/ChimeraGaming/PixelNavigator')).toEqual(
+      { owner: 'ChimeraGaming', repo: 'PixelNavigator' },
+    );
+  });
+
+  it('resolves an owner/repo shorthand', () => {
+    expect(parseRepoRef('ChimeraGaming/PixelNavigator')).toEqual({
+      owner: 'ChimeraGaming',
+      repo: 'PixelNavigator',
+    });
+  });
+
+  it('returns null for a bare project name', () => {
+    expect(parseRepoRef('Pixel Navigator')).toBeNull();
+  });
+});
+
+describe('getRepo', () => {
+  it('fetches the repository by exact coordinates', async () => {
+    const recorder = staticFetch(
+      jsonResponse(
+        searchItem({
+          full_name: 'ChimeraGaming/PixelNavigator',
+          name: 'PixelNavigator',
+          owner: { login: 'ChimeraGaming' },
+          html_url: 'https://github.com/ChimeraGaming/PixelNavigator',
+          description: 'Android map companion',
+          stargazers_count: 42,
+          default_branch: 'master',
+        }),
+      ),
+    );
+
+    const repo = await getRepo('ChimeraGaming', 'PixelNavigator', {
+      fetchImpl: recorder.fetchImpl,
+    });
+
+    expect(repo.fullName).toBe('ChimeraGaming/PixelNavigator');
+    expect(recorder.calls[0]?.url).toContain(
+      '/repos/ChimeraGaming/PixelNavigator',
+    );
+  });
+});
+
 describe('findRepo', () => {
   it('finds the exact repository and maps its fields', async () => {
     const recorder = staticFetch(
@@ -181,6 +229,29 @@ describe('findRepo', () => {
     expect(url).toContain('/search/repositories');
     expect(url).toContain('in%3Aname');
     expect(url).toContain('per_page=10');
+  });
+
+  it('resolves an exact GitHub URL without hitting the search API', async () => {
+    const recorder = staticFetch(
+      jsonResponse(
+        searchItem({
+          full_name: 'ChimeraGaming/PixelNavigator',
+          name: 'PixelNavigator',
+          owner: { login: 'ChimeraGaming' },
+        }),
+      ),
+    );
+
+    const repo = await findRepo(
+      'https://github.com/ChimeraGaming/PixelNavigator',
+      { fetchImpl: recorder.fetchImpl },
+    );
+
+    expect(repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
+    expect(recorder.calls[0]?.url).toContain(
+      '/repos/ChimeraGaming/PixelNavigator',
+    );
+    expect(recorder.calls[0]?.url).not.toContain('/search/repositories');
   });
 
   it('returns null when there are no matches', async () => {
@@ -287,11 +358,14 @@ function authOptions(): RepoOptions {
 
 describe.skipIf(!runIntegration)('github repo integration', () => {
   it(
-    'finds the Pixel Navigator repository',
+    'resolves the Pixel Navigator repository from its exact URL',
     async () => {
-      const repo = await findRepo('Pixel Navigator', authOptions());
+      const repo = await findRepo(
+        'https://github.com/ChimeraGaming/PixelNavigator',
+        authOptions(),
+      );
 
-      expect(repo?.fullName.toLowerCase()).toBe('chimeragaming/pixelnavigator');
+      expect(repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
     },
     60000,
   );

@@ -1,8 +1,10 @@
 export {
   findRepo,
+  getRepo,
   latestRelease,
   latestReleaseUrl,
   normalizeName,
+  parseRepoRef,
   parseRepoUrl,
   pickBestMatch,
   readReadme,
