@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
 import { AgentError } from '../../../shared/lib/errors';
+import { resolveModel } from '../../model';
 import {
   REPAIR_INSTRUCTION,
   buildProviderSettings,
@@ -297,7 +298,7 @@ describe.skipIf(!runIntegration || !hasApiKey)('provider integration', () => {
     'generates a structured object via OpenRouter',
     async () => {
       const result = await generateStructured({
-        model: testModel(),
+        model: createProvider()(resolveModel('filter')),
         schema: z.object({ pong: z.boolean() }),
         system: 'You are a test helper. Reply with JSON only.',
         prompt: 'Return {"pong": true}.',
