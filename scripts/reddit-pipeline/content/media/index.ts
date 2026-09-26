@@ -3,5 +3,10 @@ export {
   downloadImage,
   mediaFileName,
   saveImage,
+  selectImages,
 } from './lib/helpers';
-export type { DownloadImageOptions, MediaResult } from './lib/types';
+export type {
+  DownloadImageOptions,
+  MediaPlanItem,
+  MediaResult,
+} from './lib/types';

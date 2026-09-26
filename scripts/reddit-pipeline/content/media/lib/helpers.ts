@@ -6,7 +6,7 @@ import { promisify } from 'node:util';
 
 import sharp from 'sharp';
 
-import { PREVIEW_FILE_NAME } from '../../../shared/lib/constants';
+import { MEDIA_LIMITS, PREVIEW_FILE_NAME } from '../../../shared/lib/constants';
 import { FetchError } from '../../../shared/lib/errors';
 import { screenshotFileName } from '../../../shared/lib/helpers';
 import type { DownloadImageOptions, MediaResult } from './types';
@@ -79,6 +79,25 @@ export async function convertToWebp(input: Buffer): Promise<Buffer> {
 /** File name of the n-th image of a page (1-based index). */
 export function mediaFileName(index: number): string {
   return index <= 1 ? PREVIEW_FILE_NAME : screenshotFileName(index);
+}
+
+/**
+ * Select the images to use for a page.
+ *
+ * Keeps only the requested URLs that are actually available, de-duplicates
+ * them, caps the result at `max` and falls back to the first available images
+ * when nothing valid was requested. This prevents a model from inventing image
+ * URLs while still honouring its selection.
+ */
+export function selectImages(
+  available: readonly string[],
+  requested: readonly string[],
+  max: number = MEDIA_LIMITS.maxImages,
+): string[] {
+  const allowed = new Set(available);
+  const selected = [...new Set(requested.filter((url) => allowed.has(url)))];
+  const capped = selected.slice(0, max);
+  return capped.length > 0 ? capped : available.slice(0, max);
 }
 
 /** Download an image, convert it to WebP and write it to `outputPath`. */

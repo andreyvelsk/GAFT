@@ -46,3 +46,13 @@ export function screenshotFileName(index: number): string {
 export function nowUnixSeconds(): number {
   return Math.floor(Date.now() / 1000);
 }
+
+/** Format a date as the page frontmatter timestamp (`YYYY-MM-DD HH:mm`, UTC). */
+export function formatPageDate(date: Date): string {
+  const pad = (value: number): string => String(value).padStart(2, '0');
+  const day = `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(
+    date.getUTCDate(),
+  )}`;
+  const time = `${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}`;
+  return `${day} ${time}`;
+}

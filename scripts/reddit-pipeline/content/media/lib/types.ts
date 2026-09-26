@@ -18,3 +18,12 @@ export interface MediaResult {
   /** Size of the written file in bytes. */
   bytes: number;
 }
+
+/** A single media file to download for a page. */
+export interface MediaPlanItem {
+  /** Source image URL to download. */
+  url: string;
+
+  /** File name to write inside `public/content/<slug>/`. */
+  fileName: string;
+}

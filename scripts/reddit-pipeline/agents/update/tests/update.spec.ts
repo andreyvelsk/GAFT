@@ -1,0 +1,477 @@
+import type { LanguageModel } from 'ai';
+import { describe, expect, it } from 'vitest';
+
+import { parseFrontmatter } from '../../../content/frontmatter';
+import type { GitHubSearchItem } from '../../../github/client';
+import { fetchPostById, parsePostId } from '../../../reddit/client';
+import { postToReport } from '../../../reddit/normalize';
+import { AgentError } from '../../../shared/lib/errors';
+import type { ReportEntry } from '../../../shared/lib/types';
+import {
+  REPAIR_INSTRUCTION,
+  createProvider,
+  type GenerateObjectLike,
+  type GenerateObjectOptions,
+  type GenerateObjectResultLike,
+} from '../../provider';
+import { readContentPage, type ContentPage } from '../../tools/content-read';
+import {
+  UPDATE_SYSTEM_PROMPT,
+  applyPatch,
+  buildUpdatePrompt,
+  gatherUpdateContext,
+  updatePage,
+  type UpdateContext,
+  type UpdatePatch,
+} from '../index';
+
+/** Canonical repository URL reused across the tests. */
+const REPO_URL = 'https://github.com/ChimeraGaming/PixelNavigator';
+
+/** Image URLs reused across the tests. */
+const IMAGE_A = 'https://i.redd.it/a.jpg';
+const IMAGE_B = 'https://i.redd.it/b.jpg';
+
+/** Build a report entry from a base payload plus overrides. */
+function makeEntry(overrides: Partial<ReportEntry> = {}): ReportEntry {
+  return {
+    id: 'abc123',
+    title: 'Pixel Navigator update',
+    author: 'someone',
+    created_utc: 1700000000,
+    permalink: 'https://www.reddit.com/r/AynThor/comments/abc123/',
+    selftext: '',
+    external_url: REPO_URL,
+    flair: '',
+    images: [IMAGE_A, IMAGE_B],
+    ...overrides,
+  };
+}
+
+/** Build a research context with sensible defaults plus overrides. */
+function makeContext(overrides: Partial<UpdateContext> = {}): UpdateContext {
+  return {
+    repo: {
+      owner: 'ChimeraGaming',
+      repo: 'PixelNavigator',
+      fullName: 'ChimeraGaming/PixelNavigator',
+      htmlUrl: REPO_URL,
+      description: 'Android map companion',
+      stars: 42,
+      defaultBranch: 'main',
+    },
+    readme: '# Pixel Navigator\n\nMaps on the second screen.',
+    release: {
+      tagName: 'v1.2.0',
+      name: 'Version 1.2.0',
+      publishedAt: '2026-09-01T00:00:00Z',
+      url: `${REPO_URL}/releases/latest`,
+      htmlUrl: `${REPO_URL}/releases/tag/v1.2.0`,
+    },
+    ...overrides,
+  };
+}
+
+/** Build a valid existing page with sensible defaults plus overrides. */
+function makePage(overrides: Partial<ContentPage> = {}): ContentPage {
+  const raw = [
+    '---',
+    'title: "Pixel Navigator"',
+    'description: "Android map companion"',
+    'date: "2026-09-01 10:00"',
+    'slug: "pixel-navigator"',
+    'category: "app"',
+    'media:',
+    '  - type: "image"',
+    '    url: "/content/pixel-navigator/preview.webp"',
+    '---',
+    '',
+    'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc123/)',
+    '',
+    '## Description',
+    '',
+    'Old description.',
+    '',
+    '## Setup guide',
+    '',
+    '1. Old step.',
+    '',
+    `See the project page: [github.com](${REPO_URL})`,
+  ].join('\n');
+  const { data, content } = parseFrontmatter(raw);
+  return {
+    slug: 'pixel-navigator',
+    path: '/content/pixel-navigator/index.md',
+    frontmatter: data,
+    content,
+    raw,
+    ...overrides,
+  };
+}
+
+/** Build a real (but never-called) language model for the injected generator. */
+function testModel(): LanguageModel {
+  return createProvider({ apiKey: 'test-key' })('test/model');
+}
+
+/** A generator plus the options it recorded, in call order. */
+interface RecordingGenerator {
+  generate: GenerateObjectLike;
+  calls: GenerateObjectOptions[];
+}
+
+/** Build a generator that records its calls and delegates to `handler`. */
+function recordingGenerator(
+  handler: (
+    options: GenerateObjectOptions,
+    index: number,
+  ) => Promise<GenerateObjectResultLike>,
+): RecordingGenerator {
+  const calls: GenerateObjectOptions[] = [];
+  const generate: GenerateObjectLike = (options) => {
+    calls.push(options);
+    return handler(options, calls.length - 1);
+  };
+  return { generate, calls };
+}
+
+/** A generator that always resolves with the given raw object. */
+function staticGenerator(object: unknown): RecordingGenerator {
+  return recordingGenerator(() => Promise.resolve({ object }));
+}
+
+/** Extract the URL from any accepted fetch input without assertions. */
+function inputUrl(input: string | URL | Request): string {
+  if (typeof input === 'string') {
+    return input;
+  }
+  if (input instanceof URL) {
+    return input.href;
+  }
+  return input.url;
+}
+
+/** Build a fetch implementation that records calls and delegates to `handler`. */
+function createFetch(
+  handler: (url: string) => Promise<Response>,
+): typeof fetch {
+  return async (input) => await handler(inputUrl(input));
+}
+
+/** Build a fetch implementation that always returns the same response. */
+function staticFetch(response: Response): typeof fetch {
+  return createFetch(() => Promise.resolve(response));
+}
+
+/** Build a JSON `Response` for the mocked `fetch`. */
+function jsonResponse(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+/** Build a plain-text `Response` for the mocked `fetch`. */
+function textResponse(body: string, status = 200): Response {
+  return new Response(body, { status });
+}
+
+/** Build a minimal search item with overrides. */
+function searchItem(overrides: Partial<GitHubSearchItem> = {}): GitHubSearchItem {
+  return {
+    full_name: 'ChimeraGaming/PixelNavigator',
+    name: 'PixelNavigator',
+    owner: { login: 'ChimeraGaming' },
+    html_url: REPO_URL,
+    description: 'Android map companion',
+    stargazers_count: 42,
+    default_branch: 'main',
+    ...overrides,
+  };
+}
+
+/** Load a report entry from a Reddit permalink (id → post → normalize). */
+async function loadEntry(url: string): Promise<ReportEntry> {
+  const id = parsePostId(url);
+  if (id === null) {
+    throw new Error(`cannot extract post id from url: ${url}`);
+  }
+  const post = await fetchPostById(id);
+  if (post === null) {
+    throw new Error(`post ${id} not found`);
+  }
+  return postToReport(post);
+}
+
+describe('buildUpdatePrompt', () => {
+  it('includes the current page, the post id and the latest release URL', () => {
+    const prompt = buildUpdatePrompt(
+      makePage(),
+      makeEntry({ id: 'p1' }),
+      makeContext(),
+    );
+
+    expect(prompt).toContain('"pixel-navigator"');
+    expect(prompt).toContain('"p1"');
+    expect(prompt).toContain(`${REPO_URL}/releases/latest`);
+    expect(prompt).toContain('Old description.');
+  });
+
+  it('renders nulls when the context is empty', () => {
+    const prompt = buildUpdatePrompt(makePage(), makeEntry(), {
+      repo: null,
+      readme: null,
+      release: null,
+    });
+
+    expect(prompt).toContain('Repository (may be null):');
+    expect(prompt).toContain('README (may be null):');
+    expect(prompt).toContain('null');
+  });
+});
+
+describe('applyPatch', () => {
+  it('changes only the provided field and records it', () => {
+    const patch: UpdatePatch = {
+      description_body: 'New description.',
+      reason: 'new release',
+    };
+
+    const applied = applyPatch(
+      makePage(),
+      patch,
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.changed).toEqual(['description_body']);
+    expect(applied.page.sections.description).toBe('New description.');
+  });
+
+  it('preserves the fields that are not in the patch', () => {
+    const patch: UpdatePatch = {
+      description_body: 'New description.',
+      reason: 'new release',
+    };
+
+    const applied = applyPatch(
+      makePage(),
+      patch,
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.frontmatter.title).toBe('Pixel Navigator');
+    expect(applied.page.frontmatter.category).toBe('app');
+    expect(applied.page.frontmatter.date).toBe('2026-09-01 10:00');
+    expect(applied.page.sections.setupGuide).toBe('1. Old step.');
+    expect(applied.page.sections.projectUrl).toBe(REPO_URL);
+    expect(applied.page.sections.sourceUrl).toBe(
+      'https://www.reddit.com/r/AynThor/comments/abc123/',
+    );
+  });
+
+  it('does not record a field whose value is unchanged', () => {
+    const patch: UpdatePatch = {
+      title: 'Pixel Navigator',
+      reason: 'no-op',
+    };
+
+    const applied = applyPatch(
+      makePage(),
+      patch,
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.changed).toEqual([]);
+  });
+
+  it('replaces the media when the patch provides new images', () => {
+    const patch: UpdatePatch = { media: [IMAGE_B], reason: 'new screenshot' };
+
+    const applied = applyPatch(
+      makePage(),
+      patch,
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.changed).toEqual(['media']);
+    expect(applied.media).toEqual([{ url: IMAGE_B, fileName: 'preview.webp' }]);
+    expect(applied.page.frontmatter.media).toEqual([
+      { type: 'image', url: '/content/pixel-navigator/preview.webp' },
+    ]);
+  });
+
+  it('keeps the existing media when the patch omits it', () => {
+    const patch: UpdatePatch = { title: 'Pixel Navigator 2', reason: 'rename' };
+
+    const applied = applyPatch(
+      makePage(),
+      patch,
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.media).toEqual([]);
+    expect(applied.page.frontmatter.media).toEqual([
+      { type: 'image', url: '/content/pixel-navigator/preview.webp' },
+    ]);
+  });
+
+  it('falls back to the post permalink when the page has no source link', () => {
+    const page = makePage({ content: '## Description\n\nBody.' });
+
+    const applied = applyPatch(
+      page,
+      { reason: 'no-op' },
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.sections.sourceUrl).toBe(
+      'https://www.reddit.com/r/AynThor/comments/abc123/',
+    );
+  });
+});
+
+describe('gatherUpdateContext', () => {
+  it('resolves the repository, README and latest release', async () => {
+    const fetchImpl = createFetch((url) => {
+      if (url.endsWith('/readme')) {
+        return Promise.resolve(textResponse('# Pixel Navigator\n'));
+      }
+      if (url.endsWith('/releases/latest')) {
+        return Promise.resolve(
+          jsonResponse({
+            tag_name: 'v1.0.0',
+            name: 'v1.0.0',
+            html_url: `${REPO_URL}/releases/tag/v1.0.0`,
+            published_at: '2026-09-01T00:00:00Z',
+          }),
+        );
+      }
+      return Promise.resolve(jsonResponse(searchItem()));
+    });
+
+    const context = await gatherUpdateContext(makeEntry(), {
+      repoOptions: { fetchImpl },
+    });
+
+    expect(context.repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
+    expect(context.readme).toBe('# Pixel Navigator\n');
+    expect(context.release?.url).toBe(`${REPO_URL}/releases/latest`);
+  });
+
+  it('returns an empty context when no repository is found', async () => {
+    const fetchImpl = staticFetch(jsonResponse({ total_count: 0, items: [] }));
+
+    const context = await gatherUpdateContext(
+      makeEntry({ title: 'Nonexistent', external_url: '' }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(context).toEqual({ repo: null, readme: null, release: null });
+  });
+});
+
+describe('updatePage', () => {
+  it('applies the patch and renders the updated page', async () => {
+    const { generate } = staticGenerator({
+      description_body: 'New description.',
+      reason: 'new release',
+    });
+
+    const result = await updatePage(makePage(), makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(result.slug).toBe('pixel-navigator');
+    expect(result.changed).toEqual(['description_body']);
+    expect(result.markdown).toContain('New description.');
+    expect(result.markdown).toContain('## Setup guide');
+    expect(result.markdown).toContain('1. Old step.');
+  });
+
+  it('sends temperature 0, the update system prompt and a schema name', async () => {
+    const { generate, calls } = staticGenerator({ reason: 'no-op' });
+
+    await updatePage(makePage(), makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(calls[0]?.temperature).toBe(0);
+    expect(calls[0]?.system).toBe(UPDATE_SYSTEM_PROMPT);
+    expect(calls[0]?.schemaName).toBe('update_patch');
+  });
+
+  it('repairs an invalid output and then succeeds', async () => {
+    const { generate, calls } = recordingGenerator((_options, index) =>
+      Promise.resolve(
+        index === 0
+          ? { object: { not: 'a patch' } }
+          : { object: { description_body: 'New description.', reason: 'r' } },
+      ),
+    );
+
+    const result = await updatePage(makePage(), makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(result.changed).toEqual(['description_body']);
+    expect(calls).toHaveLength(2);
+    expect(calls[1]?.prompt).toContain(REPAIR_INSTRUCTION);
+  });
+
+  it('throws an AgentError when every attempt is invalid', async () => {
+    const { generate } = staticGenerator({ not: 'a patch' });
+
+    await expect(
+      updatePage(makePage(), makeEntry(), {
+        generate,
+        model: testModel(),
+        context: makeContext(),
+        maxRepairAttempts: 0,
+      }),
+    ).rejects.toBeInstanceOf(AgentError);
+  });
+});
+
+const runIntegration = process.env.RUN_MEDIA_INTEGRATION === 'true';
+const hasApiKey = (process.env.OPENROUTER_API_KEY ?? '') !== '';
+
+describe.skipIf(!runIntegration || !hasApiKey)('update integration', () => {
+  it(
+    'updates the real Pixel Navigator page from a real post',
+    async () => {
+      const page = await readContentPage('pixel-navigator');
+      if (page === null) {
+        throw new Error('pixel-navigator page not found');
+      }
+      const entry = await loadEntry(
+        'https://www.reddit.com/r/AynThor/comments/1wfm4hc/its_amazing_how_every_rom_can_be_so_diverse_also/',
+      );
+
+      const result = await updatePage(page, entry);
+
+      expect(result.slug).toBe('pixel-navigator');
+      expect(result.markdown).toContain('## Description');
+      expect(result.markdown).toContain('## Setup guide');
+      expect(result.markdown).not.toContain('/releases/tag/');
+    },
+    120000,
+  );
+});
