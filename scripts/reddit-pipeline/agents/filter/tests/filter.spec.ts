@@ -1,10 +1,10 @@
 import type { LanguageModel } from 'ai';
 import { describe, expect, it } from 'vitest';
-import { z } from 'zod';
 
+import { fetchPostById, parsePostId } from '../../../reddit/client';
 import { postToReport } from '../../../reddit/normalize';
 import { AgentError } from '../../../shared/lib/errors';
-import { rawPostSchema, type ReportEntry } from '../../../shared/lib/types';
+import type { ReportEntry } from '../../../shared/lib/types';
 import {
   REPAIR_INSTRUCTION,
   createProvider,
@@ -69,33 +69,14 @@ function staticGenerator(object: unknown): RecordingGenerator {
   return recordingGenerator(() => Promise.resolve({ object }));
 }
 
-/** arctic-shift endpoint returning posts by id. */
-const ARCTIC_SHIFT_IDS_API =
-  'https://arctic-shift.photon-reddit.com/api/posts/ids';
-
-/** Response envelope of the arctic-shift ids endpoint. */
-const idsResponseSchema = z.object({ data: z.array(rawPostSchema) });
-
-/** Extract the post id from a Reddit permalink. */
-function postIdFromUrl(url: string): string {
-  const id = /\/comments\/([^/]+)/.exec(url)?.[1];
-  if (id === undefined) {
+/** Load a report entry from a Reddit permalink (id → post → normalize). */
+async function loadEntry(url: string): Promise<ReportEntry> {
+  const id = parsePostId(url);
+  if (id === null) {
     throw new Error(`cannot extract post id from url: ${url}`);
   }
-  return id;
-}
-
-/** Fetch a single post by id and normalize it into a report entry. */
-async function fetchPostById(id: string): Promise<ReportEntry> {
-  const url = `${ARCTIC_SHIFT_IDS_API}?ids=${id}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} for ${url}`);
-  }
-  const json: unknown = await response.json();
-  const parsed = idsResponseSchema.parse(json);
-  const post = parsed.data[0];
-  if (post === undefined) {
+  const post = await fetchPostById(id);
+  if (post === null) {
     throw new Error(`post ${id} not found`);
   }
   return postToReport(post);
@@ -345,7 +326,7 @@ describe.skipIf(!runIntegration || !hasApiKey)(
     it.each(REAL_POST_CASES)(
       'classifies $url as relevant=$expected',
       async ({ url, expected }) => {
-        const entry = await fetchPostById(postIdFromUrl(url));
+        const entry = await loadEntry(url);
         const [verdict] = await classifyBatch([entry]);
 
         expect(verdict?.relevant).toBe(expected);

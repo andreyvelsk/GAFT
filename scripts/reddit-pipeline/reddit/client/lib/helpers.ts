@@ -1,5 +1,6 @@
 import {
   ARCTIC_SHIFT_API,
+  ARCTIC_SHIFT_IDS_API,
   PULLPUSH_API,
   REDDIT_USER_AGENT,
 } from '../../../shared/lib/constants';
@@ -104,4 +105,21 @@ export async function paginate(
     await sleep(POLITE_DELAY_MS);
   }
   return posts;
+}
+
+/** Build an arctic-shift URL returning the given post ids. */
+export function arcticShiftIdsUrl(ids: readonly string[]): string {
+  const params = new URLSearchParams({ ids: ids.join(',') });
+  return `${ARCTIC_SHIFT_IDS_API}?${params.toString()}`;
+}
+
+/** Extract the post id from a Reddit permalink; `null` when absent. */
+export function parsePostId(url: string): string | null {
+  return /\/comments\/([^/]+)/.exec(url)?.[1] ?? null;
+}
+
+/** Fetch a single post by id; `null` when the post is not found. */
+export async function fetchPostById(id: string): Promise<RawPost | null> {
+  const response = await httpGetJson(arcticShiftIdsUrl([id]));
+  return response.data[0] ?? null;
 }

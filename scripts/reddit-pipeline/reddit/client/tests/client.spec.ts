@@ -2,9 +2,16 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   ARCTIC_SHIFT_API,
+  ARCTIC_SHIFT_IDS_API,
   PULLPUSH_API,
 } from '../../../shared/lib/constants';
-import { fetchArcticShift, fetchPosts, fetchPullpush } from '../index';
+import {
+  fetchArcticShift,
+  fetchPostById,
+  fetchPosts,
+  fetchPullpush,
+  parsePostId,
+} from '../index';
 
 /** Minimal raw post payload accepted by `rawPostSchema`. */
 function postJson(id: string, createdUtc: number): Record<string, unknown> {
@@ -116,6 +123,43 @@ describe('reddit client', () => {
     expect(posts.map((post) => post.id)).toEqual(['fallback']);
     const urls = fetchMock.mock.calls.map((call) => call[0]);
     expect(urls.some((url) => url.startsWith(PULLPUSH_API))).toBe(true);
+  });
+});
+
+describe('parsePostId', () => {
+  it('extracts the id from a permalink', () => {
+    expect(
+      parsePostId('https://www.reddit.com/r/AynThor/comments/1wptab9/slug/'),
+    ).toBe('1wptab9');
+  });
+
+  it('returns null when the url has no post id', () => {
+    expect(parsePostId('https://www.reddit.com/r/AynThor/')).toBeNull();
+  });
+});
+
+describe('fetchPostById', () => {
+  it('fetches a single post by id from arctic-shift', async () => {
+    const fetchMock = vi.fn((_input: string) =>
+      Promise.resolve(jsonResponse({ data: [postJson('1wptab9', 10)] })),
+    );
+    vi.stubGlobal('fetch', fetchMock);
+
+    const post = await fetchPostById('1wptab9');
+
+    expect(post?.id).toBe('1wptab9');
+    const calledUrl = fetchMock.mock.calls[0]?.[0] ?? '';
+    expect(calledUrl.startsWith(ARCTIC_SHIFT_IDS_API)).toBe(true);
+    expect(calledUrl).toContain('ids=1wptab9');
+  });
+
+  it('returns null when the post is missing', async () => {
+    const fetchMock = vi.fn((_input: string) =>
+      Promise.resolve(jsonResponse({ data: [] })),
+    );
+    vi.stubGlobal('fetch', fetchMock);
+
+    expect(await fetchPostById('missing')).toBeNull();
   });
 });
 

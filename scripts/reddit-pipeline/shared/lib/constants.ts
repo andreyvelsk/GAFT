@@ -23,6 +23,10 @@ export const PLANS_DIR = join(PROJECT_ROOT, 'plans');
 export const ARCTIC_SHIFT_API =
   'https://arctic-shift.photon-reddit.com/api/posts/search';
 
+/** arctic-shift endpoint returning posts by id. */
+export const ARCTIC_SHIFT_IDS_API =
+  'https://arctic-shift.photon-reddit.com/api/posts/ids';
+
 /** pullpush submissions endpoint (fallback Reddit source). */
 export const PULLPUSH_API = 'https://api.pullpush.io/reddit/search/submission/';
 

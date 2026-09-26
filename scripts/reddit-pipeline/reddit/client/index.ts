@@ -2,6 +2,8 @@ import { arcticShiftUrl, paginate, pullpushUrl } from './lib/helpers';
 import type { FetchWindow } from './lib/types';
 import type { RawPost } from '../../shared/lib/types';
 
+export { fetchPostById, parsePostId } from './lib/helpers';
+
 /** Fetch posts from arctic-shift (primary source). */
 export async function fetchArcticShift(
   window: FetchWindow,
