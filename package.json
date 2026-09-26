@@ -9,7 +9,10 @@
     "preview": "nuxt preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "tsc": "nuxt typecheck",
+    "tsc": "tsc --noEmit",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "convert:previews": "node scripts/convert-previews.js",
     "convert:previews:all": "node scripts/convert-previews.js --all"
   },
@@ -35,6 +38,7 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.70.1",
+    "vitest": "^5.0.2",
     "vue-eslint-parser": "^9.4.3",
     "vue-tsc": "^2.2.12"
   }
