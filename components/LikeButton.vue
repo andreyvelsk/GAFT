@@ -1,6 +1,5 @@
 <template>
   <button
-    @click.stop="handleLike"
     :disabled="hasLiked || isSubmitting"
     class="inline-flex items-center gap-1.5 transition-all duration-200 group/like"
     :class="[
@@ -16,6 +15,7 @@
       isSubmitting ? 'cursor-wait' : ''
     ]"
     :title="hasLiked ? 'You already liked this' : 'Like this article'"
+    @click.stop="handleLike"
   >
     <!-- Heart icon -->
     <span
@@ -82,7 +82,7 @@ async function handleLike() {
 }
 
 onMounted(() => {
-  initLikes()
+  void initLikes()
 })
 
 onUnmounted(() => {

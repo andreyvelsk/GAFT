@@ -7,20 +7,35 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "tsc": "nuxt typecheck",
     "convert:previews": "node scripts/convert-previews.js",
     "convert:previews:all": "node scripts/convert-previews.js --all"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.0",
+    "@openrouter/ai-sdk-provider": "^0.4.5",
+    "ai": "^4.3.16",
     "firebase": "^12.14.0",
     "gray-matter": "^4.0.3",
     "nuxt": "^3.16.0",
+    "sharp": "^0.33.5",
     "vue": "^3.5.0",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@nuxtjs/tailwindcss": "^6.13.0",
     "@types/node": "^25.9.3",
-    "typescript": "^5.7.0"
+    "eslint": "^9.39.5",
+    "eslint-plugin-vue": "^9.33.0",
+    "globals": "^15.15.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.70.1",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^2.2.12"
   }
 }

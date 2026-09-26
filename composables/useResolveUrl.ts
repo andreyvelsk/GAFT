@@ -5,9 +5,13 @@
  * `/content/banjo-kazooie/preview.png` must become `/<repo>/content/...`.
  * Locally the base URL is `/`, so the path stays unchanged.
  */
-export const useResolveUrl = () => {
+export interface UseResolveUrlReturn {
+  resolveUrl: (url: string) => string
+}
+
+export const useResolveUrl = (): UseResolveUrlReturn => {
   const config = useRuntimeConfig()
-  const baseUrl = (config.app?.baseURL as string) || '/'
+  const baseUrl = config.app.baseURL || '/'
 
   function resolveUrl(url: string): string {
     // Skip external URLs (http, https, data:, mailto:, etc.)

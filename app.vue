@@ -9,7 +9,7 @@
 <script setup lang="ts">
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk
+    return titleChunk !== undefined && titleChunk !== ''
       ? `${titleChunk} | Games & Apps for AYN Thor`
       : 'Games & Apps for AYN Thor — Perfect Pairings & Android Ports'
   }

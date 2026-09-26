@@ -8,7 +8,19 @@ import {
   setDoc,
   type Firestore
 } from 'firebase/firestore'
+import type { DeepReadonly } from 'vue'
 import { useFirebase } from '~/lib/firebase'
+
+/** Public API returned by {@link useLikes}. */
+export interface UseLikesReturn {
+  firestoreLikes: DeepReadonly<Ref<number>>
+  hasLiked: DeepReadonly<Ref<boolean>>
+  isLoading: DeepReadonly<Ref<boolean>>
+  isSubmitting: DeepReadonly<Ref<boolean>>
+  initLikes: () => Promise<void>
+  like: () => Promise<void>
+  destroyLikes: () => void
+}
 
 /**
  * Composable for handling likes.
@@ -22,7 +34,7 @@ import { useFirebase } from '~/lib/firebase'
  *
  * @param articleSlug — article slug (unique identifier)
  */
-export function useLikes(articleSlug: string) {
+export function useLikes(articleSlug: string): UseLikesReturn {
   const firestoreLikes = ref<number>(0)
   const hasLiked = ref<boolean>(false)
   const isLoading = ref<boolean>(true)
@@ -35,17 +47,20 @@ export function useLikes(articleSlug: string) {
   // ─── localStorage helpers ────────────────────────────────────────────
 
   function getLikedSlugs(): string[] {
-    if (import.meta.server) return []
+    if (import.meta.server === true) return []
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
-      return raw ? JSON.parse(raw) : []
+      if (raw === null) return []
+      const parsed: unknown = JSON.parse(raw)
+      if (!Array.isArray(parsed)) return []
+      return parsed.filter((item): item is string => typeof item === 'string')
     } catch {
       return []
     }
   }
 
-  function markLiked(slug: string) {
-    if (import.meta.server) return
+  function markLiked(slug: string): void {
+    if (import.meta.server === true) return
     try {
       const slugs = getLikedSlugs()
       if (!slugs.includes(slug)) {
@@ -63,7 +78,7 @@ export function useLikes(articleSlug: string) {
    * Ensure the `likes/<slug>` document exists.
    * If it doesn't — create with count = 0.
    */
-  async function ensureDocExists(db: Firestore, slug: string) {
+  async function ensureDocExists(db: Firestore, slug: string): Promise<void> {
     const ref = doc(db, 'likes', slug)
     const snap = await getDoc(ref)
     if (!snap.exists()) {
@@ -77,24 +92,23 @@ export function useLikes(articleSlug: string) {
   /**
    * Subscribe to real-time updates for the likes document.
    */
-  function subscribeToLikes(db: Firestore, slug: string) {
+  function subscribeToLikes(db: Firestore, slug: string): void {
     const ref = doc(db, 'likes', slug)
-    unsubscribe = onSnapshot(ref, (snapshot: any) => {
-      if (snapshot.exists()) {
-        firestoreLikes.value = (snapshot.data().count as number) ?? 0
-      } else {
-        firestoreLikes.value = 0
-      }
+    unsubscribe = onSnapshot(ref, (snapshot) => {
+      const data = snapshot.data()
+      const rawCount: unknown = data?.count
+      const count = typeof rawCount === 'number' ? rawCount : 0
+      firestoreLikes.value = count
       isLoading.value = false
       // Push into global store so sorting by likes works in real-time
-      updateLikes(slug, firestoreLikes.value)
+      updateLikes(slug, count)
     })
   }
 
   /**
    * Increment the like count by 1 (atomic operation).
    */
-  async function incrementLike(db: Firestore, slug: string) {
+  async function incrementLike(db: Firestore, slug: string): Promise<void> {
     const ref = doc(db, 'likes', slug)
     await updateDoc(ref, {
       count: increment(1),
@@ -108,8 +122,8 @@ export function useLikes(articleSlug: string) {
    * Initialize the subscription and check whether the user has already liked the article.
    * Should be called in onMounted (client-side only).
    */
-  async function initLikes() {
-    if (import.meta.server) return
+  async function initLikes(): Promise<void> {
+    if (import.meta.server === true) return
 
     try {
       const { db } = useFirebase()
@@ -131,8 +145,8 @@ export function useLikes(articleSlug: string) {
   /**
    * Like the article. Does nothing if already liked.
    */
-  async function like() {
-    if (hasLiked.value || isSubmitting.value || import.meta.server) return
+  async function like(): Promise<void> {
+    if (hasLiked.value || isSubmitting.value || import.meta.server === true) return
 
     isSubmitting.value = true
     try {
@@ -150,8 +164,8 @@ export function useLikes(articleSlug: string) {
   /**
    * Unsubscribe from the snapshot listener (call in onUnmounted).
    */
-  function destroyLikes() {
-    if (unsubscribe) {
+  function destroyLikes(): void {
+    if (unsubscribe !== null) {
       unsubscribe()
       unsubscribe = null
     }

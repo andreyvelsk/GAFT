@@ -1,12 +1,25 @@
 <template>
-  <article v-if="doc" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <article
+    v-if="doc"
+    class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+  >
     <!-- Back link -->
     <NuxtLink
       to="/"
       class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors mb-8 group"
     >
-      <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      <svg
+        class="w-4 h-4 transition-transform group-hover:-translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
       </svg>
       Back
     </NuxtLink>
@@ -32,8 +45,13 @@
       </ContentRenderer>
     </div>
   </article>
-  <div v-else class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-    <p class="text-gray-500">Page not found</p>
+  <div
+    v-else
+    class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center"
+  >
+    <p class="text-gray-500">
+      Page not found
+    </p>
   </div>
 </template>
 

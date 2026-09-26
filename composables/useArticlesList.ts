@@ -5,7 +5,17 @@ import type { Article, SortField, SortOrder } from '~/composables/useArticles'
  * Search query and sort settings are kept in useState so they survive
  * navigation between '/' and '/page/N'.
  */
-export async function useArticlesList(pageNumber: Ref<number>) {
+export interface UseArticlesListReturn {
+  searchQuery: Ref<string>
+  sortField: Ref<SortField>
+  sortOrder: Ref<SortOrder>
+  articles: Ref<Article[]>
+  totalPages: Ref<number>
+  totalCount: Ref<number>
+  navigateToPage: (page: number) => void
+}
+
+export async function useArticlesList(pageNumber: Ref<number>): Promise<UseArticlesListReturn> {
   const router = useRouter()
 
   // Shared state — survives navigation between pages
@@ -27,11 +37,11 @@ export async function useArticlesList(pageNumber: Ref<number>) {
 
   // Populate the global store so useLikes can update likes in-place
   if (allArticles.value) {
-    setArticles(allArticles.value as Article[])
+    setArticles(allArticles.value)
   }
 
-  function applyFilterAndPaginate() {
-    const raw = (storeArticles.value.length ? storeArticles.value : allArticles.value ?? []) as Article[]
+  function applyFilterAndPaginate(): void {
+    const raw = storeArticles.value.length > 0 ? storeArticles.value : (allArticles.value ?? [])
     const sorted = sortArticles(raw, sortField.value, sortOrder.value)
     const filtered = filterArticles(sorted, searchQuery.value)
     totalCount.value = filtered.length
@@ -39,14 +49,14 @@ export async function useArticlesList(pageNumber: Ref<number>) {
     articles.value = paginateArticles(filtered, pageNumber.value, ARTICLES_PER_PAGE)
   }
 
-  function navigateToPage(page: number) {
+  function navigateToPage(page: number): void {
     const path = page === 1 ? '/' : `/page/${page}`
     if (router.currentRoute.value.path !== path) {
-      router.push(path)
+      void router.push(path)
     } else {
       applyFilterAndPaginate()
     }
-    if (import.meta.client) {
+    if (import.meta.client === true) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }

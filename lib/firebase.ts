@@ -18,12 +18,12 @@ export function useFirebase(): { app: FirebaseApp; db: Firestore } {
   const config = useRuntimeConfig()
 
   const firebaseConfig = {
-    apiKey: config.public.firebaseApiKey as string,
-    authDomain: config.public.firebaseAuthDomain as string,
-    projectId: config.public.firebaseProjectId as string,
-    storageBucket: config.public.firebaseStorageBucket as string,
-    messagingSenderId: config.public.firebaseMessagingSenderId as string,
-    appId: config.public.firebaseAppId as string
+    apiKey: config.public.firebaseApiKey,
+    authDomain: config.public.firebaseAuthDomain,
+    projectId: config.public.firebaseProjectId,
+    storageBucket: config.public.firebaseStorageBucket,
+    messagingSenderId: config.public.firebaseMessagingSenderId,
+    appId: config.public.firebaseAppId
   }
 
   app = initializeApp(firebaseConfig)
@@ -40,7 +40,7 @@ export function useFirebase(): { app: FirebaseApp; db: Firestore } {
  */
 export function useFirebaseAnalytics(): Analytics | null {
   // Analytics only works in the browser
-  if (import.meta.server) {
+  if (import.meta.server === true) {
     return null
   }
 
@@ -49,21 +49,16 @@ export function useFirebaseAnalytics(): Analytics | null {
   }
 
   const config = useRuntimeConfig()
-  const measurementId = config.public.firebaseMeasurementId as string
+  const measurementId = config.public.firebaseMeasurementId
 
   if (!measurementId) {
     console.warn('[Firebase Analytics] measurementId is not configured. Analytics disabled.')
     return null
   }
 
-  // Ensure Firebase app is initialized
-  if (!app) {
-    useFirebase()
-  }
-
-  // getAnalytics expects @firebase/app's FirebaseApp type;
-  // the module-level `app` is compatible at runtime despite the TS mismatch.
-  analytics = getAnalytics(app as unknown as import('@firebase/app').FirebaseApp)
+  // Ensure the Firebase app is initialized, then reuse it.
+  const firebaseApp = app ?? useFirebase().app
+  analytics = getAnalytics(firebaseApp)
 
   return analytics
 }

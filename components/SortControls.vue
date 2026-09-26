@@ -5,11 +5,11 @@
       <button
         v-for="option in sortOptions"
         :key="option.value"
-        @click="emit('update:modelValue', option.value)"
         class="px-3 py-1.5 text-sm rounded-md transition-all duration-200"
         :class="modelValue === option.value
           ? 'bg-blue-500/20 text-blue-400 shadow-sm'
           : 'text-gray-400 hover:text-gray-200 hover:bg-surface-100'"
+        @click="emit('update:modelValue', option.value)"
       >
         <span class="flex items-center gap-1.5">
           {{ option.label }}
@@ -19,9 +19,9 @@
 
     <!-- Order toggle -->
     <button
-      @click="emit('update:order', order === 'desc' ? 'asc' : 'desc')"
       class="p-2 rounded-lg bg-surface-200 border border-gray-700 text-gray-400 hover:text-gray-200 hover:border-gray-500 transition-all"
       :title="order === 'desc' ? 'Descending' : 'Ascending'"
+      @click="emit('update:order', order === 'desc' ? 'asc' : 'desc')"
     >
       <svg
         class="w-4 h-4 transition-transform duration-200"
@@ -30,7 +30,12 @@
         stroke="currentColor"
         viewBox="0 0 24 24"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        />
       </svg>
     </button>
   </div>
@@ -49,18 +54,9 @@ const emit = defineEmits<{
   'update:order': [value: SortOrder]
 }>()
 
-const sortOptions = [
-  {
-    value: 'date' as SortField,
-    label: 'Date'
-  },
-  {
-    value: 'title' as SortField,
-    label: 'A-Z'
-  },
-  {
-    value: 'likes' as SortField,
-    label: 'Popular'
-  }
+const sortOptions: { value: SortField; label: string }[] = [
+  { value: 'date', label: 'Date' },
+  { value: 'title', label: 'A-Z' },
+  { value: 'likes', label: 'Popular' }
 ]
 </script>

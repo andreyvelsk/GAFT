@@ -25,7 +25,10 @@ const isExternal = computed(() => {
     <slot />
   </a>
 
-  <NuxtLink v-else :to="href">
+  <NuxtLink
+    v-else
+    :to="href"
+  >
     <slot />
   </NuxtLink>
 </template>
