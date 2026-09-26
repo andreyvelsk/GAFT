@@ -254,6 +254,13 @@ function countOccurrences(haystack: string, needle: string): number {
   return haystack.split(needle).length - 1;
 }
 
+describe('UPDATE_SYSTEM_PROMPT', () => {
+  it('instructs the model to write for the end user', () => {
+    expect(UPDATE_SYSTEM_PROMPT).toContain('END USER');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('latest release');
+  });
+});
+
 describe('buildUpdatePrompt', () => {
   it('includes the current page, the post id and the latest release URL', () => {
     const prompt = buildUpdatePrompt(

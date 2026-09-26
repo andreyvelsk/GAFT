@@ -195,6 +195,13 @@ function countOccurrences(haystack: string, needle: string): number {
   return haystack.split(needle).length - 1;
 }
 
+describe('CREATE_SYSTEM_PROMPT', () => {
+  it('instructs the model to write for the end user', () => {
+    expect(CREATE_SYSTEM_PROMPT).toContain('END USER');
+    expect(CREATE_SYSTEM_PROMPT).toContain('latest release');
+  });
+});
+
 describe('buildCreatePrompt', () => {
   it('includes the post id, the repository and the latest release URL', () => {
     const prompt = buildCreatePrompt(makeEntry({ id: 'p1' }), makeContext());
