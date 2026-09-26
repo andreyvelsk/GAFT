@@ -44,11 +44,11 @@ export const PREVIEW_FILE_NAME = 'preview.webp';
 
 /** Fallback models per agent (used when the matching env var is empty). */
 export const DEFAULT_MODELS = {
-  filter: 'google/gemini-2.0-flash-001',
-  match: 'openai/gpt-4o-mini',
-  create: 'anthropic/claude-3.7-sonnet',
-  update: 'anthropic/claude-3.7-sonnet',
-  fallback: 'openai/gpt-4o-mini',
+  filter: '~deepseek/deepseek-v4-flash-latest',
+  match: '~deepseek/deepseek-v4-flash-latest',
+  create: '~deepseek/deepseek-v4-flash-latest',
+  update: '~deepseek/deepseek-v4-flash-latest',
+  fallback: '~deepseek/deepseek-v4-flash-latest',
 } as const;
 
 /** Default subreddit to scan. */
