@@ -2,7 +2,7 @@ import type { LanguageModel } from 'ai';
 import { z } from 'zod';
 
 import type { MediaPlanItem } from '../../../content/media';
-import type { PageInput } from '../../../content/template';
+import { pageSectionSchema, type PageInput } from '../../../content/template';
 import type {
   GitHubRepo,
   ReleaseInfo,
@@ -27,11 +27,11 @@ export const updatePatchSchema = z.object({
   /** New category, when it changes. */
   category: z.string().min(1).optional(),
 
-  /** New `Description` section body, when it changes. */
-  description_body: z.string().min(1).optional(),
-
-  /** New `Setup guide` section body, when it changes. */
-  setup_guide: z.string().min(1).optional(),
+  /**
+   * Full ordered list of `## <heading>` sections, when the page structure or
+   * any section changes. When present it replaces the whole section list.
+   */
+  sections: z.array(pageSectionSchema).optional(),
 
   /** New image URLs chosen from the post, when the media changes. */
   media: z.array(z.string()).optional(),

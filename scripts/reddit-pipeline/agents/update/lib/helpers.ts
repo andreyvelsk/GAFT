@@ -9,16 +9,19 @@ import {
 } from '../../../content/media';
 import {
   mediaItemSchema,
+  normalizeReleaseLinks,
   normalizeSectionBody,
+  parsePageBody,
   renderPage,
   type MediaItem,
   type PageInput,
+  type PageSection,
 } from '../../../content/template';
+import { MEDIA_LIMITS } from '../../../shared/lib/constants';
 import { formatPageDate } from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
-import { extractProjectUrl, extractSourceUrl } from '../../tools/content-search';
 import type { ContentPage } from '../../tools/content-read';
 import { getLatestRelease } from '../../tools/github-release';
 import { readRepositoryReadme } from '../../tools/github-readme';
@@ -44,6 +47,16 @@ const MAX_BODY_LENGTH = 4000;
 /** Schema validating the media array of an existing page. */
 const mediaArraySchema = z.array(mediaItemSchema);
 
+/** Frontmatter keys managed by the template; everything else is preserved. */
+const KNOWN_FRONTMATTER_KEYS = new Set([
+  'title',
+  'description',
+  'date',
+  'slug',
+  'category',
+  'media',
+]);
+
 /** System prompt describing the page-update task. */
 export const UPDATE_SYSTEM_PROMPT = [
   'You update an existing project page for a blog that lists projects built',
@@ -54,10 +67,12 @@ export const UPDATE_SYSTEM_PROMPT = [
   'facts — never invent features, versions, links or claims.',
   '',
   'Return a JSON object describing ONLY the fields that must change:',
-  '- "title", "description", "category", "description_body", "setup_guide" and',
-  '  "media" (an array of image URLs from the post).',
-  '- "description_body" and "setup_guide" must contain ONLY the section text:',
-  '  no "## …" heading, no "source:" line and no project link.',
+  '- "title", "description", "category" and "media" (an array of image URLs',
+  '  from the post).',
+  '- "sections": the FULL ordered array of {"heading", "body"} objects when the',
+  '  page structure or any section changes. Include ALL sections (not only the',
+  '  changed ones). Each "body" must contain ONLY the section text — no "## …"',
+  '  heading, no "source:" line and no project link.',
   '- Include a field only when it actually changes; omit unchanged fields.',
   '- Always include "reason": a short English sentence explaining the update.',
   '',
@@ -84,6 +99,27 @@ function readString(
 function readMedia(data: FrontmatterData): MediaItem[] {
   const parsed = mediaArraySchema.safeParse(data.media);
   return parsed.success ? parsed.data : [];
+}
+
+/** Collect the frontmatter keys that are not managed by the template. */
+function readExtraFrontmatter(
+  data: FrontmatterData,
+): Record<string, unknown> {
+  const extra: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (!KNOWN_FRONTMATTER_KEYS.has(key)) {
+      extra[key] = value;
+    }
+  }
+  return extra;
+}
+
+/** Whether two ordered section lists are identical. */
+function sameSections(
+  a: readonly PageSection[],
+  b: readonly PageSection[],
+): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
 }
 
 /** Return the next value, recording the field name when it actually changes. */
@@ -185,7 +221,8 @@ export async function gatherUpdateContext(
 
 /**
  * Apply a patch to an existing page. Only the fields present in the patch are
- * replaced; everything else is preserved from the current page. The returned
+ * replaced; everything else is preserved from the current page, including
+ * custom sections, unknown frontmatter keys and existing media. The returned
  * `changed` list contains the names of the fields that actually differ.
  */
 export function applyPatch(
@@ -197,6 +234,7 @@ export function applyPatch(
 ): AppliedPatch {
   const data = page.frontmatter;
   const changed: string[] = [];
+  const repoUrl = context.repo?.htmlUrl ?? null;
 
   const title = pickChanged(
     'title',
@@ -216,32 +254,35 @@ export function applyPatch(
     readString(data, 'category', ''),
     changed,
   );
-  const nextDescriptionBody =
-    patch.description_body === undefined
-      ? undefined
-      : normalizeSectionBody(patch.description_body, 'Description');
-  const descriptionBody = pickChanged(
-    'description_body',
-    nextDescriptionBody,
-    normalizeSectionBody(page.content, 'Description'),
-    changed,
-  );
-  const nextSetupGuide =
-    patch.setup_guide === undefined
-      ? undefined
-      : normalizeSectionBody(patch.setup_guide, 'Setup guide');
-  const setupGuide = pickChanged(
-    'setup_guide',
-    nextSetupGuide,
-    normalizeSectionBody(page.content, 'Setup guide'),
-    changed,
-  );
+
+  const currentBody = parsePageBody(page.content);
+  let sections = currentBody.sections;
+  if (patch.sections !== undefined) {
+    const nextSections: PageSection[] = patch.sections.map((section) => {
+      const heading = section.heading.trim();
+      return {
+        heading,
+        body: normalizeReleaseLinks(
+          normalizeSectionBody(section.body, heading),
+          repoUrl,
+        ),
+      };
+    });
+    if (!sameSections(currentBody.sections, nextSections)) {
+      changed.push('sections');
+    }
+    sections = nextSections;
+  }
 
   const currentMedia = readMedia(data);
   let mediaItems = currentMedia;
   let mediaPlan: MediaPlanItem[] = [];
   if (patch.media !== undefined) {
-    const urls = selectImages(entry.images, patch.media);
+    const urls = selectImages(
+      entry.images,
+      patch.media,
+      MEDIA_LIMITS.maxImagesHard,
+    );
     const nextItems: MediaItem[] = urls.map((_url, index) => ({
       type: 'image',
       url: `/content/${page.slug}/${mediaFileName(index + 1)}`,
@@ -257,10 +298,9 @@ export function applyPatch(
     }));
   }
 
-  const currentProjectUrl = extractProjectUrl(page.content);
-  const projectUrl = context.repo?.htmlUrl ?? currentProjectUrl;
-  const currentSourceUrl = extractSourceUrl(page.content);
-  const sourceUrl = currentSourceUrl !== '' ? currentSourceUrl : entry.permalink;
+  const projectUrl = context.repo?.htmlUrl ?? currentBody.projectUrl;
+  const sourceUrl =
+    currentBody.sourceUrl !== '' ? currentBody.sourceUrl : entry.permalink;
   const date = readString(data, 'date', formatPageDate(now));
 
   const pageInput: PageInput = {
@@ -274,10 +314,10 @@ export function applyPatch(
     },
     sections: {
       sourceUrl,
-      description: descriptionBody,
-      setupGuide,
+      sections,
       projectUrl,
     },
+    extraFrontmatter: readExtraFrontmatter(data),
   };
 
   return { page: pageInput, media: mediaPlan, changed };

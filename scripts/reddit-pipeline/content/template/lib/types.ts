@@ -10,6 +10,17 @@ export const mediaItemSchema = z.object({
 
 export type MediaItem = z.infer<typeof mediaItemSchema>;
 
+/** A single `## <heading>` section of a page body. */
+export const pageSectionSchema = z.object({
+  /** Section heading without the leading `## `. */
+  heading: z.string().min(1),
+
+  /** Section body in Markdown (may be empty). */
+  body: z.string(),
+});
+
+export type PageSection = z.infer<typeof pageSectionSchema>;
+
 /**
  * Validated frontmatter of a project page. Enforces the required fields and
  * the media limits (≤3 images, ≤1 video) before a page is written.
@@ -27,11 +38,11 @@ export const pageFrontmatterSchema = z
     const images = value.media.filter((item) => item.type === 'image').length;
     const videos = value.media.filter((item) => item.type === 'video').length;
 
-    if (images > MEDIA_LIMITS.maxImages) {
+    if (images > MEDIA_LIMITS.maxImagesHard) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['media'],
-        message: `too many images: ${images} (max ${MEDIA_LIMITS.maxImages})`,
+        message: `too many images: ${images} (max ${MEDIA_LIMITS.maxImagesHard})`,
       });
     }
     if (videos > MEDIA_LIMITS.maxVideos) {
@@ -47,21 +58,25 @@ export type PageFrontmatter = z.infer<typeof pageFrontmatterSchema>;
 
 /** Standard markdown sections of a generated project page. */
 export interface PageSections {
-  /** Permalink of the source Reddit post. */
+  /** Permalink of the source Reddit post (empty string omits the line). */
   sourceUrl: string;
 
-  /** Description section body. */
-  description: string;
+  /** Ordered `## <heading>` sections of the page body. */
+  sections: PageSection[];
 
-  /** Setup guide section body. */
-  setupGuide: string;
-
-  /** Canonical project URL (repository or store page). */
+  /** Canonical project URL (empty string omits the trailing link). */
   projectUrl: string;
 }
 
 /** Input accepted by {@link renderPage}. */
 export interface PageInput {
   frontmatter: PageFrontmatter;
+
   sections: PageSections;
+
+  /**
+   * Extra frontmatter keys preserved from an existing page (e.g. `tags`).
+   * They are written after the well-known keys.
+   */
+  extraFrontmatter?: Record<string, unknown>;
 }

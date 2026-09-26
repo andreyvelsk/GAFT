@@ -5,7 +5,6 @@ export {
   buildMediaPlan,
   createPage,
   gatherCreateContext,
-  normalizeReleaseLinks,
   resolveSlug,
 } from './lib/helpers';
 export { createDraftSchema } from './lib/types';

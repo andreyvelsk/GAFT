@@ -2,7 +2,7 @@ import type { LanguageModel } from 'ai';
 import { z } from 'zod';
 
 import type { MediaPlanItem } from '../../../content/media';
-import type { PageInput } from '../../../content/template';
+import { pageSectionSchema, type PageInput } from '../../../content/template';
 import type {
   GitHubRepo,
   ReleaseInfo,
@@ -33,11 +33,11 @@ export const createDraftSchema = z.object({
   /** Kebab-case slug derived from the project name. */
   slug: z.string().min(1),
 
-  /** Body of the `Description` section (Markdown). */
-  description_body: z.string().min(1),
-
-  /** Body of the `Setup guide` section (Markdown). */
-  setup_guide: z.string().min(1),
+  /**
+   * Ordered `## <heading>` sections of the page body. Standard headings are
+   * `Description` and `Setup guide`; extra sections are allowed.
+   */
+  sections: z.array(pageSectionSchema).min(1),
 
   /** Image URLs chosen from the post images (may be empty). */
   media: z.array(z.string()).default([]),

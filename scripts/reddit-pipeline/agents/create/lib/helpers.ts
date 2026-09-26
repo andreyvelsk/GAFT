@@ -2,12 +2,13 @@ import type { LanguageModel } from 'ai';
 
 import { mediaFileName, selectImages } from '../../../content/media';
 import {
+  normalizeReleaseLinks,
   normalizeSectionBody,
   renderPage,
   type MediaItem,
   type PageInput,
+  type PageSection,
 } from '../../../content/template';
-import type { GitHubRepo } from '../../../github/repo';
 import { formatPageDate, kebabCase } from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
@@ -45,11 +46,11 @@ export const CREATE_SYSTEM_PROMPT = [
   '- "description": one or two sentences for the page frontmatter.',
   '- "category": one lowercase word, e.g. "game", "app", "port", "emulator", "tool".',
   '- "slug": a kebab-case slug derived from the project name.',
-  '- "description_body": ONLY the text of the "Description" section (several',
-  '  paragraphs). Do NOT include the "## Description" heading, the "source:"',
-  '  line or the project link — they are added automatically.',
-  '- "setup_guide": ONLY the numbered steps of the "Setup guide" section. Do NOT',
-  '  include the "## Setup guide" heading or the project link.',
+  '- "sections": an ordered array of {"heading", "body"} objects. Use',
+  '  "Description" and "Setup guide" as the standard headings, and add extra',
+  '  sections (e.g. "Features", "Supported games", "Known issues") when the',
+  '  project needs them. Each "body" must contain ONLY the section text — no',
+  '  "## …" heading, no "source:" line and no project link.',
   '- "media": an array of image URLs chosen from the provided post images.',
   '',
   'Write in English only. When you mention a release or the repository release',
@@ -61,30 +62,6 @@ export const CREATE_SYSTEM_PROMPT = [
 /** Truncate a string to `max` characters, appending an ellipsis when cut. */
 function truncate(text: string, max: number): string {
   return text.length <= max ? text : `${text.slice(0, max - 1)}…`;
-}
-
-/** Escape a string so it can be embedded in a regular expression. */
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-/**
- * Rewrite every release link of the repository to its canonical
- * `.../releases/latest` form, so the page never points at a specific tag.
- */
-export function normalizeReleaseLinks(
-  text: string,
-  repo: GitHubRepo | null,
-): string {
-  if (repo === null) {
-    return text;
-  }
-  const base = `${repo.htmlUrl}/releases`;
-  const pattern = new RegExp(
-    `${escapeRegExp(base)}(?:/latest|/tag/[^\\s)\\]]+|/download/[^\\s)\\]]+)?`,
-    'g',
-  );
-  return text.replace(pattern, `${base}/latest`);
 }
 
 /** Build the user prompt for a post and its research context. */
@@ -178,10 +155,21 @@ export function buildCreatePageInput(
   args: BuildCreatePageInputArgs,
 ): PageInput {
   const { draft, entry, context, mediaUrls, slug, now } = args;
+  const repoUrl = context.repo?.htmlUrl ?? null;
   const media: MediaItem[] = mediaUrls.map((_url, index) => ({
     type: 'image',
     url: `/content/${slug}/${mediaFileName(index + 1)}`,
   }));
+  const sections: PageSection[] = draft.sections.map((section) => {
+    const heading = section.heading.trim();
+    return {
+      heading,
+      body: normalizeReleaseLinks(
+        normalizeSectionBody(section.body, heading),
+        repoUrl,
+      ),
+    };
+  });
   const projectUrl = context.repo?.htmlUrl ?? entry.external_url;
 
   return {
@@ -195,14 +183,7 @@ export function buildCreatePageInput(
     },
     sections: {
       sourceUrl: entry.permalink,
-      description: normalizeReleaseLinks(
-        normalizeSectionBody(draft.description_body, 'Description'),
-        context.repo,
-      ),
-      setupGuide: normalizeReleaseLinks(
-        normalizeSectionBody(draft.setup_guide, 'Setup guide'),
-        context.repo,
-      ),
+      sections,
       projectUrl,
     },
   };
@@ -233,8 +214,7 @@ export async function createPage(
     temperature: 0,
     schemaName: 'create_page',
     schemaDescription:
-      'Object with title, description, category, slug, description_body, ' +
-      'setup_guide and media',
+      'Object with title, description, category, slug, sections and media',
     agent: 'create',
     ...(options.generate !== undefined ? { generate: options.generate } : {}),
     ...(options.maxRepairAttempts !== undefined

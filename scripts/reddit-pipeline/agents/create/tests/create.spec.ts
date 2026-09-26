@@ -20,7 +20,6 @@ import {
   buildMediaPlan,
   createPage,
   gatherCreateContext,
-  normalizeReleaseLinks,
   resolveSlug,
   type CreateContext,
   type CreateDraft,
@@ -82,8 +81,16 @@ function makeDraft(overrides: Partial<CreateDraft> = {}): CreateDraft {
     description: 'Android map companion for emulated games.',
     category: 'app',
     slug: 'pixel-navigator',
-    description_body: 'Pixel Navigator shows maps on the second screen.',
-    setup_guide: '1. Download the APK from the latest release.',
+    sections: [
+      {
+        heading: 'Description',
+        body: 'Pixel Navigator shows maps on the second screen.',
+      },
+      {
+        heading: 'Setup guide',
+        body: '1. Download the APK from the latest release.',
+      },
+    ],
     media: [IMAGE_A],
     ...overrides,
   };
@@ -233,36 +240,6 @@ describe('resolveSlug', () => {
   });
 });
 
-describe('normalizeReleaseLinks', () => {
-  it('rewrites a tag URL to the latest release URL', () => {
-    const text = `Download from ${REPO_URL}/releases/tag/v1.2.0 now.`;
-
-    expect(normalizeReleaseLinks(text, makeContext().repo)).toBe(
-      `Download from ${REPO_URL}/releases/latest now.`,
-    );
-  });
-
-  it('rewrites a bare releases URL to the latest release URL', () => {
-    const text = `See ${REPO_URL}/releases for builds.`;
-
-    expect(normalizeReleaseLinks(text, makeContext().repo)).toBe(
-      `See ${REPO_URL}/releases/latest for builds.`,
-    );
-  });
-
-  it('keeps an existing latest release URL unchanged', () => {
-    const text = `See ${REPO_URL}/releases/latest.`;
-
-    expect(normalizeReleaseLinks(text, makeContext().repo)).toBe(text);
-  });
-
-  it('leaves the text unchanged when there is no repository', () => {
-    const text = `See ${REPO_URL}/releases/tag/v1.2.0.`;
-
-    expect(normalizeReleaseLinks(text, null)).toBe(text);
-  });
-});
-
 describe('buildMediaPlan', () => {
   it('names the first image preview.webp and the rest screenshot-N.webp', () => {
     expect(buildMediaPlan([IMAGE_A, IMAGE_B, IMAGE_C])).toEqual([
@@ -303,6 +280,39 @@ describe('buildCreatePageInput', () => {
       'https://www.reddit.com/r/AynThor/comments/abc123/',
     );
     expect(page.sections.projectUrl).toBe(REPO_URL);
+    expect(page.sections.sections).toEqual([
+      {
+        heading: 'Description',
+        body: 'Pixel Navigator shows maps on the second screen.',
+      },
+      {
+        heading: 'Setup guide',
+        body: '1. Download the APK from the latest release.',
+      },
+    ]);
+  });
+
+  it('keeps extra sections in order', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft({
+        sections: [
+          { heading: 'Description', body: 'D.' },
+          { heading: 'Supported games', body: '- Game one' },
+          { heading: 'Setup guide', body: 'S.' },
+        ],
+      }),
+      entry: makeEntry(),
+      context: makeContext(),
+      mediaUrls: [],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.sections.sections.map((section) => section.heading)).toEqual([
+      'Description',
+      'Supported games',
+      'Setup guide',
+    ]);
   });
 
   it('falls back to the external URL when there is no repository', () => {
@@ -321,7 +331,12 @@ describe('buildCreatePageInput', () => {
   it('normalizes release links inside the generated sections', () => {
     const page = buildCreatePageInput({
       draft: makeDraft({
-        setup_guide: `1. Download from ${REPO_URL}/releases/tag/v1.2.0.`,
+        sections: [
+          {
+            heading: 'Setup guide',
+            body: `1. Download from ${REPO_URL}/releases/tag/v1.2.0.`,
+          },
+        ],
       }),
       entry: makeEntry(),
       context: makeContext(),
@@ -330,8 +345,10 @@ describe('buildCreatePageInput', () => {
       now: new Date('2026-09-26T10:16:00Z'),
     });
 
-    expect(page.sections.setupGuide).toContain(`${REPO_URL}/releases/latest`);
-    expect(page.sections.setupGuide).not.toContain('/releases/tag/');
+    expect(page.sections.sections[0]?.body).toContain(
+      `${REPO_URL}/releases/latest`,
+    );
+    expect(page.sections.sections[0]?.body).not.toContain('/releases/tag/');
   });
 });
 
@@ -409,7 +426,12 @@ describe('createPage', () => {
       `See the project page: [github.com](${REPO_URL})`,
     ].join('\n');
     const { generate } = staticGenerator(
-      makeDraft({ description_body: full, setup_guide: full }),
+      makeDraft({
+        sections: [
+          { heading: 'Description', body: full },
+          { heading: 'Setup guide', body: full },
+        ],
+      }),
     );
 
     const result = await createPage(makeEntry(), {
@@ -422,8 +444,10 @@ describe('createPage', () => {
     expect(countOccurrences(result.markdown, '## Setup guide')).toBe(1);
     expect(countOccurrences(result.markdown, 'source: [reddit.com]')).toBe(1);
     expect(countOccurrences(result.markdown, 'See the project page:')).toBe(1);
-    expect(result.page.sections.description).toBe('The description.');
-    expect(result.page.sections.setupGuide).toBe('1. Install it.');
+    expect(result.page.sections.sections).toEqual([
+      { heading: 'Description', body: 'The description.' },
+      { heading: 'Setup guide', body: '1. Install it.' },
+    ]);
   });
 
   it('keeps only the requested images that exist in the post', async () => {
@@ -520,6 +544,7 @@ describe.skipIf(!runIntegration || !hasApiKey)('create integration', () => {
       expect(result.slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
       expect(result.draft.title.length).toBeGreaterThan(0);
       expect(result.draft.description.length).toBeGreaterThan(0);
+      expect(result.draft.sections.length).toBeGreaterThan(0);
       expect(result.markdown).toContain('## Description');
       expect(result.markdown).toContain('## Setup guide');
       expect(result.markdown).not.toContain('/releases/tag/');

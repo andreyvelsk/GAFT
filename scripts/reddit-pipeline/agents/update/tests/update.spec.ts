@@ -32,6 +32,67 @@ const REPO_URL = 'https://github.com/ChimeraGaming/PixelNavigator';
 const IMAGE_A = 'https://i.redd.it/a.jpg';
 const IMAGE_B = 'https://i.redd.it/b.jpg';
 
+/** Raw markdown of the standard test page. */
+const STANDARD_RAW = [
+  '---',
+  'title: "Pixel Navigator"',
+  'description: "Android map companion"',
+  'date: "2026-09-01 10:00"',
+  'slug: "pixel-navigator"',
+  'category: "app"',
+  'media:',
+  '  - type: "image"',
+  '    url: "/content/pixel-navigator/preview.webp"',
+  '---',
+  '',
+  'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc123/)',
+  '',
+  '## Description',
+  '',
+  'Old description.',
+  '',
+  '## Setup guide',
+  '',
+  '1. Old step.',
+  '',
+  `See the project page: [github.com](${REPO_URL})`,
+].join('\n');
+
+/** Raw markdown of a page with a custom section, tags and two images. */
+const RICH_RAW = [
+  '---',
+  'title: "Eden DS"',
+  'description: "An emulator fork"',
+  'date: "2026-08-29 12:59"',
+  'slug: "eden-ds"',
+  'category: "emulation"',
+  'tags:',
+  '  - "emulator"',
+  '  - "zelda"',
+  'media:',
+  '  - type: "image"',
+  '    url: "/content/eden-ds/preview.webp"',
+  '  - type: "image"',
+  '    url: "/content/eden-ds/screenshot-2.webp"',
+  '---',
+  '',
+  'source: [reddit](https://www.reddit.com/r/AynThor/comments/1vya2n0/x/)',
+  '',
+  '## Description',
+  '',
+  'Eden DS description.',
+  '',
+  '## Supported games',
+  '',
+  '- Zelda: Breath of the Wild',
+  '',
+  '## Setup guide',
+  '',
+  '1. Install it.',
+  '',
+  'See the project page: [github.com](https://github.com/JoeCorrell/Eden-DS)',
+].join('\n');
+
 /** Build a report entry from a base payload plus overrides. */
 function makeEntry(overrides: Partial<ReportEntry> = {}): ReportEntry {
   return {
@@ -72,41 +133,26 @@ function makeContext(overrides: Partial<UpdateContext> = {}): UpdateContext {
   };
 }
 
-/** Build a valid existing page with sensible defaults plus overrides. */
-function makePage(overrides: Partial<ContentPage> = {}): ContentPage {
-  const raw = [
-    '---',
-    'title: "Pixel Navigator"',
-    'description: "Android map companion"',
-    'date: "2026-09-01 10:00"',
-    'slug: "pixel-navigator"',
-    'category: "app"',
-    'media:',
-    '  - type: "image"',
-    '    url: "/content/pixel-navigator/preview.webp"',
-    '---',
-    '',
-    'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc123/)',
-    '',
-    '## Description',
-    '',
-    'Old description.',
-    '',
-    '## Setup guide',
-    '',
-    '1. Old step.',
-    '',
-    `See the project page: [github.com](${REPO_URL})`,
-  ].join('\n');
+/** Parse a raw markdown document into a content page. */
+function pageFromRaw(raw: string, slug = 'pixel-navigator'): ContentPage {
   const { data, content } = parseFrontmatter(raw);
   return {
-    slug: 'pixel-navigator',
-    path: '/content/pixel-navigator/index.md',
+    slug,
+    path: `/content/${slug}/index.md`,
     frontmatter: data,
     content,
     raw,
-    ...overrides,
   };
+}
+
+/** Build the standard test page. */
+function makePage(): ContentPage {
+  return pageFromRaw(STANDARD_RAW);
+}
+
+/** Build a page with a custom section, tags and two images. */
+function makeRichPage(): ContentPage {
+  return pageFromRaw(RICH_RAW, 'eden-ds');
 }
 
 /** Build a real (but never-called) language model for the injected generator. */
@@ -236,9 +282,12 @@ describe('buildUpdatePrompt', () => {
 });
 
 describe('applyPatch', () => {
-  it('changes only the provided field and records it', () => {
+  it('changes only the provided sections and records them', () => {
     const patch: UpdatePatch = {
-      description_body: 'New description.',
+      sections: [
+        { heading: 'Description', body: 'New description.' },
+        { heading: 'Setup guide', body: '1. Old step.' },
+      ],
       reason: 'new release',
     };
 
@@ -250,13 +299,16 @@ describe('applyPatch', () => {
       new Date('2026-09-26T10:16:00Z'),
     );
 
-    expect(applied.changed).toEqual(['description_body']);
-    expect(applied.page.sections.description).toBe('New description.');
+    expect(applied.changed).toEqual(['sections']);
+    expect(applied.page.sections.sections[0]?.body).toBe('New description.');
   });
 
   it('preserves the fields that are not in the patch', () => {
     const patch: UpdatePatch = {
-      description_body: 'New description.',
+      sections: [
+        { heading: 'Description', body: 'New description.' },
+        { heading: 'Setup guide', body: '1. Old step.' },
+      ],
       reason: 'new release',
     };
 
@@ -271,7 +323,6 @@ describe('applyPatch', () => {
     expect(applied.page.frontmatter.title).toBe('Pixel Navigator');
     expect(applied.page.frontmatter.category).toBe('app');
     expect(applied.page.frontmatter.date).toBe('2026-09-01 10:00');
-    expect(applied.page.sections.setupGuide).toBe('1. Old step.');
     expect(applied.page.sections.projectUrl).toBe(REPO_URL);
     expect(applied.page.sections.sourceUrl).toBe(
       'https://www.reddit.com/r/AynThor/comments/abc123/',
@@ -279,10 +330,7 @@ describe('applyPatch', () => {
   });
 
   it('does not record a field whose value is unchanged', () => {
-    const patch: UpdatePatch = {
-      title: 'Pixel Navigator',
-      reason: 'no-op',
-    };
+    const patch: UpdatePatch = { title: 'Pixel Navigator', reason: 'no-op' };
 
     const applied = applyPatch(
       makePage(),
@@ -293,6 +341,47 @@ describe('applyPatch', () => {
     );
 
     expect(applied.changed).toEqual([]);
+  });
+
+  it('preserves custom sections when the patch omits them', () => {
+    const applied = applyPatch(
+      makeRichPage(),
+      { reason: 'no-op' },
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.sections.sections.map((section) => section.heading)).toEqual(
+      ['Description', 'Supported games', 'Setup guide'],
+    );
+  });
+
+  it('preserves unknown frontmatter keys', () => {
+    const applied = applyPatch(
+      makeRichPage(),
+      { reason: 'no-op' },
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.extraFrontmatter).toEqual({
+      tags: ['emulator', 'zelda'],
+    });
+  });
+
+  it('preserves the existing media when the patch omits it', () => {
+    const applied = applyPatch(
+      makeRichPage(),
+      { reason: 'no-op' },
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.media).toEqual([]);
+    expect(applied.page.frontmatter.media).toHaveLength(2);
   });
 
   it('replaces the media when the patch provides new images', () => {
@@ -313,25 +402,23 @@ describe('applyPatch', () => {
     ]);
   });
 
-  it('keeps the existing media when the patch omits it', () => {
-    const patch: UpdatePatch = { title: 'Pixel Navigator 2', reason: 'rename' };
-
-    const applied = applyPatch(
-      makePage(),
-      patch,
-      makeEntry(),
-      makeContext(),
-      new Date('2026-09-26T10:16:00Z'),
-    );
-
-    expect(applied.media).toEqual([]);
-    expect(applied.page.frontmatter.media).toEqual([
-      { type: 'image', url: '/content/pixel-navigator/preview.webp' },
-    ]);
-  });
-
   it('falls back to the post permalink when the page has no source link', () => {
-    const page = makePage({ content: '## Description\n\nBody.' });
+    const page = pageFromRaw(
+      [
+        '---',
+        'title: "X"',
+        'description: "D"',
+        'date: "2026-09-01 10:00"',
+        'slug: "x"',
+        'category: "app"',
+        '---',
+        '',
+        '## Description',
+        '',
+        'Body.',
+      ].join('\n'),
+      'x',
+    );
 
     const applied = applyPatch(
       page,
@@ -390,7 +477,10 @@ describe('gatherUpdateContext', () => {
 describe('updatePage', () => {
   it('applies the patch and renders the updated page', async () => {
     const { generate } = staticGenerator({
-      description_body: 'New description.',
+      sections: [
+        { heading: 'Description', body: 'New description.' },
+        { heading: 'Setup guide', body: '1. Old step.' },
+      ],
       reason: 'new release',
     });
 
@@ -401,7 +491,7 @@ describe('updatePage', () => {
     });
 
     expect(result.slug).toBe('pixel-navigator');
-    expect(result.changed).toEqual(['description_body']);
+    expect(result.changed).toEqual(['sections']);
     expect(result.markdown).toContain('New description.');
     expect(result.markdown).toContain('## Setup guide');
     expect(result.markdown).toContain('1. Old step.');
@@ -422,8 +512,10 @@ describe('updatePage', () => {
       `See the project page: [github.com](${REPO_URL})`,
     ].join('\n');
     const { generate } = staticGenerator({
-      description_body: full,
-      setup_guide: full,
+      sections: [
+        { heading: 'Description', body: full },
+        { heading: 'Setup guide', body: full },
+      ],
       reason: 'echo',
     });
 
@@ -437,8 +529,10 @@ describe('updatePage', () => {
     expect(countOccurrences(result.markdown, '## Setup guide')).toBe(1);
     expect(countOccurrences(result.markdown, 'source: [reddit.com]')).toBe(1);
     expect(countOccurrences(result.markdown, 'See the project page:')).toBe(1);
-    expect(result.page.sections.description).toBe('New description.');
-    expect(result.page.sections.setupGuide).toBe('1. New step.');
+    expect(result.page.sections.sections).toEqual([
+      { heading: 'Description', body: 'New description.' },
+      { heading: 'Setup guide', body: '1. New step.' },
+    ]);
   });
 
   it('sends temperature 0, the update system prompt and a schema name', async () => {
@@ -460,7 +554,15 @@ describe('updatePage', () => {
       Promise.resolve(
         index === 0
           ? { object: { not: 'a patch' } }
-          : { object: { description_body: 'New description.', reason: 'r' } },
+          : {
+              object: {
+                sections: [
+                  { heading: 'Description', body: 'New description.' },
+                  { heading: 'Setup guide', body: '1. Old step.' },
+                ],
+                reason: 'r',
+              },
+            },
       ),
     );
 
@@ -470,7 +572,7 @@ describe('updatePage', () => {
       context: makeContext(),
     });
 
-    expect(result.changed).toEqual(['description_body']);
+    expect(result.changed).toEqual(['sections']);
     expect(calls).toHaveLength(2);
     expect(calls[1]?.prompt).toContain(REPAIR_INSTRUCTION);
   });

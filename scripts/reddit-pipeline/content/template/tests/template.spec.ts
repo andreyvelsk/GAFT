@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  buildPageBody,
+  normalizeReleaseLinks,
   normalizeSectionBody,
+  parsePageBody,
   renderPage,
   validateFrontmatter,
 } from '../index';
@@ -21,6 +24,14 @@ function makeFrontmatter(
   overrides: Record<string, unknown> = {},
 ): Record<string, unknown> {
   return { ...validFrontmatter, ...overrides };
+}
+
+/** Build `count` image media items. */
+function images(count: number): { type: string; url: string }[] {
+  return Array.from({ length: count }, (_, index) => ({
+    type: 'image',
+    url: `/content/test-app/screenshot-${index}.webp`,
+  }));
 }
 
 describe('validateFrontmatter', () => {
@@ -45,13 +56,16 @@ describe('validateFrontmatter', () => {
     ).toThrow();
   });
 
-  it('rejects more than three images', () => {
-    const media = Array.from({ length: 4 }, (_, index) => ({
-      type: 'image',
-      url: `/content/test-app/screenshot-${index}.webp`,
-    }));
+  it('accepts up to the hard image limit', () => {
+    const parsed = validateFrontmatter(makeFrontmatter({ media: images(6) }));
 
-    expect(() => validateFrontmatter(makeFrontmatter({ media }))).toThrow();
+    expect(parsed.media).toHaveLength(6);
+  });
+
+  it('rejects more than the hard image limit', () => {
+    expect(() =>
+      validateFrontmatter(makeFrontmatter({ media: images(7) })),
+    ).toThrow();
   });
 
   it('rejects more than one video', () => {
@@ -61,6 +75,93 @@ describe('validateFrontmatter', () => {
     ];
 
     expect(() => validateFrontmatter(makeFrontmatter({ media }))).toThrow();
+  });
+});
+
+describe('buildPageBody', () => {
+  it('renders the source line, sections and project link', () => {
+    const body = buildPageBody({
+      sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
+      sections: [
+        { heading: 'Description', body: 'A test app.' },
+        { heading: 'Setup guide', body: '1. Install it.' },
+      ],
+      projectUrl: 'https://github.com/user/repo',
+    });
+
+    expect(body).toContain(
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc/)',
+    );
+    expect(body).toContain('## Description\n\nA test app.');
+    expect(body).toContain('## Setup guide\n\n1. Install it.');
+    expect(body).toContain(
+      'See the project page: [github.com](https://github.com/user/repo)',
+    );
+  });
+
+  it('omits the source line and project link when empty', () => {
+    const body = buildPageBody({
+      sourceUrl: '',
+      sections: [{ heading: 'Description', body: 'A test app.' }],
+      projectUrl: '',
+    });
+
+    expect(body).not.toContain('source:');
+    expect(body).not.toContain('See the project page:');
+    expect(body).toBe('## Description\n\nA test app.');
+  });
+});
+
+describe('parsePageBody', () => {
+  it('parses the source URL, sections and project URL', () => {
+    const body = [
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc/)',
+      '',
+      '## Description',
+      '',
+      'A test app.',
+      '',
+      '## Supported games',
+      '',
+      '- Game one',
+      '',
+      '## Setup guide',
+      '',
+      '1. Install it.',
+      '',
+      'See the project page: [github.com](https://github.com/user/repo)',
+    ].join('\n');
+
+    expect(parsePageBody(body)).toEqual({
+      sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
+      sections: [
+        { heading: 'Description', body: 'A test app.' },
+        { heading: 'Supported games', body: '- Game one' },
+        { heading: 'Setup guide', body: '1. Install it.' },
+      ],
+      projectUrl: 'https://github.com/user/repo',
+    });
+  });
+
+  it('round-trips through buildPageBody', () => {
+    const sections = {
+      sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
+      sections: [
+        { heading: 'Description', body: 'A test app.' },
+        { heading: 'Setup guide', body: '1. Install it.' },
+      ],
+      projectUrl: 'https://github.com/user/repo',
+    };
+
+    expect(parsePageBody(buildPageBody(sections))).toEqual(sections);
+  });
+
+  it('handles a body without a source line or project link', () => {
+    expect(parsePageBody('## Description\n\nA test app.')).toEqual({
+      sourceUrl: '',
+      sections: [{ heading: 'Description', body: 'A test app.' }],
+      projectUrl: '',
+    });
   });
 });
 
@@ -102,14 +203,44 @@ describe('normalizeSectionBody', () => {
   });
 });
 
+describe('normalizeReleaseLinks', () => {
+  const repoUrl = 'https://github.com/user/repo';
+
+  it('rewrites a tag URL to the latest release URL', () => {
+    expect(
+      normalizeReleaseLinks(`See ${repoUrl}/releases/tag/v1.2.0 now.`, repoUrl),
+    ).toBe(`See ${repoUrl}/releases/latest now.`);
+  });
+
+  it('rewrites a bare releases URL to the latest release URL', () => {
+    expect(normalizeReleaseLinks(`See ${repoUrl}/releases.`, repoUrl)).toBe(
+      `See ${repoUrl}/releases/latest.`,
+    );
+  });
+
+  it('keeps an existing latest release URL unchanged', () => {
+    const text = `See ${repoUrl}/releases/latest.`;
+
+    expect(normalizeReleaseLinks(text, repoUrl)).toBe(text);
+  });
+
+  it('leaves the text unchanged when there is no repository', () => {
+    const text = `See ${repoUrl}/releases/tag/v1.2.0.`;
+
+    expect(normalizeReleaseLinks(text, null)).toBe(text);
+  });
+});
+
 describe('renderPage', () => {
   it('renders a complete index.md document', () => {
     const output = renderPage({
       frontmatter: validateFrontmatter(validFrontmatter),
       sections: {
         sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
-        description: 'A test app.',
-        setupGuide: '1. Install it.',
+        sections: [
+          { heading: 'Description', body: 'A test app.' },
+          { heading: 'Setup guide', body: '1. Install it.' },
+        ],
         projectUrl: 'https://github.com/user/repo',
       },
     });
@@ -120,5 +251,20 @@ describe('renderPage', () => {
     expect(output).toContain(
       'See the project page: [github.com](https://github.com/user/repo)',
     );
+  });
+
+  it('preserves extra frontmatter keys', () => {
+    const output = renderPage({
+      frontmatter: validateFrontmatter(validFrontmatter),
+      sections: {
+        sourceUrl: '',
+        sections: [{ heading: 'Description', body: 'A test app.' }],
+        projectUrl: '',
+      },
+      extraFrontmatter: { tags: ['a', 'b'] },
+    });
+
+    expect(output).toContain('tags:');
+    expect(output).toContain('- "a"');
   });
 });

@@ -39,7 +39,16 @@ export const REDDIT_USER_AGENT =
 
 /** Media limits enforced before writing a page. */
 export const MEDIA_LIMITS = {
+  /** Maximum number of images a newly generated page may use. */
   maxImages: 3,
+
+  /**
+   * Hard cap on images of an existing page. Higher than {@link maxImages} so
+   * that updating a page never drops images it already had.
+   */
+  maxImagesHard: 6,
+
+  /** Maximum number of videos a page may use. */
   maxVideos: 1,
 } as const;
 
