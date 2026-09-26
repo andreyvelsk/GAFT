@@ -455,6 +455,51 @@ describe('gatherCreateContext', () => {
 
     expect(context.repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
   });
+
+  it('strips trailing markdown from a GitHub link in the body', async () => {
+    const urls: string[] = [];
+    const fetchImpl: typeof fetch = (input) => {
+      const url = inputUrl(input);
+      urls.push(url);
+      if (url.endsWith('/readme')) {
+        return Promise.resolve(new Response('# Eden DS\n', { status: 200 }));
+      }
+      if (url.endsWith('/releases/latest')) {
+        return Promise.resolve(new Response('', { status: 404 }));
+      }
+      return Promise.resolve(
+        jsonResponse(
+          searchItem({
+            full_name: 'JoeCorrell/Eden-DS',
+            name: 'Eden-DS',
+            owner: { login: 'JoeCorrell' },
+          }),
+        ),
+      );
+    };
+
+    await gatherCreateContext(
+      makeEntry({
+        external_url: 'https://i.redd.it/a.jpg',
+        selftext: 'Repo: https://github.com/JoeCorrell/Eden-DS***',
+      }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(urls[0]).toContain('/repos/JoeCorrell/Eden-DS');
+    expect(urls[0]).not.toContain('***');
+  });
+
+  it('returns an empty context when the repository lookup fails', async () => {
+    const fetchImpl = staticFetch(textResponse('', 404));
+
+    const context = await gatherCreateContext(
+      makeEntry({ external_url: 'https://github.com/JoeCorrell/Eden-DS' }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(context).toEqual({ repo: null, readme: null, release: null });
+  });
 });
 
 describe('createPage', () => {

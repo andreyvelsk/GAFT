@@ -523,6 +523,17 @@ describe('gatherUpdateContext', () => {
 
     expect(context.repo?.fullName).toBe('ChimeraGaming/PixelNavigator');
   });
+
+  it('returns an empty context when the repository lookup fails', async () => {
+    const fetchImpl = staticFetch(textResponse('', 404));
+
+    const context = await gatherUpdateContext(
+      makeEntry({ external_url: 'https://github.com/JoeCorrell/Eden-DS' }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(context).toEqual({ repo: null, readme: null, release: null });
+  });
 });
 
 describe('updatePage', () => {

@@ -93,10 +93,13 @@ export function isProjectUrl(url: string): boolean {
   }
 }
 
+/** Trailing markdown/punctuation characters to strip from an extracted URL. */
+const TRAILING_MARKDOWN_RE = /[.,;:*_~`'"!?]+$/;
+
 /** First GitHub URL found in the given text, or `''`. */
 function firstGitHubUrl(text: string): string {
   const match = /https?:\/\/github\.com\/[^\s)\]]+/i.exec(text);
-  return match?.[0]?.replace(/[.,;:]+$/, '') ?? '';
+  return match?.[0]?.replace(TRAILING_MARKDOWN_RE, '') ?? '';
 }
 
 /**

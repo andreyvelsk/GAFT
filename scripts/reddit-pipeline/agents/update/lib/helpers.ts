@@ -216,13 +216,24 @@ export async function gatherUpdateContext(
 ): Promise<UpdateContext> {
   const repoOptions = options.repoOptions ?? {};
   const query = githubUrlFromEntry(entry) || entry.title;
-  const repo = await searchRepository(query, repoOptions);
-  if (repo === null) {
+  try {
+    const repo = await searchRepository(query, repoOptions);
+    if (repo === null) {
+      return { repo: null, readme: null, release: null };
+    }
+    const readme = await readRepositoryReadme(
+      repo.owner,
+      repo.repo,
+      repoOptions,
+    );
+    const release = await getLatestRelease(repo.owner, repo.repo, repoOptions);
+    return { repo, readme, release };
+  } catch (error) {
+    console.warn(
+      `repository research failed for "${query}": ${String(error)}`,
+    );
     return { repo: null, readme: null, release: null };
   }
-  const readme = await readRepositoryReadme(repo.owner, repo.repo, repoOptions);
-  const release = await getLatestRelease(repo.owner, repo.repo, repoOptions);
-  return { repo, readme, release };
 }
 
 /**
