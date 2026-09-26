@@ -9,6 +9,7 @@ import {
 } from '../../../content/media';
 import {
   mediaItemSchema,
+  normalizeSectionBody,
   renderPage,
   type MediaItem,
   type PageInput,
@@ -55,6 +56,8 @@ export const UPDATE_SYSTEM_PROMPT = [
   'Return a JSON object describing ONLY the fields that must change:',
   '- "title", "description", "category", "description_body", "setup_guide" and',
   '  "media" (an array of image URLs from the post).',
+  '- "description_body" and "setup_guide" must contain ONLY the section text:',
+  '  no "## …" heading, no "source:" line and no project link.',
   '- Include a field only when it actually changes; omit unchanged fields.',
   '- Always include "reason": a short English sentence explaining the update.',
   '',
@@ -81,19 +84,6 @@ function readString(
 function readMedia(data: FrontmatterData): MediaItem[] {
   const parsed = mediaArraySchema.safeParse(data.media);
   return parsed.success ? parsed.data : [];
-}
-
-/**
- * Extract the body of a `## <heading>` section from a markdown document.
- * The section ends at the next `##` heading, at the trailing project link
- * added by the page template, or at the end of the document.
- */
-function extractSection(content: string, heading: string): string {
-  const pattern = new RegExp(
-    `##\\s+${heading}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|\\nSee the project page:|$)`,
-  );
-  const match = pattern.exec(content);
-  return match?.[1]?.trim() ?? '';
 }
 
 /** Return the next value, recording the field name when it actually changes. */
@@ -226,16 +216,24 @@ export function applyPatch(
     readString(data, 'category', ''),
     changed,
   );
+  const nextDescriptionBody =
+    patch.description_body === undefined
+      ? undefined
+      : normalizeSectionBody(patch.description_body, 'Description');
   const descriptionBody = pickChanged(
     'description_body',
-    patch.description_body,
-    extractSection(page.content, 'Description'),
+    nextDescriptionBody,
+    normalizeSectionBody(page.content, 'Description'),
     changed,
   );
+  const nextSetupGuide =
+    patch.setup_guide === undefined
+      ? undefined
+      : normalizeSectionBody(patch.setup_guide, 'Setup guide');
   const setupGuide = pickChanged(
     'setup_guide',
-    patch.setup_guide,
-    extractSection(page.content, 'Setup guide'),
+    nextSetupGuide,
+    normalizeSectionBody(page.content, 'Setup guide'),
     changed,
   );
 

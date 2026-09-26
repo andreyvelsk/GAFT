@@ -2,6 +2,7 @@ import type { LanguageModel } from 'ai';
 
 import { mediaFileName, selectImages } from '../../../content/media';
 import {
+  normalizeSectionBody,
   renderPage,
   type MediaItem,
   type PageInput,
@@ -44,8 +45,11 @@ export const CREATE_SYSTEM_PROMPT = [
   '- "description": one or two sentences for the page frontmatter.',
   '- "category": one lowercase word, e.g. "game", "app", "port", "emulator", "tool".',
   '- "slug": a kebab-case slug derived from the project name.',
-  '- "description_body": the "Description" section in Markdown (several paragraphs).',
-  '- "setup_guide": the "Setup guide" section in Markdown (numbered steps).',
+  '- "description_body": ONLY the text of the "Description" section (several',
+  '  paragraphs). Do NOT include the "## Description" heading, the "source:"',
+  '  line or the project link — they are added automatically.',
+  '- "setup_guide": ONLY the numbered steps of the "Setup guide" section. Do NOT',
+  '  include the "## Setup guide" heading or the project link.',
   '- "media": an array of image URLs chosen from the provided post images.',
   '',
   'Write in English only. When you mention a release or the repository release',
@@ -192,11 +196,11 @@ export function buildCreatePageInput(
     sections: {
       sourceUrl: entry.permalink,
       description: normalizeReleaseLinks(
-        draft.description_body.trim(),
+        normalizeSectionBody(draft.description_body, 'Description'),
         context.repo,
       ),
       setupGuide: normalizeReleaseLinks(
-        draft.setup_guide.trim(),
+        normalizeSectionBody(draft.setup_guide, 'Setup guide'),
         context.repo,
       ),
       projectUrl,

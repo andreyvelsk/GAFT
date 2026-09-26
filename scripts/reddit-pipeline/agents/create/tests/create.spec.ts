@@ -183,6 +183,11 @@ async function loadEntry(url: string): Promise<ReportEntry> {
   return postToReport(post);
 }
 
+/** Count the non-overlapping occurrences of `needle` in `haystack`. */
+function countOccurrences(haystack: string, needle: string): number {
+  return haystack.split(needle).length - 1;
+}
+
 describe('buildCreatePrompt', () => {
   it('includes the post id, the repository and the latest release URL', () => {
     const prompt = buildCreatePrompt(makeEntry({ id: 'p1' }), makeContext());
@@ -387,6 +392,38 @@ describe('createPage', () => {
     expect(result.markdown).toContain('source: [reddit.com]');
     expect(result.markdown).toContain(`See the project page: [github.com](${REPO_URL})`);
     expect(result.media).toEqual([{ url: IMAGE_A, fileName: 'preview.webp' }]);
+  });
+
+  it('does not duplicate sections when the draft echoes the whole page', async () => {
+    const full = [
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc123/)',
+      '',
+      '## Description',
+      '',
+      'The description.',
+      '',
+      '## Setup guide',
+      '',
+      '1. Install it.',
+      '',
+      `See the project page: [github.com](${REPO_URL})`,
+    ].join('\n');
+    const { generate } = staticGenerator(
+      makeDraft({ description_body: full, setup_guide: full }),
+    );
+
+    const result = await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(countOccurrences(result.markdown, '## Description')).toBe(1);
+    expect(countOccurrences(result.markdown, '## Setup guide')).toBe(1);
+    expect(countOccurrences(result.markdown, 'source: [reddit.com]')).toBe(1);
+    expect(countOccurrences(result.markdown, 'See the project page:')).toBe(1);
+    expect(result.page.sections.description).toBe('The description.');
+    expect(result.page.sections.setupGuide).toBe('1. Install it.');
   });
 
   it('keeps only the requested images that exist in the post', async () => {

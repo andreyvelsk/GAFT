@@ -1,5 +1,6 @@
 export {
   buildPageBody,
+  normalizeSectionBody,
   renderPage,
   validateFrontmatter,
 } from './lib/helpers';

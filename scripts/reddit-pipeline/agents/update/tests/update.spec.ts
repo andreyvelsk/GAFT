@@ -203,6 +203,11 @@ async function loadEntry(url: string): Promise<ReportEntry> {
   return postToReport(post);
 }
 
+/** Count the non-overlapping occurrences of `needle` in `haystack`. */
+function countOccurrences(haystack: string, needle: string): number {
+  return haystack.split(needle).length - 1;
+}
+
 describe('buildUpdatePrompt', () => {
   it('includes the current page, the post id and the latest release URL', () => {
     const prompt = buildUpdatePrompt(
@@ -400,6 +405,40 @@ describe('updatePage', () => {
     expect(result.markdown).toContain('New description.');
     expect(result.markdown).toContain('## Setup guide');
     expect(result.markdown).toContain('1. Old step.');
+  });
+
+  it('does not duplicate sections when the patch echoes the whole page', async () => {
+    const full = [
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc123/)',
+      '',
+      '## Description',
+      '',
+      'New description.',
+      '',
+      '## Setup guide',
+      '',
+      '1. New step.',
+      '',
+      `See the project page: [github.com](${REPO_URL})`,
+    ].join('\n');
+    const { generate } = staticGenerator({
+      description_body: full,
+      setup_guide: full,
+      reason: 'echo',
+    });
+
+    const result = await updatePage(makePage(), makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(countOccurrences(result.markdown, '## Description')).toBe(1);
+    expect(countOccurrences(result.markdown, '## Setup guide')).toBe(1);
+    expect(countOccurrences(result.markdown, 'source: [reddit.com]')).toBe(1);
+    expect(countOccurrences(result.markdown, 'See the project page:')).toBe(1);
+    expect(result.page.sections.description).toBe('New description.');
+    expect(result.page.sections.setupGuide).toBe('1. New step.');
   });
 
   it('sends temperature 0, the update system prompt and a schema name', async () => {

@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { renderPage, validateFrontmatter } from '../index';
+import {
+  normalizeSectionBody,
+  renderPage,
+  validateFrontmatter,
+} from '../index';
 
 /** A valid frontmatter payload used as the base for the tests. */
 const validFrontmatter: Record<string, unknown> = {
@@ -57,6 +61,44 @@ describe('validateFrontmatter', () => {
     ];
 
     expect(() => validateFrontmatter(makeFrontmatter({ media }))).toThrow();
+  });
+});
+
+describe('normalizeSectionBody', () => {
+  it('keeps a plain section body unchanged', () => {
+    expect(normalizeSectionBody('Just the text.', 'Description')).toBe(
+      'Just the text.',
+    );
+  });
+
+  it('extracts the requested section from an echoed full page', () => {
+    const full = [
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc/)',
+      '',
+      '## Description',
+      '',
+      'The description.',
+      '',
+      '## Setup guide',
+      '',
+      '1. Install it.',
+      '',
+      'See the project page: [github.com](https://github.com/user/repo)',
+    ].join('\n');
+
+    expect(normalizeSectionBody(full, 'Description')).toBe('The description.');
+    expect(normalizeSectionBody(full, 'Setup guide')).toBe('1. Install it.');
+  });
+
+  it('strips the source line, headings and project link', () => {
+    const text = [
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc/)',
+      '## Description',
+      'The description.',
+      'See the project page: [github.com](https://github.com/user/repo)',
+    ].join('\n');
+
+    expect(normalizeSectionBody(text, 'Description')).toBe('The description.');
   });
 });
 
