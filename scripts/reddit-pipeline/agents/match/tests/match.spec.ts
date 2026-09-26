@@ -255,6 +255,20 @@ describe('findCandidates', () => {
     expect(candidates.map((item) => item.slug)).toEqual(['pixel-navigator']);
   });
 
+  it('finds a candidate mentioned only in the selftext', async () => {
+    const entry = makeEntry({
+      title: 'It’s amazing how every ROM can be so diverse…',
+      selftext:
+        'App: https://github.com/ChimeraGaming/PixelNavigator — Pixel Navigator is still in beta.',
+    });
+
+    const candidates = await findCandidates(entry, {
+      index: [PIXEL_NAVIGATOR],
+    });
+
+    expect(candidates.map((item) => item.slug)).toEqual(['pixel-navigator']);
+  });
+
   it('returns an empty list when nothing matches', async () => {
     const entry = makeEntry({ title: 'Brand New Thing' });
 

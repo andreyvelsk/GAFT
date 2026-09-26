@@ -142,8 +142,10 @@ function toSearchOptions(options: MatchOptions): ContentSearchOptions {
 }
 
 /**
- * Deterministically gather candidate pages for a post: by its title and, when
- * present, by its external (GitHub) URL. Results are de-duplicated by slug.
+ * Deterministically gather candidate pages for a post. The post is searched by
+ * its title, its body (`selftext`) and its external URL — the project name and
+ * the repository link often live in the body rather than the title. Results are
+ * de-duplicated by slug.
  */
 export async function findCandidates(
   entry: ReportEntry,
@@ -152,11 +154,12 @@ export async function findCandidates(
   const index = await loadContentIndex(toSearchOptions(options));
   const merged = new Map<string, ContentCandidate>();
 
-  for (const candidate of matchCandidates(entry.title, index)) {
-    merged.set(candidate.slug, candidate);
-  }
-  if (entry.external_url !== '') {
-    for (const candidate of matchCandidates(entry.external_url, index)) {
+  const queries = [entry.title, entry.selftext, entry.external_url];
+  for (const query of queries) {
+    if (query === '') {
+      continue;
+    }
+    for (const candidate of matchCandidates(query, index)) {
       merged.set(candidate.slug, candidate);
     }
   }
