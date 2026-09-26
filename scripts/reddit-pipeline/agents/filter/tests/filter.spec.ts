@@ -288,9 +288,17 @@ describe.skipIf(!runIntegration || !hasApiKey)('filter integration', () => {
 
       const result = await classifyBatch(entries);
 
+      // Structure: exactly one verdict per input post, in the input order.
       expect(result).toHaveLength(3);
       expect(result.map((verdict) => verdict.id)).toEqual(['int1', 'int2', 'int3']);
-      expect(typeof result[0]?.relevant).toBe('boolean');
+
+      // Semantics: the model must actually classify the posts, not just echo ids.
+      const relevantById = new Map(
+        result.map((verdict) => [verdict.id, verdict.relevant]),
+      );
+      expect(relevantById.get('int1')).toBe(false); // question, no project
+      expect(relevantById.get('int2')).toBe(true); // released project + repo link
+      expect(relevantById.get('int3')).toBe(false); // shipping update
     },
     60000,
   );
