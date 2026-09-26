@@ -3,7 +3,9 @@ export {
   githubRequest,
   githubText,
   isRetryable,
+  resetMissingTokenWarning,
   resolveRetrySettings,
+  warnIfMissingToken,
   withRetry,
 } from './lib/helpers';
 export {

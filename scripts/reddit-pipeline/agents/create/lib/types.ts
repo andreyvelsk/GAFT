@@ -2,7 +2,12 @@ import type { LanguageModel } from 'ai';
 import { z } from 'zod';
 
 import type { MediaPlanItem } from '../../../content/media';
-import { pageSectionSchema, type PageInput } from '../../../content/template';
+import {
+  pageCategorySchema,
+  pageSectionsSchema,
+  type PageInput,
+} from '../../../content/template';
+import type { ContentCandidate } from '../../tools/content-search';
 import type {
   GitHubRepo,
   ReleaseInfo,
@@ -27,8 +32,8 @@ export const createDraftSchema = z.object({
   /** One or two sentences for the page frontmatter. */
   description: z.string().min(1),
 
-  /** Single lowercase category word (e.g. `game`, `app`, `port`). */
-  category: z.string().min(1),
+  /** Category from the controlled vocabulary (e.g. `game`, `app`, `port`). */
+  category: pageCategorySchema,
 
   /** Kebab-case slug derived from the project name. */
   slug: z.string().min(1),
@@ -40,10 +45,10 @@ export const createDraftSchema = z.object({
   project_url: z.string().optional(),
 
   /**
-   * Ordered `## <heading>` sections of the page body. Standard headings are
-   * `Description` and `Setup guide`; extra sections are allowed.
+   * Ordered `## <heading>` sections of the page body. `Description` and
+   * `Setup guide` are required; at most {@link MAX_PAGE_SECTIONS} are allowed.
    */
-  sections: z.array(pageSectionSchema).min(1),
+  sections: pageSectionsSchema,
 
   /** Image URLs chosen from the post images (may be empty). */
   media: z.array(z.string()).default([]),
@@ -108,6 +113,12 @@ export interface CreateOptions {
 
   /** Timestamp used for the page date (defaults to now). */
   now?: Date;
+
+  /** Pre-loaded content index used to reconcile the slug (used by tests). */
+  contentIndex?: readonly ContentCandidate[];
+
+  /** Content directory override used to reconcile the slug. */
+  contentDir?: string;
 }
 
 /** Input accepted by {@link buildCreatePageInput}. */

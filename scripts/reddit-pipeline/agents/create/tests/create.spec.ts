@@ -2,6 +2,7 @@ import type { LanguageModel } from 'ai';
 import { describe, expect, it } from 'vitest';
 
 import type { GitHubSearchItem } from '../../../github/client';
+import type { GitHubRepo } from '../../../github/repo';
 import { fetchPostById, parsePostId } from '../../../reddit/client';
 import { postToReport } from '../../../reddit/normalize';
 import { AgentError } from '../../../shared/lib/errors';
@@ -18,9 +19,11 @@ import {
   buildCreatePageInput,
   buildCreatePrompt,
   buildMediaPlan,
+  createDraftSchema,
   createPage,
   gatherCreateContext,
   resolveSlug,
+  resolveTitle,
   type CreateContext,
   type CreateDraft,
 } from '../index';
@@ -50,18 +53,24 @@ function makeEntry(overrides: Partial<ReportEntry> = {}): ReportEntry {
   };
 }
 
+/** Build a repository with sensible defaults plus overrides. */
+function makeRepo(overrides: Partial<GitHubRepo> = {}): GitHubRepo {
+  return {
+    owner: 'ChimeraGaming',
+    repo: 'PixelNavigator',
+    fullName: 'ChimeraGaming/PixelNavigator',
+    htmlUrl: REPO_URL,
+    description: 'Android map companion',
+    stars: 42,
+    defaultBranch: 'main',
+    ...overrides,
+  };
+}
+
 /** Build a research context with sensible defaults plus overrides. */
 function makeContext(overrides: Partial<CreateContext> = {}): CreateContext {
   return {
-    repo: {
-      owner: 'ChimeraGaming',
-      repo: 'PixelNavigator',
-      fullName: 'ChimeraGaming/PixelNavigator',
-      htmlUrl: REPO_URL,
-      description: 'Android map companion',
-      stars: 42,
-      defaultBranch: 'main',
-    },
+    repo: makeRepo(),
     readme: '# Pixel Navigator\n\nMaps on the second screen.',
     release: {
       tagName: 'v1.2.0',
@@ -200,6 +209,16 @@ describe('CREATE_SYSTEM_PROMPT', () => {
     expect(CREATE_SYSTEM_PROMPT).toContain('END USER');
     expect(CREATE_SYSTEM_PROMPT).toContain('latest release');
   });
+
+  it('requires a short description and the controlled category vocabulary', () => {
+    expect(CREATE_SYSTEM_PROMPT).toContain('ONE short sentence');
+    expect(CREATE_SYSTEM_PROMPT).toContain('"companion"');
+  });
+
+  it('asks for the project name and the required sections', () => {
+    expect(CREATE_SYSTEM_PROMPT).toContain('PROJECT NAME');
+    expect(CREATE_SYSTEM_PROMPT).toContain('"Setup guide" are REQUIRED');
+  });
 });
 
 describe('buildCreatePrompt', () => {
@@ -234,16 +253,111 @@ describe('buildCreatePrompt', () => {
 });
 
 describe('resolveSlug', () => {
-  it('normalizes the draft slug to kebab-case', () => {
-    expect(resolveSlug(makeEntry(), makeDraft({ slug: 'Pixel Navigator!' }))).toBe(
-      'pixel-navigator',
-    );
+  it('normalizes the draft slug to kebab-case', async () => {
+    await expect(
+      resolveSlug(makeEntry(), makeDraft({ slug: 'Pixel Navigator!' }), {
+        contentIndex: [],
+      }),
+    ).resolves.toBe('pixel-navigator');
   });
 
-  it('falls back to the post title when the slug is blank', () => {
+  it('falls back to the post title when the slug is blank', async () => {
+    await expect(
+      resolveSlug(makeEntry({ title: 'Thor Widgets' }), makeDraft({ slug: '  ' }), {
+        contentIndex: [],
+      }),
+    ).resolves.toBe('thor-widgets');
+  });
+
+  it('reuses the slug of an existing page with a matching title', async () => {
+    const index = [
+      {
+        slug: 'pixel-navigator',
+        title: 'Pixel Navigator',
+        description: '',
+        path: '/content/pixel-navigator/index.md',
+        projectUrl: REPO_URL,
+        sourceUrl: '',
+      },
+    ];
+
+    await expect(
+      resolveSlug(makeEntry(), makeDraft({ slug: 'pixel-navigator-2' }), {
+        contentIndex: index,
+      }),
+    ).resolves.toBe('pixel-navigator');
+  });
+
+  it('generates a new slug when no page matches', async () => {
+    await expect(
+      resolveSlug(
+        makeEntry({ title: 'Brand New' }),
+        makeDraft({ slug: 'brand-new' }),
+        { contentIndex: [] },
+      ),
+    ).resolves.toBe('brand-new');
+  });
+});
+
+describe('resolveTitle', () => {
+  it('keeps the draft title when it is a real project name', () => {
     expect(
-      resolveSlug(makeEntry({ title: 'Thor Widgets' }), makeDraft({ slug: '  ' })),
-    ).toBe('thor-widgets');
+      resolveTitle(
+        makeEntry({ title: 'Doom on 2 Screens' }),
+        makeDraft({ title: 'DOOM (1993)' }),
+        makeContext(),
+      ),
+    ).toBe('DOOM (1993)');
+  });
+
+  it('uses the repository name when the draft echoes the post title', () => {
+    expect(
+      resolveTitle(
+        makeEntry({ title: 'Doom on 2 Screens' }),
+        makeDraft({ title: 'Doom on 2 Screens' }),
+        makeContext({ repo: makeRepo({ repo: 'DOOM-1993' }) }),
+      ),
+    ).toBe('DOOM 1993');
+  });
+
+  it('falls back to the post title without a repository', () => {
+    expect(
+      resolveTitle(
+        makeEntry({ title: 'Some Post' }),
+        makeDraft({ title: 'Some Post' }),
+        makeContext({ repo: null, readme: null, release: null }),
+      ),
+    ).toBe('Some Post');
+  });
+});
+
+describe('createDraftSchema', () => {
+  it('accepts a valid category', () => {
+    expect(createDraftSchema.parse(makeDraft()).category).toBe('app');
+  });
+
+  it('rejects an unknown category', () => {
+    expect(() =>
+      createDraftSchema.parse({ ...makeDraft(), category: 'emulation' }),
+    ).toThrow();
+  });
+
+  it('rejects more than five sections', () => {
+    const sections = Array.from({ length: 6 }, (_, index) => ({
+      heading: `Section ${index}`,
+      body: 'x',
+    }));
+
+    expect(() => createDraftSchema.parse({ ...makeDraft(), sections })).toThrow();
+  });
+
+  it('rejects a missing Setup guide section', () => {
+    expect(() =>
+      createDraftSchema.parse({
+        ...makeDraft(),
+        sections: [{ heading: 'Description', body: 'x' }],
+      }),
+    ).toThrow();
   });
 });
 
@@ -376,6 +490,35 @@ describe('buildCreatePageInput', () => {
     });
 
     expect(page.sections.projectUrl).toBe('https://gitlab.com/user/repo');
+  });
+
+  it('uses the current date, not the post date', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft(),
+      entry: makeEntry({ created_utc: 1700000000 }),
+      context: makeContext(),
+      mediaUrls: [],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.frontmatter.date).toBe('2026-09-26 10:16');
+  });
+
+  it('adds a YouTube video to the media when the post links one', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft(),
+      entry: makeEntry({ video_url: 'https://www.youtube.com/watch?v=abc123' }),
+      context: makeContext(),
+      mediaUrls: [IMAGE_A],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.frontmatter.media).toEqual([
+      { type: 'image', url: '/content/pixel-navigator/preview.webp' },
+      { type: 'video', url: 'https://www.youtube.com/watch?v=abc123' },
+    ]);
   });
 
   it('normalizes release links inside the generated sections', () => {

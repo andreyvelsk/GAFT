@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { rawPostSchema, type RawPost } from '../../../shared/lib/types';
-import { extractImages, postToReport } from '../index';
+import { extractImages, extractVideoUrl, postToReport } from '../index';
 
 /** Build a valid `RawPost` from a base payload plus overrides. */
 function makePost(overrides: Record<string, unknown> = {}): RawPost {
@@ -104,5 +104,37 @@ describe('extractImages', () => {
 
   it('returns no images when nothing is available', () => {
     expect(extractImages(makePost())).toEqual([]);
+  });
+});
+
+describe('extractVideoUrl', () => {
+  it('extracts a YouTube watch URL from the external link', () => {
+    const entry = postToReport(
+      makePost({
+        url_overridden_by_dest: 'https://www.youtube.com/watch?v=abc123',
+      }),
+    );
+
+    expect(entry.video_url).toBe('https://www.youtube.com/watch?v=abc123');
+  });
+
+  it('extracts a youtu.be URL from the body', () => {
+    const entry = postToReport(
+      makePost({ selftext: 'Video: https://youtu.be/abc123' }),
+    );
+
+    expect(entry.video_url).toBe('https://youtu.be/abc123');
+  });
+
+  it('ignores non-YouTube links', () => {
+    expect(
+      extractVideoUrl(
+        makePost({ url_overridden_by_dest: 'https://example.com/video.mp4' }),
+      ),
+    ).toBe('');
+  });
+
+  it('returns an empty string when there is no video', () => {
+    expect(postToReport(makePost()).video_url).toBe('');
   });
 });

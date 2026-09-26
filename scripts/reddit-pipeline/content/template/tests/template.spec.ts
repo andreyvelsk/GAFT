@@ -76,6 +76,18 @@ describe('validateFrontmatter', () => {
 
     expect(() => validateFrontmatter(makeFrontmatter({ media }))).toThrow();
   });
+
+  it('treats a null media as an empty array', () => {
+    const parsed = validateFrontmatter(makeFrontmatter({ media: null }));
+
+    expect(parsed.media).toEqual([]);
+  });
+
+  it('treats a missing media as an empty array', () => {
+    const parsed = validateFrontmatter(makeFrontmatter({ media: undefined }));
+
+    expect(parsed.media).toEqual([]);
+  });
 });
 
 describe('buildPageBody', () => {
@@ -109,6 +121,26 @@ describe('buildPageBody', () => {
     expect(body).not.toContain('source:');
     expect(body).not.toContain('See the project page:');
     expect(body).toBe('## Description\n\nA test app.');
+  });
+
+  it('labels the project link from the URL host', () => {
+    const cases: [string, string][] = [
+      ['https://github.com/user/repo', 'github.com'],
+      ['https://gitlab.com/user/repo', 'gitlab.com'],
+      ['https://play.google.com/store/apps/details?id=x', 'play.google.com'],
+      ['https://user.itch.io/game', 'itch.io'],
+      ['https://example.com/app', 'example.com'],
+    ];
+
+    for (const [url, label] of cases) {
+      const body = buildPageBody({
+        sourceUrl: '',
+        sections: [{ heading: 'Description', body: 'x' }],
+        projectUrl: url,
+      });
+
+      expect(body).toContain(`See the project page: [${label}](${url})`);
+    }
   });
 });
 
@@ -201,6 +233,27 @@ describe('normalizeSectionBody', () => {
 
     expect(normalizeSectionBody(text, 'Description')).toBe('The description.');
   });
+
+  it('keeps a "## …" line inside a fenced code block', () => {
+    const text = [
+      'Intro.',
+      '',
+      '```bash',
+      '## this is a comment',
+      'echo hi',
+      '```',
+      '',
+      'Outro.',
+    ].join('\n');
+
+    expect(normalizeSectionBody(text, 'Description')).toBe(text);
+  });
+
+  it('still strips a heading outside a code block', () => {
+    const text = ['## Description', 'Body.', '## Setup guide', 'More.'].join('\n');
+
+    expect(normalizeSectionBody(text, 'Description')).toBe('Body.');
+  });
 });
 
 describe('normalizeReleaseLinks', () => {
@@ -251,6 +304,19 @@ describe('renderPage', () => {
     expect(output).toContain(
       'See the project page: [github.com](https://github.com/user/repo)',
     );
+  });
+
+  it('renders an empty media array as "media: []"', () => {
+    const output = renderPage({
+      frontmatter: validateFrontmatter(makeFrontmatter({ media: [] })),
+      sections: {
+        sourceUrl: '',
+        sections: [{ heading: 'Description', body: 'A test app.' }],
+        projectUrl: '',
+      },
+    });
+
+    expect(output).toContain('media: []');
   });
 
   it('preserves extra frontmatter keys', () => {

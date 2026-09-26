@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 
 import { GITHUB_API } from '../../../shared/lib/constants';
@@ -8,6 +8,8 @@ import {
   githubRequest,
   githubText,
   isRetryable,
+  resetMissingTokenWarning,
+  warnIfMissingToken,
   type GitHubRequestOptions,
 } from '../index';
 
@@ -292,6 +294,39 @@ describe('githubText', () => {
     expect(callHeaders(recorder).get('Accept')).toBe(
       'application/vnd.github.raw+json',
     );
+  });
+});
+
+describe('warnIfMissingToken', () => {
+  beforeEach(() => {
+    resetMissingTokenWarning();
+  });
+
+  afterEach(() => {
+    resetMissingTokenWarning();
+  });
+
+  it('warns once when the token is empty', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    try {
+      warnIfMissingToken('');
+      warnIfMissingToken('');
+
+      expect(spy).toHaveBeenCalledTimes(1);
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  it('does not warn when a token is set', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    try {
+      warnIfMissingToken('secret');
+
+      expect(spy).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
 

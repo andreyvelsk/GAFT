@@ -53,6 +53,9 @@ export const reportEntrySchema = z.object({
   external_url: z.string(),
   flair: z.string(),
   images: z.array(z.string()),
+
+  /** YouTube URL of the post, when it links to a video (empty otherwise). */
+  video_url: z.string().optional(),
 });
 
 export type ReportEntry = z.infer<typeof reportEntrySchema>;

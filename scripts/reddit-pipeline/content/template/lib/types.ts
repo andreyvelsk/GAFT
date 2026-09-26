@@ -21,6 +21,56 @@ export const pageSectionSchema = z.object({
 
 export type PageSection = z.infer<typeof pageSectionSchema>;
 
+/** Controlled vocabulary of page categories. */
+export const PAGE_CATEGORIES = [
+  'game',
+  'app',
+  'companion',
+  'emulator',
+  'port',
+  'tool',
+] as const;
+
+/** Validated page category (one of {@link PAGE_CATEGORIES}). */
+export const pageCategorySchema = z.enum(PAGE_CATEGORIES);
+
+/** Hard limit on the number of `## <heading>` sections of a page. */
+export const MAX_PAGE_SECTIONS = 4;
+
+/** Section headings every generated page must contain. */
+export const REQUIRED_SECTION_HEADINGS = ['Description', 'Setup guide'] as const;
+
+/** Required headings missing from a section list (case-insensitive). */
+export function missingRequiredSections(
+  sections: readonly PageSection[],
+): string[] {
+  const headings = new Set(
+    sections.map((section) => section.heading.trim().toLowerCase()),
+  );
+  return REQUIRED_SECTION_HEADINGS.filter(
+    (heading) => !headings.has(heading.toLowerCase()),
+  );
+}
+
+/**
+ * Ordered section list with the hard limit and the required headings enforced.
+ * Used by the create/update agent schemas so a model can never produce a page
+ * without `Description`/`Setup guide` or with too many sections.
+ */
+export const pageSectionsSchema = z
+  .array(pageSectionSchema)
+  .min(1)
+  .max(MAX_PAGE_SECTIONS)
+  .superRefine((sections, ctx) => {
+    for (const heading of missingRequiredSections(sections)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [],
+        message: `missing required section: ${heading}`,
+      });
+    }
+  });
+
 /**
  * Validated frontmatter of a project page. Enforces the required fields and
  * the media limits (≤3 images, ≤1 video) before a page is written.
@@ -32,7 +82,10 @@ export const pageFrontmatterSchema = z
     date: z.string().min(1),
     slug: z.string().min(1),
     category: z.string().min(1),
-    media: z.array(mediaItemSchema).default([]),
+    media: z
+      .array(mediaItemSchema)
+      .nullish()
+      .transform((value) => value ?? []),
   })
   .superRefine((value, ctx) => {
     const images = value.media.filter((item) => item.type === 'image').length;

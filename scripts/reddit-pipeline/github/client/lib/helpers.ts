@@ -20,6 +20,29 @@ const DEFAULT_RATE_LIMIT_DELAY_MS = 5000;
 /** User-Agent sent to the GitHub API. */
 const GITHUB_USER_AGENT = 'reddit-pipeline';
 
+/** Whether the missing-token warning has already been emitted this run. */
+let missingTokenWarned = false;
+
+/** Reset the one-time missing-token warning (used by tests). */
+export function resetMissingTokenWarning(): void {
+  missingTokenWarned = false;
+}
+
+/**
+ * Warn once per run when no GitHub token is configured, so the degraded
+ * (60 requests/hour) rate limit is explicit instead of silent.
+ */
+export function warnIfMissingToken(token: string): void {
+  if (token !== '' || missingTokenWarned) {
+    return;
+  }
+  missingTokenWarned = true;
+  console.warn(
+    'GITHUB_TOKEN is not set: GitHub API requests are limited to 60/hour. ' +
+      'Set a personal access token to raise the limit.',
+  );
+}
+
 /** Pinned GitHub REST API version. */
 const GITHUB_API_VERSION = '2022-11-28';
 
@@ -88,6 +111,7 @@ export async function githubRequest(
   const baseUrl = options.baseUrl ?? GITHUB_API;
   const url = path.startsWith('http') ? path : `${baseUrl}${path}`;
   const token = options.token ?? process.env.GITHUB_TOKEN ?? '';
+  warnIfMissingToken(token);
   const fetchImpl = options.fetchImpl ?? fetch;
   const settings = resolveRetrySettings(options);
 

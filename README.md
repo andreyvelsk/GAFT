@@ -41,3 +41,26 @@ npm run preview
 ## Adding New Content
 
 See the [How to Add](content/how-to/index.md) guide for detailed instructions.
+
+---
+
+## Reddit Pipeline
+
+The `scripts/reddit-pipeline` tooling scans r/AynThor, filters relevant posts and
+generates/updates project pages under `content/<slug>/index.md`.
+
+### GitHub token
+
+The pipeline reads repositories, READMEs and releases through the GitHub REST
+API. Without a token the API is limited to **60 requests per hour per IP**,
+which a single run can exhaust. Set a personal access token to raise the limit
+to 5000 requests/hour:
+
+```bash
+export GITHUB_TOKEN=ghp_xxx
+```
+
+Use a classic PAT with the `public_repo` scope (or a fine-grained token with
+read-only **Contents** access). In GitHub Actions the token is provided
+automatically. When the token is missing the pipeline logs a one-time warning
+and continues in the degraded mode.

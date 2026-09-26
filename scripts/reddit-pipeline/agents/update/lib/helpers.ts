@@ -71,14 +71,19 @@ export const UPDATE_SYSTEM_PROMPT = [
   'facts — never invent features, versions, links or claims.',
   '',
   'Return a JSON object describing ONLY the fields that must change:',
-  '- "title", "description", "category" and "media" (an array of image URLs',
-  '  from the post).',
+  '- "title": the PROJECT NAME (never the Reddit post title).',
+  '- "description": ONE short sentence for the frontmatter — a summary only,',
+  '  do NOT repeat the "Description" section text.',
+  '- "category": exactly one of "game", "app", "companion", "emulator", "port",',
+  '  "tool".',
+  '- "media": an array of image URLs from the post.',
   '- "project_url": the canonical link to the project (repository, store page',
   '  or official site), when it changes.',
   '- "sections": the FULL ordered array of {"heading", "body"} objects when the',
   '  page structure or any section changes. Include ALL sections (not only the',
-  '  changed ones). Each "body" must contain ONLY the section text — no "## …"',
-  '  heading, no "source:" line and no project link.',
+  '  changed ones); "Description" and "Setup guide" are REQUIRED and there must',
+  '  be at most 5 sections. Each "body" must contain ONLY the section text — no',
+  '  "## …" heading, no "source:" line and no project link.',
   '- Include a field only when it actually changes; omit unchanged fields.',
   '- Always include "reason": a short English sentence explaining the update.',
   '',
@@ -300,6 +305,7 @@ export function applyPatch(
   }
 
   const currentMedia = readMedia(data);
+  const currentVideos = currentMedia.filter((item) => item.type === 'video');
   let mediaItems = currentMedia;
   let mediaPlan: MediaPlanItem[] = [];
   if (patch.media !== undefined) {
@@ -314,13 +320,23 @@ export function applyPatch(
     }));
     // The page stores only the local file paths, so a different source image
     // can map onto the same path. Any explicit media selection is therefore
-    // treated as a change and re-downloaded.
+    // treated as a change and re-downloaded. Existing videos are preserved.
     changed.push('media');
-    mediaItems = nextItems;
+    mediaItems = [...nextItems, ...currentVideos];
     mediaPlan = urls.map((url, index) => ({
       url,
       fileName: mediaFileName(index + 1),
     }));
+  }
+  if (
+    entry.video_url !== undefined &&
+    entry.video_url !== '' &&
+    !mediaItems.some((item) => item.type === 'video')
+  ) {
+    mediaItems = [...mediaItems, { type: 'video', url: entry.video_url }];
+    if (!changed.includes('media')) {
+      changed.push('media');
+    }
   }
 
   const resolvedProjectUrl = resolveProjectUrl(

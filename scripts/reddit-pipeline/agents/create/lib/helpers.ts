@@ -9,15 +9,22 @@ import {
   type PageInput,
   type PageSection,
 } from '../../../content/template';
+import { normalizeName } from '../../../github/repo';
 import {
   formatPageDate,
   githubUrlFromEntry,
+  humanizeRepoName,
   kebabCase,
   resolveProjectUrl,
 } from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
+import {
+  loadContentIndex,
+  matchCandidates,
+  type ContentCandidate,
+} from '../../tools/content-search';
 import { getLatestRelease } from '../../tools/github-release';
 import { readRepositoryReadme } from '../../tools/github-readme';
 import { searchRepository } from '../../tools/github-search';
@@ -47,18 +54,22 @@ export const CREATE_SYSTEM_PROMPT = [
   'features, versions, links or claims that are not present in the input.',
   '',
   'Return a JSON object with these fields:',
-  '- "title": the project name (short, no marketing fluff).',
-  '- "description": one or two sentences for the page frontmatter.',
-  '- "category": one lowercase word, e.g. "game", "app", "port", "emulator", "tool".',
-  '- "slug": a kebab-case slug derived from the project name.',
+  '- "title": the PROJECT NAME (e.g. "GoldenEye 007", "DOOM (1993)"), never the',
+  '  Reddit post title. When a repository is provided, take the name from the',
+  '  repository or its README.',
+  '- "description": ONE short sentence for the page frontmatter. It is a summary',
+  '  only — do NOT repeat the "Description" section text.',
+  '- "category": exactly one of "game", "app", "companion", "emulator", "port",',
+  '  "tool".',
+  '- "slug": a kebab-case slug derived from the project name (not the post title).',
   '- "project_url": the canonical link to the project (repository, store page',
   '  or official site) taken from the post or README. Omit it when there is no',
   '  such link.',
-  '- "sections": an ordered array of {"heading", "body"} objects. Use',
-  '  "Description" and "Setup guide" as the standard headings, and add extra',
-  '  sections (e.g. "Features", "Supported games", "Known issues") when the',
-  '  project needs them. Each "body" must contain ONLY the section text — no',
-  '  "## …" heading, no "source:" line and no project link.',
+  '- "sections": an ordered array of {"heading", "body"} objects. "Description"',
+  '  and "Setup guide" are REQUIRED. Add at most three extra sections (e.g.',
+  '  "Features", "Supported games", "Known issues") only when the project needs',
+  '  them — never more than 5 sections in total. Each "body" must contain ONLY',
+  '  the section text — no "## …" heading, no "source:" line and no project link.',
   '- "media": an array of image URLs chosen from the provided post images.',
   '',
   'Write for the END USER who wants to use the project, never for its',
@@ -163,10 +174,72 @@ export async function gatherCreateContext(
   }
 }
 
-/** Resolve the page slug from the draft, falling back to the post title. */
-export function resolveSlug(entry: ReportEntry, draft: CreateDraft): string {
+/**
+ * Resolve the page title. The model is asked for the project name, but when it
+ * merely echoes the Reddit post title (or returns nothing) the repository name
+ * is used instead, so the page is named after the project, not the post.
+ */
+export function resolveTitle(
+  entry: ReportEntry,
+  draft: CreateDraft,
+  context: CreateContext,
+): string {
+  const draftTitle = draft.title.trim();
+  const repoName =
+    context.repo === null ? '' : humanizeRepoName(context.repo.repo);
+  const echoesPostTitle =
+    draftTitle !== '' &&
+    normalizeName(draftTitle) === normalizeName(entry.title);
+
+  if (draftTitle !== '' && !echoesPostTitle) {
+    return draftTitle;
+  }
+  if (repoName !== '') {
+    return repoName;
+  }
+  return draftTitle !== '' ? draftTitle : entry.title;
+}
+
+/** Options accepted by {@link resolveSlug}. */
+export interface ResolveSlugOptions {
+  /** Pre-loaded content index (used by tests). */
+  contentIndex?: readonly ContentCandidate[];
+
+  /** Content directory override. */
+  contentDir?: string;
+
+  /** Query used to find an existing page (e.g. the repository URL). */
+  query?: string;
+}
+
+/**
+ * Resolve the page slug. An existing page matching the repository URL or the
+ * project title is reused (so a project never gets a duplicate page); otherwise
+ * a new kebab-case slug is derived from the draft slug or the post title.
+ */
+export async function resolveSlug(
+  entry: ReportEntry,
+  draft: CreateDraft,
+  options: ResolveSlugOptions = {},
+): Promise<string> {
   const candidate = draft.slug.trim() === '' ? entry.title : draft.slug;
-  return kebabCase(candidate);
+  const fallback = kebabCase(candidate);
+  const index = await loadContentIndex({
+    ...(options.contentIndex !== undefined
+      ? { index: options.contentIndex }
+      : {}),
+    ...(options.contentDir !== undefined
+      ? { contentDir: options.contentDir }
+      : {}),
+  });
+
+  for (const query of [options.query ?? '', draft.title, entry.title]) {
+    const match = matchCandidates(query, index)[0];
+    if (match !== undefined) {
+      return match.slug;
+    }
+  }
+  return fallback;
 }
 
 /** Build the media download plan for the selected image URLs. */
@@ -187,6 +260,9 @@ export function buildCreatePageInput(
     type: 'image',
     url: `/content/${slug}/${mediaFileName(index + 1)}`,
   }));
+  if (entry.video_url !== undefined && entry.video_url !== '') {
+    media.push({ type: 'video', url: entry.video_url });
+  }
   const sections: PageSection[] = draft.sections.map((section) => {
     const heading = section.heading.trim();
     return {
@@ -205,7 +281,7 @@ export function buildCreatePageInput(
 
   return {
     frontmatter: {
-      title: draft.title.trim(),
+      title: resolveTitle(entry, draft, context),
       description: draft.description.trim(),
       date: formatPageDate(now),
       slug,
@@ -253,7 +329,15 @@ export async function createPage(
       : {}),
   });
 
-  const slug = resolveSlug(entry, draft);
+  const slug = await resolveSlug(entry, draft, {
+    ...(options.contentIndex !== undefined
+      ? { contentIndex: options.contentIndex }
+      : {}),
+    ...(options.contentDir !== undefined
+      ? { contentDir: options.contentDir }
+      : {}),
+    query: context.repo?.htmlUrl ?? '',
+  });
   const mediaUrls = selectImages(entry.images, draft.media);
   const page = buildCreatePageInput({
     draft,

@@ -1,3 +1,4 @@
+import { projectLinkLabel } from '../../../shared/lib/helpers';
 import { serializeFrontmatter, type FrontmatterData } from '../../frontmatter';
 import {
   pageFrontmatterSchema,
@@ -39,7 +40,8 @@ export function buildPageBody(sections: PageSections): string {
     parts.push(`## ${section.heading}\n\n${section.body.trim()}`);
   }
   if (sections.projectUrl !== '') {
-    parts.push(`See the project page: [github.com](${sections.projectUrl})`);
+    const label = projectLinkLabel(sections.projectUrl);
+    parts.push(`See the project page: [${label}](${sections.projectUrl})`);
   }
   return parts.join('\n\n');
 }
@@ -96,13 +98,42 @@ export function parsePageBody(content: string): PageSections {
   return { sourceUrl, sections, projectUrl };
 }
 
-/** Extract the body of a `## <heading>` section, or `null` when absent. */
+/** Matches the opening/closing fence of a fenced code block. */
+const FENCE_RE = /^\s*(```|~~~)/;
+
+/**
+ * Extract the body of a `## <heading>` section, or `null` when absent.
+ * Fenced code blocks are respected, so a `## …` line inside a code block is
+ * never mistaken for the start of the next section.
+ */
 function extractHeadingSection(text: string, heading: string): string | null {
-  const pattern = new RegExp(
-    `##\\s+${escapeRegExp(heading)}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|$)`,
-  );
-  const match = pattern.exec(text);
-  return match?.[1] ?? null;
+  const lines = text.split('\n');
+  let inFence = false;
+  let start = -1;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index] ?? '';
+    if (FENCE_RE.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) {
+      continue;
+    }
+    const match = HEADING_RE.exec(line);
+    if (match === null) {
+      continue;
+    }
+    if (start === -1) {
+      if ((match[1] ?? '').trim() === heading) {
+        start = index + 1;
+      }
+      continue;
+    }
+    return lines.slice(start, index).join('\n');
+  }
+
+  return start === -1 ? null : lines.slice(start).join('\n');
 }
 
 /**
@@ -116,14 +147,29 @@ function extractHeadingSection(text: string, heading: string): string | null {
 export function normalizeSectionBody(text: string, heading: string): string {
   const extracted = extractHeadingSection(text, heading);
   const body = extracted ?? text;
-  const kept = body
-    .split('\n')
-    .filter(
-      (line) =>
-        !SOURCE_LINE_RE.test(line) &&
-        !PROJECT_LINE_RE.test(line) &&
-        !HEADING_RE.test(line),
-    );
+  const kept: string[] = [];
+  let inFence = false;
+
+  for (const line of body.split('\n')) {
+    if (FENCE_RE.test(line)) {
+      inFence = !inFence;
+      kept.push(line);
+      continue;
+    }
+    if (inFence) {
+      kept.push(line);
+      continue;
+    }
+    if (
+      SOURCE_LINE_RE.test(line) ||
+      PROJECT_LINE_RE.test(line) ||
+      HEADING_RE.test(line)
+    ) {
+      continue;
+    }
+    kept.push(line);
+  }
+
   return kept.join('\n').trim();
 }
 

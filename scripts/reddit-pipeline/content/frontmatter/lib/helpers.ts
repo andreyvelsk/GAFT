@@ -47,8 +47,12 @@ function serializeMapping(
   const lines: string[] = [];
   for (const [key, value] of entries) {
     if (Array.isArray(value)) {
-      lines.push(`${indent}${key}:`);
-      lines.push(...serializeArray(value, `${indent}  `));
+      if (value.length === 0) {
+        lines.push(`${indent}${key}: []`);
+      } else {
+        lines.push(`${indent}${key}:`);
+        lines.push(...serializeArray(value, `${indent}  `));
+      }
     } else if (isPlainObject(value)) {
       lines.push(`${indent}${key}:`);
       lines.push(...serializeMapping(Object.entries(value), `${indent}  `));

@@ -39,6 +39,52 @@ export function kebabCase(input: string): string {
     .toLowerCase();
 }
 
+/**
+ * Turn a repository name into a human-readable project name.
+ * Splits camelCase boundaries and separators, e.g. `PixelNavigator` →
+ * `Pixel Navigator`, `goldeneye-007-recomp` → `goldeneye 007 recomp`.
+ */
+export function humanizeRepoName(name: string): string {
+  return name
+    .replace(/[-_]+/g, ' ')
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Force the `http` scheme of a URL to `https`; other URLs are unchanged. */
+export function normalizeUrlScheme(url: string): string {
+  return url.startsWith('http://')
+    ? `https://${url.slice('http://'.length)}`
+    : url;
+}
+
+/**
+ * Human-friendly label for the project link, derived from the URL host.
+ * Well-known hosts (GitHub, GitLab, Google Play, itch.io) get a stable label;
+ * any other host falls back to its hostname.
+ */
+export function projectLinkLabel(url: string): string {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '');
+    if (host === 'github.com' || host.endsWith('.github.com')) {
+      return 'github.com';
+    }
+    if (host === 'gitlab.com' || host.endsWith('.gitlab.com')) {
+      return 'gitlab.com';
+    }
+    if (host === 'play.google.com') {
+      return 'play.google.com';
+    }
+    if (host === 'itch.io' || host.endsWith('.itch.io')) {
+      return 'itch.io';
+    }
+    return host;
+  } catch {
+    return 'project page';
+  }
+}
+
 /** File name of the n-th screenshot (1-based index). */
 export function screenshotFileName(index: number): string {
   return `screenshot-${index}.webp`;
@@ -122,7 +168,9 @@ export function githubUrlFromEntry(entry: ReportEntry): string {
  * as the project link.
  */
 export function projectUrlFromEntry(entry: ReportEntry): string {
-  return isProjectUrl(entry.external_url) ? entry.external_url : '';
+  return isProjectUrl(entry.external_url)
+    ? normalizeUrlScheme(entry.external_url)
+    : '';
 }
 
 /**
@@ -136,10 +184,10 @@ export function resolveProjectUrl(
   entry: ReportEntry,
 ): string {
   if (repoUrl !== null && repoUrl !== '') {
-    return repoUrl;
+    return normalizeUrlScheme(repoUrl);
   }
   if (candidate !== undefined && isProjectUrl(candidate)) {
-    return candidate;
+    return normalizeUrlScheme(candidate);
   }
   return projectUrlFromEntry(entry);
 }

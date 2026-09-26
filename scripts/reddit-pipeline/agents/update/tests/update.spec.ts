@@ -21,6 +21,7 @@ import {
   buildUpdatePrompt,
   gatherUpdateContext,
   updatePage,
+  updatePatchSchema,
   type UpdateContext,
   type UpdatePatch,
 } from '../index';
@@ -259,6 +260,48 @@ describe('UPDATE_SYSTEM_PROMPT', () => {
     expect(UPDATE_SYSTEM_PROMPT).toContain('END USER');
     expect(UPDATE_SYSTEM_PROMPT).toContain('latest release');
   });
+
+  it('requires a short description and the controlled category vocabulary', () => {
+    expect(UPDATE_SYSTEM_PROMPT).toContain('ONE short sentence');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('"companion"');
+  });
+
+  it('asks for the project name and the required sections', () => {
+    expect(UPDATE_SYSTEM_PROMPT).toContain('PROJECT NAME');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('"Setup guide" are REQUIRED');
+  });
+});
+
+describe('updatePatchSchema', () => {
+  it('accepts a valid category', () => {
+    expect(updatePatchSchema.parse({ category: 'port', reason: 'r' }).category).toBe(
+      'port',
+    );
+  });
+
+  it('rejects an unknown category', () => {
+    expect(() =>
+      updatePatchSchema.parse({ category: 'emulation', reason: 'r' }),
+    ).toThrow();
+  });
+
+  it('rejects more than five sections', () => {
+    const sections = Array.from({ length: 6 }, (_, index) => ({
+      heading: `Section ${index}`,
+      body: 'x',
+    }));
+
+    expect(() => updatePatchSchema.parse({ sections, reason: 'r' })).toThrow();
+  });
+
+  it('rejects sections without Setup guide', () => {
+    expect(() =>
+      updatePatchSchema.parse({
+        sections: [{ heading: 'Description', body: 'x' }],
+        reason: 'r',
+      }),
+    ).toThrow();
+  });
 });
 
 describe('buildUpdatePrompt', () => {
@@ -405,6 +448,75 @@ describe('applyPatch', () => {
     );
 
     expect(applied.page.sections.projectUrl).toBe(REPO_URL);
+  });
+
+  it('keeps the existing page date on update', () => {
+    const applied = applyPatch(
+      makePage(),
+      { reason: 'no-op' },
+      makeEntry(),
+      makeContext(),
+      new Date('2030-01-01T00:00:00Z'),
+    );
+
+    expect(applied.page.frontmatter.date).toBe('2026-09-01 10:00');
+  });
+
+  it('preserves an existing video when the patch replaces images', () => {
+    const page = pageFromRaw(
+      [
+        '---',
+        'title: "X"',
+        'description: "D"',
+        'date: "2026-09-01 10:00"',
+        'slug: "x"',
+        'category: "app"',
+        'media:',
+        '  - type: "image"',
+        '    url: "/content/x/preview.webp"',
+        '  - type: "video"',
+        '    url: "https://www.youtube.com/watch?v=abc"',
+        '---',
+        '',
+        '## Description',
+        '',
+        'Body.',
+        '',
+        '## Setup guide',
+        '',
+        'Steps.',
+      ].join('\n'),
+      'x',
+    );
+
+    const applied = applyPatch(
+      page,
+      { media: [IMAGE_B], reason: 'new screenshot' },
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.frontmatter.media).toEqual([
+      { type: 'image', url: '/content/x/preview.webp' },
+      { type: 'video', url: 'https://www.youtube.com/watch?v=abc' },
+    ]);
+  });
+
+  it('adds a YouTube video from the post when the page has none', () => {
+    const applied = applyPatch(
+      makePage(),
+      { reason: 'video' },
+      makeEntry({ video_url: 'https://youtu.be/abc123' }),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.changed).toContain('media');
+    expect(applied.page.frontmatter.media).toContainEqual({
+      type: 'video',
+      url: 'https://youtu.be/abc123',
+    });
   });
 
   it('preserves the existing media when the patch omits it', () => {

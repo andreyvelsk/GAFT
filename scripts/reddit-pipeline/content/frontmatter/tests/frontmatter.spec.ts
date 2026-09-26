@@ -36,6 +36,22 @@ describe('serializeFrontmatter', () => {
 
     expect(output).toBe('---\ntitle: "a \\"b\\" c"\n---\n');
   });
+
+  it('serializes an empty array as "key: []"', () => {
+    const output = serializeFrontmatter({ title: 'Hello', media: [] }, '');
+
+    expect(output).toBe('---\ntitle: "Hello"\nmedia: []\n---\n');
+  });
+});
+
+describe('empty array round-trip', () => {
+  it('parses and re-serializes an empty media array', () => {
+    const raw = '---\ntitle: "Hello"\nmedia: []\n---\n\nbody\n';
+    const parsed = parseFrontmatter(raw);
+
+    expect(parsed.data.media).toEqual([]);
+    expect(serializeFrontmatter(parsed.data, parsed.content)).toBe(raw);
+  });
 });
 
 describe('frontmatter round-trip', () => {

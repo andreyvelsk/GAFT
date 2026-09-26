@@ -7,9 +7,15 @@ export {
   validateFrontmatter,
 } from './lib/helpers';
 export {
+  MAX_PAGE_SECTIONS,
+  PAGE_CATEGORIES,
+  REQUIRED_SECTION_HEADINGS,
   mediaItemSchema,
+  missingRequiredSections,
+  pageCategorySchema,
   pageFrontmatterSchema,
   pageSectionSchema,
+  pageSectionsSchema,
   type MediaItem,
   type PageFrontmatter,
   type PageInput,

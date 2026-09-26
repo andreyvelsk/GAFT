@@ -1,1 +1,1 @@
-export { extractImages, postToReport } from './lib/helpers';
+export { extractImages, extractVideoUrl, postToReport } from './lib/helpers';

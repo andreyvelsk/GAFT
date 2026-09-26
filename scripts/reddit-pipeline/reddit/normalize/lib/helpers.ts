@@ -1,5 +1,12 @@
 import type { RawPost, ReportEntry } from '../../../shared/lib/types';
 
+/** Matches a YouTube video URL (watch, embed, shorts or youtu.be). */
+const YOUTUBE_RE =
+  /https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)[^\s)\]]+/i;
+
+/** Trailing markdown/punctuation characters to strip from an extracted URL. */
+const TRAILING_MARKDOWN_RE = /[.,;:*_~`'"!?]+$/;
+
 /** Decode the handful of HTML entities that appear in Reddit signed URLs. */
 function htmlUnescape(input: string): string {
   return input
@@ -44,6 +51,25 @@ export function extractImages(post: RawPost): string[] {
   return urls;
 }
 
+/**
+ * First YouTube URL of a post (external URL or body), or `''`.
+ * Only YouTube links are treated as videos.
+ */
+export function extractVideoUrl(post: RawPost): string {
+  const candidates = [
+    post.url_overridden_by_dest ?? '',
+    post.url ?? '',
+    post.selftext ?? '',
+  ];
+  for (const candidate of candidates) {
+    const match = YOUTUBE_RE.exec(candidate);
+    if (match !== null) {
+      return match[0].replace(TRAILING_MARKDOWN_RE, '');
+    }
+  }
+  return '';
+}
+
 /** Normalize a raw post into a report entry. */
 export function postToReport(post: RawPost): ReportEntry {
   const permalink = post.permalink ?? `/r/AynThor/comments/${post.id}/`;
@@ -66,5 +92,6 @@ export function postToReport(post: RawPost): ReportEntry {
     external_url: external,
     flair: post.link_flair_text ?? '',
     images: extractImages(post),
+    video_url: extractVideoUrl(post),
   };
 }
