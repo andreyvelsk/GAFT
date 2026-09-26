@@ -6,7 +6,7 @@ import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
 import {
-  filterVerdictsSchema,
+  filterResponseSchema,
   type FilterOptions,
   type FilterPostInput,
   type FilterVerdict,
@@ -31,8 +31,9 @@ export const FILTER_SYSTEM_PROMPT = [
   'request, a shipping/delivery update, a purchase advice thread, a poll, a',
   'meme, a photo of the device, a general discussion, or news with no project.',
   '',
-  'Return a JSON array with one object per input post, in the SAME order as the',
-  'input, using the exact input `id` and a boolean `relevant` field.',
+  'Return a JSON object of the shape {"verdicts": [ ... ]} with one object per',
+  'input post, in the SAME order as the input, using the exact input `id` and a',
+  'boolean `relevant` field.',
 ].join('\n');
 
 /** Truncate a string to `max` characters, appending an ellipsis when cut. */
@@ -56,7 +57,8 @@ export function buildFilterPrompt(entries: readonly ReportEntry[]): string {
   const posts = entries.map((entry) => toPostInput(entry));
   return [
     'Classify the relevance of each of the following Reddit posts.',
-    'Return ONLY a JSON array, one object per post, preserving the input order.',
+    'Return ONLY a JSON object {"verdicts": [...]}, one object per post,',
+    'preserving the input order.',
     '',
     JSON.stringify(posts, null, 2),
   ].join('\n');
@@ -100,14 +102,15 @@ export async function classifyBatch(
   }
 
   const model = resolveFilterModel(options);
-  const verdicts = await generateStructured({
+  const response = await generateStructured({
     model,
-    schema: filterVerdictsSchema,
+    schema: filterResponseSchema,
     system: FILTER_SYSTEM_PROMPT,
     prompt: buildFilterPrompt(entries),
     temperature: 0,
     schemaName: 'filter_verdicts',
-    schemaDescription: 'Relevance verdict (id + boolean) for every input post',
+    schemaDescription:
+      'Object with a `verdicts` array (id + boolean) for every input post',
     agent: 'filter',
     ...(options.generate !== undefined ? { generate: options.generate } : {}),
     ...(options.maxRepairAttempts !== undefined
@@ -115,7 +118,7 @@ export async function classifyBatch(
       : {}),
   });
 
-  return reconcileVerdicts(entries, verdicts);
+  return reconcileVerdicts(entries, response.verdicts);
 }
 
 /** Classify report entries in batches, concatenating the verdicts. */

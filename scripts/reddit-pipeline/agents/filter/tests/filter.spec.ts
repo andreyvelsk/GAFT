@@ -124,7 +124,7 @@ describe('reconcileVerdicts', () => {
 
 describe('classifyBatch', () => {
   it('returns an empty array for no entries without calling the model', async () => {
-    const { generate, calls } = staticGenerator([]);
+    const { generate, calls } = staticGenerator({ verdicts: [] });
 
     const result = await classifyBatch([], { generate, model: testModel() });
 
@@ -138,11 +138,13 @@ describe('classifyBatch', () => {
       makeEntry({ id: 'p2', title: 'I built a port of Doom' }),
       makeEntry({ id: 'p3', title: 'Shipping update' }),
     ];
-    const { generate } = staticGenerator([
-      { id: 'p1', relevant: false },
-      { id: 'p2', relevant: true },
-      { id: 'p3', relevant: false },
-    ]);
+    const { generate } = staticGenerator({
+      verdicts: [
+        { id: 'p1', relevant: false },
+        { id: 'p2', relevant: true },
+        { id: 'p3', relevant: false },
+      ],
+    });
 
     const result = await classifyBatch(entries, {
       generate,
@@ -157,7 +159,7 @@ describe('classifyBatch', () => {
   });
 
   it('sends temperature 0, the filter system prompt and a schema name', async () => {
-    const { generate, calls } = staticGenerator([]);
+    const { generate, calls } = staticGenerator({ verdicts: [] });
 
     await classifyBatch([makeEntry({ id: 'p1' })], {
       generate,
@@ -171,7 +173,9 @@ describe('classifyBatch', () => {
 
   it('reconciles an incomplete verdict list into the input shape', async () => {
     const entries = [makeEntry({ id: 'p1' }), makeEntry({ id: 'p2' })];
-    const { generate } = staticGenerator([{ id: 'p1', relevant: true }]);
+    const { generate } = staticGenerator({
+      verdicts: [{ id: 'p1', relevant: true }],
+    });
 
     const result = await classifyBatch(entries, {
       generate,
@@ -189,8 +193,8 @@ describe('classifyBatch', () => {
     const { generate, calls } = recordingGenerator((_options, index) =>
       Promise.resolve(
         index === 0
-          ? { object: { not: 'an array' } }
-          : { object: [{ id: 'p1', relevant: true }] },
+          ? { object: { not: 'a verdicts object' } }
+          : { object: { verdicts: [{ id: 'p1', relevant: true }] } },
       ),
     );
 
@@ -205,7 +209,7 @@ describe('classifyBatch', () => {
   });
 
   it('throws an AgentError when every attempt is invalid', async () => {
-    const { generate } = staticGenerator({ not: 'an array' });
+    const { generate } = staticGenerator({ not: 'a verdicts object' });
 
     await expect(
       classifyBatch([makeEntry({ id: 'p1' })], {
@@ -219,7 +223,7 @@ describe('classifyBatch', () => {
 
 describe('classifyPosts', () => {
   it('returns an empty array for no entries', async () => {
-    const { generate } = staticGenerator([]);
+    const { generate } = staticGenerator({ verdicts: [] });
 
     const result = await classifyPosts([], { generate, model: testModel() });
 
@@ -235,10 +239,12 @@ describe('classifyPosts', () => {
     const { generate, calls } = recordingGenerator((options) => {
       const ids = options.prompt.match(/"id":\s*"([^"]+)"/g) ?? [];
       return Promise.resolve({
-        object: ids.map((token) => ({
-          id: token.replace(/"id":\s*"/, '').replace(/"$/, ''),
-          relevant: true,
-        })),
+        object: {
+          verdicts: ids.map((token) => ({
+            id: token.replace(/"id":\s*"/, '').replace(/"$/, ''),
+            relevant: true,
+          })),
+        },
       });
     });
 

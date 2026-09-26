@@ -14,10 +14,21 @@ export const filterVerdictSchema = z.object({
 
 export type FilterVerdict = z.infer<typeof filterVerdictSchema>;
 
-/** Batch of relevance verdicts (strict JSON output of the agent). */
+/** Batch of relevance verdicts (public output of the agent). */
 export const filterVerdictsSchema = z.array(filterVerdictSchema);
 
 export type FilterVerdicts = z.infer<typeof filterVerdictsSchema>;
+
+/**
+ * LLM-facing response schema. The root is an object with a `verdicts` array
+ * because several providers (e.g. OpenAI structured outputs) do not support a
+ * top-level array; the agent unwraps it into `FilterVerdicts`.
+ */
+export const filterResponseSchema = z.object({
+  verdicts: z.array(filterVerdictSchema),
+});
+
+export type FilterResponse = z.infer<typeof filterResponseSchema>;
 
 /** Subset of a report entry sent to the model. */
 export interface FilterPostInput {
