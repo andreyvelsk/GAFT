@@ -3,6 +3,7 @@ export {
   applyPatch,
   buildUpdatePrompt,
   gatherUpdateContext,
+  sanitizeUpdatePatch,
   updatePage,
 } from './lib/helpers';
 export { updatePatchSchema } from './lib/types';

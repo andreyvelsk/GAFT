@@ -20,6 +20,7 @@ import {
   applyPatch,
   buildUpdatePrompt,
   gatherUpdateContext,
+  sanitizeUpdatePatch,
   updatePage,
   updatePatchSchema,
   type UpdateContext,
@@ -328,6 +329,46 @@ describe('buildUpdatePrompt', () => {
     expect(prompt).toContain('Repository (may be null):');
     expect(prompt).toContain('README (may be null):');
     expect(prompt).toContain('null');
+  });
+
+  it('lists the repository candidates from the context', () => {
+    const prompt = buildUpdatePrompt(makePage(), makeEntry(), {
+      ...makeContext(),
+      candidates: [
+        {
+          owner: 'mstan',
+          repo: 'Tomba2Recomp',
+          fullName: 'mstan/Tomba2Recomp',
+          htmlUrl: 'https://github.com/mstan/Tomba2Recomp',
+          description: 'Tomba 2 recompilation',
+          stars: 3,
+          defaultBranch: 'main',
+        },
+      ],
+    });
+
+    expect(prompt).toContain('Repository candidates');
+    expect(prompt).toContain('mstan/Tomba2Recomp');
+  });
+});
+
+describe('sanitizeUpdatePatch', () => {
+  it('removes markdown escapes from URLs and section text', () => {
+    const patch = sanitizeUpdatePatch({
+      project_url: 'https://github.com/Raekwon1603/super\\_metroid-android',
+      media: ['https://i.redd.it/a\\_b.jpg'],
+      sections: [
+        { heading: 'Description', body: 'See super\\_metroid for details.' },
+        { heading: 'Setup guide', body: 'Install it.' },
+      ],
+      reason: 'update',
+    });
+
+    expect(patch.project_url).toBe(
+      'https://github.com/Raekwon1603/super_metroid-android',
+    );
+    expect(patch.media).toEqual(['https://i.redd.it/a_b.jpg']);
+    expect(patch.sections?.[0]?.body).toBe('See super_metroid for details.');
   });
 });
 

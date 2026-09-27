@@ -142,22 +142,44 @@ export function isProjectUrl(url: string): boolean {
 /** Trailing markdown/punctuation characters to strip from an extracted URL. */
 const TRAILING_MARKDOWN_RE = /[.,;:*_~`'"!?]+$/;
 
-/** First GitHub URL found in the given text, or `''`. */
-function firstGitHubUrl(text: string): string {
-  const match = /https?:\/\/github\.com\/[^\s)\]]+/i.exec(text);
-  return match?.[0]?.replace(TRAILING_MARKDOWN_RE, '') ?? '';
+/**
+ * Remove the backslashes a model (or a Reddit export) added before markdown
+ * special characters. Models routinely escape `_`, `*`, `[`, `]`, `(` and `)`
+ * inside URLs (e.g. `super\_metroid`), which breaks link handling and GitHub
+ * lookups once the value is reused outside of markdown.
+ */
+export function stripMarkdownEscapes(text: string): string {
+  return text.replace(/\\([_*[\]()])/g, '$1');
+}
+
+/** Matches a GitHub web URL inside arbitrary text. */
+const GITHUB_URL_RE = /https?:\/\/github\.com\/[^\s)\]]+/gi;
+
+/** All GitHub URLs found in the given text (unescaped, de-duplicated). */
+export function githubUrls(text: string): string[] {
+  const unescaped = stripMarkdownEscapes(text);
+  const matches = unescaped.match(GITHUB_URL_RE) ?? [];
+  return unique(matches.map((url) => url.replace(TRAILING_MARKDOWN_RE, '')));
+}
+
+/**
+ * All GitHub URLs of a post (external URL first, then the body), de-duplicated.
+ * When a post links several repositories (e.g. an upstream project and a fork
+ * for the AYN Thor), every candidate is returned so the caller can pick one.
+ */
+export function githubUrlsFromEntry(entry: ReportEntry): string[] {
+  return unique([
+    ...githubUrls(entry.external_url),
+    ...githubUrls(entry.selftext),
+  ]);
 }
 
 /**
  * First GitHub URL of a post (external URL or body), or `''`.
- * Used to locate the repository for README/release research.
+ * Used as a fallback when the full candidate list is not needed.
  */
 export function githubUrlFromEntry(entry: ReportEntry): string {
-  const fromExternal = firstGitHubUrl(entry.external_url);
-  if (fromExternal !== '') {
-    return fromExternal;
-  }
-  return firstGitHubUrl(entry.selftext);
+  return githubUrlsFromEntry(entry)[0] ?? '';
 }
 
 /**

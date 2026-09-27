@@ -61,6 +61,12 @@ export interface UpdateContext {
 
   /** Latest release of the repository (or `null`). */
   release: ReleaseInfo | null;
+
+  /**
+   * Every repository linked from the post, in link order. Omitted when nothing
+   * was resolved.
+   */
+  candidates?: GitHubRepo[];
 }
 
 /** Result of applying a patch to an existing page. */

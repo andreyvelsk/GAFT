@@ -7,6 +7,7 @@ export {
   gatherCreateContext,
   resolveSlug,
   resolveTitle,
+  sanitizeCreateDraft,
 } from './lib/helpers';
 export type { ResolveSlugOptions } from './lib/helpers';
 export { createDraftSchema } from './lib/types';

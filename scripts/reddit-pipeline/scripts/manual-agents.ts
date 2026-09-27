@@ -42,9 +42,21 @@ if (mode === 'create') {
   const fileFlag = rest.indexOf('--file');
   if (fileFlag !== -1) {
     const links = await readLinks(rest[fileFlag + 1] ?? '');
+    let failures = 0;
     for (const link of links) {
       console.log(`\n=== ${link} ===`);
-      await runCreate(link);
+      try {
+        await runCreate(link);
+      } catch (error) {
+        failures += 1;
+        const reason =
+          error instanceof Error ? error.message : 'unknown error';
+        console.error(`failed for ${link}: ${reason}`);
+      }
+    }
+    if (failures > 0) {
+      console.error(`\n${failures}/${links.length} post(s) failed.`);
+      process.exitCode = 1;
     }
   } else {
     await runCreate(rest[0] ?? '');

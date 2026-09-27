@@ -66,6 +66,13 @@ export interface CreateContext {
 
   /** Latest release of the repository (or `null`). */
   release: ReleaseInfo | null;
+
+  /**
+   * Every repository linked from the post, in link order. Lets the agent know
+   * which alternatives existed when several links (e.g. an upstream project
+   * and a dual-screen fork) were present. Omitted when nothing was resolved.
+   */
+  candidates?: GitHubRepo[];
 }
 
 export type { MediaPlanItem };

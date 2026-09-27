@@ -18,6 +18,41 @@ export const REPAIR_INSTRUCTION =
   'Reply again with ONLY a valid JSON document that matches the schema, ' +
   'without any commentary, markdown fences or extra text.';
 
+/** Maximum length of a validation error embedded in a repair prompt. */
+const MAX_ERROR_LENGTH = 1200;
+
+/** Convert an unknown thrown value into a printable message. */
+function errorToMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  if (typeof error === 'string') {
+    return error;
+  }
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return 'unknown error';
+  }
+}
+
+/**
+ * Describe the previous failure so the repair attempt can address it
+ * specifically (e.g. "too many sections") instead of only receiving the
+ * generic repair instruction. Empty when there is no error to report.
+ */
+function describeError(error: unknown): string {
+  if (error === undefined) {
+    return '';
+  }
+  const message = errorToMessage(error);
+  const trimmed =
+    message.length <= MAX_ERROR_LENGTH
+      ? message
+      : `${message.slice(0, MAX_ERROR_LENGTH - 1)}…`;
+  return `\n\nThe previous answer was rejected with: ${trimmed}`;
+}
+
 /** Default number of repair attempts after the first invalid answer. */
 const DEFAULT_MAX_REPAIR_ATTEMPTS = 1;
 
@@ -114,7 +149,9 @@ export async function generateStructured<T>(
   let lastError: unknown;
   for (let attempt = 0; attempt <= maxRepair; attempt += 1) {
     const prompt =
-      attempt === 0 ? options.prompt : `${options.prompt}${REPAIR_INSTRUCTION}`;
+      attempt === 0
+        ? options.prompt
+        : `${options.prompt}${REPAIR_INSTRUCTION}${describeError(lastError)}`;
     try {
       const result = await generate(
         buildCallOptions(options, prompt, temperature),

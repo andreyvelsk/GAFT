@@ -14,7 +14,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "convert:previews": "node scripts/convert-previews.js",
-    "convert:previews:all": "node scripts/convert-previews.js --all"
+    "convert:previews:all": "node scripts/convert-previews.js --all",
+    "reddit:pipeline": "tsx scripts/reddit-pipeline/index.ts",
+    "reddit:create": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts create",
+    "reddit:update": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts update"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.0",

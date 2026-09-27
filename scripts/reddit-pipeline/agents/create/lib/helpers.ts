@@ -9,13 +9,21 @@ import {
   type PageInput,
   type PageSection,
 } from '../../../content/template';
-import { normalizeName } from '../../../github/repo';
+import {
+  getRepo,
+  normalizeName,
+  parseRepoRef,
+  type GitHubRepo,
+  type RepoOptions,
+} from '../../../github/repo';
 import {
   formatPageDate,
   githubUrlFromEntry,
+  githubUrlsFromEntry,
   humanizeRepoName,
   kebabCase,
   resolveProjectUrl,
+  stripMarkdownEscapes,
 } from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
@@ -58,7 +66,10 @@ export const CREATE_SYSTEM_PROMPT = [
   '  Reddit post title. When a repository is provided, take the name from the',
   '  repository or its README.',
   '- "description": ONE short sentence for the page frontmatter. It is a summary',
-  '  only — do NOT repeat the "Description" section text.',
+  '  only — do NOT repeat the "Description" section text. The "ONE short',
+  '  sentence" rule applies to this frontmatter field only: inside the page',
+  '  sections write as much detail as the post and README support — do not',
+  '  compress a rich project into a couple of lines.',
   '- "category": exactly one of "game", "app", "companion", "emulator", "port",',
   '  "tool".',
   '- "slug": a kebab-case slug derived from the project name (not the post title).',
@@ -66,9 +77,9 @@ export const CREATE_SYSTEM_PROMPT = [
   '  or official site) taken from the post or README. Omit it when there is no',
   '  such link.',
   '- "sections": an ordered array of {"heading", "body"} objects. "Description"',
-  '  and "Setup guide" are REQUIRED. Add at most three extra sections (e.g.',
-  '  "Features", "Supported games", "Known issues") only when the project needs',
-  '  them — never more than 5 sections in total. Each "body" must contain ONLY',
+  '  and "Setup guide" are REQUIRED. Add at most two extra sections (e.g.',
+  '  "Features", "Known issues") only when the project needs them — never',
+  '  more than 4 sections in total. Each "body" must contain ONLY',
   '  the section text — no "## …" heading, no "source:" line and no project link.',
   '- "media": an array of image URLs chosen from the provided post images.',
   '',
@@ -120,6 +131,11 @@ export function buildCreatePrompt(
           name: context.release.name,
           url: context.release.url,
         };
+  const candidates = (context.candidates ?? []).map((item) => ({
+    fullName: item.fullName,
+    htmlUrl: item.htmlUrl,
+    description: item.description,
+  }));
   const readme =
     context.readme === null
       ? null
@@ -135,6 +151,9 @@ export function buildCreatePrompt(
     'Repository (may be null):',
     JSON.stringify(repo, null, 2),
     '',
+    'Repository candidates from the post (the AYN Thor target is preferred):',
+    JSON.stringify(candidates, null, 2),
+    '',
     'Latest release (may be null):',
     JSON.stringify(release, null, 2),
     '',
@@ -143,10 +162,94 @@ export function buildCreatePrompt(
   ].join('\n');
 }
 
+/** Keywords that mark a repository as targeted at the dual-screen device. */
+const DUAL_SCREEN_RE =
+  /(second screen|dual[\s-]?screen|two screens|top screen|bottom screen|ayn thor|\bthor\b)/i;
+
+/** Resolve every repository linked from a post (best effort, never throws). */
+async function resolveCandidateRepos(
+  entry: ReportEntry,
+  repoOptions: RepoOptions,
+): Promise<GitHubRepo[]> {
+  const repos: GitHubRepo[] = [];
+  for (const url of githubUrlsFromEntry(entry)) {
+    const ref = parseRepoRef(url);
+    if (ref === null) {
+      continue;
+    }
+    try {
+      repos.push(await getRepo(ref.owner, ref.repo, repoOptions));
+    } catch {
+      // A broken or private link must not abort the whole research.
+    }
+  }
+  if (repos.length === 0) {
+    const repo = await searchRepository(
+      githubUrlFromEntry(entry) || entry.title,
+      repoOptions,
+    );
+    if (repo !== null) {
+      repos.push(repo);
+    }
+  }
+  return repos;
+}
+
+/** Read a README without letting a transient error abort the research. */
+async function readReadmeSafe(
+  repo: GitHubRepo,
+  repoOptions: RepoOptions,
+): Promise<string | null> {
+  try {
+    return await readRepositoryReadme(repo.owner, repo.repo, repoOptions);
+  } catch {
+    return null;
+  }
+}
+
+/** Score a repository as the AYN Thor target from its description + README. */
+function dualScreenScore(repo: GitHubRepo, readme: string | null): number {
+  let score = 0;
+  if (DUAL_SCREEN_RE.test(repo.description)) {
+    score += 2;
+  }
+  if (readme !== null && DUAL_SCREEN_RE.test(readme)) {
+    score += 3;
+  }
+  if (readme !== null && /\bfork\b/i.test(readme)) {
+    score += 1;
+  }
+  return score;
+}
+
 /**
- * Gather the research context for a post: resolve the repository from the
- * external URL (falling back to the title), then read its README and latest
- * release. Any missing piece is represented as `null`.
+ * Pick the repository that targets the AYN Thor when a post links several
+ * (e.g. an upstream project and a dual-screen fork). Its description and README
+ * are scored for dual-screen/Thor keywords; ties keep the original order, so
+ * the link from the post body wins. The README read while scoring is returned
+ * so it is not fetched twice.
+ */
+async function pickPreferredRepo(
+  repos: readonly GitHubRepo[],
+  repoOptions: RepoOptions,
+): Promise<{ repo: GitHubRepo; readme: string | null } | null> {
+  let best: { repo: GitHubRepo; readme: string | null; score: number } | null =
+    null;
+  for (const repo of repos) {
+    const readme = await readReadmeSafe(repo, repoOptions);
+    const score = dualScreenScore(repo, readme);
+    if (best === null || score > best.score) {
+      best = { repo, readme, score };
+    }
+  }
+  return best === null ? null : { repo: best.repo, readme: best.readme };
+}
+
+/**
+ * Gather the research context for a post. Every GitHub link of the post is
+ * resolved, the repository that targets the AYN Thor is selected from the
+ * candidates, and its README and latest release are read. Any missing piece is
+ * represented as `null`.
  */
 export async function gatherCreateContext(
   entry: ReportEntry,
@@ -155,17 +258,25 @@ export async function gatherCreateContext(
   const repoOptions = options.repoOptions ?? {};
   const query = githubUrlFromEntry(entry) || entry.title;
   try {
-    const repo = await searchRepository(query, repoOptions);
-    if (repo === null) {
+    const repos = await resolveCandidateRepos(entry, repoOptions);
+    if (repos.length === 0) {
       return { repo: null, readme: null, release: null };
     }
-    const readme = await readRepositoryReadme(
-      repo.owner,
-      repo.repo,
+    const preferred = await pickPreferredRepo(repos, repoOptions);
+    if (preferred === null) {
+      return { repo: null, readme: null, release: null };
+    }
+    const release = await getLatestRelease(
+      preferred.repo.owner,
+      preferred.repo.repo,
       repoOptions,
     );
-    const release = await getLatestRelease(repo.owner, repo.repo, repoOptions);
-    return { repo, readme, release };
+    return {
+      repo: preferred.repo,
+      readme: preferred.readme,
+      release,
+      candidates: repos,
+    };
   } catch (error) {
     console.warn(
       `repository research failed for "${query}": ${String(error)}`,
@@ -296,6 +407,28 @@ export function buildCreatePageInput(
   };
 }
 
+/**
+ * Remove the markdown backslash-escapes a model adds to URLs and text, so an
+ * escaped underscore (e.g. `super\_metroid`) never reaches the frontmatter,
+ * the slug or the GitHub lookup.
+ */
+export function sanitizeCreateDraft(draft: CreateDraft): CreateDraft {
+  return {
+    ...draft,
+    title: stripMarkdownEscapes(draft.title),
+    description: stripMarkdownEscapes(draft.description),
+    slug: stripMarkdownEscapes(draft.slug),
+    ...(draft.project_url !== undefined
+      ? { project_url: stripMarkdownEscapes(draft.project_url) }
+      : {}),
+    sections: draft.sections.map((section) => ({
+      heading: stripMarkdownEscapes(section.heading),
+      body: stripMarkdownEscapes(section.body),
+    })),
+    media: draft.media.map((url) => stripMarkdownEscapes(url)),
+  };
+}
+
 /** Resolve the language model used by the create agent. */
 function resolveCreateModel(options: CreateOptions): LanguageModel {
   if (options.model !== undefined) {
@@ -313,7 +446,7 @@ export async function createPage(
   const context = options.context ?? (await gatherCreateContext(entry, options));
   const model = resolveCreateModel(options);
 
-  const draft = await generateStructured({
+  const rawDraft = await generateStructured({
     model,
     schema: createDraftSchema,
     system: CREATE_SYSTEM_PROMPT,
@@ -328,6 +461,7 @@ export async function createPage(
       ? { maxRepairAttempts: options.maxRepairAttempts }
       : {}),
   });
+  const draft = sanitizeCreateDraft(rawDraft);
 
   const slug = await resolveSlug(entry, draft, {
     ...(options.contentIndex !== undefined

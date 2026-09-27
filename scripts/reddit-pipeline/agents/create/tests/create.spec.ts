@@ -24,6 +24,7 @@ import {
   gatherCreateContext,
   resolveSlug,
   resolveTitle,
+  sanitizeCreateDraft,
   type CreateContext,
   type CreateDraft,
 } from '../index';
@@ -249,6 +250,39 @@ describe('buildCreatePrompt', () => {
 
     expect(prompt).not.toContain(long);
     expect(prompt).toContain('…');
+  });
+
+  it('lists the repository candidates from the context', () => {
+    const prompt = buildCreatePrompt(makeEntry(), {
+      ...makeContext(),
+      candidates: [makeRepo()],
+    });
+
+    expect(prompt).toContain('Repository candidates');
+    expect(prompt).toContain('ChimeraGaming/PixelNavigator');
+  });
+});
+
+describe('sanitizeCreateDraft', () => {
+  it('removes markdown escapes from URLs, slug and text', () => {
+    const draft = sanitizeCreateDraft(
+      makeDraft({
+        slug: 'super\\_metroid',
+        project_url: 'https://github.com/Raekwon1603/super\\_metroid-android',
+        sections: [
+          { heading: 'Description', body: 'See super\\_metroid for details.' },
+          { heading: 'Setup guide', body: 'Watch https://youtu.be/k98\\_kGSJot4' },
+        ],
+        media: ['https://i.redd.it/a\\_b.jpg'],
+      }),
+    );
+
+    expect(draft.slug).toBe('super_metroid');
+    expect(draft.project_url).toBe(
+      'https://github.com/Raekwon1603/super_metroid-android',
+    );
+    expect(draft.sections[0]?.body).toBe('See super_metroid for details.');
+    expect(draft.media).toEqual(['https://i.redd.it/a_b.jpg']);
   });
 });
 
@@ -584,6 +618,99 @@ describe('gatherCreateContext', () => {
     expect(context).toEqual({ repo: null, readme: null, release: null });
   });
 
+  it('unescapes markdown underscores in a GitHub link from the body', async () => {
+    const urls: string[] = [];
+    const fetchImpl: typeof fetch = (input) => {
+      const url = inputUrl(input);
+      urls.push(url);
+      if (url.endsWith('/readme')) {
+        return Promise.resolve(textResponse('# Super Metroid\n'));
+      }
+      if (url.endsWith('/releases/latest')) {
+        return Promise.resolve(textResponse('', 404));
+      }
+      return Promise.resolve(
+        jsonResponse(
+          searchItem({
+            full_name: 'Raekwon1603/super_metroid-android',
+            name: 'super_metroid-android',
+            owner: { login: 'Raekwon1603' },
+          }),
+        ),
+      );
+    };
+
+    await gatherCreateContext(
+      makeEntry({
+        external_url: 'https://i.redd.it/a.jpg',
+        selftext:
+          'Repo: https://github.com/Raekwon1603/super\\_metroid-android',
+      }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(urls[0]).toContain('/repos/Raekwon1603/super_metroid-android');
+    expect(urls[0]).not.toContain('\\');
+  });
+
+  it('prefers the dual-screen fork when a post links several repositories', async () => {
+    const upstream = 'https://github.com/mstan/Tomba2Recomp';
+    const fork = 'https://github.com/igawa6/Tomba2RecompDS';
+    const itemFor = (
+      fullName: string,
+      repo: string,
+      owner: string,
+      url: string,
+      description: string,
+    ): GitHubSearchItem =>
+      searchItem({
+        full_name: fullName,
+        name: repo,
+        owner: { login: owner },
+        html_url: url,
+        description,
+      });
+    const fetchImpl = createFetch((url) => {
+      if (url.includes('/repos/mstan/Tomba2Recomp/readme')) {
+        return Promise.resolve(textResponse('# Tomba 2 Recomp\n\nA recompilation.'));
+      }
+      if (url.includes('/repos/igawa6/Tomba2RecompDS/readme')) {
+        return Promise.resolve(
+          textResponse('# Tomba2RecompDS\n\nDual screen fork for the AYN Thor.'),
+        );
+      }
+      if (url.endsWith('/releases/latest')) {
+        return Promise.resolve(textResponse('', 404));
+      }
+      if (url.includes('/repos/mstan/Tomba2Recomp')) {
+        return Promise.resolve(
+          jsonResponse(
+            itemFor('mstan/Tomba2Recomp', 'Tomba2Recomp', 'mstan', upstream, 'Tomba 2 recompilation'),
+          ),
+        );
+      }
+      if (url.includes('/repos/igawa6/Tomba2RecompDS')) {
+        return Promise.resolve(
+          jsonResponse(
+            itemFor('igawa6/Tomba2RecompDS', 'Tomba2RecompDS', 'igawa6', fork, 'Dual screen fork'),
+          ),
+        );
+      }
+      return Promise.resolve(jsonResponse(searchItem()));
+    });
+
+    const context = await gatherCreateContext(
+      makeEntry({ external_url: upstream, selftext: `Dual screen fork: ${fork}` }),
+      { repoOptions: { fetchImpl } },
+    );
+
+    expect(context.repo?.fullName).toBe('igawa6/Tomba2RecompDS');
+    expect(context.candidates?.map((candidate) => candidate.fullName)).toEqual([
+      'mstan/Tomba2Recomp',
+      'igawa6/Tomba2RecompDS',
+    ]);
+  });
+
   it('finds the repository from a GitHub link in the body', async () => {
     const fetchImpl = createFetch((url) => {
       if (url.endsWith('/readme')) {
@@ -738,6 +865,25 @@ describe('createPage', () => {
       IMAGE_B,
       IMAGE_C,
     ]);
+  });
+
+  it('strips markdown escapes from a generated project URL', async () => {
+    const { generate } = staticGenerator(
+      makeDraft({
+        slug: 'super-metroid',
+        project_url: 'https://github.com/Raekwon1603/super\\_metroid-android',
+      }),
+    );
+
+    const result = await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext({ repo: null, readme: null, release: null }),
+    });
+
+    expect(result.page.sections.projectUrl).toBe(
+      'https://github.com/Raekwon1603/super_metroid-android',
+    );
   });
 
   it('sends temperature 0, the create system prompt and a schema name', async () => {

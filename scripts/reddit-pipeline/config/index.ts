@@ -10,6 +10,7 @@ import {
   DEFAULT_PR_LABELS,
   DEFAULT_SUBREDDIT,
 } from '../shared/lib/constants';
+import { loadDotenv } from '../shared/lib/env';
 import type { AppConfig } from './lib/types';
 
 /** Read an env var, treating missing/blank values as `undefined`. */
@@ -122,6 +123,12 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       token: parsed.GITHUB_TOKEN,
     },
   };
+}
+
+// Load `.env` before resolving the configuration (no-op when absent). Skipped
+// under Vitest so unit tests keep an isolated, explicit environment.
+if (process.env.VITEST === undefined) {
+  loadDotenv();
 }
 
 /** Configuration resolved from the current process environment. */

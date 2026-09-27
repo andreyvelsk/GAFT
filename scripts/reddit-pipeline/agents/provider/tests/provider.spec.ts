@@ -200,6 +200,23 @@ describe('generateStructured', () => {
     expect(calls[1]?.prompt).toContain(REPAIR_INSTRUCTION);
   });
 
+  it('embeds the concrete validation error in the repair prompt', async () => {
+    const { generate, calls } = recordingGenerator((_options, index) =>
+      Promise.resolve(index === 0 ? { object: { ok: 'nope' } } : { object: { ok: true } }),
+    );
+
+    await generateStructured({
+      model: testModel(),
+      schema: okSchema,
+      system: 'SYS',
+      prompt: 'USER',
+      generate,
+    });
+
+    expect(calls[1]?.prompt).toContain('was rejected with');
+    expect(calls[1]?.prompt).toContain('boolean');
+  });
+
   it('repairs when the generator throws', async () => {
     const { generate, calls } = recordingGenerator((_options, index) =>
       index === 0
