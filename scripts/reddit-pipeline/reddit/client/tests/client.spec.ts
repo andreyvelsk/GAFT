@@ -4,6 +4,8 @@ import {
   ARCTIC_SHIFT_API,
   ARCTIC_SHIFT_IDS_API,
   PULLPUSH_API,
+  REDDIT_RSS_POST_API,
+  REDDIT_RSS_SUB_API,
 } from '../../../shared/lib/constants';
 import {
   fetchArcticShift,
@@ -29,6 +31,14 @@ function postJson(id: string, createdUtc: number): Record<string, unknown> {
 /** Build a JSON `Response` for the mocked `fetch`. */
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status });
+}
+
+/** Minimal Reddit Atom feed with a single entry. */
+const SAMPLE_FEED = `<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><entry><author><name>/u/author</name></author><content type="html"><div class="md"><p>body</p></div></content><id>t3_rsspost</id><link href="https://www.reddit.com/r/AynThor/comments/rsspost/slug/" /><published>2026-08-25T19:37:30+00:00</published><title>RSS post</title></entry></feed>`;
+
+/** Build a text `Response` for the mocked `fetch`. */
+function textResponse(body: string, status = 200): Response {
+  return new Response(body, { status });
 }
 
 /** Run an async operation while fake timers drive the retry/polite delays. */
@@ -124,6 +134,24 @@ describe('reddit client', () => {
     const urls = fetchMock.mock.calls.map((call) => call[0]);
     expect(urls.some((url) => url.startsWith(PULLPUSH_API))).toBe(true);
   });
+
+  it('falls back to the RSS feed when arctic-shift and pullpush fail', async () => {
+    const fetchMock = vi.fn((input: string) => {
+      if (input.startsWith(REDDIT_RSS_SUB_API)) {
+        return Promise.resolve(textResponse(SAMPLE_FEED));
+      }
+      return Promise.resolve(new Response('', { status: 500 }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const posts = await withFakeTimers(() =>
+      fetchPosts({ subreddit: 'AynThor', after: 0, before: 2_000_000_000 }),
+    );
+
+    expect(posts.map((post) => post.id)).toEqual(['rsspost']);
+    const urls = fetchMock.mock.calls.map((call) => call[0]);
+    expect(urls.some((url) => url.startsWith(REDDIT_RSS_SUB_API))).toBe(true);
+  });
 });
 
 describe('parsePostId', () => {
@@ -160,6 +188,54 @@ describe('fetchPostById', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     expect(await fetchPostById('missing')).toBeNull();
+  });
+
+  it('falls back to pullpush when arctic-shift fails', async () => {
+    const fetchMock = vi.fn((input: string) => {
+      if (input.startsWith(ARCTIC_SHIFT_IDS_API)) {
+        return Promise.resolve(new Response('', { status: 500 }));
+      }
+      return Promise.resolve(jsonResponse({ data: [postJson('fallback', 5)] }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const post = await withFakeTimers(() => fetchPostById('1wptab9'));
+
+    expect(post?.id).toBe('fallback');
+    const urls = fetchMock.mock.calls.map((call) => call[0]);
+    expect(urls.some((url) => url.startsWith(PULLPUSH_API))).toBe(true);
+  });
+
+  it('falls back to pullpush when arctic-shift has no such post', async () => {
+    const fetchMock = vi.fn((input: string) => {
+      if (input.startsWith(ARCTIC_SHIFT_IDS_API)) {
+        return Promise.resolve(jsonResponse({ data: [] }));
+      }
+      return Promise.resolve(jsonResponse({ data: [postJson('from-pullpush', 5)] }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const post = await fetchPostById('1wptab9');
+
+    expect(post?.id).toBe('from-pullpush');
+    const urls = fetchMock.mock.calls.map((call) => call[0]);
+    expect(urls.some((url) => url.startsWith(PULLPUSH_API))).toBe(true);
+  });
+
+  it('falls back to the RSS feed when arctic-shift and pullpush fail', async () => {
+    const fetchMock = vi.fn((input: string) => {
+      if (input.startsWith(REDDIT_RSS_POST_API)) {
+        return Promise.resolve(textResponse(SAMPLE_FEED));
+      }
+      return Promise.resolve(new Response('', { status: 500 }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const post = await withFakeTimers(() => fetchPostById('rsspost'));
+
+    expect(post?.id).toBe('rsspost');
+    const urls = fetchMock.mock.calls.map((call) => call[0]);
+    expect(urls.some((url) => url.startsWith(REDDIT_RSS_POST_API))).toBe(true);
   });
 });
 

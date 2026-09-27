@@ -30,12 +30,25 @@ export const ARCTIC_SHIFT_IDS_API =
 /** pullpush submissions endpoint (fallback Reddit source). */
 export const PULLPUSH_API = 'https://api.pullpush.io/reddit/search/submission/';
 
+/**
+ * Reddit Atom feed for a single post. The subreddit is not required, so this
+ * works for any post id. No token is needed, but Reddit rate-limits the feed
+ * aggressively (HTTP 429).
+ */
+export const REDDIT_RSS_POST_API = 'https://www.reddit.com/comments';
+
+/** Reddit Atom feed for a subreddit's newest posts (last 25, no token). */
+export const REDDIT_RSS_SUB_API = 'https://www.reddit.com/r';
+
 /** GitHub REST API base URL. */
 export const GITHUB_API = 'https://api.github.com';
 
-/** User-Agent sent to the Reddit mirrors. */
+/**
+ * User-Agent sent to the Reddit mirrors. Reddit requires a descriptive,
+ * unique User-Agent; a generic browser string is more likely to be blocked.
+ */
 export const REDDIT_USER_AGENT =
-  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)';
+  'ayn-thor-blog/1.0 (Reddit pipeline; by /u/aynthor)';
 
 /** Media limits enforced before writing a page. */
 export const MEDIA_LIMITS = {

@@ -6,11 +6,23 @@ export class FetchError extends Error {
   /** HTTP status code, when the failure came from a response. */
   readonly status: number | undefined;
 
-  constructor(message: string, url: string, status?: number) {
+  /**
+   * Suggested delay (ms) before retrying, derived from a `Retry-After` or
+   * `x-ratelimit-reset` header. `undefined` when the server gave no hint.
+   */
+  readonly retryAfterMs: number | undefined;
+
+  constructor(
+    message: string,
+    url: string,
+    status?: number,
+    retryAfterMs?: number,
+  ) {
     super(message);
     this.name = 'FetchError';
     this.url = url;
     this.status = status;
+    this.retryAfterMs = retryAfterMs;
   }
 }
 

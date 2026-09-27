@@ -18,9 +18,20 @@ export interface RetryOptions {
   onRetry?: (error: unknown, attempt: number) => void;
 }
 
+/** Read a server-suggested retry delay (ms) from an error, when present. */
+function retryAfterMs(error: unknown): number | undefined {
+  if (typeof error !== 'object' || error === null || !('retryAfterMs' in error)) {
+    return undefined;
+  }
+  const value = error.retryAfterMs;
+  return typeof value === 'number' && value > 0 ? value : undefined;
+}
+
 /**
  * Run `operation`, retrying with linear backoff on failure.
- * The last error is re-thrown once all attempts are exhausted.
+ * A server-suggested delay (`retryAfterMs` on the error) takes precedence over
+ * the computed backoff. The last error is re-thrown once all attempts are
+ * exhausted.
  */
 export async function retry<T>(
   operation: () => Promise<T>,
@@ -34,9 +45,12 @@ export async function retry<T>(
         throw error instanceof Error ? error : new Error(String(error));
       }
       const rateLimited = options.isRateLimit?.(error) ?? false;
-      const delay = rateLimited
+      const computed = rateLimited
         ? options.rateLimitDelayMs * (attempt + 1)
         : options.baseDelayMs * (attempt + 1);
+      // A server hint is a lower bound: Reddit's `x-ratelimit-reset` often
+      // understates the real penalty, so never wait less than the backoff.
+      const delay = Math.max(retryAfterMs(error) ?? 0, computed);
       options.onRetry?.(error, attempt);
       await sleep(delay);
     }
