@@ -59,3 +59,50 @@ export const reportEntrySchema = z.object({
 });
 
 export type ReportEntry = z.infer<typeof reportEntrySchema>;
+
+/** Severity levels of the structured logger, from most to least verbose. */
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+
+/** A single structured log record. */
+export interface LogRecord {
+  /** Severity of the record. */
+  level: LogLevel;
+
+  /** Human-readable message. */
+  message: string;
+
+  /** ISO timestamp of the record. */
+  time: string;
+
+  /** Structured context merged into the record. */
+  context: Record<string, unknown>;
+}
+
+/** Options accepted by `createLogger`. */
+export interface LoggerOptions {
+  /** Minimum level to emit (defaults to `info`). */
+  level?: LogLevel;
+
+  /** Emit one JSON object per line (defaults to `false`). */
+  json?: boolean;
+
+  /** Sink receiving each formatted line (defaults to stdout). */
+  write?: (line: string) => void;
+
+  /** Clock used for the record timestamp (defaults to `Date`). */
+  now?: () => Date;
+
+  /** Base context merged into every record. */
+  context?: Record<string, unknown>;
+}
+
+/** Structured logger with level filtering and optional JSON output. */
+export interface Logger {
+  debug(message: string, context?: Record<string, unknown>): void;
+  info(message: string, context?: Record<string, unknown>): void;
+  warn(message: string, context?: Record<string, unknown>): void;
+  error(message: string, context?: Record<string, unknown>): void;
+
+  /** Derive a logger that merges `context` into every record. */
+  child(context: Record<string, unknown>): Logger;
+}

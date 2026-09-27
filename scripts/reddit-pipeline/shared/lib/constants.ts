@@ -19,6 +19,9 @@ export const PUBLIC_CONTENT_DIR = join(PROJECT_ROOT, 'public', 'content');
 /** Directory with the run reports. */
 export const PLANS_DIR = join(PROJECT_ROOT, 'plans');
 
+/** Default path of the run report artifact. */
+export const REPORT_FILE = join(PLANS_DIR, 'reddit-pipeline-report.json');
+
 /** arctic-shift posts search endpoint (primary Reddit source). */
 export const ARCTIC_SHIFT_API =
   'https://arctic-shift.photon-reddit.com/api/posts/search';
