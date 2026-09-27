@@ -91,6 +91,19 @@ jobs:
             git checkout -B "$PR_BRANCH"
           fi
 
+      - name: Merge the base branch into the automation branch
+        run: |
+          # Keep the long-lived automation branch up to date with `main`.
+          # The merge is best-effort: if it conflicts (or cannot be performed),
+          # abort it and continue — the pipeline run itself must still happen.
+          git fetch origin "$PR_BASE" || true
+          if git merge "origin/$PR_BASE" --no-edit; then
+            echo "Merged origin/$PR_BASE into $PR_BRANCH."
+          else
+            echo "::warning::Merge of origin/$PR_BASE into $PR_BRANCH conflicts — skipping the merge, continuing the run."
+            git merge --abort || true
+          fi
+
       - name: Check dry-run mode
         run: |
           case "$(echo "$REDDIT_DRY_RUN" | tr '[:upper:]' '[:lower:]')" in
