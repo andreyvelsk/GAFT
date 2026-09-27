@@ -19,3 +19,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
+
+# Reddit pipeline run reports (generated; uploaded as CI artifacts)
+plans/reddit-pipeline-report.json
+plans/reddit-pipeline-report.md

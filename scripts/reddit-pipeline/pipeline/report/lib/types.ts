@@ -95,3 +95,33 @@ export interface WriteReportOptions {
   /** Logger used to announce the written artifact. */
   logger?: Logger;
 }
+
+/** Options accepted by `writeReportMarkdown`. */
+export interface WriteReportMarkdownOptions {
+  /** Destination path (defaults to the shared `REPORT_MARKDOWN_FILE`). */
+  markdownPath?: string;
+
+  /** Logger used to announce the written artifact. */
+  logger?: Logger;
+}
+
+/** Human-readable breakdown of a run report. */
+export interface ReportSummary {
+  /** Posts dropped by the deterministic prefilter. */
+  prefilter: number;
+
+  /** Posts classified as not relevant by the filter agent. */
+  filter: number;
+
+  /** Posts skipped for any other reason. */
+  otherSkipped: number;
+
+  /** Entries of the pages created during the run. */
+  created: PostReportEntry[];
+
+  /** Entries of the pages updated during the run. */
+  updated: PostReportEntry[];
+
+  /** Entries of the posts that failed during the run. */
+  errors: PostReportEntry[];
+}

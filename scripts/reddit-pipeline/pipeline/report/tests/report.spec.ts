@@ -10,7 +10,11 @@ import {
   buildReport,
   countEntries,
   createReportBuilder,
+  formatReportMarkdown,
+  markdownPathFor,
+  summarizeReport,
   writeReport,
+  writeReportMarkdown,
   type PostReportEntry,
 } from '../index';
 
@@ -135,5 +139,152 @@ describe('writeReport', () => {
     const raw = await readFile(path, 'utf8');
     expect(raw).toBe(`${JSON.stringify(report, null, 2)}\n`);
     expect(lines.some((line) => line.includes('run report written'))).toBe(true);
+  });
+});
+
+describe('summarizeReport', () => {
+  it('splits skipped posts by stage and groups created/updated/errors', () => {
+    const report = buildReport(
+      [
+        makeEntry({ id: 'p', action: 'skipped', reason: 'prefilter: flair=support' }),
+        makeEntry({
+          id: 'q',
+          action: 'skipped',
+          reason: 'prefilter: question title without project link/signal',
+        }),
+        makeEntry({ id: 'r', action: 'skipped', reason: 'filter: not relevant' }),
+        makeEntry({ id: 's', action: 'skipped', reason: 'something else' }),
+        makeEntry({ id: 'c', action: 'created', slug: 'app-c' }),
+        makeEntry({ id: 'u', action: 'updated', slug: 'app-u' }),
+        makeEntry({ id: 'e', action: 'error', error: 'boom' }),
+      ],
+      { now: () => FIXED },
+    );
+
+    const summary = summarizeReport(report);
+
+    expect(summary.prefilter).toBe(2);
+    expect(summary.filter).toBe(1);
+    expect(summary.otherSkipped).toBe(1);
+    expect(summary.created.map((entry) => entry.id)).toEqual(['c']);
+    expect(summary.updated.map((entry) => entry.id)).toEqual(['u']);
+    expect(summary.errors.map((entry) => entry.id)).toEqual(['e']);
+  });
+
+  it('returns empty groups for an empty report', () => {
+    const summary = summarizeReport(buildReport([], { now: () => FIXED }));
+
+    expect(summary).toEqual({
+      prefilter: 0,
+      filter: 0,
+      otherSkipped: 0,
+      created: [],
+      updated: [],
+      errors: [],
+    });
+  });
+});
+
+describe('markdownPathFor', () => {
+  it('replaces a .json extension with .md', () => {
+    expect(markdownPathFor('plans/reddit-pipeline-report.json')).toBe(
+      'plans/reddit-pipeline-report.md',
+    );
+  });
+
+  it('appends .md when the path has no .json extension', () => {
+    expect(markdownPathFor('plans/report')).toBe('plans/report.md');
+  });
+});
+
+describe('formatReportMarkdown', () => {
+  it('renders counts, stage breakdown and the changed pages', () => {
+    const report = buildReport(
+      [
+        makeEntry({
+          id: 'p',
+          action: 'skipped',
+          reason: 'prefilter: flair=support',
+        }),
+        makeEntry({
+          id: 'r',
+          action: 'skipped',
+          reason: 'filter: not relevant',
+        }),
+        makeEntry({
+          id: 'c',
+          title: 'Selaco Android port',
+          action: 'created',
+          slug: 'selaco',
+        }),
+        makeEntry({
+          id: 'u',
+          title: 'Wayfinder 1.0',
+          action: 'updated',
+          slug: 'wayfinder',
+        }),
+        makeEntry({ id: 'e', action: 'error', error: 'boom' }),
+      ],
+      { now: () => FIXED },
+    );
+
+    const markdown = formatReportMarkdown(report);
+
+    expect(markdown).toContain('## Reddit pipeline report');
+    expect(markdown).toContain('| Fetched posts | 5 |');
+    expect(markdown).toContain('| Dropped by prefilter | 1 |');
+    expect(markdown).toContain('| Not relevant (filter agent) | 1 |');
+    expect(markdown).toContain('| Created | 1 |');
+    expect(markdown).toContain('| Updated | 1 |');
+    expect(markdown).toContain('| Errors | 1 |');
+    expect(markdown).toContain('### Created pages (1)');
+    expect(markdown).toContain('Selaco Android port → `selaco`');
+    expect(markdown).toContain('### Updated pages (1)');
+    expect(markdown).toContain('Wayfinder 1.0 → `wayfinder`');
+    expect(markdown).toContain('### Errors (1)');
+    expect(markdown).toContain('— boom');
+    expect(markdown.endsWith('\n')).toBe(true);
+  });
+
+  it('flags a dry run and omits empty sections', () => {
+    const report = buildReport([], { dryRun: true, now: () => FIXED });
+
+    const markdown = formatReportMarkdown(report);
+
+    expect(markdown).toContain('**Dry run**');
+    expect(markdown).not.toContain('### Created pages');
+    expect(markdown).not.toContain('### Errors');
+  });
+});
+
+describe('writeReportMarkdown', () => {
+  let dir: string | null = null;
+
+  afterEach(async () => {
+    if (dir !== null) {
+      await rm(dir, { recursive: true, force: true });
+      dir = null;
+    }
+  });
+
+  it('writes the report as Markdown and returns the path', async () => {
+    dir = await mkdtemp(join(tmpdir(), 'report-md-'));
+    const path = join(dir, 'report.md');
+    const report = buildReport([makeEntry({ action: 'created', slug: 'x' })], {
+      now: () => FIXED,
+    });
+    const { logger, lines } = collectLogger();
+
+    const written = await writeReportMarkdown(report, {
+      markdownPath: path,
+      logger,
+    });
+
+    expect(written).toBe(path);
+    const raw = await readFile(path, 'utf8');
+    expect(raw).toBe(formatReportMarkdown(report));
+    expect(
+      lines.some((line) => line.includes('run report (markdown) written')),
+    ).toBe(true);
   });
 });

@@ -3,7 +3,9 @@ import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
 import {
   createReportBuilder,
+  markdownPathFor,
   writeReport,
+  writeReportMarkdown,
   type PostAction,
   type PostReportEntry,
 } from '../../report';
@@ -223,6 +225,10 @@ export async function runPipeline(
       ...(options.reportPath !== undefined
         ? { reportPath: options.reportPath }
         : {}),
+      logger,
+    });
+    await writeReportMarkdown(report, {
+      markdownPath: markdownPathFor(reportPath),
       logger,
     });
   }
