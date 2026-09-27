@@ -2,7 +2,9 @@ import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { generateObject } from 'ai';
 
 import { config } from '../../../config';
+import { createLogger } from '../../../shared/lib/logger';
 import { AgentError } from '../../../shared/lib/errors';
+import type { Logger } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   GenerateObjectOptions,
@@ -145,14 +147,28 @@ export async function generateStructured<T>(
   const maxRepair = options.maxRepairAttempts ?? DEFAULT_MAX_REPAIR_ATTEMPTS;
   const temperature = options.temperature ?? DEFAULT_TEMPERATURE;
   const agent = options.agent ?? 'agent';
+  const log: Logger = options.logger ?? createLogger();
 
   let lastError: unknown;
   for (let attempt = 0; attempt <= maxRepair; attempt += 1) {
+    if (attempt > 0) {
+      log.warn('structured generation: retrying after invalid output', {
+        agent,
+        attempt,
+        maxAttempts: maxRepair + 1,
+        error: errorToMessage(lastError),
+      });
+    }
     const prompt =
       attempt === 0
         ? options.prompt
         : `${options.prompt}${REPAIR_INSTRUCTION}${describeError(lastError)}`;
     try {
+      log.info('structured generation: calling model', {
+        agent,
+        attempt,
+        maxAttempts: maxRepair + 1,
+      });
       const result = await generate(
         buildCallOptions(options, prompt, temperature),
       );

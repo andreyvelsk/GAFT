@@ -42,6 +42,17 @@ export interface UpdateStageOptions {
 
   /** Injected text writer (used by tests). */
   writeFile?: (path: string, content: string) => Promise<void>;
+
+  /** Progress callback invoked for every media download. */
+  onMedia?: (info: {
+    url: string;
+    fileName: string;
+    index: number;
+    total: number;
+  }) => void;
+
+  /** Progress callback invoked right before the page file is written. */
+  onWrite?: (info: { path: string }) => void;
 }
 
 /** Result of the update stage. */

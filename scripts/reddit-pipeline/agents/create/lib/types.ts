@@ -13,7 +13,7 @@ import type {
   ReleaseInfo,
   RepoOptions,
 } from '../../../github/repo';
-import type { ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ReportEntry } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
@@ -100,6 +100,9 @@ export interface CreateResult {
 
 /** Options accepted by the create agent. */
 export interface CreateOptions {
+  /** Structured logger for progress output (defaults to a stdout logger). */
+  logger?: Logger;
+
   /** Pre-built language model (used by tests / callers). */
   model?: LanguageModel;
 

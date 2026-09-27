@@ -47,6 +47,7 @@ function postEntry(
 export async function runPipeline(
   options: OrchestratorOptions = {},
 ): Promise<OrchestratorResult> {
+  const startedAtMs = Date.now();
   const cfg = options.config ?? loadConfig();
   const logger = options.logger ?? createLogger();
   const fixedNow = options.now;
@@ -72,6 +73,7 @@ export async function runPipeline(
     dryRun,
   });
 
+  logger.info('stage fetch: fetching posts from reddit');
   const fetchResult = await fetchStage({
     subreddit: cfg.reddit.subreddit,
     lookbackHours: cfg.reddit.lookbackHours,
@@ -79,25 +81,69 @@ export async function runPipeline(
     now: windowNow,
     ...stages.fetch,
   });
+  logger.info('stage fetch: done', {
+    fetched: fetchResult.fetched,
+    kept: fetchResult.entries.length,
+    dropped: fetchResult.dropped.length,
+  });
 
   for (const dropped of fetchResult.dropped) {
+    logger.info('prefilter: dropped', {
+      id: dropped.entry.id,
+      title: dropped.entry.title,
+      reason: dropped.reason,
+    });
     builder.add(
       postEntry(dropped.entry, 'skipped', `prefilter: ${dropped.reason}`),
     );
   }
 
-  const filterResult = await filterStage(fetchResult.entries, {
+  const filterEntries = fetchResult.entries;
+  logger.info('stage filter: classifying relevance', {
+    posts: filterEntries.length,
+    batchSize: cfg.reddit.batchSize,
+  });
+  const filterResult = await filterStage(filterEntries, {
     batchSize: cfg.reddit.batchSize,
     ...stages.filter,
+    filterOptions: {
+      ...stages.filter?.filterOptions,
+      onBatch: (info): void => {
+        logger.info('stage filter: batch classified', {
+          batch: info.batch,
+          totalBatches: info.totalBatches,
+          posts: info.posts,
+        });
+      },
+    },
+  });
+  logger.info('stage filter: done', {
+    relevant: filterResult.relevant.length,
+    skipped: filterResult.skipped.length,
   });
 
   for (const skipped of filterResult.skipped) {
+    logger.info('filter: not relevant', {
+      id: skipped.entry.id,
+      title: skipped.entry.title,
+    });
     builder.add(
       postEntry(skipped.entry, 'skipped', `filter: ${skipped.reason}`),
     );
   }
 
-  for (const entry of filterResult.relevant) {
+  const relevant = filterResult.relevant;
+  logger.info('stage process: processing relevant posts', {
+    count: relevant.length,
+  });
+
+  for (const [index, entry] of relevant.entries()) {
+    logger.info('post: processing', {
+      index: index + 1,
+      total: relevant.length,
+      id: entry.id,
+      title: entry.title,
+    });
     try {
       const matchResult = await matchStage([entry], stages.match ?? {});
       const matched = matchResult.decisions[0];
@@ -105,11 +151,31 @@ export async function runPipeline(
         throw new Error('match stage returned no decision');
       }
       const { decision } = matched;
+      logger.info('stage match: decided', {
+        id: entry.id,
+        action: decision.action,
+        slug: decision.slug,
+        reason: decision.reason,
+      });
 
       if (decision.action === 'CREATE') {
         const created = await createStage(entry, {
           ...stages.create,
           dryRun,
+          createOptions: {
+            ...stages.create?.createOptions,
+            logger,
+          },
+          onWrite: (info): void => {
+            logger.info('stage create: writing page', { path: info.path });
+          },
+          onMedia: (info): void => {
+            logger.info('stage create: downloading media', info);
+          },
+        });
+        logger.info('stage create: done', {
+          slug: created.slug,
+          written: created.written,
         });
         builder.add(
           postEntry(entry, 'created', decision.reason, { slug: created.slug }),
@@ -118,6 +184,23 @@ export async function runPipeline(
         const updated = await updateStage(entry, decision.slug, {
           ...stages.update,
           dryRun,
+          updateOptions: {
+            ...stages.update?.updateOptions,
+            logger,
+          },
+          onWrite: (info): void => {
+            logger.info('stage update: writing page', {
+              slug: decision.slug,
+              path: info.path,
+            });
+          },
+          onMedia: (info): void => {
+            logger.info('stage update: downloading media', info);
+          },
+        });
+        logger.info('stage update: done', {
+          slug: updated.slug,
+          written: updated.written,
         });
         builder.add(
           postEntry(entry, 'updated', decision.reason, { slug: updated.slug }),
@@ -144,6 +227,9 @@ export async function runPipeline(
     });
   }
 
-  logger.info('pipeline finished', { counts: report.counts });
+  logger.info('pipeline finished', {
+    counts: report.counts,
+    durationMs: Date.now() - startedAtMs,
+  });
   return { report, reportPath };
 }

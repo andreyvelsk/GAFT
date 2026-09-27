@@ -31,6 +31,7 @@ import {
   resolveProjectUrl,
   stripMarkdownEscapes,
 } from '../../../shared/lib/helpers';
+import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
 import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
@@ -329,20 +330,32 @@ export async function gatherUpdateContext(
 ): Promise<UpdateContext> {
   const repoOptions = options.repoOptions ?? {};
   const query = githubUrlFromEntry(entry) || entry.title;
+  const log = options.logger ?? createLogger();
   try {
+    log.debug('update: researching repositories', { id: entry.id, query });
     const repos = await resolveCandidateRepos(entry, repoOptions);
     if (repos.length === 0) {
+      log.info('update: no repository found', { id: entry.id, query });
       return { repo: null, readme: null, release: null };
     }
     const preferred = await pickPreferredRepo(repos, repoOptions);
     if (preferred === null) {
       return { repo: null, readme: null, release: null };
     }
+    log.debug('update: fetching latest release', {
+      repo: preferred.repo.fullName,
+    });
     const release = await getLatestRelease(
       preferred.repo.owner,
       preferred.repo.repo,
       repoOptions,
     );
+    log.info('update: repository research done', {
+      id: entry.id,
+      repo: preferred.repo.fullName,
+      hasReadme: preferred.readme !== null,
+      release: release?.tagName ?? null,
+    });
     return {
       repo: preferred.repo,
       readme: preferred.readme,
@@ -350,9 +363,11 @@ export async function gatherUpdateContext(
       candidates: repos,
     };
   } catch (error) {
-    console.warn(
-      `repository research failed for "${query}": ${String(error)}`,
-    );
+    log.warn('update: repository research failed', {
+      id: entry.id,
+      query,
+      error: String(error),
+    });
     return { repo: null, readme: null, release: null };
   }
 }

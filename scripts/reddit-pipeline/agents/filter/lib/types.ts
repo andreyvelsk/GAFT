@@ -30,6 +30,18 @@ export const filterResponseSchema = z.object({
 
 export type FilterResponse = z.infer<typeof filterResponseSchema>;
 
+/** Progress info of a single classification batch. */
+export interface FilterBatchInfo {
+  /** Index of the batch (starting at 1). */
+  batch: number;
+
+  /** Total number of batches. */
+  totalBatches: number;
+
+  /** Number of posts in this batch. */
+  posts: number;
+}
+
 /** Subset of a report entry sent to the model. */
 export interface FilterPostInput {
   id: string;
@@ -55,4 +67,7 @@ export interface FilterOptions {
 
   /** Number of posts sent per LLM request (defaults to the config value). */
   batchSize?: number;
+
+  /** Progress callback invoked after each classified batch. */
+  onBatch?: (info: FilterBatchInfo) => void;
 }

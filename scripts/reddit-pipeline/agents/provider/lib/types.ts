@@ -5,6 +5,8 @@ import type {
 import type { LanguageModel } from 'ai';
 import type { z } from 'zod';
 
+import type { Logger } from '../../../shared/lib/types';
+
 /** Options accepted when creating the OpenRouter provider. */
 export interface ProviderOptions {
   /** API key override; falls back to the resolved config. */
@@ -60,6 +62,9 @@ export type GenerateObjectLike = (
 
 /** Options for `generateStructured`. */
 export interface StructuredGenerationOptions<T> {
+  /** Structured logger for progress output (defaults to a stdout logger). */
+  logger?: Logger;
+
   /** Language model used for the call. */
   model: LanguageModel;
 

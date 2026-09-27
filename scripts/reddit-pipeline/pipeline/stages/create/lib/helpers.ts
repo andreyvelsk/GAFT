@@ -39,8 +39,15 @@ export async function runCreateStage(
   const writeFile = options.writeFile ?? writeTextFile;
   const saveImage = options.saveImage ?? defaultSaveImage;
 
+  options.onWrite?.({ path: join(contentDir, result.slug, PAGE_FILE) });
   await writeFile(join(contentDir, result.slug, PAGE_FILE), result.markdown);
-  for (const item of result.media) {
+  for (const [index, item] of result.media.entries()) {
+    options.onMedia?.({
+      url: item.url,
+      fileName: item.fileName,
+      index: index + 1,
+      total: result.media.length,
+    });
     await saveImage({
       url: item.url,
       outputPath: join(publicContentDir, result.slug, item.fileName),

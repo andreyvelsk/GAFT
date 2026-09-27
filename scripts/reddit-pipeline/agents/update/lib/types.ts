@@ -12,6 +12,7 @@ import type {
   ReleaseInfo,
   RepoOptions,
 } from '../../../github/repo';
+import type { Logger } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
@@ -107,6 +108,9 @@ export interface UpdateResult {
 
 /** Options accepted by the update agent. */
 export interface UpdateOptions {
+  /** Structured logger for progress output (defaults to a stdout logger). */
+  logger?: Logger;
+
   /** Pre-built language model (used by tests / callers). */
   model?: LanguageModel;
 

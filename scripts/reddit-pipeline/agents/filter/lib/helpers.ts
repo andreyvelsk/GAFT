@@ -7,6 +7,7 @@ import { resolveModel } from '../../model/lib/helpers';
 import { createProvider, generateStructured } from '../../provider/lib/helpers';
 import {
   filterResponseSchema,
+  type FilterBatchInfo,
   type FilterOptions,
   type FilterPostInput,
   type FilterVerdict,
@@ -131,9 +132,18 @@ export async function classifyPosts(
   }
 
   const batchSize = options.batchSize ?? config.reddit.batchSize;
+  const batches = chunk(entries, batchSize);
   const verdicts: FilterVerdict[] = [];
-  for (const batch of chunk(entries, batchSize)) {
+  for (const [index, batch] of batches.entries()) {
     verdicts.push(...(await classifyBatch(batch, options)));
+    if (options.onBatch !== undefined) {
+      const info: FilterBatchInfo = {
+        batch: index + 1,
+        totalBatches: batches.length,
+        posts: batch.length,
+      };
+      options.onBatch(info);
+    }
   }
   return verdicts;
 }
