@@ -30,13 +30,23 @@ interface FetchArticlesOptions {
   pageSize?: number
 }
 
-export const useArticles = () => {
+export interface UseArticlesReturn {
+  getArticles: (options?: FetchArticlesOptions) => Promise<Article[]>
+  getArticle: (slug: string) => Promise<Article | null>
+  getArticlesCount: () => Promise<number>
+  filterArticles: (articles: Article[], searchQuery: string) => Article[]
+  sortArticles: (list: Article[], sortField: SortField, sortOrder: SortOrder) => Article[]
+  paginateArticles: (articles: Article[], page: number, pageSize: number) => Article[]
+  ARTICLES_PER_PAGE: number
+}
+
+export const useArticles = (): UseArticlesReturn => {
   const ARTICLES_PER_PAGE = 18
 
   /**
    * Fetch all articles with sorting and search support
    */
-  const getArticles = (options: FetchArticlesOptions = {}) => {
+  const getArticles = (options: FetchArticlesOptions = {}): Promise<Article[]> => {
     const {
       sortField = 'date',
       sortOrder = 'desc',
@@ -76,7 +86,7 @@ export const useArticles = () => {
     return articles.filter((article) =>
       article.title.toLowerCase().includes(lowerQuery) ||
       article.description.toLowerCase().includes(lowerQuery) ||
-      (article.tags && article.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)))
+      (article.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)) ?? false)
     )
   }
 
@@ -117,7 +127,7 @@ export const useArticles = () => {
   /**
    * Fetch a single article by slug
    */
-  const getArticle = (slug: string) => {
+  const getArticle = (slug: string): Promise<Article | null> => {
     return queryContent<Article>('/')
       .where({ slug: { $contains: slug } })
       .findOne()
@@ -126,7 +136,7 @@ export const useArticles = () => {
   /**
    * Get total article count
    */
-  const getArticlesCount = () => {
+  const getArticlesCount = (): Promise<number> => {
     return queryContent<Article>('/').count()
   }
 

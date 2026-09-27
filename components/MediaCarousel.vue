@@ -12,7 +12,7 @@
         :src="resolveUrl(currentItem?.url || '')"
         :alt="`Slide ${currentIndex + 1}`"
         class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-      />
+      >
 
       <!-- YouTube Video Embed -->
       <iframe
@@ -35,22 +35,42 @@
       <!-- Navigation Arrows -->
       <button
         v-if="hasMultipleItems"
-        @click="prev"
         class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-all hover:scale-110 backdrop-blur-sm"
         aria-label="Previous"
+        @click="prev"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
       <button
         v-if="hasMultipleItems"
-        @click="next"
         class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-all hover:scale-110 backdrop-blur-sm"
         aria-label="Next"
+        @click="next"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
 
@@ -62,10 +82,10 @@
         <button
           v-for="(_, index) in totalItems"
           :key="index"
-          @click="goTo(index)"
           class="w-2 h-2 rounded-full transition-all duration-300"
           :class="index === currentIndex ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/60'"
           :aria-label="`Go to slide ${index + 1}`"
+          @click="goTo(index)"
         />
       </div>
     </div>

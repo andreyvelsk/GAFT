@@ -1,0 +1,45 @@
+import type { FetchWindow } from '../../../../reddit/client/lib/types';
+import type { PrefilterReason } from '../../../../reddit/prefilter';
+import type { RawPost, ReportEntry } from '../../../../shared/lib/types';
+
+/** Options accepted by the fetch stage. */
+export interface FetchStageOptions {
+  /** Subreddit to scan (defaults to the config value). */
+  subreddit?: string;
+
+  /** Lookback window in hours (defaults to the config value). */
+  lookbackHours?: number;
+
+  /** Maximum number of posts to keep, `0` = unlimited (defaults to config). */
+  maxPosts?: number;
+
+  /** Reference time used to compute the window (defaults to now). */
+  now?: Date;
+
+  /** Injected post fetcher (used by tests). */
+  fetchPosts?: (window: FetchWindow) => Promise<RawPost[]>;
+}
+
+/** A post dropped by the deterministic prefilter. */
+export interface DroppedPost {
+  /** Normalized post that was dropped. */
+  entry: ReportEntry;
+
+  /** Reason returned by the prefilter. */
+  reason: PrefilterReason;
+}
+
+/** Result of the fetch stage. */
+export interface FetchStageResult {
+  /** Window that was queried. */
+  window: FetchWindow;
+
+  /** Number of raw posts returned by the source. */
+  fetched: number;
+
+  /** Posts kept after normalization and prefiltering. */
+  entries: ReportEntry[];
+
+  /** Posts dropped by the prefilter. */
+  dropped: DroppedPost[];
+}

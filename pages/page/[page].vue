@@ -5,7 +5,12 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const pageNumber = computed(() => parseInt(route.params.page as string) || 1)
+const pageNumber = computed(() => {
+  const raw = route.params.page
+  const value = Array.isArray(raw) ? raw[0] : raw
+  const parsed = Number.parseInt(value ?? '', 10)
+  return Number.isNaN(parsed) ? 1 : parsed
+})
 
 // SEO
 useHead({

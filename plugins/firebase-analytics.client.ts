@@ -23,15 +23,15 @@ export default defineNuxtPlugin(() => {
   /**
    * Log the first page view (the page the user landed on).
    */
-  const trackPageView = (path: string) => {
+  const trackPageView = (path: string): void => {
     logEvent(analytics, 'page_view', {
       page_path: path,
-      page_title: document?.title || '',
+      page_title: document.title,
     })
   }
 
   // Track initial page
-  if (import.meta.client) {
+  if (import.meta.client === true) {
     trackPageView(router.currentRoute.value.fullPath)
   }
 
@@ -51,7 +51,7 @@ export default defineNuxtPlugin(() => {
        * $trackEvent('like_clicked', { article: 'skyrim' })
        * ```
        */
-      trackEvent: (eventName: string, params?: Record<string, string | number | boolean>) => {
+      trackEvent: (eventName: string, params?: Record<string, string | number | boolean>): void => {
         logEvent(analytics, eventName, params)
       },
     },

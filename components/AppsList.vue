@@ -51,8 +51,12 @@
         v-else
         class="text-center py-16"
       >
-        <div class="text-5xl mb-4 text-gray-600">[ ? ]</div>
-        <h3 class="text-xl font-semibold text-gray-300 mb-2">Nothing found</h3>
+        <div class="text-5xl mb-4 text-gray-600">
+          [ ? ]
+        </div>
+        <h3 class="text-xl font-semibold text-gray-300 mb-2">
+          Nothing found
+        </h3>
         <p class="text-gray-500">
           Try changing your search query or resetting filters
         </p>

@@ -17,20 +17,30 @@
       <input
         ref="inputEl"
         :value="modelValue"
-        @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         type="text"
         placeholder="Search games and apps..."
         class="w-full pl-10 pr-4 py-3 bg-surface-200 border border-gray-700 rounded-xl text-gray-200 placeholder-gray-500 appearance-none focus:outline-none focus:bg-surface-200 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-[border-color,box-shadow] duration-200"
-      />
+        @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+      >
       <!-- Clear button -->
       <button
         v-if="modelValue"
-        @click="emit('update:modelValue', '')"
         class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
         aria-label="Clear search"
+        @click="emit('update:modelValue', '')"
       >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
     </div>
@@ -53,13 +63,13 @@ const inputEl = ref<HTMLInputElement | null>(null)
 const searchFocusPending = useState<boolean>('search-focus-pending', () => false)
 
 onBeforeUnmount(() => {
-  if (import.meta.client && document.activeElement === inputEl.value) {
+  if (import.meta.client === true && document.activeElement === inputEl.value) {
     searchFocusPending.value = true
   }
 })
 
 onMounted(() => {
-  if (import.meta.client && searchFocusPending.value) {
+  if (import.meta.client === true && searchFocusPending.value) {
     searchFocusPending.value = false
     inputEl.value?.focus()
     // Move the caret to the end of the input

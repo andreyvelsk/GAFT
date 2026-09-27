@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   // SEO
   app: {
     // Base path для GitHub Pages (/<repo-name>/), локально — '/'
-    baseURL: process.env.NUXT_APP_BASE_URL || '/',
+    baseURL: process.env.NUXT_APP_BASE_URL ?? '/',
 
     head: {
       charset: 'utf-8',
@@ -43,11 +43,11 @@ export default defineNuxtConfig({
         lang: 'en'
       },
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: `${process.env.NUXT_APP_BASE_URL || '/'}favicon.svg` },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${process.env.NUXT_APP_BASE_URL || '/'}favicon-32x32.png` },
-        { rel: 'icon', type: 'image/png', sizes: '16x16', href: `${process.env.NUXT_APP_BASE_URL || '/'}favicon-16x16.png` },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: `${process.env.NUXT_APP_BASE_URL || '/'}apple-touch-icon.png` },
-        { rel: 'manifest', href: `${process.env.NUXT_APP_BASE_URL || '/'}site.webmanifest` }
+        { rel: 'icon', type: 'image/svg+xml', href: `${process.env.NUXT_APP_BASE_URL ?? '/'}favicon.svg` },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${process.env.NUXT_APP_BASE_URL ?? '/'}favicon-32x32.png` },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: `${process.env.NUXT_APP_BASE_URL ?? '/'}favicon-16x16.png` },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: `${process.env.NUXT_APP_BASE_URL ?? '/'}apple-touch-icon.png` },
+        { rel: 'manifest', href: `${process.env.NUXT_APP_BASE_URL ?? '/'}site.webmanifest` }
       ],
       meta: [
         { name: 'yandex-verification', content: '' },
@@ -56,7 +56,7 @@ export default defineNuxtConfig({
       script: [
         {
           type: 'application/ld+json',
-          children: JSON.stringify({
+          innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
             name: 'Games & Apps for AYN Thor',
@@ -72,13 +72,13 @@ export default defineNuxtConfig({
   // NUXT_PUBLIC_FIREBASE_* are exposed to the client side
   runtimeConfig: {
     public: {
-      firebaseApiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY || '',
-      firebaseAuthDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN || '',
-      firebaseProjectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID || '',
-      firebaseStorageBucket: process.env.NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '',
-      firebaseMessagingSenderId: process.env.NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '',
-      firebaseAppId: process.env.NUXT_PUBLIC_FIREBASE_APP_ID || '',
-      firebaseMeasurementId: process.env.NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID || ''
+      firebaseApiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY ?? '',
+      firebaseAuthDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN ?? '',
+      firebaseProjectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID ?? '',
+      firebaseStorageBucket: process.env.NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET ?? '',
+      firebaseMessagingSenderId: process.env.NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ?? '',
+      firebaseAppId: process.env.NUXT_PUBLIC_FIREBASE_APP_ID ?? '',
+      firebaseMeasurementId: process.env.NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID ?? ''
     }
   },
 

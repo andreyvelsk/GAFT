@@ -5,7 +5,10 @@
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <!-- Logo -->
-          <NuxtLink to="/" class="flex items-center gap-2 group">
+          <NuxtLink
+            to="/"
+            class="flex items-center gap-2 group"
+          >
             <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               GAFT
             </span>
@@ -41,11 +44,21 @@
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="text-sm text-gray-600">
             &copy; {{ new Date().getFullYear() }} Games & Apps for Thor. Built with
-            <a href="https://nuxt.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors">
+            <a
+              href="https://nuxt.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-blue-400 hover:text-blue-300 transition-colors"
+            >
               Nuxt 3
             </a>
             &
-            <a href="https://content.nuxt.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors">
+            <a
+              href="https://content.nuxt.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-blue-400 hover:text-blue-300 transition-colors"
+            >
               Content v2
             </a>
           </div>

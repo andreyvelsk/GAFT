@@ -12,11 +12,17 @@ import type { Article } from '~/composables/useArticles'
 // Internal reactive state
 const articles = ref<Article[]>([])
 
-export function useArticlesStore() {
+export interface UseArticlesStoreReturn {
+  articles: ComputedRef<Article[]>
+  setArticles: (list: Article[]) => void
+  updateLikes: (slug: string, count: number) => void
+}
+
+export function useArticlesStore(): UseArticlesStoreReturn {
   /**
    * Replace the full article list (e.g. after fetching from @nuxt/content).
    */
-  function setArticles(list: Article[]) {
+  function setArticles(list: Article[]): void {
     articles.value = list.map((a) => ({ ...a, likes: a.likes ?? 0 }))
   }
 
@@ -24,18 +30,18 @@ export function useArticlesStore() {
    * Update the like count for a single article by slug.
    * Called from `useLikes` whenever the Firestore snapshot fires.
    */
-  function updateLikes(slug: string, count: number) {
+  function updateLikes(slug: string, count: number): void {
     const idx = articles.value.findIndex((a) => a.slug === slug)
-    if (idx !== -1 && articles.value[idx].likes !== count) {
-      const updated = [...articles.value]
-      updated[idx] = { ...updated[idx], likes: count }
-      articles.value = updated
-    }
+    const current = articles.value[idx]
+    if (idx === -1 || current === undefined || current.likes === count) return
+    const updated = [...articles.value]
+    updated[idx] = { ...current, likes: count }
+    articles.value = updated
   }
 
   return {
     /** Readonly reactive list of articles */
-    articles: readonly(articles),
+    articles: computed(() => articles.value),
     setArticles,
     updateLikes,
   }
