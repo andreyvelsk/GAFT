@@ -9,6 +9,7 @@ const KEY_ORDER = [
   'date',
   'slug',
   'category',
+  'generated',
   'media',
 ] as const;
 
