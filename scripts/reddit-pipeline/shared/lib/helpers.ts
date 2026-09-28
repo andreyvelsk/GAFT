@@ -152,6 +152,81 @@ export function stripMarkdownEscapes(text: string): string {
   return text.replace(/\\([_*[\]()])/g, '$1');
 }
 
+/**
+ * Reddit replaces the body of a removed or deleted post with a placeholder.
+ * Such a body carries no usable information and must be treated as empty.
+ */
+const REMOVED_SELFTEXT_RE = /^\[(?:removed|deleted)\]$/i;
+
+/** Whether a post body is a Reddit `[removed]` / `[deleted]` placeholder. */
+export function isRemovedSelftext(text: string): boolean {
+  return REMOVED_SELFTEXT_RE.test(text.trim());
+}
+
+/** Words that carry no project-name signal in a Reddit post title. */
+const TITLE_STOPWORDS = new Set([
+  'a',
+  'an',
+  'and',
+  'app',
+  'for',
+  'free',
+  'is',
+  'my',
+  'new',
+  'now',
+  'of',
+  'on',
+  'open',
+  'open-source',
+  'release',
+  'released',
+  'the',
+  'this',
+  'to',
+  'update',
+  'version',
+  'with',
+]);
+
+/**
+ * Derive short repository-name search queries from a post title.
+ *
+ * A Reddit title is a sentence ("Wayfinder 1.0 The BIG update! …"), while the
+ * GitHub search API matches repository names, so the whole title never matches.
+ * The project name is combined with "thor" (the blog only lists AYN Thor
+ * projects), which narrows a generic name like "Wayfinder" down to the
+ * dual-screen repository. Queries are ordered from the most to the least
+ * specific and the caller tries them in turn.
+ */
+export function repoSearchQueries(title: string): string[] {
+  const tokens = title
+    .replace(/[^\p{L}\p{N}\s.+-]/gu, ' ')
+    .split(/\s+/)
+    .map((token) => token.replace(/^[.+-]+|[.+-]+$/g, ''))
+    .filter(
+      (token) =>
+        token !== '' &&
+        !/^v?\d+(?:\.\d+)*$/i.test(token) &&
+        !TITLE_STOPWORDS.has(token.toLowerCase()),
+    );
+  if (tokens.length === 0) {
+    return [];
+  }
+  // A title that already starts with "Thor" (e.g. "Thor Pathfinder") must not
+  // produce a "thor thor" query.
+  const head =
+    tokens[0]?.toLowerCase() === 'thor' ? tokens.slice(0, 2) : tokens.slice(0, 1);
+  const base = head.join(' ');
+  const twoWords = tokens.slice(0, 2).join(' ');
+  const queries = [
+    `${base} thor`,
+    tokens.length > 1 ? `${twoWords} thor` : '',
+    tokens.length > 1 ? twoWords : '',
+  ];
+  return unique(queries.filter((query) => query !== ''));
+}
+
 /** Matches a GitHub web URL inside arbitrary text. */
 const GITHUB_URL_RE = /https?:\/\/github\.com\/[^\s)\]]+/gi;
 

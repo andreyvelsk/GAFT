@@ -28,6 +28,7 @@ import {
   formatPageDate,
   githubUrlFromEntry,
   githubUrlsFromEntry,
+  repoSearchQueries,
   resolveProjectUrl,
   stripMarkdownEscapes,
 } from '../../../shared/lib/helpers';
@@ -48,11 +49,15 @@ import {
   type UpdateResult,
 } from './types';
 
-/** Maximum number of `selftext` characters forwarded to the model. */
-const MAX_SELFTEXT_LENGTH = 1200;
+/**
+ * Maximum number of `selftext` characters forwarded to the model.
+ * Long release posts (feature lists, changelogs) routinely exceed 10k
+ * characters; truncating them too aggressively yields a thin page.
+ */
+const MAX_SELFTEXT_LENGTH = 10000;
 
 /** Maximum number of README characters forwarded to the model. */
-const MAX_README_LENGTH = 4000;
+const MAX_README_LENGTH = 12000;
 
 /** Maximum number of current-page body characters forwarded to the model. */
 const MAX_BODY_LENGTH = 4000;
@@ -259,12 +264,20 @@ async function resolveCandidateRepos(
     }
   }
   if (repos.length === 0) {
-    const repo = await searchRepository(
-      githubUrlFromEntry(entry) || entry.title,
-      repoOptions,
-    );
-    if (repo !== null) {
-      repos.push(repo);
+    // No link in the post (or the body was removed): fall back to a name
+    // search. The full Reddit title never matches a repository name, so short
+    // queries derived from it are tried from the most to the least specific.
+    const queries = [
+      githubUrlFromEntry(entry),
+      ...repoSearchQueries(entry.title),
+      entry.title,
+    ].filter((query) => query !== '');
+    for (const query of queries) {
+      const repo = await searchRepository(query, repoOptions);
+      if (repo !== null) {
+        repos.push(repo);
+        break;
+      }
     }
   }
   return repos;

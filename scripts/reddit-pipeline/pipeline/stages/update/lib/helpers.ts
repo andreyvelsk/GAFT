@@ -2,7 +2,11 @@ import { join } from 'node:path';
 
 import { readContentPage as defaultReadPage } from '../../../../agents/tools/content-read';
 import { updatePage as defaultUpdate } from '../../../../agents/update';
-import { saveImage as defaultSaveImage } from '../../../../content/media';
+import {
+  downloadMediaPlan,
+  saveImage as defaultSaveImage,
+} from '../../../../content/media';
+import { renderPage, withoutMediaFiles } from '../../../../content/template';
 import {
   CONTENT_DIR,
   PUBLIC_CONTENT_DIR,
@@ -19,6 +23,9 @@ const PAGE_FILE = 'index.md';
  * Update an existing page with the update agent and write it deterministically.
  * The page must exist: a missing page is a validation error (the match agent
  * must not have chosen UPDATE for a page that is not in `content/`).
+ *
+ * Media downloads are best-effort: a broken image is skipped (and dropped from
+ * the frontmatter) instead of aborting the page.
  */
 export async function runUpdateStage(
   entry: ReportEntry,
@@ -49,24 +56,26 @@ export async function runUpdateStage(
   const writeFile = options.writeFile ?? writeTextFile;
   const saveImage = options.saveImage ?? defaultSaveImage;
 
+  const failed = await downloadMediaPlan(result.media, {
+    slug: result.slug,
+    publicContentDir,
+    saveImage,
+    ...(options.onMedia !== undefined ? { onMedia: options.onMedia } : {}),
+    ...(options.onMediaError !== undefined
+      ? { onMediaError: options.onMediaError }
+      : {}),
+  });
+  const markdown =
+    failed.size === 0
+      ? result.markdown
+      : renderPage(withoutMediaFiles(result.page, failed));
+
   options.onWrite?.({ path: join(contentDir, result.slug, PAGE_FILE) });
-  await writeFile(join(contentDir, result.slug, PAGE_FILE), result.markdown);
-  for (const [index, item] of result.media.entries()) {
-    options.onMedia?.({
-      url: item.url,
-      fileName: item.fileName,
-      index: index + 1,
-      total: result.media.length,
-    });
-    await saveImage({
-      url: item.url,
-      outputPath: join(publicContentDir, result.slug, item.fileName),
-    });
-  }
+  await writeFile(join(contentDir, result.slug, PAGE_FILE), markdown);
 
   return {
     slug: result.slug,
-    markdown: result.markdown,
+    markdown,
     media: result.media,
     changed: result.changed,
     written: true,

@@ -215,6 +215,28 @@ function toFrontmatterData(
   return data;
 }
 
+/**
+ * Return a copy of `page` with the image media items whose file name is in
+ * `fileNames` removed. Used when a media download fails: the page is still
+ * written, but it must not reference a file that was never saved.
+ */
+export function withoutMediaFiles(
+  page: PageInput,
+  fileNames: ReadonlySet<string>,
+): PageInput {
+  if (fileNames.size === 0) {
+    return page;
+  }
+  const media = page.frontmatter.media.filter((item) => {
+    if (item.type !== 'image') {
+      return true;
+    }
+    const name = item.url.split('/').pop() ?? '';
+    return !fileNames.has(name);
+  });
+  return { ...page, frontmatter: { ...page.frontmatter, media } };
+}
+
 /** Render a complete `index.md` document from validated page input. */
 export function renderPage(input: PageInput): string {
   const frontmatter = validateFrontmatter(input.frontmatter);

@@ -174,6 +174,9 @@ export async function runPipeline(
           onMedia: (info): void => {
             logger.info('stage create: downloading media', info);
           },
+          onMediaError: (info): void => {
+            logger.warn('stage create: media download failed', info);
+          },
         });
         logger.info('stage create: done', {
           slug: created.slug,
@@ -198,6 +201,9 @@ export async function runPipeline(
           },
           onMedia: (info): void => {
             logger.info('stage update: downloading media', info);
+          },
+          onMediaError: (info): void => {
+            logger.warn('stage update: media download failed', info);
           },
         });
         logger.info('stage update: done', {

@@ -245,7 +245,7 @@ describe('buildCreatePrompt', () => {
   });
 
   it('truncates a very long selftext', () => {
-    const long = 'x'.repeat(3000);
+    const long = 'x'.repeat(12000);
     const prompt = buildCreatePrompt(makeEntry({ selftext: long }), makeContext());
 
     expect(prompt).not.toContain(long);

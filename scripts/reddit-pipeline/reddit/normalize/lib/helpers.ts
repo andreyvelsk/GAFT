@@ -1,3 +1,4 @@
+import { isRemovedSelftext } from '../../../shared/lib/helpers';
 import type { RawPost, ReportEntry } from '../../../shared/lib/types';
 
 /** Matches a YouTube video URL (watch, embed, shorts or youtu.be). */
@@ -82,13 +83,20 @@ export function postToReport(post: RawPost): ReportEntry {
     external = '';
   }
 
+  const rawSelftext = (post.selftext ?? '').trim();
+  if (isRemovedSelftext(rawSelftext)) {
+    console.warn(
+      `post ${post.id} body is "${rawSelftext}" (removed by Reddit); treating it as empty`,
+    );
+  }
+
   return {
     id: post.id.toLowerCase(),
     title: post.title,
     author: post.author,
     created_utc: Math.trunc(post.created_utc),
     permalink: fullUrl,
-    selftext: (post.selftext ?? '').trim(),
+    selftext: isRemovedSelftext(rawSelftext) ? '' : rawSelftext,
     external_url: external,
     flair: post.link_flair_text ?? '',
     images: extractImages(post),
