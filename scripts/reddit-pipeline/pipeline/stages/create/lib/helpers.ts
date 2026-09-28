@@ -1,7 +1,11 @@
 import { join } from 'node:path';
 
 import { createPage as defaultCreate } from '../../../../agents/create';
-import { saveImage as defaultSaveImage } from '../../../../content/media';
+import {
+  downloadMediaPlan,
+  saveImage as defaultSaveImage,
+} from '../../../../content/media';
+import { renderPage, withoutMediaFiles } from '../../../../content/template';
 import {
   CONTENT_DIR,
   PUBLIC_CONTENT_DIR,
@@ -17,6 +21,9 @@ const PAGE_FILE = 'index.md';
  * Generate a new page with the create agent and write it deterministically:
  * the agent only returns structured content, the file layout and the media
  * download are handled here. In dry-run mode nothing is written.
+ *
+ * Media downloads are best-effort: a broken image is skipped (and dropped from
+ * the frontmatter) instead of aborting the page.
  */
 export async function runCreateStage(
   entry: ReportEntry,
@@ -39,24 +46,26 @@ export async function runCreateStage(
   const writeFile = options.writeFile ?? writeTextFile;
   const saveImage = options.saveImage ?? defaultSaveImage;
 
+  const failed = await downloadMediaPlan(result.media, {
+    slug: result.slug,
+    publicContentDir,
+    saveImage,
+    ...(options.onMedia !== undefined ? { onMedia: options.onMedia } : {}),
+    ...(options.onMediaError !== undefined
+      ? { onMediaError: options.onMediaError }
+      : {}),
+  });
+  const markdown =
+    failed.size === 0
+      ? result.markdown
+      : renderPage(withoutMediaFiles(result.page, failed));
+
   options.onWrite?.({ path: join(contentDir, result.slug, PAGE_FILE) });
-  await writeFile(join(contentDir, result.slug, PAGE_FILE), result.markdown);
-  for (const [index, item] of result.media.entries()) {
-    options.onMedia?.({
-      url: item.url,
-      fileName: item.fileName,
-      index: index + 1,
-      total: result.media.length,
-    });
-    await saveImage({
-      url: item.url,
-      outputPath: join(publicContentDir, result.slug, item.fileName),
-    });
-  }
+  await writeFile(join(contentDir, result.slug, PAGE_FILE), markdown);
 
   return {
     slug: result.slug,
-    markdown: result.markdown,
+    markdown,
     media: result.media,
     written: true,
   };

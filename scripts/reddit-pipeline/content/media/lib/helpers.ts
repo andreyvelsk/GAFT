@@ -9,7 +9,11 @@ import sharp from 'sharp';
 import { MEDIA_LIMITS, PREVIEW_FILE_NAME } from '../../../shared/lib/constants';
 import { FetchError } from '../../../shared/lib/errors';
 import { screenshotFileName } from '../../../shared/lib/helpers';
-import type { DownloadImageOptions, MediaResult } from './types';
+import type {
+  DownloadImageOptions,
+  MediaPlanItem,
+  MediaResult,
+} from './types';
 
 /** WebP quality used for the conversion. */
 const WEBP_QUALITY = 80;
@@ -109,4 +113,67 @@ export async function saveImage(
   await mkdir(dirname(options.outputPath), { recursive: true });
   await writeFile(options.outputPath, webp);
   return { outputPath: options.outputPath, bytes: webp.byteLength };
+}
+
+/** Options accepted by {@link downloadMediaPlan}. */
+export interface DownloadMediaPlanOptions {
+  /** Page slug used to build the output path of every image. */
+  slug: string;
+
+  /** Directory holding the media (e.g. `public/content`). */
+  publicContentDir: string;
+
+  /** Injected image writer (defaults to {@link saveImage}). */
+  saveImage?: (options: DownloadImageOptions) => Promise<MediaResult>;
+
+  /** Progress callback invoked for every media download. */
+  onMedia?: (info: {
+    url: string;
+    fileName: string;
+    index: number;
+    total: number;
+  }) => void;
+
+  /** Callback invoked when a download fails (the image is skipped). */
+  onMediaError?: (info: {
+    url: string;
+    fileName: string;
+    error: string;
+  }) => void;
+}
+
+/**
+ * Download every image of a media plan, skipping the ones that fail. A broken
+ * image must never abort the page, so failures are reported through
+ * `onMediaError` and their file names are returned so the caller can drop them
+ * from the page frontmatter.
+ */
+export async function downloadMediaPlan(
+  plan: readonly MediaPlanItem[],
+  options: DownloadMediaPlanOptions,
+): Promise<Set<string>> {
+  const write = options.saveImage ?? saveImage;
+  const failed = new Set<string>();
+  for (const [index, item] of plan.entries()) {
+    options.onMedia?.({
+      url: item.url,
+      fileName: item.fileName,
+      index: index + 1,
+      total: plan.length,
+    });
+    try {
+      await write({
+        url: item.url,
+        outputPath: join(options.publicContentDir, options.slug, item.fileName),
+      });
+    } catch (error) {
+      failed.add(item.fileName);
+      options.onMediaError?.({
+        url: item.url,
+        fileName: item.fileName,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+  return failed;
 }

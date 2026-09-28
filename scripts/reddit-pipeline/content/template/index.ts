@@ -5,6 +5,7 @@ export {
   parsePageBody,
   renderPage,
   validateFrontmatter,
+  withoutMediaFiles,
 } from './lib/helpers';
 export {
   MAX_PAGE_SECTIONS,

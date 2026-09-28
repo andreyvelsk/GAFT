@@ -40,6 +40,13 @@ export interface CreateStageOptions {
     total: number;
   }) => void;
 
+  /** Callback invoked when a media download fails (the image is skipped). */
+  onMediaError?: (info: {
+    url: string;
+    fileName: string;
+    error: string;
+  }) => void;
+
   /** Progress callback invoked right before the page file is written. */
   onWrite?: (info: { path: string }) => void;
 }

@@ -137,6 +137,42 @@ describe('runCreateStage', () => {
       outputPath: join('/tmp/public', 'pixel-navigator', 'preview.webp'),
     });
   });
+
+  it('still writes the page when a media download fails', async () => {
+    const writeFile = vi.fn(
+      (_path: string, _content: string): Promise<void> => Promise.resolve(),
+    );
+    const saveImage = vi.fn(
+      (_options: DownloadImageOptions): Promise<MediaResult> =>
+        Promise.reject(new Error('HTTP 404')),
+    );
+    const onMediaError = vi.fn();
+
+    const result = await runCreateStage(makeEntry(), {
+      create: () => Promise.resolve(makeCreateResult()),
+      contentDir: '/tmp/content',
+      publicContentDir: '/tmp/public',
+      writeFile,
+      saveImage,
+      onMediaError,
+    });
+
+    expect(result.written).toBe(true);
+    expect(onMediaError).toHaveBeenCalledWith({
+      url: 'https://i.redd.it/a.jpg',
+      fileName: 'preview.webp',
+      error: 'HTTP 404',
+    });
+    // The failed image is dropped from the frontmatter.
+    expect(result.markdown).not.toContain(
+      '/content/pixel-navigator/preview.webp',
+    );
+    expect(result.markdown).toContain('## Description');
+    expect(writeFile).toHaveBeenCalledWith(
+      join('/tmp/content', 'pixel-navigator', 'index.md'),
+      result.markdown,
+    );
+  });
 });
 
 describe.skipIf(!RUN_INTEGRATION)('runCreateStage (integration)', () => {
