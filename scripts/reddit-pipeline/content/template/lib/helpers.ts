@@ -203,6 +203,7 @@ function toFrontmatterData(
     date: frontmatter.date,
     slug: frontmatter.slug,
     category: frontmatter.category,
+    generated: 'ai',
     media: frontmatter.media,
   };
   if (extra !== undefined) {

@@ -13,6 +13,8 @@ export interface Article {
   media: ArticleMedia[]
   tags?: string[]
   status?: string
+  // Marks content generated automatically from a source (e.g. "ai")
+  generated?: string
   // Rendered article body
   body?: string
   // Like count — kept in sync by useLikes via useArticlesStore

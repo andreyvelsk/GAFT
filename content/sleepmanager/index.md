@@ -4,6 +4,7 @@ description: "Android sleep/wake manager that cuts standby battery drain on the 
 date: "2026-09-27 18:22"
 slug: "sleepmanager"
 category: "app"
+generated: "ai"
 media:
   - type: "video"
     url: "https://youtu.be/MATer9L8E1s?si=uhFrzt0F5maFB6eY"

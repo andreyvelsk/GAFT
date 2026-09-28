@@ -4,6 +4,7 @@ description: "The handheld's bottom panel becomes Selaco's own codex — datalog
 date: "2026-09-27 18:23"
 slug: "selaco"
 category: "port"
+generated: "ai"
 media:
   - type: "image"
     url: "/content/selaco/preview.webp"

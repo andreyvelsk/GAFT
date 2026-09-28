@@ -1,10 +1,7 @@
 <template>
   <article class="group relative flex flex-col bg-surface-200 rounded-xl border border-gray-800 overflow-hidden hover:border-blue-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5">
-    <!-- Media Carousel -->
-    <MediaCarousel
-      v-if="article.media?.length"
-      :media="article.media"
-    />
+    <!-- Media Carousel (falls back to the default card image when no media) -->
+    <MediaCarousel :media="media" />
 
     <!-- Content -->
     <div class="p-5 flex flex-col grow justify-between relative">
@@ -62,11 +59,21 @@
 </template>
 
 <script setup lang="ts">
-import type { Article } from '~/composables/useArticles'
+import type { Article, ArticleMedia } from '~/composables/useArticles'
 
-defineProps<{
+const props = defineProps<{
   article: Article
 }>()
+
+const DEFAULT_CARD_IMAGE = '/default_card.webp'
+
+const media = computed<ArticleMedia[]>(() => {
+  if (props.article.media.length) {
+    return props.article.media
+  }
+
+  return [{ type: 'image', url: DEFAULT_CARD_IMAGE }]
+})
 
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr)
