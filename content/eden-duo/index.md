@@ -4,6 +4,7 @@ description: "A Nintendo Switch emulator for dual-screen Android handhelds that 
 date: "2026-09-27 18:26"
 slug: "eden-duo"
 category: "emulator"
+generated: "ai"
 media:
   - type: "image"
     url: "/content/eden-duo/preview.webp"

@@ -4,6 +4,7 @@ description: "A free, open-source utility that truly powers off the Thor's botto
 date: "2026-09-28 03:58"
 slug: "jesty-thor-fix"
 category: "tool"
+generated: "ai"
 media: []
 ---
 
