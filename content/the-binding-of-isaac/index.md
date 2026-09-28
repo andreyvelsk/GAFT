@@ -1,7 +1,7 @@
 ---
 title: "The Binding of Isaac"
-description: "A recent Android port of The Binding of Isaac that plays great on the AYN Thor and now supports mods."
-date: "2026-09-28 03:59"
+description: "An Android port of the roguelike classic that plays great on the AYN Thor."
+date: "2026-09-28 06:27"
 slug: "the-binding-of-isaac"
 category: "port"
 media:
@@ -13,16 +13,12 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1ws1im6/binding_o
 
 ## Description
 
-The Binding of Isaac is available on the AYN Thor through a recent Android port from wicked projects. The port plays great on the handheld's screens, and a recent update added mod support.
-
-## Features
-
-Runs great on the AYN Thor. The port recently gained mod support, letting you load mods on top of the game.
+This is a recent Android port of The Binding of Isaac from wicked projects. It plays great on the AYN Thor handheld, and the port recently gained mod support so you can enjoy community mods on the go. The APK is currently distributed only through the wicked projects Discord server.
 
 ## Setup guide
 
-The APK is distributed exclusively through the wicked projects Discord server — join the server to download the latest build. Install the APK on your AYN Thor and launch it from your app library to start playing.
+Download the latest APK from the wicked projects Discord server — the post notes that the APK link is only available there. Install the APK on your AYN Thor and launch the game from your app launcher.
 
-## Availability
+## Features
 
-There is no public store or repository link for the APK; the download link is only shared on the wicked projects Discord.
+Runs great on the AYN Thor's screens. A recent update added mod support to the port.

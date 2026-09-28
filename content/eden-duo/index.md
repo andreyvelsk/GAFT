@@ -50,7 +50,7 @@ Compatibility is intentionally strict: each companion is written for one exact g
 
 1. Download the latest EdenDuo APK from the [Releases page](https://github.com/igawa6/eden-duo/releases/latest) and install it.
 2. Set up the emulator as usual: keys, firmware, and your games folder.
-3. Download a companion package from the Eden Duo Companions repository.
+3. Download a companion package from the [Eden Duo Companions repository](https://github.com/igawa6/eden-duo-companions).
 4. In Eden Duo, long-press the game, open **Add-ons** and tap **Install**. In the **Content type** dialog choose **Dual screen mods**, tap **OK**, then select the `.dsmod.zip` file. The companion appears in the Add-ons list as `Name-version`, for example `MetroidDreadDS-1.0.0`.
 5. Launch the game — the companion appears on the second screen once the game reaches gameplay.
 

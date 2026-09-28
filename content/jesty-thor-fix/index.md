@@ -1,6 +1,6 @@
 ---
 title: "Jesty Thor Fix"
-description: "A free, open-source utility that truly powers off the Thor's bottom display in TOP mode and stops AYN Dashboard from pinning CPU clocks."
+description: "A free, open-source utility that truly powers off the Thor's bottom display, stops AYN Dashboard from pinning CPU clocks, and shows live CPU/display telemetry."
 date: "2026-09-28 03:58"
 slug: "jesty-thor-fix"
 category: "tool"
@@ -25,6 +25,8 @@ The app provides two independent switches, because the Thor has two different pr
 - **AYN Dashboard CPU Fix** — stops CPU cores from staying pinned at maximum clocks while the AYN Dashboard is open.
 
 Which switches should you use? If you use TOP mode and want the lower display truly powered off, enable **True Bottom Display Fix**. If you use the AYN Dashboard or regularly use both screens, enable **AYN Dashboard CPU Fix**. If you switch between TOP and BOTH, enable **both fixes**. Your choices are saved and restored after a normal reboot.
+
+The app also shows live telemetry — the current display mode, CPU clocks and a live power estimate — so you can see both fixes working.
 
 ## Setup guide
 
