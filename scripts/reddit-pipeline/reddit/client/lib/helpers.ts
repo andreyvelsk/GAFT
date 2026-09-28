@@ -7,7 +7,7 @@ import {
   REDDIT_USER_AGENT,
 } from '../../../shared/lib/constants';
 import { FetchError } from '../../../shared/lib/errors';
-import { sleep } from '../../../shared/lib/helpers';
+import { isRemovedSelftext, sleep } from '../../../shared/lib/helpers';
 import { retry } from '../../../shared/lib/retry';
 import { parseAtomFeed } from './rss';
 import {
@@ -231,6 +231,14 @@ export async function fetchPostById(id: string): Promise<RawPost | null> {
     try {
       const post = await source.load();
       if (post) {
+        // A `[removed]` / `[deleted]` body means the source only has a stub of
+        // the post; keep looking so a source with the real text can win.
+        if (isRemovedSelftext(post.selftext ?? '')) {
+          console.warn(
+            `${source.name} returned a removed post body, trying next…`,
+          );
+          continue;
+        }
         return post;
       }
     } catch (error) {

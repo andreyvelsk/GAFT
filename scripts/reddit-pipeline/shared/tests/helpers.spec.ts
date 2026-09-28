@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import {
   humanizeRepoName,
+  isRemovedSelftext,
   normalizeUrlScheme,
   projectLinkLabel,
   projectUrlFromEntry,
+  repoSearchQueries,
   resolveProjectUrl,
 } from '../lib/helpers';
 import type { ReportEntry } from '../lib/types';
@@ -98,5 +100,37 @@ describe('resolveProjectUrl', () => {
     expect(
       resolveProjectUrl(null, 'http://example.com/app', makeEntry()),
     ).toBe('https://example.com/app');
+  });
+});
+
+describe('isRemovedSelftext', () => {
+  it('detects the Reddit placeholders', () => {
+    expect(isRemovedSelftext('[removed]')).toBe(true);
+    expect(isRemovedSelftext('  [deleted]  ')).toBe(true);
+    expect(isRemovedSelftext('[Removed]')).toBe(true);
+  });
+
+  it('keeps a real body', () => {
+    expect(isRemovedSelftext('A real post body')).toBe(false);
+    expect(isRemovedSelftext('')).toBe(false);
+  });
+});
+
+describe('repoSearchQueries', () => {
+  it('combines the project name with "thor"', () => {
+    expect(
+      repoSearchQueries('Wayfinder 1.0 The BIG update! Now a 100% shizuku less!'),
+    ).toEqual(['Wayfinder thor', 'Wayfinder BIG thor', 'Wayfinder BIG']);
+  });
+
+  it('does not duplicate "thor" when the title starts with it', () => {
+    expect(repoSearchQueries('Thor Pathfinder: a free screen swapper')).toEqual([
+      'Thor Pathfinder thor',
+      'Thor Pathfinder',
+    ]);
+  });
+
+  it('returns no query for a title without meaningful words', () => {
+    expect(repoSearchQueries('1.0 the new update')).toEqual([]);
   });
 });
