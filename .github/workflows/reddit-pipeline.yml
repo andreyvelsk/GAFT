@@ -167,8 +167,13 @@ jobs:
             echo "Review the generated pages and merge manually."
           } > "$body_file"
 
-          if gh pr view "$PR_BRANCH" --json number >/dev/null 2>&1; then
-            gh pr edit "$PR_BRANCH" --title "$title" --body-file "$body_file"
+          # Only an OPEN pull request should be updated. `gh pr view <branch>`
+          # also resolves merged/closed PRs, so after a previous PR for this
+          # branch was merged it would make us edit that merged PR instead of
+          # opening a new one.
+          open_pr="$(gh pr list --head "$PR_BRANCH" --state open --json number --jq '.[0].number' 2>/dev/null || true)"
+          if [ -n "$open_pr" ]; then
+            gh pr edit "$open_pr" --title "$title" --body-file "$body_file"
           else
             gh pr create \
               --base "$PR_BASE" \
