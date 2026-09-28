@@ -167,8 +167,6 @@ jobs:
           missing="${{ steps.remove.outputs.missing }}"
           message="✅ Removed from this pull request: \`$removed\` (both \`content/<slug>\` and \`public/content/<slug>\`)."
           if [ -n "$missing" ]; then
-            message="$message
-
-ℹ️ Not found and skipped: \`$missing\`."
+            message="$(printf '%s\n\nℹ️ Not found and skipped: `%s`.' "$message" "$missing")"
           fi
           gh pr comment "$PR_NUMBER" --body "$message"
