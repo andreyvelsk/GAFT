@@ -165,6 +165,8 @@ jobs:
             echo "- Base: \`$PR_BASE\`"
             echo ""
             echo "Review the generated pages and merge manually."
+            echo ""
+            echo "To drop generated pages, comment \`/reject <slug> [<slug> ...]\` on this pull request."
           } > "$body_file"
 
           # Only an OPEN pull request should be updated. `gh pr view <branch>`

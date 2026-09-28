@@ -1,0 +1,174 @@
+name: Reddit pipeline — reject page
+
+# Interactive companion to the Reddit pipeline. A user with write access to the
+# repository can comment `/reject <slug> [<slug> ...]` on the automation pull
+# request to drop one or more generated pages (and their images) from the active
+# PR. Slugs may be separated by spaces and/or commas.
+#
+# No persistent denylist is required: the pipeline only looks back a fixed
+# window (REDDIT_LOOKBACK_HOURS, default 24h) and runs once a day, so a rejected
+# post is not part of the next run's selection and the page is not re-created.
+
+on:
+  issue_comment:
+    types: [created]
+
+# Needed to push the automation branch and to post the confirmation comment.
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+# Share the pipeline's concurrency group so a rejection never races a run that
+# is pushing to the same branch.
+concurrency:
+  group: reddit-pipeline
+  cancel-in-progress: false
+
+jobs:
+  reject:
+    # Only react to `/reject ...` comments left on pull requests.
+    if: |
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/reject')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_BRANCH: ${{ vars.PR_BRANCH || 'reddit-pipeline/auto' }}
+      COMMENT_BODY: ${{ github.event.comment.body }}
+      COMMENTER: ${{ github.event.comment.user.login }}
+      PR_NUMBER: ${{ github.event.issue.number }}
+
+    steps:
+      - name: Verify the commenter can write to the repository
+        id: permission
+        run: |
+          # The collaborators permission endpoint returns admin/maintain/write/
+          # read/none (or 404 for non-collaborators, mapped to `none`).
+          permission="$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$COMMENTER/permission" --jq '.permission' 2>/dev/null || echo 'none')"
+          echo "Commenter '$COMMENTER' permission: $permission"
+          case "$permission" in
+            admin|maintain|write)
+              echo "allowed=true" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "allowed=false" >> "$GITHUB_OUTPUT"
+              gh pr comment "$PR_NUMBER" --body "🚫 @$COMMENTER, only users with write access to this repository can run \`/reject\`."
+              ;;
+          esac
+
+      - name: Resolve the pull request
+        id: pr
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          head_ref="$(gh pr view "$PR_NUMBER" --json headRefName --jq '.headRefName')"
+          head_repo="$(gh pr view "$PR_NUMBER" --json headRepository --jq '.headRepository.nameWithOwner')"
+          echo "head_ref=$head_ref" >> "$GITHUB_OUTPUT"
+
+          if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::error::PR #$PR_NUMBER comes from a fork ($head_repo); refusing to act."
+            gh pr comment "$PR_NUMBER" --body "🚫 \`/reject\` only works on pull requests opened from this repository."
+            exit 1
+          fi
+
+          if [ "$head_ref" != "$PR_BRANCH" ]; then
+            echo "::error::PR #$PR_NUMBER targets '$head_ref', not the automation branch '$PR_BRANCH'."
+            gh pr comment "$PR_NUMBER" --body "🚫 \`/reject\` only works on the automation pull request (branch \`$PR_BRANCH\`)."
+            exit 1
+          fi
+
+      - name: Parse the command
+        id: cmd
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          # Accept one or more slugs, separated by spaces and/or commas:
+          #   /reject slug-one slug-two,slug-three
+          first_line="$(printf '%s\n' "$COMMENT_BODY" | head -n 1)"
+          args="$(printf '%s' "$first_line" | sed -E 's/^[[:space:]]*\/reject[[:space:]]*//')"
+          slugs="$(printf '%s' "$args" | tr ',' ' ' | tr -s '[:space:]' ' ' | xargs)"
+
+          if [ -z "$slugs" ]; then
+            echo "::error::Missing slug(s) in the '/reject' command."
+            gh pr comment "$PR_NUMBER" --body "🚫 Usage: \`/reject <slug> [<slug> ...]\` — e.g. \`/reject my-project another-project\`. Slugs may be separated by spaces or commas and must match \`^[a-z0-9][a-z0-9-]*$\`."
+            exit 1
+          fi
+
+          valid=""
+          invalid=""
+          for slug in $slugs; do
+            if printf '%s' "$slug" | grep -Eq '^[a-z0-9][a-z0-9-]*$'; then
+              valid="$valid $slug"
+            else
+              invalid="$invalid $slug"
+            fi
+          done
+          valid="$(printf '%s' "$valid" | xargs)"
+
+          if [ -n "$invalid" ]; then
+            echo "::error::Invalid slug(s):$invalid"
+            gh pr comment "$PR_NUMBER" --body "🚫 Invalid slug(s): \`$(printf '%s' "$invalid" | xargs)\`. Slugs must match \`^[a-z0-9][a-z0-9-]*$\`."
+            exit 1
+          fi
+
+          echo "slugs=$valid" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout the automation branch
+        if: steps.permission.outputs.allowed == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.head_ref }}
+          fetch-depth: 0
+
+      - name: Configure git user
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Remove the pages and their images
+        id: remove
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          slugs="${{ steps.cmd.outputs.slugs }}"
+          removed=""
+          missing=""
+          for slug in $slugs; do
+            if [ -e "content/$slug" ] || [ -e "public/content/$slug" ]; then
+              git rm -r --ignore-unmatch "content/$slug" "public/content/$slug"
+              removed="$removed $slug"
+            else
+              missing="$missing $slug"
+            fi
+          done
+          removed="$(printf '%s' "$removed" | xargs)"
+          missing="$(printf '%s' "$missing" | xargs)"
+
+          echo "removed=$removed" >> "$GITHUB_OUTPUT"
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$removed" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            gh pr comment "$PR_NUMBER" --body "ℹ️ Nothing to remove: no page found for slug(s) \`$missing\` in this pull request."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.remove.outputs.changed == 'true'
+        run: |
+          slugs="${{ steps.remove.outputs.removed }}"
+          git commit -m "chore(reddit): reject pages $slugs"
+          git push origin "HEAD:$PR_BRANCH"
+
+      - name: Confirm
+        if: steps.remove.outputs.changed == 'true'
+        run: |
+          removed="${{ steps.remove.outputs.removed }}"
+          missing="${{ steps.remove.outputs.missing }}"
+          message="✅ Removed from this pull request: \`$removed\` (both \`content/<slug>\` and \`public/content/<slug>\`)."
+          if [ -n "$missing" ]; then
+            message="$message
+
+ℹ️ Not found and skipped: \`$missing\`."
+          fi
+          gh pr comment "$PR_NUMBER" --body "$message"
