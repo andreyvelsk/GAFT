@@ -8,12 +8,6 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/eden-duo/preview.webp"
-  - type: "image"
-    url: "/content/eden-duo/screenshot-2.webp"
-  - type: "image"
-    url: "/content/eden-duo/screenshot-3.webp"
-  - type: "image"
-    url: "/content/eden-duo/screenshot-4.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_a_switch_emulator_fork_with_second/)
@@ -22,7 +16,7 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_
 
 Eden Duo is a fork of the Eden Nintendo Switch emulator for Android devices with two screens, such as the AYN Thor. The game runs on the top screen as usual, while the bottom screen shows a touch companion for the game you are playing: maps, party and inventory menus, status, and more, all driven by the running game's live state.
 
-Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. For the initial release, dual-screen support is baked in for three games: **Persona 5 Royal**, **Metroid Dread**, and **Link's Awakening**.
+Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for four games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, and **Mario Kart 8 Deluxe**.
 
 ## Features
 
@@ -30,6 +24,7 @@ Companions are separate, installable `.dsmod.zip` packages, one per game, so a c
 - **Live game state** — companions read the running game's memory every frame: no save-file snapshots and no polling delays.
 - **Installable packages** — add a companion from the game's **Add-ons** menu with its `.dsmod.zip`; packages are validated (title, build, file layout and module checksums) before they are installed.
 - **Native companion modules** — a package can carry a small native module for games whose data is too complex for a declarative manifest; modules talk to the emulator through a small, versioned C interface and never ship inside the APK.
+- **Touch that feels native** — taps, press-and-hold gestures, drag and drop, animated page and layout changes, and haptic feedback on the second screen.
 - **Built for handhelds** — change-driven partial redraws, tile-based texture uploads and an optional GPU compositor keep the second screen at full frame rate without costing the game frames.
 
 ### Requirements
@@ -44,6 +39,7 @@ Companions are separate, installable `.dsmod.zip` packages, one per game, so a c
 - **Persona 5 Royal (1.0.2)** — the full start menu on the bottom screen: skills, items, equipment, Persona, stats, confidants, requests and the calendar with the Daily Log. You can use items and change equipment or Persona by tapping, and see enemy affinities in battle.
 - **Metroid Dread (2.1.0)** — a live area map with Samus's position, EMMI zones, water levels, and energy and missiles.
 - **The Legend of Zelda: Link's Awakening (1.0.1)** — a live map with your own pins, plus gear and items, with X/Y equip from the touch screen.
+- **Mario Kart 8 Deluxe (4.0.0, 3.0.3)** — a live rank bar with every racer's items, a course map showing all racers, and a big horn button. Also works with CTGP-DX v1.1.1 custom tracks.
 
 Compatibility is intentionally strict: each companion is written for one exact game build and checks the running build before it loads. On any other version it does not load and shows a notice, instead of reading memory it does not understand.
 
