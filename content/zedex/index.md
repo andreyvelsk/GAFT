@@ -3,7 +3,7 @@ title: "Zedex"
 description: "A modern ZX Spectrum emulator for Android with full dual-screen support — controls, menus and indicators on the second display of the AYN Thor"
 date: "2026-09-01 09:35"
 slug: "zedex"
-category: "emulation"
+category: "emulator"
 media:
   - type: "image"
     url: "/content/zedex/preview.webp"

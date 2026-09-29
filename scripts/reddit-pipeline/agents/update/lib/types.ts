@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 import type { MediaPlanItem } from '../../../content/media';
 import {
-  pageCategorySchema,
   pageSectionsSchema,
+  projectCategorySchema,
   type PageInput,
 } from '../../../content/template';
 import type {
@@ -30,7 +30,7 @@ export const updatePatchSchema = z.object({
   description: z.string().min(1).optional(),
 
   /** New category from the controlled vocabulary, when it changes. */
-  category: pageCategorySchema.optional(),
+  category: projectCategorySchema.optional(),
 
   /** New canonical project link, when it changes. */
   project_url: z.string().optional(),

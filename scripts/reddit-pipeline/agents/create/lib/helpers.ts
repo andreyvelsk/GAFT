@@ -2,6 +2,7 @@ import type { LanguageModel } from 'ai';
 
 import { mediaFileName, selectImages } from '../../../content/media';
 import {
+  CATEGORY_PROMPT_GUIDE,
   normalizeReleaseLinks,
   normalizeSectionBody,
   renderPage,
@@ -76,8 +77,8 @@ export const CREATE_SYSTEM_PROMPT = [
   '  sentence" rule applies to this frontmatter field only: inside the page',
   '  sections write as much detail as the post and README support — do not',
   '  compress a rich project into a couple of lines.',
-  '- "category": exactly one of "game", "app", "companion", "emulator", "port",',
-  '  "tool".',
+  '- "category": exactly one of the following project categories:',
+  CATEGORY_PROMPT_GUIDE,
   '- "slug": a kebab-case slug derived from the project name (not the post title).',
   '- "project_url": the canonical link to the project (repository, store page',
   '  or official site) taken from the post or README. Omit it when there is no',
@@ -424,7 +425,7 @@ export function buildCreatePageInput(
       description: draft.description.trim(),
       date: formatPageDate(now),
       slug,
-      category: draft.category.trim(),
+      category: draft.category,
       media,
     },
     sections: {

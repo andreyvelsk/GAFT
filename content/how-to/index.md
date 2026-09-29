@@ -3,7 +3,7 @@ title: "How to Add a Project"
 description: "Step-by-step guide on how to contribute a new project to the Games & Apps for AYN Thor collection via GitHub Pull Request."
 date: "2026-06-15 00:00"
 slug: "how-to"
-category: "guide"
+category: "page"
 media: []
 ---
 
@@ -90,9 +90,22 @@ Explain how to install and run the project.
 | `description` | ✅ | Short description shown on the card and in SEO meta |
 | `date` | ✅ | Publication date in `YYYY-MM-DD HH:MM` format |
 | `slug` | ✅ | URL-friendly identifier (must match the directory name) |
-| `category` | ✅ | One of: `companion`, `app`, `emulation`, `guide` |
+| `category` | ✅ | One of the project categories listed below |
 | `media` | ❌ | List of images or videos for the carousel |
 | `tags` | ❌ | List of tags for categorization |
+
+### Categories
+
+Each project page must use exactly one of the following categories:
+
+| Category | Meaning |
+|----------|---------|
+| `game` | A standalone, self-contained game. |
+| `app` | A standalone application that makes use of both screens. |
+| `companion` | An app used together with a game to show useful information. It may be synced with the game in real time or act as an offline reference. |
+| `emulator` | An emulator of a system that has a feature using the second screen. |
+| `tool` | A utility for flexible configuration or for improving how the system works overall. |
+
 
 ### Media Items
 

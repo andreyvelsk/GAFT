@@ -3,7 +3,7 @@ title: "Wayfinder"
 description: "Wayfinder moves apps between the AYN Thor's two screens, sends the controller where you want it, and puts the Thor's settings one press away."
 date: "2026-09-29 06:17"
 slug: "wayfinder"
-category: "app"
+category: "tool"
 generated: "ai"
 media:
   - type: "image"

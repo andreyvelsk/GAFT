@@ -3,7 +3,7 @@ title: "Selaco"
 description: "The handheld's bottom panel becomes Selaco's own codex — datalogs, objectives, milestones, statistics and the manual — while the top screen stays the game."
 date: "2026-09-27 18:23"
 slug: "selaco"
-category: "port"
+category: "game"
 generated: "ai"
 media:
   - type: "image"

@@ -370,10 +370,12 @@ describe('createDraftSchema', () => {
     expect(createDraftSchema.parse(makeDraft()).category).toBe('app');
   });
 
-  it('rejects an unknown category', () => {
-    expect(() =>
-      createDraftSchema.parse({ ...makeDraft(), category: 'emulation' }),
-    ).toThrow();
+  it('rejects a legacy, system or unknown category', () => {
+    for (const category of ['port', 'guide', 'emulation', 'page', 'unknown']) {
+      expect(() =>
+        createDraftSchema.parse({ ...makeDraft(), category }),
+      ).toThrow();
+    }
   });
 
   it('rejects more than five sections', () => {
