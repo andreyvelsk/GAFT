@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { ContentPage } from '../../../../agents/tools/content-read';
+import type { ContentPage } from '../../../../tools/content-read';
 import type { UpdateResult } from '../../../../agents/update';
 import {
   saveImage as realSaveImage,

@@ -16,7 +16,7 @@ import type { Logger } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
-} from '../../provider/lib/types';
+} from '../../../engines/generation/lib/types';
 
 /**
  * Patch produced by the update agent. Only the fields that actually change are

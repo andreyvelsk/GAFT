@@ -11,8 +11,8 @@ import {
   type GenerateObjectLike,
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
-} from '../../provider';
-import type { ContentCandidate } from '../../tools/content-search';
+} from '../../../engines/generation';
+import type { ContentCandidate } from '../../../tools/content-search';
 import {
   MATCH_SYSTEM_PROMPT,
   buildMatchPrompt,

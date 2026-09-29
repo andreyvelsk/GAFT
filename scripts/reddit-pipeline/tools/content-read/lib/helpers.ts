@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { parseFrontmatter } from '../../../../content/frontmatter';
-import { CONTENT_DIR } from '../../../../shared/lib/constants';
+import { parseFrontmatter } from '../../../content/frontmatter';
+import { CONTENT_DIR } from '../../../shared/lib/constants';
 import type { ContentPage, ContentReadOptions } from './types';
 
 /** File name of a page inside its slug directory. */

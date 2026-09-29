@@ -11,7 +11,7 @@ import {
   type GenerateObjectLike,
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
-} from '../../provider';
+} from '../../../engines/generation';
 import {
   FILTER_SYSTEM_PROMPT,
   buildFilterPrompt,

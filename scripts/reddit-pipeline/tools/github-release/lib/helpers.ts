@@ -2,7 +2,7 @@ import {
   latestRelease,
   latestReleaseUrl,
   type ReleaseInfo,
-} from '../../../../github/repo';
+} from '../../../github/repo';
 import type { GitHubReleaseOptions } from './types';
 
 /** Fetch the latest release of a repository; `null` when it has none. */

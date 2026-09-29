@@ -3,8 +3,8 @@ import type { LanguageModel } from 'ai';
 import { config } from '../../../config';
 import { chunk } from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
-import { resolveModel } from '../../model/lib/helpers';
-import { createProvider, generateStructured } from '../../provider/lib/helpers';
+import { resolveModel } from '../../../engines/model/lib/helpers';
+import { createProvider, generateStructured } from '../../../engines/generation/lib/helpers';
 import {
   filterResponseSchema,
   type FilterBatchInfo,

@@ -1,4 +1,4 @@
-import { downloadImage } from '../../../../content/media';
+import { downloadImage } from '../../../content/media';
 import type { ImageDownloadOptions } from './types';
 
 /** Download an image and return its raw bytes. */

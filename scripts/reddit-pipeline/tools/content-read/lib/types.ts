@@ -1,4 +1,4 @@
-import type { FrontmatterData } from '../../../../content/frontmatter';
+import type { FrontmatterData } from '../../../content/frontmatter';
 
 /** A fully read content page. */
 export interface ContentPage {

@@ -13,7 +13,7 @@ import {
   type GenerateObjectLike,
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
-} from '../../provider';
+} from '../../../engines/generation';
 import {
   CREATE_SYSTEM_PROMPT,
   buildCreatePageInput,

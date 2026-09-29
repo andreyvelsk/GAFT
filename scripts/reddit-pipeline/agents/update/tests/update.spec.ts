@@ -13,8 +13,8 @@ import {
   type GenerateObjectLike,
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
-} from '../../provider';
-import { readContentPage, type ContentPage } from '../../tools/content-read';
+} from '../../../engines/generation';
+import { readContentPage, type ContentPage } from '../../../tools/content-read';
 import {
   UPDATE_SYSTEM_PROMPT,
   applyPatch,

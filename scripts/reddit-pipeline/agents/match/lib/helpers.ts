@@ -2,14 +2,14 @@ import type { LanguageModel } from 'ai';
 
 import { kebabCase } from '../../../shared/lib/helpers';
 import type { ReportEntry } from '../../../shared/lib/types';
-import { resolveModel } from '../../model/lib/helpers';
-import { createProvider, generateStructured } from '../../provider/lib/helpers';
+import { resolveModel } from '../../../engines/model/lib/helpers';
+import { createProvider, generateStructured } from '../../../engines/generation/lib/helpers';
 import {
   loadContentIndex,
   matchCandidates,
   type ContentCandidate,
   type ContentSearchOptions,
-} from '../../tools/content-search';
+} from '../../../tools/content-search';
 import {
   matchDecisionSchema,
   type MatchDecision,

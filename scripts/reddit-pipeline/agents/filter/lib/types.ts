@@ -1,7 +1,7 @@
 import type { LanguageModel } from 'ai';
 import { z } from 'zod';
 
-import type { GenerateObjectLike, ProviderOptions } from '../../provider/lib/types';
+import type { GenerateObjectLike, ProviderOptions } from '../../../engines/generation/lib/types';
 
 /** Relevance verdict of a single post. */
 export const filterVerdictSchema = z.object({

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { GitHubSearchItem } from '../../../../github/client';
+import type { GitHubSearchItem } from '../../../github/client';
 import { resolveRepositoryRef, searchRepository } from '../index';
 
 /** A single recorded `fetch` invocation. */

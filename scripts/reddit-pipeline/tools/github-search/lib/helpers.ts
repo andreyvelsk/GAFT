@@ -3,7 +3,7 @@ import {
   parseRepoRef,
   type GitHubRepo,
   type GitHubRepoRef,
-} from '../../../../github/repo';
+} from '../../../github/repo';
 import type { GitHubSearchOptions } from './types';
 
 /**

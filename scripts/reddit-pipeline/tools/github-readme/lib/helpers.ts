@@ -1,4 +1,4 @@
-import { readReadme } from '../../../../github/repo';
+import { readReadme } from '../../../github/repo';
 import type { GitHubReadmeOptions } from './types';
 
 /** Read the README of a repository as raw text; `null` when absent. */

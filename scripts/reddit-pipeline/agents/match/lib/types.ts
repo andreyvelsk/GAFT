@@ -1,8 +1,8 @@
 import type { LanguageModel } from 'ai';
 import { z } from 'zod';
 
-import type { GenerateObjectLike, ProviderOptions } from '../../provider/lib/types';
-import type { ContentCandidate } from '../../tools/content-search';
+import type { GenerateObjectLike, ProviderOptions } from '../../../engines/generation/lib/types';
+import type { ContentCandidate } from '../../../tools/content-search';
 
 /** Action decided by the match agent. */
 export const matchActionSchema = z.enum(['CREATE', 'UPDATE']);

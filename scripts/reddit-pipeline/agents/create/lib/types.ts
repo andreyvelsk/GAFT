@@ -7,7 +7,7 @@ import {
   projectCategorySchema,
   type PageInput,
 } from '../../../content/template';
-import type { ContentCandidate } from '../../tools/content-search';
+import type { ContentCandidate } from '../../../tools/content-search';
 import type {
   GitHubRepo,
   ReleaseInfo,
@@ -17,7 +17,7 @@ import type { Logger, ReportEntry } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
-} from '../../provider/lib/types';
+} from '../../../engines/generation/lib/types';
 
 /**
  * Draft page produced by the create agent (LLM output).

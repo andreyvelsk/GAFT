@@ -37,12 +37,12 @@ import {
 } from '../../../shared/lib/helpers';
 import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
-import { resolveModel } from '../../model/lib/helpers';
-import { createProvider, generateStructured } from '../../provider/lib/helpers';
-import type { ContentPage } from '../../tools/content-read';
-import { getLatestRelease } from '../../tools/github-release';
-import { readRepositoryReadme } from '../../tools/github-readme';
-import { searchRepository } from '../../tools/github-search';
+import { resolveModel } from '../../../engines/model/lib/helpers';
+import { createProvider, generateStructured } from '../../../engines/generation/lib/helpers';
+import type { ContentPage } from '../../../tools/content-read';
+import { getLatestRelease } from '../../../tools/github-release';
+import { readRepositoryReadme } from '../../../tools/github-readme';
+import { searchRepository } from '../../../tools/github-search';
 import {
   updatePatchSchema,
   type AppliedPatch,

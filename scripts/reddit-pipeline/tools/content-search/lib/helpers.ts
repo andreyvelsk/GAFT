@@ -2,13 +2,13 @@ import type { Dirent } from 'node:fs';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { parseFrontmatter } from '../../../../content/frontmatter';
+import { parseFrontmatter } from '../../../content/frontmatter';
 import {
   normalizeName,
   parseRepoRef,
   type GitHubRepoRef,
-} from '../../../../github/repo';
-import { CONTENT_DIR } from '../../../../shared/lib/constants';
+} from '../../../github/repo';
+import { CONTENT_DIR } from '../../../shared/lib/constants';
 import type { ContentCandidate, ContentSearchOptions } from './types';
 
 /** File name of a page inside its slug directory. */
