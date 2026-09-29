@@ -490,7 +490,19 @@ export async function createPage(
       ? { maxRepairAttempts: options.maxRepairAttempts }
       : {}),
   });
-  const draft = sanitizeCreateDraft(rawDraft);
+  let draft = sanitizeCreateDraft(rawDraft);
+  if (
+    options.categoryOverride !== undefined &&
+    options.categoryOverride !== draft.category
+  ) {
+    const log = options.logger ?? createLogger();
+    log.debug('create: overriding draft category', {
+      id: entry.id,
+      from: draft.category,
+      to: options.categoryOverride,
+    });
+    draft = { ...draft, category: options.categoryOverride };
+  }
 
   const slug = await resolveSlug(entry, draft, {
     ...(options.contentIndex !== undefined

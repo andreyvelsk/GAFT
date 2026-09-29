@@ -2,17 +2,29 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { CreateResult } from '../../../../agents/create';
+import type { CategoryAgentOptions } from '../../../../agents/category';
+import type { CreateOptions, CreateResult } from '../../../../agents/create';
 import {
   saveImage as realSaveImage,
   type DownloadImageOptions,
   type MediaResult,
 } from '../../../../content/media';
 import type { PageInput } from '../../../../content/template';
+import { createLogger } from '../../../../shared/lib/logger';
 import type { ReportEntry } from '../../../../shared/lib/types';
 import { runCreateStage } from '../index';
+
+/** Mocks of the category agent module (hoisted so `vi.mock` can use them). */
+const categoryMock = vi.hoisted(() => ({
+  createCategoryAgent: vi.fn(),
+  classifyCategory: vi.fn(),
+}));
+
+vi.mock('../../../../agents/category', () => ({
+  createCategoryAgent: categoryMock.createCategoryAgent,
+}));
 
 /** Whether the media integration tests should run. */
 const RUN_INTEGRATION = process.env.RUN_MEDIA_INTEGRATION === 'true';
@@ -86,6 +98,14 @@ function makeCreateResult(
 }
 
 describe('runCreateStage', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    categoryMock.createCategoryAgent.mockReturnValue({
+      classifyCategory: categoryMock.classifyCategory,
+    });
+    categoryMock.classifyCategory.mockResolvedValue('app');
+  });
+
   it('does not write anything in dry-run mode', async () => {
     const writeFile = vi.fn(
       (_path: string, _content: string): Promise<void> => Promise.resolve(),
@@ -172,6 +192,94 @@ describe('runCreateStage', () => {
       join('/tmp/content', 'pixel-navigator', 'index.md'),
       result.markdown,
     );
+  });
+
+  it('passes the injected category as createOptions.categoryOverride', async () => {
+    const create = vi.fn(
+      (_entry: ReportEntry, _options: CreateOptions): Promise<CreateResult> =>
+        Promise.resolve(makeCreateResult()),
+    );
+
+    await runCreateStage(makeEntry(), {
+      create,
+      classifyCategory: () => Promise.resolve('tool'),
+      dryRun: true,
+    });
+
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(create.mock.calls[0]?.[1]?.categoryOverride).toBe('tool');
+    expect(categoryMock.createCategoryAgent).not.toHaveBeenCalled();
+  });
+
+  it('uses the default category agent when no classifier is injected', async () => {
+    categoryMock.classifyCategory.mockResolvedValue('emulator');
+    const create = vi.fn(
+      (_entry: ReportEntry, _options: CreateOptions): Promise<CreateResult> =>
+        Promise.resolve(makeCreateResult()),
+    );
+
+    await runCreateStage(makeEntry(), { create, dryRun: true });
+
+    expect(categoryMock.createCategoryAgent).toHaveBeenCalledTimes(1);
+    expect(create.mock.calls[0]?.[1]?.categoryOverride).toBe('emulator');
+  });
+
+  it('forwards categoryOptions to the default category agent', async () => {
+    const create = vi.fn(
+      (_entry: ReportEntry, _options: CreateOptions): Promise<CreateResult> =>
+        Promise.resolve(makeCreateResult()),
+    );
+    const categoryOptions: CategoryAgentOptions = {
+      backend: 'jev',
+      threshold: 0.5,
+    };
+
+    await runCreateStage(makeEntry(), { create, dryRun: true, categoryOptions });
+
+    expect(categoryMock.createCategoryAgent).toHaveBeenCalledWith(
+      categoryOptions,
+    );
+  });
+
+  it('continues without a category override when classification fails', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'warn',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const create = vi.fn(
+      (_entry: ReportEntry, _options: CreateOptions): Promise<CreateResult> =>
+        Promise.resolve(makeCreateResult()),
+    );
+
+    const result = await runCreateStage(makeEntry(), {
+      create,
+      classifyCategory: () => Promise.reject(new Error('boom')),
+      dryRun: true,
+      categoryOptions: { logger },
+    });
+
+    expect(result.written).toBe(false);
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(create.mock.calls[0]?.[1]?.categoryOverride).toBeUndefined();
+    expect(
+      lines.some((line) => line.includes('category classification failed')),
+    ).toBe(true);
+  });
+
+  it('continues without a category override when the default agent fails', async () => {
+    categoryMock.classifyCategory.mockRejectedValue(new Error('agent down'));
+    const create = vi.fn(
+      (_entry: ReportEntry, _options: CreateOptions): Promise<CreateResult> =>
+        Promise.resolve(makeCreateResult()),
+    );
+
+    await runCreateStage(makeEntry(), { create, dryRun: true });
+
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(create.mock.calls[0]?.[1]?.categoryOverride).toBeUndefined();
   });
 });
 

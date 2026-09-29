@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { CreateResult } from '../../../agents/create';
 import type { AppConfig } from '../../../config/lib/types';
@@ -17,6 +17,16 @@ import type { Logger, RawPost, ReportEntry } from '../../../shared/lib/types';
 import type { FetchStageResult } from '../../stages/fetch';
 import type { MatchStageResult } from '../../stages/match';
 import { runPipeline, type OrchestratorDependencies } from '../index';
+
+/** Mock of the category agent module (hoisted so `vi.mock` can use it). */
+const categoryMock = vi.hoisted(() => ({
+  createCategoryAgent: vi.fn(),
+  classifyCategory: vi.fn(),
+}));
+
+vi.mock('../../../../agents/category', () => ({
+  createCategoryAgent: categoryMock.createCategoryAgent,
+}));
 
 /** Whether the media integration tests should run. */
 const RUN_INTEGRATION = process.env.RUN_MEDIA_INTEGRATION === 'true';
@@ -181,6 +191,14 @@ function makeDeps(
 describe('runPipeline', () => {
   let dir: string | null = null;
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+    categoryMock.createCategoryAgent.mockReturnValue({
+      classifyCategory: categoryMock.classifyCategory,
+    });
+    categoryMock.classifyCategory.mockResolvedValue('app');
+  });
+
   afterEach(async () => {
     if (dir !== null) {
       await rm(dir, { recursive: true, force: true });
@@ -224,6 +242,20 @@ describe('runPipeline', () => {
     // The report reason is synthesized from the decision, not taken from it.
     expect(result.report.posts[0]?.reason).toBe('match: CREATE a');
     expect(raw).toContain('match: CREATE a');
+  });
+
+  it('does not invoke the category agent when a create stage is injected', async () => {
+    const entries = [makeEntry({ id: 'a' })];
+
+    await runPipeline({
+      config: makeConfig(),
+      now: NOW,
+      logger: silentLogger(),
+      writeReport: false,
+      deps: makeDeps(entries, ['a']),
+    });
+
+    expect(categoryMock.createCategoryAgent).not.toHaveBeenCalled();
   });
 
   it('processes exactly one post when maxPosts is 1', async () => {

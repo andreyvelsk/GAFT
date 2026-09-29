@@ -18,6 +18,7 @@ import type {
   GenerateObjectLike,
   ProviderOptions,
 } from '../../../engines/generation/lib/types';
+import type { ProjectCategory } from '../../../../../lib/categories';
 
 /**
  * Draft page produced by the create agent (LLM output).
@@ -123,6 +124,13 @@ export interface CreateOptions {
 
   /** Timestamp used for the page date (defaults to now). */
   now?: Date;
+
+  /**
+   * Category resolved by the category agent. When provided, it takes
+   * precedence over the category the model put in the draft, so the page is
+   * filed under the deterministic decision.
+   */
+  categoryOverride?: ProjectCategory;
 
   /** Pre-loaded content index used to reconcile the slug (used by tests). */
   contentIndex?: readonly ContentCandidate[];

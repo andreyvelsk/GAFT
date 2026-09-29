@@ -6,6 +6,7 @@ import type { GitHubRepo } from '../../../github/repo';
 import { fetchPostById, parsePostId } from '../../../reddit/client';
 import { postToReport } from '../../../reddit/normalize';
 import { AgentError } from '../../../shared/lib/errors';
+import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
 import {
   REPAIR_INSTRUCTION,
@@ -933,6 +934,82 @@ describe('createPage', () => {
         maxRepairAttempts: 0,
       }),
     ).rejects.toBeInstanceOf(AgentError);
+  });
+
+  it('overrides the draft category with categoryOverride', async () => {
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+
+    const result = await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      now: new Date('2026-09-26T10:16:00Z'),
+      categoryOverride: 'tool',
+    });
+
+    expect(result.draft.category).toBe('tool');
+    expect(result.page.frontmatter.category).toBe('tool');
+    expect(result.markdown).toMatch(/category: ["']?tool["']?/);
+  });
+
+  it('keeps the draft category when there is no override', async () => {
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+
+    const result = await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(result.draft.category).toBe('game');
+    expect(result.page.frontmatter.category).toBe('game');
+  });
+
+  it('logs a debug line when the override differs from the draft category', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+
+    await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'tool',
+      logger,
+    });
+
+    expect(
+      lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(true);
+  });
+
+  it('does not log when the override matches the draft category', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'app' }));
+
+    await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'app',
+      logger,
+    });
+
+    expect(
+      lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(false);
   });
 });
 
