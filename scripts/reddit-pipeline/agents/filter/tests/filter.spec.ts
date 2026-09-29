@@ -1,10 +1,12 @@
 import type { LanguageModel } from 'ai';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { fetchPostById, parsePostId } from '../../../reddit/client';
-import { postToReport } from '../../../reddit/normalize';
-import { AgentError } from '../../../shared/lib/errors';
-import type { ReportEntry } from '../../../shared/lib/types';
+import { config } from '../../../config';
+import type {
+  DecisionPort,
+  DecisionRequest,
+  DecisionResult,
+} from '../../../engines/decision';
 import {
   REPAIR_INSTRUCTION,
   createProvider,
@@ -12,15 +14,92 @@ import {
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
 } from '../../../engines/generation';
+import { fetchPostById, parsePostId } from '../../../reddit/client';
+import { postToReport } from '../../../reddit/normalize';
+import { AgentError } from '../../../shared/lib/errors';
+import type { Logger, ReportEntry } from '../../../shared/lib/types';
 import {
+  FILTER_NOUL_CRITERIA,
   FILTER_SYSTEM_PROMPT,
   buildFilterPrompt,
   classifyBatch,
   classifyPosts,
+  createFilterAgent,
   reconcileVerdicts,
+  type FilterBatchInfo,
   type FilterVerdict,
 } from '../index';
 import { REAL_POST_CASES } from './fixtures/real-posts';
+
+/** Shape of the client config captured from the mocked SDK constructor. */
+interface ClientConfigLike {
+  apiKey?: string;
+  baseURL?: string;
+}
+
+/** Shape of the `systemOne` request captured from the mocked SDK client. */
+interface SystemOneRequestLike {
+  model?: string;
+  state: unknown;
+  questions: Record<string, unknown>;
+}
+
+/** Shared state for the mocked `@typesafe-ai/sdk` module. */
+const sdkState = vi.hoisted(() => {
+  const constructorCalls: ClientConfigLike[] = [];
+  const systemOneCalls: SystemOneRequestLike[] = [];
+  const response: { value: unknown } = { value: undefined };
+  return { constructorCalls, systemOneCalls, response };
+});
+
+vi.mock('@typesafe-ai/sdk', () => {
+  class TypeSafeClient {
+    constructor(clientConfig?: ClientConfigLike) {
+      sdkState.constructorCalls.push(clientConfig ?? {});
+    }
+
+    systemOne(request: SystemOneRequestLike): Promise<unknown> {
+      sdkState.systemOneCalls.push(request);
+      return Promise.resolve(sdkState.response.value);
+    }
+  }
+
+  return { TypeSafeClient };
+});
+
+/** An injected decision port that answers `relevant` with a scripted `noul`. */
+function mockDecision(script: (state: unknown) => number | Promise<number>): {
+  decision: DecisionPort;
+  calls: DecisionRequest[];
+} {
+  const calls: DecisionRequest[] = [];
+  const decision: DecisionPort = {
+    decide: async (request: DecisionRequest): Promise<DecisionResult> => {
+      calls.push(request);
+      const noul = await script(request.state);
+      return { model: 'mock', answers: { relevant: { type: 'noul', noul } } };
+    },
+  };
+  return { decision, calls };
+}
+
+/** A logger that records `warn` contexts without writing to stdout. */
+function collectingLogger(): {
+  logger: Logger;
+  warns: Record<string, unknown>[];
+} {
+  const warns: Record<string, unknown>[] = [];
+  const logger: Logger = {
+    debug: (): void => undefined,
+    info: (): void => undefined,
+    error: (): void => undefined,
+    warn: (_message, context): void => {
+      warns.push(context ?? {});
+    },
+    child: (): Logger => logger,
+  };
+  return { logger, warns };
+}
 
 /** Build a report entry from a base payload plus overrides. */
 function makeEntry(overrides: Partial<ReportEntry> = {}): ReportEntry {
@@ -273,6 +352,247 @@ describe('classifyPosts', () => {
     expect(calls).toHaveLength(2);
     expect(result).toHaveLength(3);
     expect(result.map((verdict) => verdict.id)).toEqual(['p1', 'p2', 'p3']);
+  });
+});
+
+describe('createFilterAgent (jev backend)', () => {
+  it('uses the default config threshold of 0.8', async () => {
+    expect(config.thresholds.filter).toBe(0.8);
+    const { decision } = mockDecision(() => 0.8);
+
+    const result = await createFilterAgent({
+      backend: 'jev',
+      decision,
+    }).classifyPosts([makeEntry({ id: 'p1' })]);
+
+    expect(result).toEqual([{ id: 'p1', relevant: true, probability: 0.8 }]);
+  });
+
+  it('marks a post relevant when noul >= threshold and not relevant below', async () => {
+    const values = [0.85, 0.79];
+    let index = 0;
+    const { decision } = mockDecision(() => values[index++] ?? 0);
+
+    const result = await createFilterAgent({
+      backend: 'jev',
+      decision,
+    }).classifyPosts([makeEntry({ id: 'a' }), makeEntry({ id: 'b' })]);
+
+    expect(result).toEqual([
+      { id: 'a', relevant: true, probability: 0.85 },
+      { id: 'b', relevant: false, probability: 0.79 },
+    ]);
+  });
+
+  it('honours an explicit threshold', async () => {
+    const { decision } = mockDecision(() => 0.6);
+    const lenient = createFilterAgent({
+      backend: 'jev',
+      decision,
+      threshold: 0.5,
+    });
+
+    expect(await lenient.classifyPosts([makeEntry({ id: 'p1' })])).toEqual([
+      { id: 'p1', relevant: true, probability: 0.6 },
+    ]);
+
+    const { decision: strictDecision } = mockDecision(() => 0.6);
+    const strict = createFilterAgent({
+      backend: 'jev',
+      decision: strictDecision,
+      threshold: 0.7,
+    });
+
+    expect(await strict.classifyPosts([makeEntry({ id: 'p2' })])).toEqual([
+      { id: 'p2', relevant: false, probability: 0.6 },
+    ]);
+  });
+
+  it('sends the post input and a noul relevance question with criteria', async () => {
+    const { decision, calls } = mockDecision(() => 1);
+
+    await createFilterAgent({ backend: 'jev', decision }).classifyPosts([
+      makeEntry({ id: 'p1', title: 'A title', selftext: 'A body' }),
+    ]);
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.state).toEqual({
+      id: 'p1',
+      title: 'A title',
+      selftext: 'A body',
+      external_url: '',
+      flair: '',
+    });
+    expect(calls[0]?.questions.relevant).toMatchObject({
+      type: 'noul',
+      criteria: FILTER_NOUL_CRITERIA,
+    });
+  });
+
+  it('returns an empty array without calling the port', async () => {
+    const { decision, calls } = mockDecision(() => 1);
+
+    const result = await createFilterAgent({
+      backend: 'jev',
+      decision,
+    }).classifyPosts([]);
+
+    expect(result).toEqual([]);
+    expect(calls).toHaveLength(0);
+  });
+
+  it('preserves the input order and length', async () => {
+    const values = [0.1, 0.9, 0.5];
+    let index = 0;
+    const { decision } = mockDecision(() => values[index++] ?? 0);
+
+    const result = await createFilterAgent({
+      backend: 'jev',
+      decision,
+    }).classifyPosts([
+      makeEntry({ id: 'x' }),
+      makeEntry({ id: 'y' }),
+      makeEntry({ id: 'z' }),
+    ]);
+
+    expect(result.map((verdict) => verdict.id)).toEqual(['x', 'y', 'z']);
+    expect(result).toHaveLength(3);
+  });
+
+  it('treats a failing post as not relevant and processes the rest', async () => {
+    let index = 0;
+    const { decision } = mockDecision(() => {
+      if (index++ === 1) {
+        throw new Error('boom');
+      }
+      return 0.9;
+    });
+    const { logger, warns } = collectingLogger();
+
+    const result = await createFilterAgent({
+      backend: 'jev',
+      decision,
+      logger,
+    }).classifyPosts([
+      makeEntry({ id: 'a' }),
+      makeEntry({ id: 'b' }),
+      makeEntry({ id: 'c' }),
+    ]);
+
+    expect(result).toEqual([
+      { id: 'a', relevant: true, probability: 0.9 },
+      { id: 'b', relevant: false },
+      { id: 'c', relevant: true, probability: 0.9 },
+    ]);
+    expect(warns).toHaveLength(1);
+    expect(warns[0]).toMatchObject({ id: 'b', error: 'boom' });
+  });
+
+  it('calls the port once per post and invokes onBatch per group', async () => {
+    const { decision, calls } = mockDecision(() => 1);
+    const infos: FilterBatchInfo[] = [];
+
+    const result = await createFilterAgent({
+      backend: 'jev',
+      decision,
+    }).classifyPosts(
+      [makeEntry({ id: 'a' }), makeEntry({ id: 'b' }), makeEntry({ id: 'c' })],
+      {
+        batchSize: 2,
+        onBatch: (info) => {
+          infos.push(info);
+        },
+      },
+    );
+
+    expect(calls).toHaveLength(3);
+    expect(infos).toEqual([
+      { batch: 1, totalBatches: 2, posts: 2 },
+      { batch: 2, totalBatches: 2, posts: 1 },
+    ]);
+    expect(result).toHaveLength(3);
+  });
+});
+
+describe('createFilterAgent (llm backend)', () => {
+  it('splits requests according to batchSize', async () => {
+    const { generate, calls } = staticGenerator({ verdicts: [] });
+
+    await createFilterAgent({
+      backend: 'llm',
+      generate,
+      model: testModel(),
+    }).classifyPosts(
+      [makeEntry({ id: 'a' }), makeEntry({ id: 'b' }), makeEntry({ id: 'c' })],
+      { batchSize: 1 },
+    );
+
+    expect(calls).toHaveLength(3);
+  });
+
+  it('is at parity with the legacy classifyPosts (same prompt, temp, schema)', async () => {
+    const entries = [makeEntry({ id: 'p1' }), makeEntry({ id: 'p2' })];
+    const payload = {
+      verdicts: [
+        { id: 'p1', relevant: true },
+        { id: 'p2', relevant: false },
+      ],
+    };
+
+    const { generate: factoryGenerate, calls: factoryCalls } =
+      staticGenerator(payload);
+    const factoryResult = await createFilterAgent({
+      backend: 'llm',
+      generate: factoryGenerate,
+      model: testModel(),
+    }).classifyPosts(entries);
+
+    const { generate: freeGenerate, calls: freeCalls } = staticGenerator(payload);
+    const freeResult = await classifyPosts(entries, {
+      generate: freeGenerate,
+      model: testModel(),
+    });
+
+    expect(factoryResult).toEqual(freeResult);
+    expect(factoryResult).toEqual([
+      { id: 'p1', relevant: true },
+      { id: 'p2', relevant: false },
+    ]);
+    expect(factoryCalls).toHaveLength(1);
+    expect(freeCalls).toHaveLength(1);
+    expect(factoryCalls[0]?.prompt).toBe(freeCalls[0]?.prompt);
+    expect(factoryCalls[0]?.system).toBe(FILTER_SYSTEM_PROMPT);
+    expect(factoryCalls[0]?.temperature).toBe(0);
+    expect(factoryCalls[0]?.schema).toBe(freeCalls[0]?.schema);
+  });
+});
+
+describe('createFilterAgent (jev default adapter)', () => {
+  beforeEach(() => {
+    sdkState.constructorCalls.length = 0;
+    sdkState.systemOneCalls.length = 0;
+    sdkState.response.value = undefined;
+  });
+
+  it('creates a Jev adapter when backend is jev without an injected port', async () => {
+    sdkState.response.value = {
+      model: 'typesafe/jev-1.13',
+      answers: { relevant: { type: 'noul', noul: 0.9 } },
+    };
+
+    const result = await createFilterAgent({ backend: 'jev' }).classifyPosts([
+      makeEntry({ id: 'p1' }),
+    ]);
+
+    expect(result).toEqual([{ id: 'p1', relevant: true, probability: 0.9 }]);
+    expect(sdkState.systemOneCalls).toHaveLength(1);
+    expect(sdkState.systemOneCalls[0]?.state).toEqual({
+      id: 'p1',
+      title: 'My dual screen app',
+      selftext: '',
+      external_url: '',
+      flair: '',
+    });
   });
 });
 
