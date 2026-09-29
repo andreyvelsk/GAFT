@@ -49,6 +49,61 @@ See the [How to Add](content/how-to/index.md) guide for detailed instructions.
 The `scripts/reddit-pipeline` tooling scans r/AynThor, filters relevant posts and
 generates/updates project pages under `content/<slug>/index.md`.
 
+### Architecture
+
+The pipeline is layered so that the domain logic is testable in isolation and the
+model backends can be swapped:
+
+- **`engines/`** — the low-level capabilities shared by the agents:
+  - `generation/` — the LLM generation port (`createProvider`,
+    `generateStructured` with repair-retry);
+  - `decision/` — the decision port (`DecisionPort`) with two adapters: the Jev
+    System One adapter and the legacy LLM adapter, wired by
+    `createDecisionEngine`;
+  - `model/` — model resolution per agent (`resolveModel`,
+    `resolveDecisionModel`).
+- **`agents/`** — task-specific agents, each exposing a factory in addition to
+  its low-level helpers:
+  - `filter/` → `createFilterAgent`;
+  - `match/` → `createMatchAgent`;
+  - `category/` → `createCategoryAgent`;
+  - `create/` → `createCreateAgent`;
+  - `update/` → `createUpdateAgent`.
+- **`tools/`** — top-level tools used by the agents: `github-search`,
+  `github-readme`, `github-release`, `content-read`, `content-search` and
+  `image-download`.
+
+### Decision backends (`jev` vs `llm`)
+
+The `filter`, `match` and `category` agents classify posts through the
+`DecisionPort` and can run on either backend, selected per agent via
+`REDDIT_<AGENT>_BACKEND` (`jev` or `llm`, default `llm`):
+
+- `llm` — the legacy behaviour: the same prompts and `generateStructured()` call
+  over the configured OpenRouter model;
+- `jev` — the System One (Jev) backend at `OPENROUTER_DECISIONS_BASE_URL` using
+  `REDDIT_DECISIONS_MODEL`.
+
+Each backend returns a confidence score. A decision counts as positive when the
+score reaches `REDDIT_<AGENT>_THRESHOLD` (default `0.8`). The `create` and
+`update` agents always use the generation engine (`GenerationPort`) because they
+produce page content rather than a decision.
+
+### Comparing backends
+
+The comparison harness runs the `filter`, `match` and `category` agents through
+both the Jev and the LLM backends on the labelled post fixtures and prints a
+confusion matrix, the derived metrics (accuracy / precision / recall / F1) and
+the agreement between the two backends:
+
+```bash
+# Compare one agent (default: filter), optionally overriding the decision
+# threshold and limiting the number of posts:
+yarn reddit:compare --agent=filter --threshold=0.8 --limit=20
+yarn reddit:compare --agent=match
+yarn reddit:compare --agent=category
+```
+
 ### GitHub token
 
 The pipeline reads repositories, READMEs and releases through the GitHub REST
