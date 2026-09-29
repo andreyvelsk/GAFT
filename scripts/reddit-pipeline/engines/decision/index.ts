@@ -1,4 +1,11 @@
+export { createDecisionEngine } from './lib/engine';
 export { createJevAdapter } from './lib/jev';
+export {
+  LLM_DECISION_SYSTEM_PROMPT,
+  buildLlmDecisionPrompt,
+  createLlmDecisionAdapter,
+  llmDecisionResponseSchema,
+} from './lib/llm';
 export {
   DEFAULT_DECISIONS_BASE_URL,
   DEFAULT_DECISIONS_MODEL,
@@ -6,6 +13,8 @@ export {
   validateAnswers,
   type SystemOneUsage,
 } from './lib/helpers';
+export type { DecisionEngineOptions } from './lib/engine';
+export type { LlmDecisionAdapterOptions } from './lib/llm';
 export type {
   JevAdapterOptions,
   SystemOneArgs,
