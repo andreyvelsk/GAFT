@@ -1,4 +1,7 @@
-import { DEFAULT_MODELS } from '../../../shared/lib/constants';
+import {
+  DEFAULT_DECISIONS_MODEL,
+  DEFAULT_MODELS,
+} from '../../../shared/lib/constants';
 import type { AgentName, ModelMap, ResolveModelOptions } from './types';
 
 /** Environment variable holding the model of each agent. */
@@ -7,10 +10,14 @@ export const AGENT_MODEL_ENV: Record<AgentName, string> = {
   match: 'REDDIT_MATCH_MODEL',
   create: 'REDDIT_CREATE_MODEL',
   update: 'REDDIT_UPDATE_MODEL',
+  category: 'REDDIT_CATEGORY_MODEL',
 };
 
 /** Environment variable holding the global fallback model. */
 export const DEFAULT_MODEL_ENV = 'OPENROUTER_DEFAULT_MODEL';
+
+/** Environment variable holding the System One (Jev) decision model. */
+export const DECISION_MODEL_ENV = 'REDDIT_DECISIONS_MODEL';
 
 /** Read a non-blank env value, treating missing/blank values as unset. */
 function readEnv(env: NodeJS.ProcessEnv, name: string): string | undefined {
@@ -42,6 +49,17 @@ export function resolveModel(
   );
 }
 
+/**
+ * Resolve the System One (Jev) decision model, in order of precedence:
+ * `REDDIT_DECISIONS_MODEL` → `DEFAULT_DECISIONS_MODEL`.
+ */
+export function resolveDecisionModel(
+  options: ResolveModelOptions = {},
+): string {
+  const env = options.env ?? process.env;
+  return readEnv(env, DECISION_MODEL_ENV) ?? DEFAULT_DECISIONS_MODEL;
+}
+
 /** Resolve the model of every agent at once. */
 export function resolveModels(options: ResolveModelOptions = {}): ModelMap {
   return {
@@ -49,5 +67,6 @@ export function resolveModels(options: ResolveModelOptions = {}): ModelMap {
     match: resolveModel('match', options),
     create: resolveModel('create', options),
     update: resolveModel('update', options),
+    category: resolveModel('category', options),
   };
 }

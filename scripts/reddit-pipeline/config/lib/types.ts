@@ -1,3 +1,5 @@
+import type { DecisionBackend } from '../../engines/decision';
+
 /** OpenRouter connection settings. */
 export interface OpenRouterConfig {
   apiKey: string;
@@ -11,6 +13,27 @@ export interface AgentModelsConfig {
   match: string;
   create: string;
   update: string;
+  category: string;
+}
+
+/** System One (Jev) connection settings. */
+export interface DecisionConfig {
+  baseUrl: string;
+  model: string;
+}
+
+/** Decision backend selected per agent (`jev` or `llm`). */
+export interface AgentBackendConfig {
+  filter: DecisionBackend;
+  match: DecisionBackend;
+  category: DecisionBackend;
+}
+
+/** Confidence thresholds (0..1) applied per agent. */
+export interface ThresholdConfig {
+  filter: number;
+  match: number;
+  category: number;
 }
 
 /** Reddit fetch / processing settings. */
@@ -37,6 +60,9 @@ export interface GitHubConfig {
 /** Fully resolved, typed application configuration. */
 export interface AppConfig {
   openrouter: OpenRouterConfig;
+  decisions: DecisionConfig;
+  backends: AgentBackendConfig;
+  thresholds: ThresholdConfig;
   models: AgentModelsConfig;
   reddit: RedditConfig;
   pr: PullRequestConfig;

@@ -1,13 +1,15 @@
 import { z } from 'zod';
 
+import {
+  DEFAULT_DECISIONS_BASE_URL,
+  DEFAULT_DECISIONS_MODEL,
+} from '../../../shared/lib/constants';
 import { AgentError } from '../../../shared/lib/errors';
 import type { DecisionAnswer, DecisionUsage } from './types';
 
-/** Default System One base URL (OpenRouter-compatible gateway). */
-export const DEFAULT_DECISIONS_BASE_URL = 'https://openrouter.ai/api';
-
-/** Default System One model. */
-export const DEFAULT_DECISIONS_MODEL = 'typesafe/jev-1.13';
+// Re-exported for backward compatibility; the canonical definitions live in
+// `shared/lib/constants` so that `config` can import them without a cycle.
+export { DEFAULT_DECISIONS_BASE_URL, DEFAULT_DECISIONS_MODEL };
 
 /** Raw usage as reported by System One (snake_case; `cost` is optional). */
 export interface SystemOneUsage {

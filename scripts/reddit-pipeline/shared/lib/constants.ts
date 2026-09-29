@@ -83,8 +83,19 @@ export const DEFAULT_MODELS = {
   match: '~deepseek/deepseek-v4-flash-latest',
   create: '~deepseek/deepseek-v4-flash-latest',
   update: '~deepseek/deepseek-v4-flash-latest',
+  category: '~deepseek/deepseek-v4-flash-latest',
   fallback: '~deepseek/deepseek-v4-flash-latest',
 } as const;
+
+/**
+ * Default System One base URL (OpenRouter-compatible gateway). Lives here (and
+ * not in `engines/decision`) so that `config` can import it without creating a
+ * circular dependency through the Jev adapter.
+ */
+export const DEFAULT_DECISIONS_BASE_URL = 'https://openrouter.ai/api';
+
+/** Default System One model (used when `REDDIT_DECISIONS_MODEL` is empty). */
+export const DEFAULT_DECISIONS_MODEL = 'typesafe/jev-1.13';
 
 /** Default subreddit to scan. */
 export const DEFAULT_SUBREDDIT = 'AynThor';

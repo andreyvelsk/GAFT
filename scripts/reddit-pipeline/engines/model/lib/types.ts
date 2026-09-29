@@ -1,7 +1,13 @@
 import { z } from 'zod';
 
 /** Agents that can be configured with a dedicated model. */
-export const agentNameSchema = z.enum(['filter', 'match', 'create', 'update']);
+export const agentNameSchema = z.enum([
+  'filter',
+  'match',
+  'create',
+  'update',
+  'category',
+]);
 
 export type AgentName = z.infer<typeof agentNameSchema>;
 

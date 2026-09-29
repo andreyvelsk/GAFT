@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 import {
   DEFAULT_BATCH_SIZE,
+  DEFAULT_DECISIONS_BASE_URL,
+  DEFAULT_DECISIONS_MODEL,
   DEFAULT_LOOKBACK_HOURS,
   DEFAULT_MAX_POSTS,
   DEFAULT_MODELS,
@@ -38,6 +40,15 @@ const envSchema = z.object({
   REDDIT_MATCH_MODEL: z.string().default(''),
   REDDIT_CREATE_MODEL: z.string().default(''),
   REDDIT_UPDATE_MODEL: z.string().default(''),
+  REDDIT_CATEGORY_MODEL: z.string().default(''),
+  OPENROUTER_DECISIONS_BASE_URL: z.string().default(''),
+  REDDIT_DECISIONS_MODEL: z.string().default(''),
+  REDDIT_FILTER_BACKEND: z.enum(['jev', 'llm']).default('llm'),
+  REDDIT_MATCH_BACKEND: z.enum(['jev', 'llm']).default('llm'),
+  REDDIT_CATEGORY_BACKEND: z.enum(['jev', 'llm']).default('llm'),
+  REDDIT_FILTER_THRESHOLD: z.coerce.number().min(0).max(1).default(0.8),
+  REDDIT_MATCH_THRESHOLD: z.coerce.number().min(0).max(1).default(0.8),
+  REDDIT_CATEGORY_THRESHOLD: z.coerce.number().min(0).max(1).default(0.8),
   REDDIT_SUBREDDIT: z.string().default(DEFAULT_SUBREDDIT),
   REDDIT_LOOKBACK_HOURS: z.coerce
     .number()
@@ -76,6 +87,18 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     REDDIT_MATCH_MODEL: envValue(env, 'REDDIT_MATCH_MODEL'),
     REDDIT_CREATE_MODEL: envValue(env, 'REDDIT_CREATE_MODEL'),
     REDDIT_UPDATE_MODEL: envValue(env, 'REDDIT_UPDATE_MODEL'),
+    REDDIT_CATEGORY_MODEL: envValue(env, 'REDDIT_CATEGORY_MODEL'),
+    OPENROUTER_DECISIONS_BASE_URL: envValue(
+      env,
+      'OPENROUTER_DECISIONS_BASE_URL',
+    ),
+    REDDIT_DECISIONS_MODEL: envValue(env, 'REDDIT_DECISIONS_MODEL'),
+    REDDIT_FILTER_BACKEND: envValue(env, 'REDDIT_FILTER_BACKEND'),
+    REDDIT_MATCH_BACKEND: envValue(env, 'REDDIT_MATCH_BACKEND'),
+    REDDIT_CATEGORY_BACKEND: envValue(env, 'REDDIT_CATEGORY_BACKEND'),
+    REDDIT_FILTER_THRESHOLD: envValue(env, 'REDDIT_FILTER_THRESHOLD'),
+    REDDIT_MATCH_THRESHOLD: envValue(env, 'REDDIT_MATCH_THRESHOLD'),
+    REDDIT_CATEGORY_THRESHOLD: envValue(env, 'REDDIT_CATEGORY_THRESHOLD'),
     REDDIT_SUBREDDIT: envValue(env, 'REDDIT_SUBREDDIT'),
     REDDIT_LOOKBACK_HOURS: envValue(env, 'REDDIT_LOOKBACK_HOURS'),
     REDDIT_BATCH_SIZE: envValue(env, 'REDDIT_BATCH_SIZE'),
@@ -99,11 +122,35 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
         DEFAULT_MODELS.fallback,
       ),
     },
+    decisions: {
+      baseUrl:
+        parsed.OPENROUTER_DECISIONS_BASE_URL === ''
+          ? DEFAULT_DECISIONS_BASE_URL
+          : parsed.OPENROUTER_DECISIONS_BASE_URL,
+      model: resolveModel(
+        parsed.REDDIT_DECISIONS_MODEL,
+        DEFAULT_DECISIONS_MODEL,
+      ),
+    },
+    backends: {
+      filter: parsed.REDDIT_FILTER_BACKEND,
+      match: parsed.REDDIT_MATCH_BACKEND,
+      category: parsed.REDDIT_CATEGORY_BACKEND,
+    },
+    thresholds: {
+      filter: parsed.REDDIT_FILTER_THRESHOLD,
+      match: parsed.REDDIT_MATCH_THRESHOLD,
+      category: parsed.REDDIT_CATEGORY_THRESHOLD,
+    },
     models: {
       filter: resolveModel(parsed.REDDIT_FILTER_MODEL, DEFAULT_MODELS.filter),
       match: resolveModel(parsed.REDDIT_MATCH_MODEL, DEFAULT_MODELS.match),
       create: resolveModel(parsed.REDDIT_CREATE_MODEL, DEFAULT_MODELS.create),
       update: resolveModel(parsed.REDDIT_UPDATE_MODEL, DEFAULT_MODELS.update),
+      category: resolveModel(
+        parsed.REDDIT_CATEGORY_MODEL,
+        DEFAULT_MODELS.category,
+      ),
     },
     reddit: {
       subreddit: parsed.REDDIT_SUBREDDIT,

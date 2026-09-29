@@ -18,11 +18,15 @@ const RUN_INTEGRATION = process.env.RUN_MEDIA_INTEGRATION === 'true';
 function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
   return {
     openrouter: { apiKey: '', baseUrl: undefined, defaultModel: 'test/model' },
+    decisions: { baseUrl: 'https://openrouter.ai/api', model: 'test/jev' },
+    backends: { filter: 'llm', match: 'llm', category: 'llm' },
+    thresholds: { filter: 0.8, match: 0.8, category: 0.8 },
     models: {
       filter: 'test/model',
       match: 'test/model',
       create: 'test/model',
       update: 'test/model',
+      category: 'test/model',
     },
     reddit: {
       subreddit: 'AynThor',
