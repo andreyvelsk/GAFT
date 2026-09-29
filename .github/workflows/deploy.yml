@@ -5,13 +5,13 @@ on:
     branches:
       - main
 
-# позволяет GitHub Pages читать артефакты workflow
+# allows GitHub Pages to read workflow artifacts
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# одной группой — только параллельные деплои между ветками
+# single group — only parallel deploys across branches
 concurrency:
   group: pages
   cancel-in-progress: false
