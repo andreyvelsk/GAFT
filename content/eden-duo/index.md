@@ -8,6 +8,10 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/eden-duo/preview.webp"
+  - type: "image"
+    url: "/content/eden-duo/screenshot-2.webp"
+  - type: "image"
+    url: "/content/eden-duo/screenshot-3.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_a_switch_emulator_fork_with_second/)
