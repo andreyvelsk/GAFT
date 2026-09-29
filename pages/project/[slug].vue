@@ -134,6 +134,22 @@ const article = ref<Article | null>(null)
 const { data } = await useAsyncData(`article-${slug}`, () => getArticle(slug))
 article.value = data.value
 
+// Count unique page views (client-side only, no UI output)
+const { registerView } = useViews(slug)
+
+onMounted(() => {
+  void registerView()
+})
+
+// The component is reused when navigating between projects — count the new slug
+watch(
+  () => route.params.slug,
+  (newSlug) => {
+    const next = (Array.isArray(newSlug) ? newSlug[0] : newSlug) ?? ''
+    void registerView(next)
+  }
+)
+
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr)
   return date.toLocaleDateString('en-US', {

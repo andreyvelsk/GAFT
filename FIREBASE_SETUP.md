@@ -1,28 +1,28 @@
-# 🔥 Firebase Setup для лайков (пошаговая инструкция)
+# 🔥 Firebase Setup for Likes & Views (step-by-step guide)
 
-Этот гайд поможет вам настроить Firebase Firestore для хранения лайков на статьях блога. Выполняйте шаги последовательно.
-
----
-
-## Шаг 1: Создание аккаунта и проекта Firebase
-
-1. Перейдите на [https://console.firebase.google.com/](https://console.firebase.google.com/)
-2. Войдите через Google-аккаунт
-3. Нажмите **«Добавить проект»** (Add project)
-4. Введите имя проекта, например: `my-blog-likes`
-5. **Google Analytics** — можно оставить включённым или отключить (необязательно)
-6. Нажмите **«Создать проект»** (Create project)
-7. Дождитесь завершения создания и нажмите **«Продолжить»**
+This guide walks you through setting up Firebase Firestore to store likes and unique page views for the blog. Follow the steps in order.
 
 ---
 
-## Шаг 2: Добавление веб-приложения
+## Step 1: Create a Firebase account and project
 
-1. На главной странице проекта нажмите иконку **`</>`** (Web)
-2. Введите имя приложения, например: `my-blog-web`
-3. (Опционально) Поставьте галочку «Also set up Firebase Hosting» — вам это не нужно для Static Site, но можно
-4. Нажмите **«Зарегистрировать приложение»** (Register app)
-5. **Важно!** Скопируйте объект конфигурации — он понадобится на шаге 5:
+1. Go to [https://console.firebase.google.com/](https://console.firebase.google.com/)
+2. Sign in with your Google account
+3. Click **"Add project"**
+4. Enter a project name, e.g. `my-blog-likes`
+5. **Google Analytics** — you can keep it enabled or disable it (optional)
+6. Click **"Create project"**
+7. Wait for creation to finish and click **"Continue"**
+
+---
+
+## Step 2: Add a web app
+
+1. On the project home page, click the **`</>`** (Web) icon
+2. Enter an app name, e.g. `my-blog-web`
+3. (Optional) Tick "Also set up Firebase Hosting" — you don't need it for a static site, but it's fine
+4. Click **"Register app"**
+5. **Important!** Copy the config object — you'll need it in Step 5:
 
 ```javascript
 const firebaseConfig = {
@@ -35,94 +35,113 @@ const firebaseConfig = {
 };
 ```
 
-6. Нажмите **«Завершить»** (Done)
+6. Click **"Done"**
 
 ---
 
-## Шаг 3: Настройка Firestore Database
+## Step 3: Set up Firestore Database
 
-1. В левой панели консоли Firebase выберите **Firestore Database**
-2. Нажмите **«Создать базу данных»** (Create database)
-3. Выберите **режим**: выберите **«Режим тестирования»** (Start in test mode)
-   - Мы позже настроим правила безопасности
-4. Выберите ближайший регион (например, `eur3` для Европы или `nam5` для США)
-5. Нажмите **«Создать»** (Enable)
+1. In the Firebase console left panel, select **Firestore Database**
+2. Click **"Create database"**
+3. Choose a **mode**: select **"Start in test mode"**
+   - We'll configure security rules later
+4. Choose the nearest region (e.g. `eur3` for Europe or `nam5` for the US)
+5. Click **"Enable"**
 
 ---
 
-## Шаг 4: Настройка Security Rules (правила безопасности)
+## Step 4: Configure Security Rules
 
-Это критически важный шаг — правила определяют, кто может читать/писать данные.
+This is a critical step — the rules define who can read/write data.
 
-1. В Firestore выберите вкладку **«Правила»** (Rules)
-2. Замените содержимое на:
+1. In Firestore, open the **"Rules"** tab
+2. Replace the contents with:
 
 ```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Коллекция likes — документ ID = slug статьи
+    // likes collection — document ID = article slug
     match /likes/{articleSlug} {
-      // Чтение — разрешено всем (анонимно)
+      // Read — allowed for everyone (anonymous)
       allow read: if true;
 
-      // Запись — разрешено всем, но ТОЛЬКО:
-      // 1. Документ может быть создан (setDoc) с count = 0
-      // 2. Поле count может быть увеличено только на 1 (increment)
-      // 3. Запрещено: удаление, обновление других полей, установка произвольного count
+      // Write — allowed for everyone, but ONLY:
+      // 1. The document may be created (setDoc) with count = 0
+      // 2. The count field may only be incremented by 1 (increment)
+      // 3. Forbidden: deletion, updating other fields, setting an arbitrary count
       allow create: if request.resource.data.count == 0
                     && request.resource.data.keys().hasAll(['count', 'updatedAt']);
 
       allow update: if request.resource.data.count == resource.data.count + 1
                     && request.resource.data.keys().hasAll(['count', 'updatedAt']);
 
-      // Запрет на удаление документов
+      // Deletion is forbidden
+      allow delete: if false;
+    }
+
+    // views collection — document ID = article slug (unique page views)
+    match /views/{articleSlug} {
+      // Read — allowed for everyone (anonymous)
+      allow read: if true;
+
+      // Write — allowed for everyone, but ONLY:
+      // 1. The document may be created (setDoc merge) with count = 1
+      // 2. The count field may only be incremented by 1 (increment)
+      // 3. Forbidden: deletion, updating other fields, setting an arbitrary count
+      allow create: if request.resource.data.count == 1
+                    && request.resource.data.keys().hasAll(['count', 'updatedAt']);
+
+      allow update: if request.resource.data.count == resource.data.count + 1
+                    && request.resource.data.keys().hasAll(['count', 'updatedAt']);
+
+      // Deletion is forbidden
       allow delete: if false;
     }
   }
 }
 ```
 
-3. Нажмите **«Опубликовать»** (Publish)
+3. Click **"Publish"**
 
-> ⚠️ **Важно:** Эти правила разрешают увеличивать `count` только на +1 и запрещают
-> устанавливать произвольные значения. Это защищает от накрутки.
+> ⚠️ **Important:** These rules only allow incrementing `count` by +1 and forbid
+> setting arbitrary values. This protects against inflation.
 
 ---
 
-## Шаг 5: Получение ключей API и подключение к проекту
+## Step 5: Get the API keys and connect them to the project
 
-### 5.1. Получение ключей
+### 5.1. Get the keys
 
-1. В консоли Firebase перейдите в **Настройки проекта** (⚙️ Project Settings)
-2. Выберите вкладку **«Общие»** (General)
-3. В разделе **«Ваши приложения»** найдите веб-приложение, созданное на шаге 2
-4. Нажмите **«Запуск»** (Web config) — скопируйте значения
+1. In the Firebase console, go to **Project Settings** (⚙️)
+2. Open the **"General"** tab
+3. Under **"Your apps"**, find the web app you created in Step 2
+4. Click **"Web config"** — copy the values
 
-### 5.2. Создание файла `.env`
+### 5.2. Create the `.env` file
 
-В корне проекта (рядом с `nuxt.config.ts`) создайте файл `.env`:
+In the project root (next to `nuxt.config.ts`), create a `.env` file:
 
 ```bash
 # Firebase Configuration
-NUXT_PUBLIC_FIREBASE_API_KEY=ваш_apiKey
-NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN=ваш_projectId.firebaseapp.com
-NUXT_PUBLIC_FIREBASE_PROJECT_ID=ваш_projectId
-NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET=ваш_projectId.firebasestorage.app
-NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=ваш_messagingSenderId
-NUXT_PUBLIC_FIREBASE_APP_ID=ваш_appId
+NUXT_PUBLIC_FIREBASE_API_KEY=your_apiKey
+NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_projectId.firebaseapp.com
+NUXT_PUBLIC_FIREBASE_PROJECT_ID=your_projectId
+NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_projectId.firebasestorage.app
+NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messagingSenderId
+NUXT_PUBLIC_FIREBASE_APP_ID=your_appId
 NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-> Значения подставьте из скопированного конфига (шаг 2.5 или 5.1).
+> Fill in the values from the config you copied (Step 2.5 or 5.1).
 
-### 5.3. Для GitHub Pages (GitHub Actions)
+### 5.3. For GitHub Pages (GitHub Actions)
 
-Если вы деплоитесь через GitHub Actions, добавьте эти значения как **Repository Secrets**:
+If you deploy via GitHub Actions, add these values as **Repository Secrets**:
 
-1. В репозитории GitHub: **Settings** → **Secrets and variables** → **Actions**
-2. Нажмите **«New repository secret»** для каждой переменной:
+1. In the GitHub repository: **Settings** → **Secrets and variables** → **Actions**
+2. Click **"New repository secret"** for each variable:
    - `NUXT_PUBLIC_FIREBASE_API_KEY`
    - `NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
    - `NUXT_PUBLIC_FIREBASE_PROJECT_ID`
@@ -131,7 +150,7 @@ NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
    - `NUXT_PUBLIC_FIREBASE_APP_ID`
    - `NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
 
-В файле `.github/workflows/deploy.yml` перед сборкой добавьте:
+In `.github/workflows/deploy.yml`, add this before the build step:
 
 ```yaml
 - name: Generate .env
@@ -147,28 +166,29 @@ NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
 
 ---
 
-## Шаг 6: Проверка работоспособности
+## Step 6: Verify it works
 
-1. Запустите проект локально:
+1. Run the project locally:
 
 ```bash
 cd nuxt-blog
 cp .env.example .env
-# Заполните .env вашими ключами из Firebase
+# Fill in .env with your Firebase keys
 npm run dev
 ```
 
-2. Откройте браузер → `http://localhost:3000`
-3. На главной странице вы должны увидеть кнопки лайков (❤️) на каждой карточке статьи
-4. Нажмите на кнопку лайка:
-   - Счётчик должен увеличиться на 1
-   - Кнопка должна стать розовой (активное состояние)
-   - Повторное нажатие не должно быть возможным
-5. Откройте Firebase Console → Firestore — вы должны увидеть коллекцию `likes` с документами
+2. Open your browser → `http://localhost:3000`
+3. On the home page you should see like buttons (❤️) on each article card
+4. Click a like button:
+   - The counter should increase by 1
+   - The button should turn pink (active state)
+   - Clicking again should not be possible
+5. Open the Firebase Console → Firestore — you should see the `likes` collection with documents
+6. Open any project page (e.g. `http://localhost:3000/project/skyrim`) — you should see the `views` collection with a document for that slug
 
 ---
 
-## Шаг 7: Структура данных в Firestore
+## Step 7: Firestore data structure
 
 ```
 likes/
@@ -184,62 +204,93 @@ likes/
   └── ...
 ```
 
-- **Коллекция:** `likes`
-- **Document ID:** slug статьи (совпадает с именем папки в `content/`)
-- **Поля:**
-  - `count` (number) — количество лайков
-  - `updatedAt` (timestamp) — время последнего обновления
+- **Collection:** `likes`
+- **Document ID:** article slug (matches the folder name in `content/`)
+- **Fields:**
+  - `count` (number) — number of likes
+  - `updatedAt` (timestamp) — last update time
+
+### `views` collection (unique page views)
+
+```
+views/
+  ├── civilization-6/
+  │     ├── count: 42
+  │     └── updatedAt: <timestamp>
+  ├── dualscreendex/
+  │     ├── count: 128
+  │     └── updatedAt: <timestamp>
+  └── ...
+```
+
+- **Collection:** `views`
+- **Document ID:** article slug (matches the folder name in `content/`)
+- **Fields:**
+  - `count` (number) — number of unique page views
+  - `updatedAt` (timestamp) — last update time
+
+**How uniqueness is determined:** one browser = one view, forever.
+After the first counted view, the slug is stored in `localStorage`
+(key `viewed_articles`), and repeat visits from that browser are not counted.
+The logic lives in [`composables/useViews.ts`](composables/useViews.ts:1) and is
+invoked on the page [`pages/project/[slug].vue`](pages/project/[slug].vue:1).
+
+**Quota efficiency:** the write is performed via
+`setDoc(ref, { count: increment(1), updatedAt: serverTimestamp() }, { merge: true })` —
+that's **one write and zero reads** per unique browser. The `onSnapshot`
+subscription and `getDoc` are intentionally not used, since displaying the
+counter in the UI is not required yet.
 
 ---
 
-## Шаг 8: Настройка Google Analytics (GA4)
+## Step 8: Google Analytics (GA4) setup
 
-Firebase Analytics использует **Google Analytics 4 (GA4)** под капотом. Это позволяет отслеживать посещаемость, поведение пользователей и многое другое — всё через встроенные дашборды Firebase.
+Firebase Analytics is powered by **Google Analytics 4 (GA4)** under the hood. It lets you track traffic, user behavior and much more — all through the built-in Firebase dashboards.
 
-### 8.1. Включение Analytics в Firebase Console
+### 8.1. Enable Analytics in the Firebase Console
 
-1. В консоли Firebase перейдите в **Integrations** → **Google Analytics**
-2. Нажмите **«Link a Google Analytics property»**
-3. Выберите существующий аккаунт GA4 или создайте новый:
-   - Нажмите **«Create a new property»**
-   - Введите имя (например: `Dual Screen Games Blog`)
-   - Выберите часовой пояс и валюту
-4. Нажмите **«Link»** и дождитесь завершения
-5. Нажмите **«Continue»**
+1. In the Firebase console, go to **Integrations** → **Google Analytics**
+2. Click **"Link a Google Analytics property"**
+3. Select an existing GA4 account or create a new one:
+   - Click **"Create a new property"**
+   - Enter a name (e.g. `Dual Screen Games Blog`)
+   - Choose a time zone and currency
+4. Click **"Link"** and wait for it to finish
+5. Click **"Continue"**
 
-### 8.2. Получение Measurement ID
+### 8.2. Get the Measurement ID
 
-Measurement ID — это ключ GA4 в формате `G-XXXXXXXXXX`.
+The Measurement ID is the GA4 key in the format `G-XXXXXXXXXX`.
 
-1. Перейдите в **Google Analytics** → [analytics.google.com](https://analytics.google.com/)
-2. Выберите созданное свойство (property)
-3. Перейдите в **Администратор** (⚙️) → **Потоки данных** (Data streams)
-4. Выберите веб-поток данных
-5. Скопируйте **Measurement ID** (отображается в верхней части)
+1. Go to **Google Analytics** → [analytics.google.com](https://analytics.google.com/)
+2. Select the property you created
+3. Go to **Admin** (⚙️) → **Data streams**
+4. Select the web data stream
+5. Copy the **Measurement ID** (shown at the top)
 
-### 8.3. Добавление Measurement ID в проект
+### 8.3. Add the Measurement ID to the project
 
-Добавьте в файл `.env`:
+Add this to your `.env` file:
 
 ```bash
 NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-### 8.4. GitHub Actions (если деплоитесь через CI)
+### 8.4. GitHub Actions (if you deploy via CI)
 
-Добавьте секрет `NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID` в Repository Secrets.
+Add the `NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID` secret to Repository Secrets.
 
-### 8.5. Как это работает
+### 8.5. How it works
 
-Плагин [`plugins/firebase-analytics.client.ts`](plugins/firebase-analytics.client.ts) автоматически:
+The plugin [`plugins/firebase-analytics.client.ts`](plugins/firebase-analytics.client.ts) automatically:
 
-1. **Инициализирует** Firebase Analytics при загрузке страницы (только на клиенте)
-2. **Логирует** событие `page_view` при каждом переходе между страницами
-3. **Предоставляет** хелпер `$trackEvent()` для кастомных событий
+1. **Initializes** Firebase Analytics on page load (client-side only)
+2. **Logs** a `page_view` event on every navigation
+3. **Provides** the `$trackEvent()` helper for custom events
 
-#### Автоматический трекинг
+#### Automatic tracking
 
-При каждом переходе на страницу автоматически отправляется событие:
+On every navigation, the following event is sent automatically:
 
 ```
 page_view
@@ -247,94 +298,115 @@ page_view
   └── page_title: "Skyrim | Dual Screen Games..."
 ```
 
-#### Кастомные события
+#### Custom events
 
-Используйте `$trackEvent()` для отслеживания пользовательских действий:
+Use `$trackEvent()` to track user actions:
 
 ```vue
 <script setup lang="ts">
 const { $trackEvent } = useNuxtApp()
 
-// Трекинг клика по лайку
+// Track a like click
 const handleLike = () => {
   $trackEvent('like_clicked', { article: 'skyrim' })
 }
 
-// Трекинг поиска
+// Track a search
 const handleSearch = (query: string) => {
   $trackEvent('search', { query })
 }
 </script>
 ```
 
-### 8.6. Просмотр аналитики
+### 8.6. Viewing analytics
 
-#### В Firebase Console:
+#### In the Firebase Console:
 
-1. Перейдите в **Analytics** → **Dashboard** в консоли Firebase
-2. Вы увидите:
-   - Количество активных пользователей
-   - Количество сессий
-   - Популярные страницы
-   - Географию аудитории
-   - Устройства и браузеры
+1. Go to **Analytics** → **Dashboard** in the Firebase console
+2. You'll see:
+   - Active users
+   - Number of sessions
+   - Popular pages
+   - Audience geography
+   - Devices and browsers
 
-#### В Google Analytics:
+#### In Google Analytics:
 
-1. Перейдите в [analytics.google.com](https://analytics.google.com/)
-2. Выберите свойство вашего блога
-3. Полные отчёты GA4 доступны:
-   - **Realtime** — кто на сайте прямо сейчас
-   - **Lifecycle** — воронки, удержание, монетизация
-   - **User** — демография, интересы, технологии
+1. Go to [analytics.google.com](https://analytics.google.com/)
+2. Select your blog's property
+3. Full GA4 reports are available:
+   - **Realtime** — who is on the site right now
+   - **Lifecycle** — funnels, retention, monetization
+   - **User** — demographics, interests, technology
 
-### 8.7. Полезные события для блога
+### 8.7. Useful events for the blog
 
-| Событие | Параметры | Когда отправлять |
-|---------|-----------|------------------|
-| `page_view` | `page_path`, `page_title` | Автоматически (плагин) |
-| `like_clicked` | `article` (slug) | При нажатии лайка |
-| `search` | `query`, `results_count` | При поиске |
-| `sort_changed` | `sort_by` (popular/newest) | При сортировке |
-| `article_open` | `article` (slug) | При открытии статьи |
+| Event | Parameters | When to send |
+|-------|------------|--------------|
+| `page_view` | `page_path`, `page_title` | Automatically (plugin) |
+| `like_clicked` | `article` (slug) | On like click |
+| `search` | `query`, `results_count` | On search |
+| `sort_changed` | `sort_by` (popular/newest) | On sort |
+| `article_open` | `article` (slug) | On opening an article |
 
-### 8.8. Конфиденциальность и GDPR
+### 8.8. Privacy and GDPR
 
-> ⚠️ **Важно:** Firebase Analytics отправляет данные в Google. Если ваш сайт ориентирован на пользователей из ЕС, вам может потребоваться:
-> - Добавить баннер согласия (cookie consent)
-> - Настроить IP-анонимизацию
-> - Обновить политику конфиденциальности
+> ⚠️ **Important:** Firebase Analytics sends data to Google. If your site targets EU users, you may need to:
+> - Add a cookie consent banner
+> - Enable IP anonymization
+> - Update your privacy policy
 
-Для простого блога это обычно не требуется, но стоит иметь в виду.
-
----
-
-## Часто задаваемые вопросы
-
-### Могут ли пользователи накрутить лайки?
-Нет. Каждый браузер хранит в `localStorage` информацию о том, какие статьи уже лайкнуты. Пользователь не может поставить больше одного лайка на одну статью с одного браузера. Additionally, правила Firestore не позволяют устанавливать произвольные значения `count`.
-
-### Нужна ли авторизация для лайков?
-Нет. Лайки работают анонимно — авторизация не требуется. Это сделано намеренно для простоты UX.
-
-### Что если пользователь очистит localStorage?
-Тогда он сможет поставить лайк повторно. Этоacceptable trade-off для анонимной системы без авторизации.
-
-### Как работает сортировка по популярности?
-На странице главной нажмите «❤️ Popular» в панели сортировки. Статьи будут отсортированы по количеству лайков (от наибольшего к наименьшему).
-
-### Сколько это стоит?
-Бесплатно. Тариф Firebase Spark (free) включает:
-- 1 GiB хранения данных
-- 50 КБ/с чтения
-- 20 КБ/с записи
-- 10 000 операций чтения/дня
-
-Для блога с лайками этого более чем достаточно.
+For a simple blog this is usually not required, but it's worth keeping in mind.
 
 ---
 
-## Архитектура решения
+## FAQ
+
+### Can users inflate likes?
+No. Each browser stores in `localStorage` which articles have already been liked. A user cannot like the same article more than once from a single browser. Additionally, the Firestore rules do not allow setting arbitrary `count` values.
+
+### Is authentication required for likes?
+No. Likes work anonymously — no authentication is required. This is intentional for a simple UX.
+
+### What if a user clears localStorage?
+Then they can like again. This is an acceptable trade-off for an anonymous system without authentication.
+
+### How does sorting by popularity work?
+On the home page, click "❤️ Popular" in the sort controls. Articles will be sorted by like count (highest to lowest).
+
+### How much does it cost?
+Free. The Firebase Spark (free) plan includes:
+- 1 GiB of stored data
+- 50,000 read operations/day
+- 20,000 write operations/day
+- 20,000 delete operations/day
+- 10 GiB of outbound traffic/month
+
+For a blog with likes and views this is more than enough: each unique
+browser produces just one write per view and one per like.
+
+> ⚠️ **Important:** once the daily quota is exhausted, writes simply stop
+> going through (the client receives an error). The Spark plan has no budget
+> alerts — those are only available on the paid Blaze plan. The view counter
+> code ([`composables/useViews.ts`](composables/useViews.ts:1)) catches errors
+> and does not break the page.
+
+### How do I view the number of page views in the Firebase panel?
+1. Open the [Firebase Console](https://console.firebase.google.com/) and select your project.
+2. In the left menu, go to **Build → Firestore Database**
+   (direct link: `https://console.firebase.google.com/project/<PROJECT_ID>/firestore`).
+3. On the **Data** tab, select the **`views`** collection.
+4. Each document is a project page: **Document ID** = slug,
+   the **`count`** field = number of unique views, **`updatedAt`** = last view time.
+5. To sort by popularity: click the `count` column header
+   (or create an index/query) — documents will be ordered descending.
+
+> Tip: to quickly find a specific page, type its slug
+> (e.g. `skyrim`) into the search box above the document list.
+
+---
+
+## Solution architecture
 
 ```
 ┌─────────────────────┐     onSnapshot      ┌──────────────────┐
@@ -347,7 +419,7 @@ const handleSearch = (query: string) => {
 └─────────────────────┘                      └──────────────────┘
 ```
 
-- **Локальное хранение:** `localStorage` key `liked_articles` — массив slug'ов
-- **Глобальное хранение:** Firestore коллекция `likes` — документ ID = slug
-- **Синхронизация:** `onSnapshot` — подписка на обновления в реальном времени
-- **Атомарность:** `increment(1)` — операция +1 атомарна на уровне Firestore
+- **Local storage:** `localStorage` key `liked_articles` — an array of slugs
+- **Global storage:** Firestore collection `likes` — document ID = slug
+- **Sync:** `onSnapshot` — real-time subscription to updates
+- **Atomicity:** `increment(1)` — the +1 operation is atomic at the Firestore level

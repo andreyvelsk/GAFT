@@ -34,6 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # `gh` runs before actions/checkout, so it cannot infer the repository
+      # from a git remote — point it at the repository explicitly.
+      GH_REPO: ${{ github.repository }}
       PR_BRANCH: ${{ vars.PR_BRANCH || 'reddit-pipeline/auto' }}
       COMMENT_BODY: ${{ github.event.comment.body }}
       COMMENTER: ${{ github.event.comment.user.login }}
