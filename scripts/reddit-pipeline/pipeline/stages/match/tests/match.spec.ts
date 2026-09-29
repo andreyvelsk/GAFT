@@ -30,7 +30,6 @@ describe('runMatchStage', () => {
       Promise.resolve({
         action: entry.id === 'a' ? 'CREATE' : 'UPDATE',
         slug: entry.id,
-        reason: 'test',
       });
 
     const result = await runMatchStage(entries, { match });
@@ -47,7 +46,7 @@ describe('runMatchStage', () => {
       options: MatchOptions,
     ): Promise<MatchDecision> => {
       calls.push(options);
-      return Promise.resolve({ action: 'CREATE', slug: 'x', reason: 'r' });
+      return Promise.resolve({ action: 'CREATE', slug: 'x' });
     };
 
     await runMatchStage([makeEntry()], {

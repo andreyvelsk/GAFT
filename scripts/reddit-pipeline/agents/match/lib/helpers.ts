@@ -1,9 +1,12 @@
 import type { LanguageModel } from 'ai';
 
-import { kebabCase } from '../../../shared/lib/helpers';
-import type { ReportEntry } from '../../../shared/lib/types';
-import { resolveModel } from '../../../engines/model/lib/helpers';
+import { config } from '../../../config';
+import { createJevAdapter, type DecisionPort } from '../../../engines/decision';
 import { createProvider, generateStructured } from '../../../engines/generation/lib/helpers';
+import { resolveModel } from '../../../engines/model/lib/helpers';
+import { kebabCase } from '../../../shared/lib/helpers';
+import { createLogger } from '../../../shared/lib/logger';
+import type { Logger, ReportEntry } from '../../../shared/lib/types';
 import {
   loadContentIndex,
   matchCandidates,
@@ -12,12 +15,28 @@ import {
 } from '../../../tools/content-search';
 import {
   matchDecisionSchema,
+  type MatchAgent,
+  type MatchAgentOptions,
   type MatchDecision,
   type MatchOptions,
 } from './types';
 
 /** Maximum number of `selftext` characters forwarded to the model. */
 const MAX_SELFTEXT_LENGTH = 800;
+
+/** Criteria key selecting a brand-new project (CREATE) in the Jev branch. */
+export const MATCH_NEW_OPTION = '__new__';
+
+/** Criterion text describing the {@link MATCH_NEW_OPTION} alternative. */
+const MATCH_NEW_CRITERION = 'A project that is not among the candidates';
+
+/** Instructions of the Jev `choice` question. */
+const MATCH_CHOICE_INSTRUCTIONS = [
+  'Decide which existing content page corresponds to this Reddit post about an',
+  'AYN Thor project. Choose the slug of the matching page, or choose',
+  `"${MATCH_NEW_OPTION}" when the post describes a project that is not among`,
+  'the candidates.',
+].join(' ');
 
 /** System prompt describing the CREATE/UPDATE decision task. */
 export const MATCH_SYSTEM_PROMPT = [
@@ -37,8 +56,7 @@ export const MATCH_SYSTEM_PROMPT = [
   '(lowercase ASCII words separated by single hyphens).',
   '',
   'Return a JSON object of the shape',
-  '{"action": "CREATE" | "UPDATE", "slug": "...", "reason": "..."}.',
-  'The `reason` is a short English sentence explaining the decision.',
+  '{"action": "CREATE" | "UPDATE", "slug": "..."}.',
 ].join('\n');
 
 /** Truncate a string to `max` characters, appending an ellipsis when cut. */
@@ -61,6 +79,11 @@ function toCandidateView(candidate: ContentCandidate): {
   };
 }
 
+/** Single-line criterion describing a candidate in the Jev `choice` question. */
+function toCriterion(candidate: ContentCandidate): string {
+  return `${candidate.title} — ${candidate.description} (${candidate.projectUrl})`;
+}
+
 /** Build the user prompt for a post and its candidate pages. */
 export function buildMatchPrompt(
   entry: ReportEntry,
@@ -77,7 +100,7 @@ export function buildMatchPrompt(
 
   return [
     'Decide whether to CREATE a new page or UPDATE an existing one for this post.',
-    'Return ONLY a JSON object {"action": ..., "slug": ..., "reason": ...}.',
+    'Return ONLY a JSON object {"action": ..., "slug": ...}.',
     '',
     'Post:',
     JSON.stringify(post, null, 2),
@@ -110,29 +133,31 @@ export function reconcileDecision(
   if (decision.action === 'UPDATE') {
     const exact = bySlug.get(requested);
     if (exact !== undefined) {
-      return { action: 'UPDATE', slug: exact.slug, reason: decision.reason };
+      return { action: 'UPDATE', slug: exact.slug };
     }
     const only = candidates[0];
     if (candidates.length === 1 && only !== undefined) {
-      return { action: 'UPDATE', slug: only.slug, reason: decision.reason };
+      return { action: 'UPDATE', slug: only.slug };
     }
     return {
       action: 'CREATE',
       slug: requested === '' ? fallbackSlug : requested,
-      reason: decision.reason,
     };
   }
 
   const slug = requested === '' ? fallbackSlug : requested;
   const existing = bySlug.get(slug);
   if (existing !== undefined) {
-    return { action: 'UPDATE', slug: existing.slug, reason: decision.reason };
+    return { action: 'UPDATE', slug: existing.slug };
   }
-  return { action: 'CREATE', slug, reason: decision.reason };
+  return { action: 'CREATE', slug };
 }
 
-/** Build the content-search options from the match options. */
-function toSearchOptions(options: MatchOptions): ContentSearchOptions {
+/** Build the content-search options from a subset of the match options. */
+function toSearchOptions(options: {
+  contentDir?: string;
+  index?: readonly ContentCandidate[];
+}): ContentSearchOptions {
   return {
     ...(options.contentDir !== undefined
       ? { contentDir: options.contentDir }
@@ -149,7 +174,10 @@ function toSearchOptions(options: MatchOptions): ContentSearchOptions {
  */
 export async function findCandidates(
   entry: ReportEntry,
-  options: MatchOptions = {},
+  options: {
+    contentDir?: string;
+    index?: readonly ContentCandidate[];
+  } = {},
 ): Promise<ContentCandidate[]> {
   const index = await loadContentIndex(toSearchOptions(options));
   const merged = new Map<string, ContentCandidate>();
@@ -176,29 +204,202 @@ function resolveMatchModel(options: MatchOptions): LanguageModel {
   return provider(resolveModel('match'));
 }
 
-/** Decide CREATE/UPDATE for a single post. */
-export async function matchPost(
+/**
+ * Merge agent-level and per-call options, the per-call value taking precedence.
+ * Only defined values are copied so the result stays compatible with
+ * `exactOptionalPropertyTypes`.
+ */
+function mergeMatchOptions(
+  agentOptions: MatchAgentOptions,
+  callOptions: MatchOptions,
+): MatchOptions {
+  const model = callOptions.model ?? agentOptions.model;
+  const provider = callOptions.provider ?? agentOptions.provider;
+  const generate = callOptions.generate ?? agentOptions.generate;
+  const maxRepairAttempts =
+    callOptions.maxRepairAttempts ?? agentOptions.maxRepairAttempts;
+  const contentDir = callOptions.contentDir ?? agentOptions.contentDir;
+  const index = callOptions.index ?? agentOptions.index;
+  return {
+    ...(model !== undefined ? { model } : {}),
+    ...(provider !== undefined ? { provider } : {}),
+    ...(generate !== undefined ? { generate } : {}),
+    ...(maxRepairAttempts !== undefined ? { maxRepairAttempts } : {}),
+    ...(contentDir !== undefined ? { contentDir } : {}),
+    ...(index !== undefined ? { index } : {}),
+  };
+}
+
+/** Create the LLM-backed match agent (the existing behaviour, unchanged). */
+function createLlmMatchAgent(options: MatchAgentOptions): MatchAgent {
+  return {
+    async matchPost(
+      entry: ReportEntry,
+      callOptions: MatchOptions = {},
+    ): Promise<MatchDecision> {
+      const merged = mergeMatchOptions(options, callOptions);
+      const candidates = await findCandidates(entry, merged);
+      const model = resolveMatchModel(merged);
+
+      const response = await generateStructured({
+        model,
+        schema: matchDecisionSchema,
+        system: MATCH_SYSTEM_PROMPT,
+        prompt: buildMatchPrompt(entry, candidates),
+        temperature: 0,
+        schemaName: 'match_decision',
+        schemaDescription:
+          'Object with action (CREATE|UPDATE) and a kebab-case slug',
+        agent: 'match',
+        ...(merged.generate !== undefined ? { generate: merged.generate } : {}),
+        ...(merged.maxRepairAttempts !== undefined
+          ? { maxRepairAttempts: merged.maxRepairAttempts }
+          : {}),
+      });
+
+      return reconcileDecision(entry, candidates, response);
+    },
+  };
+}
+
+/**
+ * Create the Jev-backed match agent. Each post is sent to the decision port as a
+ * single `choice` question over the deterministic candidates plus a
+ * {@link MATCH_NEW_OPTION} alternative; `reconcileDecision` then maps the chosen
+ * option onto a CREATE/UPDATE decision. A failing port, a non-choice answer or
+ * an unknown slug all fall back to CREATE (a new page).
+ */
+function createJevMatchAgent(
+  decision: DecisionPort,
+  threshold: number,
+  logger: Logger,
+  options: MatchAgentOptions,
+): MatchAgent {
+  return {
+    async matchPost(
+      entry: ReportEntry,
+      callOptions: MatchOptions = {},
+    ): Promise<MatchDecision> {
+      const search: {
+        contentDir?: string;
+        index?: readonly ContentCandidate[];
+      } = {};
+      const contentDir = callOptions.contentDir ?? options.contentDir;
+      const index = callOptions.index ?? options.index;
+      if (contentDir !== undefined) {
+        search.contentDir = contentDir;
+      }
+      if (index !== undefined) {
+        search.index = index;
+      }
+
+      const candidates = await findCandidates(entry, search);
+      const criteria: Record<string, string> = {};
+      for (const candidate of candidates) {
+        criteria[candidate.slug] = toCriterion(candidate);
+      }
+      criteria[MATCH_NEW_OPTION] = MATCH_NEW_CRITERION;
+
+      const state = {
+        post: {
+          id: entry.id,
+          title: entry.title,
+          selftext: truncate(entry.selftext, MAX_SELFTEXT_LENGTH),
+          external_url: entry.external_url,
+          flair: entry.flair,
+        },
+        candidates: candidates.map((candidate) => toCandidateView(candidate)),
+      };
+
+      let choice: string | undefined;
+      let confidence: number | undefined;
+      try {
+        const result = await decision.decide({
+          state,
+          questions: {
+            match: {
+              type: 'choice',
+              instructions: MATCH_CHOICE_INSTRUCTIONS,
+              criteria,
+            },
+          },
+        });
+        const answer = result.answers.match;
+        if (answer?.type === 'choice') {
+          choice = answer.choice;
+          confidence = answer.confidence;
+        } else {
+          logger.warn(
+            'match: decision engine returned a non-choice answer; treating as CREATE',
+            { id: entry.id },
+          );
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        logger.warn('match decision failed; treating as CREATE', {
+          id: entry.id,
+          error: message,
+        });
+      }
+
+      if (
+        choice !== undefined &&
+        confidence !== undefined &&
+        confidence < threshold
+      ) {
+        logger.warn(
+          'match: low confidence from decision engine; keeping the choice',
+          { id: entry.id, choice, confidence, threshold },
+        );
+      }
+
+      const known =
+        choice !== undefined &&
+        Object.prototype.hasOwnProperty.call(criteria, choice);
+      if (choice !== undefined && !known) {
+        logger.warn(
+          'match: unknown choice from decision engine; treating as CREATE',
+          { id: entry.id, choice },
+        );
+      }
+
+      const requested: MatchDecision =
+        choice !== undefined && known && choice !== MATCH_NEW_OPTION
+          ? { action: 'UPDATE', slug: choice }
+          : { action: 'CREATE', slug: '' };
+
+      return reconcileDecision(entry, candidates, requested);
+    },
+  };
+}
+
+/**
+ * Create a match agent for the requested backend. `llm` (the default) keeps the
+ * existing structured-generation behaviour; `jev` resolves the CREATE/UPDATE
+ * decision with a `choice` question over the deterministic candidates. Passing
+ * `options.decision` selects the Jev branch and injects the port (used by
+ * tests).
+ */
+export function createMatchAgent(options: MatchAgentOptions = {}): MatchAgent {
+  const backend = options.backend ?? 'llm';
+  if (backend === 'jev' || options.decision !== undefined) {
+    const logger = options.logger ?? createLogger();
+    const decision =
+      options.decision ??
+      createJevAdapter(options.logger !== undefined ? { logger: options.logger } : {});
+    const threshold = options.threshold ?? config.thresholds.match;
+    return createJevMatchAgent(decision, threshold, logger, options);
+  }
+  return createLlmMatchAgent(options);
+}
+
+/**
+ * Decide CREATE/UPDATE for a single post (thin wrapper over the agent, kept for
+ * backward compatibility). Uses the LLM backend.
+ */
+export function matchPost(
   entry: ReportEntry,
   options: MatchOptions = {},
 ): Promise<MatchDecision> {
-  const candidates = await findCandidates(entry, options);
-  const model = resolveMatchModel(options);
-
-  const response = await generateStructured({
-    model,
-    schema: matchDecisionSchema,
-    system: MATCH_SYSTEM_PROMPT,
-    prompt: buildMatchPrompt(entry, candidates),
-    temperature: 0,
-    schemaName: 'match_decision',
-    schemaDescription:
-      'Object with action (CREATE|UPDATE), a kebab-case slug and a reason',
-    agent: 'match',
-    ...(options.generate !== undefined ? { generate: options.generate } : {}),
-    ...(options.maxRepairAttempts !== undefined
-      ? { maxRepairAttempts: options.maxRepairAttempts }
-      : {}),
-  });
-
-  return reconcileDecision(entry, candidates, response);
+  return createMatchAgent({ backend: 'llm' }).matchPost(entry, options);
 }

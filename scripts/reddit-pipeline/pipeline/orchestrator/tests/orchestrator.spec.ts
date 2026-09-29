@@ -157,7 +157,7 @@ function makeDeps(
       Promise.resolve({
         decisions: input.map((entry) => ({
           entry,
-          decision: { action: 'CREATE', slug: entry.id, reason: 'new' },
+          decision: { action: 'CREATE', slug: entry.id },
         })),
       }),
     createStage: (entry) =>
@@ -221,6 +221,9 @@ describe('runPipeline', () => {
     expect(result.reportPath).toBe(reportPath);
     const raw = await readFile(reportPath, 'utf8');
     expect(raw).toContain('"created": 1');
+    // The report reason is synthesized from the decision, not taken from it.
+    expect(result.report.posts[0]?.reason).toBe('match: CREATE a');
+    expect(raw).toContain('match: CREATE a');
   });
 
   it('processes exactly one post when maxPosts is 1', async () => {
@@ -257,7 +260,7 @@ describe('runPipeline', () => {
       return Promise.resolve({
         decisions: input.map((entry) => ({
           entry,
-          decision: { action: 'CREATE', slug: entry.id, reason: 'new' },
+          decision: { action: 'CREATE', slug: entry.id },
         })),
       });
     };

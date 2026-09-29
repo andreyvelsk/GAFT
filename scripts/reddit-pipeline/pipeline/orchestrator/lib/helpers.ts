@@ -153,11 +153,11 @@ export async function runPipeline(
         throw new Error('match stage returned no decision');
       }
       const { decision } = matched;
+      const matchReason = `match: ${decision.action} ${decision.slug}`;
       logger.info('stage match: decided', {
         id: entry.id,
         action: decision.action,
         slug: decision.slug,
-        reason: decision.reason,
       });
 
       if (decision.action === 'CREATE') {
@@ -183,7 +183,7 @@ export async function runPipeline(
           written: created.written,
         });
         builder.add(
-          postEntry(entry, 'created', decision.reason, { slug: created.slug }),
+          postEntry(entry, 'created', matchReason, { slug: created.slug }),
         );
       } else {
         const updated = await updateStage(entry, decision.slug, {
@@ -211,7 +211,7 @@ export async function runPipeline(
           written: updated.written,
         });
         builder.add(
-          postEntry(entry, 'updated', decision.reason, { slug: updated.slug }),
+          postEntry(entry, 'updated', matchReason, { slug: updated.slug }),
         );
       }
     } catch (error) {
