@@ -46,6 +46,8 @@ import { searchRepository } from '../../../tools/github-search';
 import {
   updatePatchSchema,
   type AppliedPatch,
+  type UpdateAgent,
+  type UpdateAgentOptions,
   type UpdateContext,
   type UpdateOptions,
   type UpdatePatch,
@@ -604,5 +606,24 @@ export async function updatePage(
     markdown: renderPage(applied.page),
     media: applied.media,
     changed: applied.changed,
+  };
+}
+
+/**
+ * Create the update agent. A thin wrapper over {@link updatePage} that keeps the
+ * generation engine (LLM) as the only backend; agent-level options (the logger)
+ * are merged with the per-call options, the per-call value taking precedence.
+ */
+export function createUpdateAgent(
+  options: UpdateAgentOptions = {},
+): UpdateAgent {
+  return {
+    updatePage(
+      page: ContentPage,
+      entry: ReportEntry,
+      callOptions: UpdateOptions = {},
+    ): Promise<UpdateResult> {
+      return updatePage(page, entry, { ...options, ...callOptions });
+    },
   };
 }

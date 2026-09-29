@@ -2,6 +2,7 @@ export {
   UPDATE_SYSTEM_PROMPT,
   applyPatch,
   buildUpdatePrompt,
+  createUpdateAgent,
   gatherUpdateContext,
   sanitizeUpdatePatch,
   updatePage,
@@ -9,6 +10,8 @@ export {
 export { updatePatchSchema } from './lib/types';
 export type {
   AppliedPatch,
+  UpdateAgent,
+  UpdateAgentOptions,
   UpdateContext,
   UpdateOptions,
   UpdatePatch,

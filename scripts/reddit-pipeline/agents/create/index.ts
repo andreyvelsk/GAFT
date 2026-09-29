@@ -3,6 +3,7 @@ export {
   buildCreatePageInput,
   buildCreatePrompt,
   buildMediaPlan,
+  createCreateAgent,
   createPage,
   gatherCreateContext,
   resolveSlug,
@@ -13,6 +14,8 @@ export type { ResolveSlugOptions } from './lib/helpers';
 export { createDraftSchema } from './lib/types';
 export type {
   BuildCreatePageInputArgs,
+  CreateAgent,
+  CreateAgentOptions,
   CreateContext,
   CreateDraft,
   CreateOptions,

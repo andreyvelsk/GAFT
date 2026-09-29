@@ -20,6 +20,7 @@ import {
   buildCreatePageInput,
   buildCreatePrompt,
   buildMediaPlan,
+  createCreateAgent,
   createDraftSchema,
   createPage,
   gatherCreateContext,
@@ -1009,6 +1010,95 @@ describe('createPage', () => {
 
     expect(
       lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(false);
+  });
+});
+
+describe('createCreateAgent', () => {
+  it('returns a working createPage identical to the direct call', async () => {
+    const { generate } = staticGenerator(makeDraft());
+    const agent = createCreateAgent();
+    const options = {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      now: new Date('2026-09-26T10:16:00Z'),
+    };
+
+    const viaAgent = await agent.createPage(makeEntry(), options);
+    const direct = await createPage(makeEntry(), options);
+
+    expect(viaAgent).toEqual(direct);
+  });
+
+  it('uses the injected generator from the per-call options', async () => {
+    const { generate, calls } = staticGenerator(makeDraft());
+    const agent = createCreateAgent();
+
+    await agent.createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.schemaName).toBe('create_page');
+  });
+
+  it('forwards the agent-level logger to createPage', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+    const agent = createCreateAgent({ logger });
+
+    await agent.createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'tool',
+    });
+
+    expect(
+      lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(true);
+  });
+
+  it('lets the per-call logger override the agent-level logger', async () => {
+    const agentLines: string[] = [];
+    const callLines: string[] = [];
+    const agentLogger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        agentLines.push(line);
+      },
+    });
+    const callLogger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        callLines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+    const agent = createCreateAgent({ logger: agentLogger });
+
+    await agent.createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'tool',
+      logger: callLogger,
+    });
+
+    expect(
+      callLines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(true);
+    expect(
+      agentLines.some((line) => line.includes('create: overriding draft category')),
     ).toBe(false);
   });
 });

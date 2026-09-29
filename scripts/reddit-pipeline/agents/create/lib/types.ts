@@ -139,6 +139,18 @@ export interface CreateOptions {
   contentDir?: string;
 }
 
+/** Options accepted by {@link createCreateAgent}. */
+export interface CreateAgentOptions {
+  /** Structured logger shared by every call (per-call options take precedence). */
+  logger?: Logger;
+}
+
+/** Create agent: generates a new project page from a post. */
+export interface CreateAgent {
+  /** Generate a new project page for a post. */
+  createPage(entry: ReportEntry, options?: CreateOptions): Promise<CreateResult>;
+}
+
 /** Input accepted by {@link buildCreatePageInput}. */
 export interface BuildCreatePageInputArgs {
   /** Draft returned by the model. */

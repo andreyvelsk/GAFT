@@ -42,6 +42,8 @@ import { searchRepository } from '../../../tools/github-search';
 import {
   createDraftSchema,
   type BuildCreatePageInputArgs,
+  type CreateAgent,
+  type CreateAgentOptions,
   type CreateContext,
   type CreateDraft,
   type CreateOptions,
@@ -530,5 +532,23 @@ export async function createPage(
     page,
     markdown: renderPage(page),
     media: buildMediaPlan(mediaUrls),
+  };
+}
+
+/**
+ * Create the create agent. A thin wrapper over {@link createPage} that keeps the
+ * generation engine (LLM) as the only backend; agent-level options (the logger)
+ * are merged with the per-call options, the per-call value taking precedence.
+ */
+export function createCreateAgent(
+  options: CreateAgentOptions = {},
+): CreateAgent {
+  return {
+    createPage(
+      entry: ReportEntry,
+      callOptions: CreateOptions = {},
+    ): Promise<CreateResult> {
+      return createPage(entry, { ...options, ...callOptions });
+    },
   };
 }
