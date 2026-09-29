@@ -26,12 +26,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
+          node-version: 'node'
+          cache: yarn
+          cache-dependency-path: yarn.lock
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Generate .env
         run: |
@@ -44,7 +44,7 @@ jobs:
           echo "NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}" >> .env
 
       - name: Generate static site
-        run: npm run generate
+        run: yarn generate
         env:
           NUXT_APP_BASE_URL: /${{ github.event.repository.name }}/
 
