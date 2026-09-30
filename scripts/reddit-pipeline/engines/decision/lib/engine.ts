@@ -1,6 +1,6 @@
 import type { LanguageModel } from 'ai';
 
-import type { Logger } from '../../../shared/lib/types';
+import type { Logger, ModelUsage } from '../../../shared/lib/types';
 import { createProvider } from '../../generation/lib/helpers';
 import type {
   GenerateObjectLike,
@@ -40,6 +40,9 @@ export interface DecisionEngineOptions {
   /** LLM: repair attempts after the first invalid answer. */
   maxRepairAttempts?: number;
 
+  /** LLM: called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
+
   /** Structured logger shared by both adapters. */
   logger?: Logger;
 }
@@ -65,6 +68,7 @@ export function createDecisionEngine(
       ...(options.maxRepairAttempts !== undefined
         ? { maxRepairAttempts: options.maxRepairAttempts }
         : {}),
+      ...(options.onUsage !== undefined ? { onUsage: options.onUsage } : {}),
       ...(options.logger !== undefined ? { logger: options.logger } : {}),
     });
   }

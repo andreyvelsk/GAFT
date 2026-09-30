@@ -2,6 +2,7 @@ import type { LanguageModel } from 'ai';
 import { describe, expect, it } from 'vitest';
 
 import { AgentError } from '../../../shared/lib/errors';
+import type { ModelUsage } from '../../../shared/lib/types';
 import {
   REPAIR_INSTRUCTION,
   createProvider,
@@ -121,6 +122,31 @@ describe('createLlmDecisionAdapter', () => {
 
     expect(result.model).toBe('llm');
     expect(result.usage).toBeUndefined();
+  });
+
+  it('returns the token usage and forwards it to onUsage', async () => {
+    const { generate } = recordingGenerator(() =>
+      Promise.resolve({
+        object: { answers: { q: { type: 'noul', noul: 1 } } },
+        usage: { promptTokens: 20, completionTokens: 4 },
+      }),
+    );
+    const reported: ModelUsage[] = [];
+    const port = createLlmDecisionAdapter({
+      model: testModel(),
+      generate,
+      onUsage: (usage): void => {
+        reported.push(usage);
+      },
+    });
+
+    const result = await port.decide({
+      state: 'x',
+      questions: { q: { type: 'noul', instructions: 'Q?' } },
+    });
+
+    expect(result.usage).toEqual({ inputTokens: 20, outputTokens: 4 });
+    expect(reported).toEqual([{ inputTokens: 20, outputTokens: 4 }]);
   });
 
   it('sends temperature 0, the system prompt and the response schema', async () => {

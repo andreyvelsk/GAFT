@@ -1,3 +1,5 @@
+import type { ModelUsage } from '../../../shared/lib/types';
+
 /** Backend that resolves typed decisions. */
 export type DecisionBackend = 'jev' | 'llm';
 
@@ -57,12 +59,12 @@ export interface DecisionRequest {
   questions: Record<string, DecisionQuestion>;
 }
 
-/** Token and cost usage of a decision request. */
-export interface DecisionUsage {
-  inputTokens: number;
-  outputTokens: number;
-  cost: number;
-}
+/**
+ * Token and cost usage of a decision request. Shares the shape of
+ * {@link ModelUsage}: `cost` is optional because the LLM backend only reports
+ * tokens (its cost is estimated later from the model price).
+ */
+export type DecisionUsage = ModelUsage;
 
 /** Answers keyed by question name, with model and usage metadata. */
 export interface DecisionResult {

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import type { DecisionBackend, DecisionPort } from '../../../engines/decision';
 import type { GenerateObjectLike, ProviderOptions } from '../../../engines/generation/lib/types';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 
 /** Relevance verdict of a single post. */
 export const filterVerdictSchema = z.object({
@@ -76,6 +76,9 @@ export interface FilterOptions {
   /** Number of posts sent per LLM request (defaults to the config value). */
   batchSize?: number;
 
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
+
   /** Progress callback invoked after each classified batch. */
   onBatch?: (info: FilterBatchInfo) => void;
 }
@@ -102,6 +105,9 @@ export interface FilterAgentOptions {
 
   /** LLM: repair attempts after the first invalid output. */
   maxRepairAttempts?: number;
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 
   /** Structured logger shared by both backends. */
   logger?: Logger;

@@ -6,7 +6,7 @@ import { createProvider, generateStructured } from '../../../engines/generation/
 import { resolveModel } from '../../../engines/model/lib/helpers';
 import { chunk } from '../../../shared/lib/helpers';
 import { createLogger } from '../../../shared/lib/logger';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import {
   filterResponseSchema,
   type FilterAgent,
@@ -157,6 +157,7 @@ async function classifyBatchLlm(
     ...(options.maxRepairAttempts !== undefined
       ? { maxRepairAttempts: options.maxRepairAttempts }
       : {}),
+    ...(options.onUsage !== undefined ? { onUsage: options.onUsage } : {}),
   });
 
   return reconcileVerdicts(entries, response.verdicts);
@@ -176,11 +177,13 @@ function mergeFilterOptions(
   const generate = callOptions.generate ?? agentOptions.generate;
   const maxRepairAttempts =
     callOptions.maxRepairAttempts ?? agentOptions.maxRepairAttempts;
+  const onUsage = callOptions.onUsage ?? agentOptions.onUsage;
   return {
     ...(model !== undefined ? { model } : {}),
     ...(provider !== undefined ? { provider } : {}),
     ...(generate !== undefined ? { generate } : {}),
     ...(maxRepairAttempts !== undefined ? { maxRepairAttempts } : {}),
+    ...(onUsage !== undefined ? { onUsage } : {}),
   };
 }
 
@@ -225,6 +228,7 @@ async function classifyEntryJev(
   decision: DecisionPort,
   threshold: number,
   logger: Logger,
+  onUsage?: (usage: ModelUsage) => void,
 ): Promise<FilterVerdict> {
   try {
     const result = await decision.decide({
@@ -237,6 +241,9 @@ async function classifyEntryJev(
         },
       },
     });
+    if (result.usage !== undefined) {
+      onUsage?.(result.usage);
+    }
     const answer = result.answers.relevant;
     if (answer?.type !== 'noul') {
       return { id: entry.id, relevant: false };
@@ -265,6 +272,7 @@ function createJevFilterAgent(
   decision: DecisionPort,
   threshold: number,
   logger: Logger,
+  onUsage?: (usage: ModelUsage) => void,
 ): FilterAgent {
   return {
     async classifyPosts(
@@ -281,7 +289,13 @@ function createJevFilterAgent(
       for (const [index, batch] of batches.entries()) {
         for (const entry of batch) {
           verdicts.push(
-            await classifyEntryJev(entry, decision, threshold, logger),
+            await classifyEntryJev(
+              entry,
+              decision,
+              threshold,
+              logger,
+              options.onUsage ?? onUsage,
+            ),
           );
         }
         if (options.onBatch !== undefined) {
@@ -312,7 +326,7 @@ export function createFilterAgent(options: FilterAgentOptions = {}): FilterAgent
       options.decision ??
       createJevAdapter(options.logger !== undefined ? { logger: options.logger } : {});
     const threshold = options.threshold ?? config.thresholds.filter;
-    return createJevFilterAgent(decision, threshold, logger);
+    return createJevFilterAgent(decision, threshold, logger, options.onUsage);
   }
   return createLlmFilterAgent(options);
 }

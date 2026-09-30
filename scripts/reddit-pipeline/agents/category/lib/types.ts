@@ -3,7 +3,7 @@ import type { LanguageModel } from 'ai';
 import type { DecisionBackend, DecisionPort } from '../../../engines/decision';
 import type { GenerateObjectLike, ProviderOptions } from '../../../engines/generation/lib/types';
 import type { GitHubRepo } from '../../../github/repo';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import type { ProjectCategory } from '../../../../../lib/categories';
 
 /**
@@ -41,6 +41,9 @@ export interface CategoryAgentOptions {
 
   /** LLM: repair attempts after the first invalid output. */
   maxRepairAttempts?: number;
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 
   /** Structured logger shared by both backends. */
   logger?: Logger;

@@ -3,6 +3,7 @@ import {
   REPORT_MARKDOWN_FILE,
 } from '../../../shared/lib/constants';
 import { writeTextFile } from '../../../shared/lib/fs';
+import { emptyUsage } from '../../../shared/lib/usage';
 import type {
   PostReportEntry,
   ReportBuilder,
@@ -10,6 +11,7 @@ import type {
   ReportCounts,
   ReportSummary,
   RunReport,
+  RunUsage,
   WriteReportMarkdownOptions,
   WriteReportOptions,
 } from './types';
@@ -59,6 +61,7 @@ export function createReportBuilder(
       dryRun: options.dryRun ?? false,
       counts: countEntries(entries),
       posts: [...entries],
+      usage: options.usage?.() ?? { byAgent: [], total: emptyUsage() },
     }),
   };
 }
@@ -135,6 +138,45 @@ export function summarizeReport(report: RunReport): ReportSummary {
   return summary;
 }
 
+/** Format a USD amount with enough precision for sub-cent costs. */
+function formatCost(cost: number): string {
+  return `$${cost.toFixed(6)}`;
+}
+
+/** Format a token count with thousands separators. */
+function formatTokens(tokens: number): string {
+  return tokens.toLocaleString('en-US');
+}
+
+/**
+ * Append the per-agent model usage table. Rendered only when at least one agent
+ * reported usage, so a run without model calls keeps the report compact.
+ */
+function appendUsageSection(lines: string[], usage: RunUsage): void {
+  if (usage.byAgent.length === 0) {
+    return;
+  }
+  lines.push('### Cost by model');
+  lines.push('');
+  lines.push(
+    '| Agent | Backend | Model | Calls | Input tokens | Output tokens | Cost (USD) |',
+  );
+  lines.push('| --- | --- | --- | ---: | ---: | ---: | ---: |');
+  for (const entry of usage.byAgent) {
+    lines.push(
+      `| ${entry.agent} | ${entry.backend ?? '—'} | \`${entry.model}\` | ` +
+        `${entry.calls} | ${formatTokens(entry.inputTokens)} | ` +
+        `${formatTokens(entry.outputTokens)} | ${formatCost(entry.cost)} |`,
+    );
+  }
+  const total = usage.total;
+  lines.push(
+    `| **Total** | | | ${total.calls} | ${formatTokens(total.inputTokens)} | ` +
+      `${formatTokens(total.outputTokens)} | ${formatCost(total.cost)} |`,
+  );
+  lines.push('');
+}
+
 /** Append a bullet list of report entries under an optional heading. */
 function appendEntrySection(
   lines: string[],
@@ -186,6 +228,8 @@ export function formatReportMarkdown(report: RunReport): string {
   lines.push(`| Updated | ${counts.updated} |`);
   lines.push(`| Errors | ${counts.errors} |`);
   lines.push('');
+
+  appendUsageSection(lines, report.usage);
 
   appendEntrySection(lines, 'Created pages', summary.created);
   appendEntrySection(lines, 'Updated pages', summary.updated);

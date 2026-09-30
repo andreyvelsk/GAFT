@@ -5,7 +5,7 @@ import type {
 import type { LanguageModel } from 'ai';
 import type { z } from 'zod';
 
-import type { Logger } from '../../../shared/lib/types';
+import type { Logger, ModelUsage } from '../../../shared/lib/types';
 
 /** Options accepted when creating the OpenRouter provider. */
 export interface ProviderOptions {
@@ -49,10 +49,22 @@ export interface GenerateObjectOptions {
   schemaDescription?: string;
 }
 
+/** Token usage as reported by the underlying generator (AI SDK shape). */
+export interface GenerateObjectUsageLike {
+  /** Number of input (prompt) tokens. */
+  promptTokens?: number;
+
+  /** Number of output (completion) tokens. */
+  completionTokens?: number;
+}
+
 /** Result of a structured generation call. */
 export interface GenerateObjectResultLike {
   /** Raw, not-yet-validated object returned by the model. */
   object: unknown;
+
+  /** Token usage of the call, when the generator reports it. */
+  usage?: GenerateObjectUsageLike;
 }
 
 /** Injectable structured-generation function (the AI SDK by default). */
@@ -97,6 +109,9 @@ export interface StructuredGenerationOptions<T> {
 
   /** Called before each repair attempt. */
   onRepair?: (error: unknown, attempt: number) => void;
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 }
 
 export type { OpenRouterProvider, OpenRouterProviderSettings };

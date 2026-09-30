@@ -13,8 +13,11 @@ import {
 } from '../../../content/media';
 import type { PageInput } from '../../../content/template';
 import { createLogger } from '../../../shared/lib/logger';
+import { buildPricingTable, emptyPricingTable } from '../../../shared/lib/pricing';
 import type { Logger, RawPost, ReportEntry } from '../../../shared/lib/types';
+import type { CreateStageResult } from '../../stages/create';
 import type { FetchStageResult } from '../../stages/fetch';
+import type { FilterStageResult } from '../../stages/filter';
 import type { MatchStageResult } from '../../stages/match';
 import { runPipeline, type OrchestratorDependencies } from '../index';
 
@@ -218,6 +221,7 @@ describe('runPipeline', () => {
       config: makeConfig({ dryRun: true }),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       reportPath,
       deps: makeDeps(entries, ['a']),
       stages: {
@@ -252,6 +256,7 @@ describe('runPipeline', () => {
       config: makeConfig(),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps: makeDeps(entries, ['a']),
     });
@@ -265,6 +270,7 @@ describe('runPipeline', () => {
       config: makeConfig({ maxPosts: 1 }),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps,
       stages: {
@@ -302,6 +308,7 @@ describe('runPipeline', () => {
       config: makeConfig(),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps,
     });
@@ -311,6 +318,61 @@ describe('runPipeline', () => {
     const failed = result.report.posts.find((post) => post.id === 'b');
     expect(failed?.action).toBe('error');
     expect(failed?.error).toBe('agent failed');
+  });
+
+  it('aggregates per-agent usage and estimates the LLM cost', async () => {
+    const entries = [makeEntry({ id: 'a' })];
+    const deps = makeDeps(entries, ['a']);
+    deps.filterStage = (input, options): Promise<FilterStageResult> => {
+      options.filterOptions?.onUsage?.({ inputTokens: 1000, outputTokens: 500 });
+      return Promise.resolve({ relevant: [...input], skipped: [] });
+    };
+    deps.createStage = (entry, options): Promise<CreateStageResult> => {
+      options.createOptions?.onUsage?.({ inputTokens: 2000, outputTokens: 1000 });
+      return Promise.resolve({
+        slug: entry.id,
+        markdown: 'md',
+        media: [],
+        written: true,
+      });
+    };
+
+    const result = await runPipeline({
+      config: makeConfig(),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: buildPricingTable({
+        data: [
+          {
+            id: 'test/model',
+            pricing: { prompt: '0.000001', completion: '0.000002' },
+          },
+        ],
+      }),
+      writeReport: false,
+      deps,
+    });
+
+    const filter = result.report.usage.byAgent.find(
+      (entry) => entry.agent === 'filter',
+    );
+    const create = result.report.usage.byAgent.find(
+      (entry) => entry.agent === 'create',
+    );
+    expect(filter).toMatchObject({
+      agent: 'filter',
+      model: 'test/model',
+      backend: 'llm',
+      calls: 1,
+      inputTokens: 1000,
+      outputTokens: 500,
+    });
+    // 1000/1e6*1 + 500/1e6*2 = 0.002
+    expect(filter?.cost).toBeCloseTo(0.002, 10);
+    // 2000/1e6*1 + 1000/1e6*2 = 0.004
+    expect(create?.cost).toBeCloseTo(0.004, 10);
+    expect(result.report.usage.total.calls).toBe(2);
+    expect(result.report.usage.total.cost).toBeCloseTo(0.006, 10);
   });
 
   it('propagates a fatal fetch error', async () => {
@@ -323,6 +385,7 @@ describe('runPipeline', () => {
         config: makeConfig(),
         now: NOW,
         logger: silentLogger(),
+        pricing: emptyPricingTable(),
         writeReport: false,
         deps,
       }),
@@ -357,6 +420,7 @@ describe.skipIf(!RUN_INTEGRATION)('runPipeline (integration)', () => {
       config: makeConfig(),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps,
       stages: {

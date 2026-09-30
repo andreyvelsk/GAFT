@@ -1,4 +1,7 @@
+import type { DecisionBackend } from '../../../engines/decision';
+import type { AgentName } from '../../../engines/model';
 import type { Logger } from '../../../shared/lib/types';
+import type { UsageTotals } from '../../../shared/lib/usage';
 
 /** Outcome of a single post in a pipeline run. */
 export type PostAction = 'created' | 'updated' | 'skipped' | 'error';
@@ -45,6 +48,27 @@ export interface ReportCounts {
   errors: number;
 }
 
+/** Token and cost usage of one agent in a run. */
+export interface AgentUsage extends UsageTotals {
+  /** Agent the usage belongs to. */
+  agent: AgentName;
+
+  /** Model the agent ran on. */
+  model: string;
+
+  /** Decision backend of the agent (`filter`/`match`/`category` only). */
+  backend?: DecisionBackend;
+}
+
+/** Aggregated model usage of a run. */
+export interface RunUsage {
+  /** Usage per agent, in a stable order. */
+  byAgent: AgentUsage[];
+
+  /** Sum of every agent. */
+  total: UsageTotals;
+}
+
 /** Full report of a pipeline run. */
 export interface RunReport {
   /** ISO timestamp of the run start. */
@@ -61,6 +85,9 @@ export interface RunReport {
 
   /** Per-post details, in processing order. */
   posts: PostReportEntry[];
+
+  /** Model usage and cost per agent. */
+  usage: RunUsage;
 }
 
 /** Options accepted by the report builder. */
@@ -70,6 +97,12 @@ export interface ReportBuilderOptions {
 
   /** Clock used for the start/finish timestamps (defaults to `Date`). */
   now?: () => Date;
+
+  /**
+   * Resolve the model usage at build time. A getter (rather than a value) so
+   * the builder can read a tracker that is still being filled during the run.
+   */
+  usage?: () => RunUsage;
 }
 
 /** Accumulates per-post entries and produces a run report. */

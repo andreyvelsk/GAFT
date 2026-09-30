@@ -85,6 +85,21 @@ export const reportEntrySchema = z.object({
 
 export type ReportEntry = z.infer<typeof reportEntrySchema>;
 
+/** Token and cost usage of a single model call. */
+export interface ModelUsage {
+  /** Number of input (prompt) tokens. */
+  inputTokens: number;
+
+  /** Number of output (completion) tokens. */
+  outputTokens: number;
+
+  /**
+   * Cost in USD, when known. Jev (System One) reports it directly; for LLM
+   * models it is estimated from the token counts and the model price.
+   */
+  cost?: number;
+}
+
 /** Severity levels of the structured logger, from most to least verbose. */
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 

@@ -255,6 +255,59 @@ describe('formatReportMarkdown', () => {
     expect(markdown).not.toContain('### Created pages');
     expect(markdown).not.toContain('### Errors');
   });
+
+  it('renders the per-agent cost table when usage is present', () => {
+    const builder = createReportBuilder({
+      now: () => FIXED,
+      usage: () => ({
+        byAgent: [
+          {
+            agent: 'filter',
+            model: 'typesafe/jev-1.13',
+            backend: 'jev',
+            calls: 2,
+            inputTokens: 1000,
+            outputTokens: 200,
+            cost: 0.0012,
+          },
+          {
+            agent: 'create',
+            model: '~deepseek/deepseek-v4-flash-latest',
+            calls: 1,
+            inputTokens: 5000,
+            outputTokens: 3000,
+            cost: 0.05,
+          },
+        ],
+        total: {
+          calls: 3,
+          inputTokens: 6000,
+          outputTokens: 3200,
+          cost: 0.0512,
+        },
+      }),
+    });
+    builder.add(makeEntry({ action: 'created', slug: 'x' }));
+
+    const markdown = formatReportMarkdown(builder.build());
+
+    expect(markdown).toContain('### Cost by model');
+    expect(markdown).toContain(
+      '| filter | jev | `typesafe/jev-1.13` | 2 | 1,000 | 200 | $0.001200 |',
+    );
+    expect(markdown).toContain(
+      '| create | — | `~deepseek/deepseek-v4-flash-latest` | 1 | 5,000 | 3,000 | $0.050000 |',
+    );
+    expect(markdown).toContain(
+      '| **Total** | | | 3 | 6,000 | 3,200 | $0.051200 |',
+    );
+  });
+
+  it('omits the cost table when no usage was recorded', () => {
+    const report = buildReport([], { now: () => FIXED });
+
+    expect(formatReportMarkdown(report)).not.toContain('### Cost by model');
+  });
 });
 
 describe('writeReportMarkdown', () => {

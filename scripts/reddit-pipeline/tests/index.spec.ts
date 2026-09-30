@@ -50,6 +50,10 @@ function makeReport(overrides: Partial<RunReport> = {}): RunReport {
     dryRun: false,
     counts: { total: 0, created: 0, updated: 0, skipped: 0, errors: 0 },
     posts: [],
+    usage: {
+      byAgent: [],
+      total: { calls: 0, inputTokens: 0, outputTokens: 0, cost: 0 },
+    },
     ...overrides,
   };
 }

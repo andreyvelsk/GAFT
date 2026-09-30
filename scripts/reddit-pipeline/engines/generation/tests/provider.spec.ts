@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
 import { AgentError } from '../../../shared/lib/errors';
+import type { ModelUsage } from '../../../shared/lib/types';
 import { resolveModel } from '../../model';
 import {
   REPAIR_INSTRUCTION,
@@ -131,6 +132,47 @@ describe('generateStructured', () => {
 
     expect(result).toEqual({ ok: true });
     expect(calls).toHaveLength(1);
+  });
+
+  it('reports the token usage through onUsage', async () => {
+    const { generate } = recordingGenerator(() =>
+      Promise.resolve({
+        object: { ok: true },
+        usage: { promptTokens: 12, completionTokens: 3 },
+      }),
+    );
+    const reported: ModelUsage[] = [];
+
+    await generateStructured({
+      model: testModel(),
+      schema: okSchema,
+      system: 'system',
+      prompt: 'prompt',
+      generate,
+      onUsage: (usage): void => {
+        reported.push(usage);
+      },
+    });
+
+    expect(reported).toEqual([{ inputTokens: 12, outputTokens: 3 }]);
+  });
+
+  it('does not call onUsage when the generator reports no usage', async () => {
+    const { generate } = staticGenerator({ ok: true });
+    const reported: ModelUsage[] = [];
+
+    await generateStructured({
+      model: testModel(),
+      schema: okSchema,
+      system: 'system',
+      prompt: 'prompt',
+      generate,
+      onUsage: (usage): void => {
+        reported.push(usage);
+      },
+    });
+
+    expect(reported).toEqual([]);
   });
 
   it('sends temperature 0, the system prompt and the user prompt', async () => {

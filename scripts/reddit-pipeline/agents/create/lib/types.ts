@@ -13,7 +13,7 @@ import type {
   ReleaseInfo,
   RepoOptions,
 } from '../../../github/repo';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
@@ -115,6 +115,9 @@ export interface CreateOptions {
 
   /** Number of repair attempts on invalid output (defaults to `1`). */
   maxRepairAttempts?: number;
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 
   /** GitHub request options (token, fetch, retries). */
   repoOptions?: RepoOptions;

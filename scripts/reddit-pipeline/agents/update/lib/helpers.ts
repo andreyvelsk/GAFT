@@ -595,6 +595,7 @@ export async function updatePage(
     ...(options.maxRepairAttempts !== undefined
       ? { maxRepairAttempts: options.maxRepairAttempts }
       : {}),
+    ...(options.onUsage !== undefined ? { onUsage: options.onUsage } : {}),
   });
   const patch = sanitizeUpdatePatch(rawPatch);
 

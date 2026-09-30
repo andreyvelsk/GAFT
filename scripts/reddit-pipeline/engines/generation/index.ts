@@ -4,11 +4,13 @@ export {
   createProvider,
   defaultGenerateObject,
   generateStructured,
+  normalizeGenerationUsage,
 } from './lib/helpers';
 export type {
   GenerateObjectLike,
   GenerateObjectOptions,
   GenerateObjectResultLike,
+  GenerateObjectUsageLike,
   OpenRouterProvider,
   OpenRouterProviderSettings,
   ProviderOptions,

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import type { DecisionBackend, DecisionPort } from '../../../engines/decision';
 import type { GenerateObjectLike, ProviderOptions } from '../../../engines/generation/lib/types';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import type { ContentCandidate } from '../../../tools/content-search';
 
 /** Action decided by the match agent. */
@@ -44,6 +44,9 @@ export interface MatchOptions {
 
   /** Pre-loaded content index; when provided the filesystem is not read. */
   index?: readonly ContentCandidate[];
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 }
 
 /** Options accepted by {@link createMatchAgent}. */
@@ -74,6 +77,9 @@ export interface MatchAgentOptions {
 
   /** Pre-loaded content index; when provided the filesystem is not read. */
   index?: readonly ContentCandidate[];
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 
   /** Structured logger shared by both backends. */
   logger?: Logger;

@@ -1,13 +1,20 @@
 import { loadConfig } from '../../../config';
+import type { AgentBackendConfig, AgentModelsConfig } from '../../../config/lib/types';
+import type { DecisionBackend } from '../../../engines/decision';
+import type { AgentName } from '../../../engines/model';
 import { createLogger } from '../../../shared/lib/logger';
+import { estimateCost, loadPricing, type PricingTable } from '../../../shared/lib/pricing';
 import type { ReportEntry } from '../../../shared/lib/types';
+import { createUsageTracker, emptyUsage, mergeUsage } from '../../../shared/lib/usage';
 import {
   createReportBuilder,
   markdownPathFor,
   writeReport,
   writeReportMarkdown,
+  type AgentUsage,
   type PostAction,
   type PostReportEntry,
+  type RunUsage,
 } from '../../report';
 import { runCreateStage } from '../../stages/create';
 import { runFetchStage } from '../../stages/fetch';
@@ -19,6 +26,54 @@ import type { OrchestratorOptions, OrchestratorResult } from './types';
 /** Human-readable message of an unknown error. */
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+/** Stable order of the agents in the usage report. */
+const AGENT_ORDER: readonly AgentName[] = [
+  'filter',
+  'match',
+  'category',
+  'create',
+  'update',
+];
+
+/** Resolve the configured model of an agent (type-safe lookup). */
+function modelForAgent(
+  models: AgentModelsConfig,
+  agent: string,
+): string | undefined {
+  switch (agent) {
+    case 'filter':
+      return models.filter;
+    case 'match':
+      return models.match;
+    case 'create':
+      return models.create;
+    case 'update':
+      return models.update;
+    case 'category':
+      return models.category;
+    default:
+      return undefined;
+  }
+}
+
+/** Resolve the decision backend of an agent (only the decision agents have one). */
+function backendForAgent(
+  backends: AgentBackendConfig,
+  agent: AgentName,
+): DecisionBackend | undefined {
+  switch (agent) {
+    case 'filter':
+      return backends.filter;
+    case 'match':
+      return backends.match;
+    case 'category':
+      return backends.category;
+    case 'create':
+    case 'update':
+      return undefined;
+  }
 }
 
 /** Build a per-post report entry, omitting the optional fields when absent. */
@@ -60,13 +115,42 @@ export async function runPipeline(
   const deps = options.deps ?? {};
   const stages = options.stages ?? {};
 
+  const pricing: PricingTable =
+    options.pricing ?? (await loadPricing({ logger }));
+  const tracker = createUsageTracker({
+    costOf: (agent, usage): number => {
+      const model = modelForAgent(cfg.models, agent);
+      return model === undefined ? 0 : estimateCost(pricing.get(model), usage);
+    },
+  });
+  const usage = (): RunUsage => {
+    const totals = tracker.totals();
+    const byAgent: AgentUsage[] = [];
+    let total = emptyUsage();
+    for (const agent of AGENT_ORDER) {
+      const agentTotals = totals[agent];
+      if (agentTotals === undefined) {
+        continue;
+      }
+      const backend = backendForAgent(cfg.backends, agent);
+      byAgent.push({
+        agent,
+        model: modelForAgent(cfg.models, agent) ?? '',
+        ...(backend !== undefined ? { backend } : {}),
+        ...agentTotals,
+      });
+      total = mergeUsage(total, agentTotals);
+    }
+    return { byAgent, total };
+  };
+
   const fetchStage = deps.fetchStage ?? runFetchStage;
   const filterStage = deps.filterStage ?? runFilterStage;
   const matchStage = deps.matchStage ?? runMatchStage;
   const createStage = deps.createStage ?? runCreateStage;
   const updateStage = deps.updateStage ?? runUpdateStage;
 
-  const builder = createReportBuilder({ dryRun, now: clock });
+  const builder = createReportBuilder({ dryRun, now: clock, usage });
 
   logger.info('pipeline started', {
     subreddit: cfg.reddit.subreddit,
@@ -111,6 +195,9 @@ export async function runPipeline(
     ...stages.filter,
     filterOptions: {
       ...stages.filter?.filterOptions,
+      onUsage: (reported): void => {
+        tracker.record('filter', reported);
+      },
       onBatch: (info): void => {
         logger.info('stage filter: batch classified', {
           batch: info.batch,
@@ -148,7 +235,15 @@ export async function runPipeline(
       title: entry.title,
     });
     try {
-      const matchResult = await matchStage([entry], stages.match ?? {});
+      const matchResult = await matchStage([entry], {
+        ...stages.match,
+        matchOptions: {
+          ...stages.match?.matchOptions,
+          onUsage: (reported): void => {
+            tracker.record('match', reported);
+          },
+        },
+      });
       const matched = matchResult.decisions[0];
       if (matched === undefined) {
         throw new Error('match stage returned no decision');
@@ -167,7 +262,16 @@ export async function runPipeline(
           dryRun,
           createOptions: {
             ...stages.create?.createOptions,
+            onUsage: (reported): void => {
+              tracker.record('create', reported);
+            },
             logger,
+          },
+          categoryOptions: {
+            ...stages.create?.categoryOptions,
+            onUsage: (reported): void => {
+              tracker.record('category', reported);
+            },
           },
           onWrite: (info): void => {
             logger.info('stage create: writing page', { path: info.path });
@@ -192,6 +296,9 @@ export async function runPipeline(
           dryRun,
           updateOptions: {
             ...stages.update?.updateOptions,
+            onUsage: (reported): void => {
+              tracker.record('update', reported);
+            },
             logger,
           },
           onWrite: (info): void => {

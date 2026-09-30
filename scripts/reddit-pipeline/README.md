@@ -58,6 +58,27 @@ yarn reddit:compare --agent=match
 yarn reddit:compare --agent=category
 ```
 
+## Cost report
+
+Every run records the model usage and cost per agent (`filter`, `match`,
+`category`, `create`, `update`) in the run report. The Markdown report gains a
+**Cost by model** table with the backend, the model, the number of calls, the
+input/output tokens and the cost in USD, plus a total row:
+
+| Agent | Backend | Model | Calls | Input tokens | Output tokens | Cost (USD) |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| filter | jev | `typesafe/jev-1.13` | 12 | 8,400 | 1,200 | $0.000420 |
+| create | — | `~deepseek/deepseek-v4-flash-latest` | 3 | 42,000 | 9,000 | $0.006300 |
+
+- **Jev** reports its cost directly (`usage.cost`).
+- **LLM** providers only report tokens, so the cost is estimated from the model
+  price. The prices are loaded once at the start of the run from the OpenRouter
+  `/api/v1/models` endpoint; when the request fails the run continues with
+  `cost: 0` (the token counts are still recorded).
+
+This makes the Jev-vs-LLM trade-off visible on concrete numbers: run the same
+window with `--backend jev` and with `--backend llm` and compare the cost table.
+
 ## GitHub token
 
 The pipeline reads repositories, READMEs and releases through the GitHub REST

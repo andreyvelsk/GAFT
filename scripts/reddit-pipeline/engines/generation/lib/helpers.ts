@@ -4,10 +4,11 @@ import { generateObject } from 'ai';
 import { config } from '../../../config';
 import { createLogger } from '../../../shared/lib/logger';
 import { AgentError } from '../../../shared/lib/errors';
-import type { Logger } from '../../../shared/lib/types';
+import type { Logger, ModelUsage } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   GenerateObjectOptions,
+  GenerateObjectResultLike,
   OpenRouterProvider,
   OpenRouterProviderSettings,
   ProviderOptions,
@@ -132,8 +133,33 @@ export const defaultGenerateObject: GenerateObjectLike = async (options) => {
       ? { schemaDescription: options.schemaDescription }
       : {}),
   });
-  return { object: result.object };
+  return {
+    object: result.object,
+    usage: {
+      promptTokens: result.usage.promptTokens,
+      completionTokens: result.usage.completionTokens,
+    },
+  };
 };
+
+/**
+ * Normalize the token usage of a generation result into the shared
+ * {@link ModelUsage} shape. Returns `undefined` when the generator reported no
+ * usage at all. The cost is left unset: it is estimated later from the model
+ * price (the OpenRouter provider does not report a cost).
+ */
+export function normalizeGenerationUsage(
+  result: GenerateObjectResultLike,
+): ModelUsage | undefined {
+  const usage = result.usage;
+  if (usage === undefined) {
+    return undefined;
+  }
+  return {
+    inputTokens: usage.promptTokens ?? 0,
+    outputTokens: usage.completionTokens ?? 0,
+  };
+}
 
 /**
  * Generate a structured object validated with `schema`.
@@ -172,6 +198,10 @@ export async function generateStructured<T>(
       const result = await generate(
         buildCallOptions(options, prompt, temperature),
       );
+      const usage = normalizeGenerationUsage(result);
+      if (usage !== undefined) {
+        options.onUsage?.(usage);
+      }
       return options.schema.parse(result.object);
     } catch (error) {
       lastError = error;

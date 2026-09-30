@@ -496,6 +496,7 @@ export async function createPage(
     ...(options.maxRepairAttempts !== undefined
       ? { maxRepairAttempts: options.maxRepairAttempts }
       : {}),
+    ...(options.onUsage !== undefined ? { onUsage: options.onUsage } : {}),
   });
   let draft = sanitizeCreateDraft(rawDraft);
   if (

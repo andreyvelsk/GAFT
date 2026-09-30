@@ -1,5 +1,6 @@
 import type { AppConfig } from '../../../config/lib/types';
 import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { PricingTable } from '../../../shared/lib/pricing';
 import type { RunReport } from '../../report';
 import type {
   CreateStageOptions,
@@ -70,6 +71,13 @@ export interface OrchestratorOptions {
 
   /** Destination of the run report (defaults to the shared `REPORT_FILE`). */
   reportPath?: string;
+
+  /**
+   * Model price table used to estimate LLM costs. When omitted it is loaded
+   * from OpenRouter at the start of the run (degrading to an empty table on
+   * failure).
+   */
+  pricing?: PricingTable;
 
   /** When `false`, the report is not written to disk (defaults to `true`). */
   writeReport?: boolean;

@@ -6,7 +6,7 @@ import { createJevAdapter, type DecisionPort } from '../../../engines/decision';
 import { createProvider, generateStructured } from '../../../engines/generation/lib/helpers';
 import { resolveModel } from '../../../engines/model/lib/helpers';
 import { createLogger } from '../../../shared/lib/logger';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import {
   CATEGORY_DEFINITIONS,
   CATEGORY_PROMPT_GUIDE,
@@ -179,6 +179,7 @@ function createLlmCategoryAgent(options: CategoryAgentOptions): CategoryAgent {
         ...(options.maxRepairAttempts !== undefined
           ? { maxRepairAttempts: options.maxRepairAttempts }
           : {}),
+        ...(options.onUsage !== undefined ? { onUsage: options.onUsage } : {}),
       });
       return response.category;
     },
@@ -195,6 +196,7 @@ function createJevCategoryAgent(
   decision: DecisionPort,
   threshold: number,
   logger: Logger,
+  onUsage?: (usage: ModelUsage) => void,
 ): CategoryAgent {
   return {
     async classifyCategory(
@@ -214,6 +216,9 @@ function createJevCategoryAgent(
             },
           },
         });
+        if (result.usage !== undefined) {
+          onUsage?.(result.usage);
+        }
         const answer = result.answers.category;
         if (answer?.type === 'choice') {
           choice = answer.choice;
@@ -273,7 +278,7 @@ export function createCategoryAgent(
         options.logger !== undefined ? { logger: options.logger } : {},
       );
     const threshold = options.threshold ?? config.thresholds.category;
-    return createJevCategoryAgent(decision, threshold, logger);
+    return createJevCategoryAgent(decision, threshold, logger, options.onUsage);
   }
   return createLlmCategoryAgent(options);
 }

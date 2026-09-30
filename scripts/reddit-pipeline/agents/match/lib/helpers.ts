@@ -6,7 +6,7 @@ import { createProvider, generateStructured } from '../../../engines/generation/
 import { resolveModel } from '../../../engines/model/lib/helpers';
 import { kebabCase } from '../../../shared/lib/helpers';
 import { createLogger } from '../../../shared/lib/logger';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import {
   loadContentIndex,
   matchCandidates,
@@ -226,6 +226,7 @@ function mergeMatchOptions(
     callOptions.maxRepairAttempts ?? agentOptions.maxRepairAttempts;
   const contentDir = callOptions.contentDir ?? agentOptions.contentDir;
   const index = callOptions.index ?? agentOptions.index;
+  const onUsage = callOptions.onUsage ?? agentOptions.onUsage;
   return {
     ...(model !== undefined ? { model } : {}),
     ...(provider !== undefined ? { provider } : {}),
@@ -233,6 +234,7 @@ function mergeMatchOptions(
     ...(maxRepairAttempts !== undefined ? { maxRepairAttempts } : {}),
     ...(contentDir !== undefined ? { contentDir } : {}),
     ...(index !== undefined ? { index } : {}),
+    ...(onUsage !== undefined ? { onUsage } : {}),
   };
 }
 
@@ -261,6 +263,7 @@ function createLlmMatchAgent(options: MatchAgentOptions): MatchAgent {
         ...(merged.maxRepairAttempts !== undefined
           ? { maxRepairAttempts: merged.maxRepairAttempts }
           : {}),
+        ...(merged.onUsage !== undefined ? { onUsage: merged.onUsage } : {}),
       });
 
       return reconcileDecision(entry, candidates, response);
@@ -280,6 +283,7 @@ function createJevMatchAgent(
   threshold: number,
   logger: Logger,
   options: MatchAgentOptions,
+  onUsage?: (usage: ModelUsage) => void,
 ): MatchAgent {
   return {
     async matchPost(
@@ -330,6 +334,9 @@ function createJevMatchAgent(
             },
           },
         });
+        if (result.usage !== undefined) {
+          (callOptions.onUsage ?? onUsage)?.(result.usage);
+        }
         const answer = result.answers.match;
         if (answer?.type === 'choice') {
           choice = answer.choice;
@@ -394,7 +401,7 @@ export function createMatchAgent(options: MatchAgentOptions = {}): MatchAgent {
       options.decision ??
       createJevAdapter(options.logger !== undefined ? { logger: options.logger } : {});
     const threshold = options.threshold ?? config.thresholds.match;
-    return createJevMatchAgent(decision, threshold, logger, options);
+    return createJevMatchAgent(decision, threshold, logger, options, options.onUsage);
   }
   return createLlmMatchAgent(options);
 }

@@ -2,7 +2,7 @@ import type { LanguageModel } from 'ai';
 import { z } from 'zod';
 
 import { createLogger } from '../../../shared/lib/logger';
-import type { Logger } from '../../../shared/lib/types';
+import type { Logger, ModelUsage } from '../../../shared/lib/types';
 import { generateStructured } from '../../generation/lib/helpers';
 import type { GenerateObjectLike } from '../../generation/lib/types';
 import { decisionAnswerSchema, validateAnswers } from './helpers';
@@ -47,6 +47,9 @@ export interface LlmDecisionAdapterOptions {
   /** Repair attempts after the first invalid answer (defaults to `1`). */
   maxRepairAttempts?: number;
 
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
+
   /** Structured logger (defaults to a stdout logger). */
   logger?: Logger;
 }
@@ -79,6 +82,7 @@ export function createLlmDecisionAdapter(
       log.debug('llm decision request', {
         questions: Object.keys(request.questions),
       });
+      let usage: ModelUsage | undefined;
       const response = await generateStructured({
         model: options.model,
         schema: llmDecisionResponseSchema,
@@ -89,6 +93,10 @@ export function createLlmDecisionAdapter(
         schemaDescription:
           'Object with an `answers` map keyed by question name',
         agent: 'decisions',
+        onUsage: (reported): void => {
+          usage = reported;
+          options.onUsage?.(reported);
+        },
         ...(options.generate !== undefined
           ? { generate: options.generate }
           : {}),
@@ -99,7 +107,9 @@ export function createLlmDecisionAdapter(
       });
       const answers = validateAnswers(response.answers);
       log.debug('llm decision response', { answers: Object.keys(answers) });
-      return { answers, model: 'llm' };
+      return usage === undefined
+        ? { answers, model: 'llm' }
+        : { answers, model: 'llm', usage };
     },
   };
 }
