@@ -34,6 +34,7 @@ function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
       batchSize: 10,
       maxPosts: 0,
       dryRun: false,
+      prefilter: true,
       ...overrides,
     },
     pr: { branch: 'reddit-pipeline/auto', base: 'main', labels: [] },

@@ -163,6 +163,8 @@ npm run reddit:pipeline -- --dry-run --report plans/my-report.json
 | --- | --- | --- | --- |
 | `--dry-run` | — | `REDDIT_DRY_RUN` | Do not write any files. |
 | `--no-dry-run` | — | `REDDIT_DRY_RUN` | Force writing files. |
+| `--prefilter` | — | `REDDIT_PREFILTER` | Run the deterministic prefilter (default). |
+| `--no-prefilter` | — | `REDDIT_PREFILTER` | Skip the deterministic prefilter: every fetched post reaches the filter agent. |
 | `--report <path>` | `--report-path` | — | JSON report path (the `.md` report is derived from it). |
 | `--no-report` | — | — | Do not write the report to disk. |
 | `--write-report` | — | — | Force writing the report. |

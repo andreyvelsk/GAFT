@@ -33,6 +33,9 @@ export interface CliArgs {
   /** Whether to run without writing any files (overrides `REDDIT_DRY_RUN`). */
   dryRun?: boolean;
 
+  /** Whether to run the deterministic prefilter (overrides `REDDIT_PREFILTER`). */
+  prefilter?: boolean;
+
   // --- Decision backends (filter / match / category) ---
   /** Backend for the filter agent (overrides `REDDIT_FILTER_BACKEND`). */
   filterBackend?: DecisionBackend;

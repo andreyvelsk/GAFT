@@ -37,6 +37,7 @@ function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
       batchSize: 10,
       maxPosts: 0,
       dryRun: false,
+      prefilter: true,
       ...overrides,
     },
     pr: { branch: 'reddit-pipeline/auto', base: 'main', labels: [] },
@@ -130,6 +131,8 @@ describe('parseArgs', () => {
   it('parses run mode and report options', () => {
     expect(parseArgs(['--dry-run']).dryRun).toBe(true);
     expect(parseArgs(['--no-dry-run']).dryRun).toBe(false);
+    expect(parseArgs(['--prefilter']).prefilter).toBe(true);
+    expect(parseArgs(['--no-prefilter']).prefilter).toBe(false);
     expect(parseArgs(['--report', 'tmp/r.json']).reportPath).toBe('tmp/r.json');
     expect(parseArgs(['--no-report']).writeReport).toBe(false);
     expect(parseArgs(['--write-report']).writeReport).toBe(true);
@@ -215,6 +218,7 @@ describe('applyArgs', () => {
       batchSize: 3,
       maxPosts: 5,
       dryRun: true,
+      prefilter: true,
     });
     expect(result.backends).toEqual({
       filter: 'jev',

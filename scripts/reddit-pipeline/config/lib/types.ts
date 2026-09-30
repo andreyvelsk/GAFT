@@ -43,6 +43,9 @@ export interface RedditConfig {
   batchSize: number;
   maxPosts: number;
   dryRun: boolean;
+
+  /** Whether the deterministic prefilter runs before the filter agent. */
+  prefilter: boolean;
 }
 
 /** Pull request settings consumed by the CI workflow. */

@@ -80,6 +80,7 @@ export async function runPipeline(
     subreddit: cfg.reddit.subreddit,
     lookbackHours: cfg.reddit.lookbackHours,
     maxPosts: cfg.reddit.maxPosts,
+    prefilter: cfg.reddit.prefilter,
     now: windowNow,
     ...stages.fetch,
   });

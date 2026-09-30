@@ -13,6 +13,9 @@ export interface FetchStageOptions {
   /** Maximum number of posts to keep, `0` = unlimited (defaults to config). */
   maxPosts?: number;
 
+  /** Whether to apply the deterministic prefilter (defaults to config). */
+  prefilter?: boolean;
+
   /** Reference time used to compute the window (defaults to now). */
   now?: Date;
 

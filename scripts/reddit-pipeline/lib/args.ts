@@ -139,6 +139,12 @@ export function parseArgs(argv: readonly string[]): CliArgs {
       case '--no-dry-run':
         args.dryRun = false;
         break;
+      case '--prefilter':
+        args.prefilter = true;
+        break;
+      case '--no-prefilter':
+        args.prefilter = false;
+        break;
 
       // --- Decision backends ---
       case '--backend': {
@@ -277,6 +283,7 @@ export function applyArgs(config: AppConfig, args: CliArgs): AppConfig {
       batchSize: args.batchSize ?? config.reddit.batchSize,
       maxPosts: args.maxPosts ?? config.reddit.maxPosts,
       dryRun: args.dryRun ?? config.reddit.dryRun,
+      prefilter: args.prefilter ?? config.reddit.prefilter,
     },
   };
 }
@@ -307,6 +314,8 @@ Fetch window:
   --max-posts <n>           Max posts to process, 0 = unlimited (default: 0)
   --subreddit <name>        Subreddit to scan (default: AynThor)
   --batch-size <n>          Posts per LLM batch (default: 10)
+  --prefilter               Run the deterministic prefilter (default: on)
+  --no-prefilter            Skip the deterministic prefilter
 
 Decision backend (filter / match / category):
   --backend <jev|llm>       Set the backend for all three agents

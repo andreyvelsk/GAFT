@@ -55,6 +55,21 @@ describe('runFetchStage', () => {
     expect(result.dropped[0]?.reason).toBe('flair=support');
   });
 
+  it('keeps every post (no drops) when the prefilter is disabled', async () => {
+    const result = await runFetchStage({
+      now: NOW,
+      prefilter: false,
+      fetchPosts: () =>
+        Promise.resolve([
+          rawPost({ id: 'keep' }),
+          rawPost({ id: 'drop', link_flair_text: 'Support' }),
+        ]),
+    });
+
+    expect(result.entries.map((entry) => entry.id)).toEqual(['keep', 'drop']);
+    expect(result.dropped).toHaveLength(0);
+  });
+
   it('applies the maxPosts limit to the kept posts', async () => {
     const result = await runFetchStage({
       now: NOW,

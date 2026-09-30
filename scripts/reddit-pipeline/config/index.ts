@@ -24,13 +24,17 @@ function envValue(env: NodeJS.ProcessEnv, name: string): string | undefined {
   return value;
 }
 
-/** Parse a boolean-ish env var, rejecting unknown values. */
-const booleanFromEnv = z
-  .string()
-  .default('false')
-  .transform((value) => value.trim().toLowerCase())
-  .pipe(z.enum(['true', 'false', '1', '0', 'yes', 'no']))
-  .transform((value) => value === 'true' || value === '1' || value === 'yes');
+/** Build a boolean-ish env schema with an explicit default, rejecting unknown values. */
+function booleanEnv(
+  defaultValue: 'true' | 'false',
+): z.ZodType<boolean, z.ZodTypeDef, unknown> {
+  return z
+    .string()
+    .default(defaultValue)
+    .transform((value) => value.trim().toLowerCase())
+    .pipe(z.enum(['true', 'false', '1', '0', 'yes', 'no']))
+    .transform((value) => value === 'true' || value === '1' || value === 'yes');
+}
 
 const envSchema = z.object({
   OPENROUTER_API_KEY: z.string().default(''),
@@ -65,7 +69,8 @@ const envSchema = z.object({
     .int()
     .nonnegative()
     .default(DEFAULT_MAX_POSTS),
-  REDDIT_DRY_RUN: booleanFromEnv,
+  REDDIT_DRY_RUN: booleanEnv('false'),
+  REDDIT_PREFILTER: booleanEnv('true'),
   PR_BRANCH: z.string().default(DEFAULT_PR_BRANCH),
   PR_BASE: z.string().default(DEFAULT_PR_BASE),
   PR_LABELS: z.string().default(DEFAULT_PR_LABELS.join(',')),
@@ -104,6 +109,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     REDDIT_BATCH_SIZE: envValue(env, 'REDDIT_BATCH_SIZE'),
     REDDIT_MAX_POSTS: envValue(env, 'REDDIT_MAX_POSTS'),
     REDDIT_DRY_RUN: envValue(env, 'REDDIT_DRY_RUN'),
+    REDDIT_PREFILTER: envValue(env, 'REDDIT_PREFILTER'),
     PR_BRANCH: envValue(env, 'PR_BRANCH'),
     PR_BASE: envValue(env, 'PR_BASE'),
     PR_LABELS: envValue(env, 'PR_LABELS'),
@@ -158,6 +164,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       batchSize: parsed.REDDIT_BATCH_SIZE,
       maxPosts: parsed.REDDIT_MAX_POSTS,
       dryRun: parsed.REDDIT_DRY_RUN,
+      prefilter: parsed.REDDIT_PREFILTER,
     },
     pr: {
       branch: parsed.PR_BRANCH,
