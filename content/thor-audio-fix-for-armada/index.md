@@ -1,7 +1,7 @@
 ---
 title: "Thor Audio Fix for Armada"
-description: "Installs the popular JamesDSP EQ profile on ArmadaOS and automatically enables it only when the Thor's speakers are in use."
-date: "2026-09-30 13:57"
+description: "Installs the JamesDSP audio profile on Armada OS with automatic profile switching for the AYN Thor."
+date: "2026-09-30 14:11"
 slug: "thor-audio-fix-for-armada"
 category: "tool"
 generated: "ai"
@@ -12,18 +12,18 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wtksqa/i_got_the
 
 ## Description
 
-This installer brings the popular JamesDSP audio fix to the AYN Thor running ArmadaOS. The JamesDSP profile, originally created for the Thor, has been converted for use on Linux with JDSP4Linux. The fix is only enabled when the speakers are in use — you never need to switch the profile manually, because it switches automatically based on what is being used for audio.
+This installs the popular JamesDSP audio profile, converted for use on Linux with JDSP4Linux, on Armada OS for the AYN Thor. The profile is only enabled when the speakers are in use — you never need to switch profiles manually, as a daemon does it automatically based on what is being used for audio.
 
 ## Features
 
-The script installs the JamesDSP flatpak in user mode, installs a converted version of the audio profile and places it in the presets folder, and installs a default preset to use when the speakers are not in use. It also installs a daemon and enables a service that runs JamesDSP on boot and switches between profiles automatically depending on whether the speakers are in use.
+The installer sets up everything in one go: it installs the JamesDSP flatpak in user mode, installs a converted version of the audio profile by ItsRetroPup into the presets folder, installs a default preset for when the speakers are not in use, and installs a daemon with an enabled service that runs JamesDSP on boot and switches between profiles depending on whether the speakers are in use. Note: do not install DeckSP on top of this, and uninstall DeckSP if it is currently installed.
 
 ## Setup guide
 
-Copy and paste the install command from the GitHub repository into a terminal in desktop mode, then reboot. Nothing else should be required. Do not install DeckSP on top of this, and uninstall DeckSP if it is currently installed.
+Copy and paste the install command from the repository into a terminal on desktop mode, then reboot. Nothing else should be required. It is confirmed working on the AYN Thor; if you get errors or it does not work, let the author know.
 
 ## Uninstall
 
-To remove the fix, copy and paste the uninstall command from the GitHub repository into a terminal.
+To remove the fix, copy and paste the uninstall command from the repository into a terminal.
 
 See the project page: [github.com](https://github.com/winghugs/thor-armada-audio-fix)
