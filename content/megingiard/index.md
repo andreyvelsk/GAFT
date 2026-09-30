@@ -4,25 +4,32 @@ description: "Allows you to customize the bottom screen with screen mirroring, v
 date: "2026-06-19 14:44"
 slug: "megingiard"
 category: "companion"
+generated: "ai"
 media:
-  - type: "video"
-    url: "https://www.youtube.com/watch?v=vgs6X9piswA"
   - type: "image"
     url: "/content/megingiard/preview.webp"
+  - type: "video"
+    url: "https://www.youtube.com/watch?v=vgs6X9piswA"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1tlids6/rerelease_source_available_megingiard_a/)
 
 ## Description
-Megingiard combines deep Android hardware video stream manipulation with modern Jetpack Compose interfaces to turn your secondary display into a fully interactive tool belt: a latency-free mirror of your primary screen, a virtual keyboard, a virtual touchpad, a configurable MacroPad, and a virtual gamepad — all driven by native input injection for sub-millisecond response.
+
+Megingiard is a bespoke companion application designed specifically for the AYN Thor dual-screen Android handheld. It combines deep Android hardware video stream manipulation with modern Jetpack Compose interfaces to turn the secondary display into a fully interactive tool belt: a latency-free, multi-cutout mirror of the primary screen, a virtual keyboard, a virtual touchpad, a configurable MacroPad, and a virtual gamepad — all driven by native input injection for sub-millisecond response. The app requires Android 13 or newer and only supports the AYN Thor; single-screen devices are permanently unsupported.
 
 ## Main Features
-- Custom MacroPad: Create your own button layouts. Map them to keyboard keys, gamepad buttons, or even complex timed macros.
-- Zero-Latency Screen Mirror: Mirror a part of your primary screen to the bottom one. Great for keeping a map, a guide, or an inventory visible at all times. Includes Pan & Zoom, custom viewport selection and a freeze option.
-- Virtual Trackpad & Keyboard: High-precision mouse control (less than 1ms latency) and a full QWERTY/QWERTZ/AZERTY layout for when you just need to type something quickly. Not very comfortable, but very handy when you cannot invoke the OS keyboard or the app does not register your inputs (can happen with streaming apps, GameNative, GameHub etc.).
 
+**Latency-Free Multi-Cutout Screen Mirroring** — Define up to 10 cropped regions of the primary screen and arrange them freely on the secondary display. Pan and pinch-to-zoom up to 10×, rotate cutouts in 90° steps, flip axes, and lock aspect ratios. Isolate stationary HUD elements (minimaps, health meters, dials) from moving scenery, freeze frames, and link MacroPad layouts to visual anchors that auto-switch when the HUD disappears. Includes smart alignment guides, edge blending, circular cutouts, temporal motion smoothing, and a Follow Touch mode that centers the viewport on your last touch.
 
-*See more features at the project page*
+**MacroPad Central Mode** — Create named profiles with custom button layouts and bind buttons to keyboard keystrokes, gamepad buttons, mouse actions, scroll wheels, layout/mirror actions, or app launchers using visual pickers. Profiles can auto-switch per app, and a visual macro editor lets you record or hand-craft timed sequences of key, mouse, and gamepad events with human-like timing randomizers.
+
+**Virtual Keyboard** — Compact full keyboard and ergonomic split layouts with QWERTY/QWERTZ/AZERTY variants, auto-open when a text field is focused on the primary screen, sticky modifiers, spacebar cursor scrubbing, an integrated trackpoint, and a quick macro toolbar.
+
+**Virtual Touchpad** — Relative mouse mode turns the bottom screen into a trackpad with tap-to-click, two-finger scrolling, and physical LMB/MMB/RMB buttons; Absolute Touch mode projects touches directly to matching coordinates on the primary screen.
 
 ## Setup guide
-Link to project: [github.com](https://github.com/stormpanda/megingiard)
+
+Download and install the latest release of Megingiard from the [releases page](https://github.com/stormpanda/megingiard/releases/latest). The app targets the AYN Thor running Android 13 or newer; single-screen devices are not supported. After installation, launch the app and grant the requested permissions to use the mirror, MacroPad, keyboard, and touchpad on the secondary display.
+
+See the project page: [github.com](https://github.com/stormpanda/megingiard)
