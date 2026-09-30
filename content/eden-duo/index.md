@@ -12,6 +12,8 @@ media:
     url: "/content/eden-duo/screenshot-2.webp"
   - type: "image"
     url: "/content/eden-duo/screenshot-3.webp"
+  - type: "video"
+    url: "https://www.youtube.com/watch?v=LaLfNIwAwHU"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_a_switch_emulator_fork_with_second/)
@@ -42,7 +44,7 @@ Companions are separate, installable `.dsmod.zip` packages, one per game, so a c
 
 - **Persona 5 Royal (1.0.2)** — the full start menu on the bottom screen: skills, items, equipment, Persona, stats, confidants, requests and the calendar with the Daily Log. You can use items and change equipment or Persona by tapping, and see enemy affinities in battle.
 - **Metroid Dread (2.1.0)** — a live area map with Samus's position, EMMI zones, water levels, and energy and missiles.
-- **The Legend of Zelda: Link's Awakening (1.0.1)** — a live map with your own pins, plus gear and items, with X/Y equip from the touch screen.
+- **The Legend of Zelda: Link's Awakening (1.0.1)** — a live map with your own pins, plus gear and items, with X/Y equip from the touch screen. [Watch a video showcase](https://www.youtube.com/watch?v=LaLfNIwAwHU).
 - **Mario Kart 8 Deluxe (4.0.0, 3.0.3)** — a live rank bar with every racer's items, a course map showing all racers, and a big horn button. Also works with CTGP-DX v1.1.1 custom tracks.
 
 Compatibility is intentionally strict: each companion is written for one exact game build and checks the running build before it loads. On any other version it does not load and shows a notice, instead of reading memory it does not understand.
