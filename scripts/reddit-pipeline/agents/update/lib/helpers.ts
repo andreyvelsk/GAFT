@@ -37,15 +37,17 @@ import {
 } from '../../../shared/lib/helpers';
 import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
-import { resolveModel } from '../../model/lib/helpers';
-import { createProvider, generateStructured } from '../../provider/lib/helpers';
-import type { ContentPage } from '../../tools/content-read';
-import { getLatestRelease } from '../../tools/github-release';
-import { readRepositoryReadme } from '../../tools/github-readme';
-import { searchRepository } from '../../tools/github-search';
+import { resolveModel } from '../../../engines/model/lib/helpers';
+import { createProvider, generateStructured } from '../../../engines/generation/lib/helpers';
+import type { ContentPage } from '../../../tools/content-read';
+import { getLatestRelease } from '../../../tools/github-release';
+import { readRepositoryReadme } from '../../../tools/github-readme';
+import { searchRepository } from '../../../tools/github-search';
 import {
   updatePatchSchema,
   type AppliedPatch,
+  type UpdateAgent,
+  type UpdateAgentOptions,
   type UpdateContext,
   type UpdateOptions,
   type UpdatePatch,
@@ -54,16 +56,21 @@ import {
 
 /**
  * Maximum number of `selftext` characters forwarded to the model.
- * Long release posts (feature lists, changelogs) routinely exceed 10k
- * characters; truncating them too aggressively yields a thin page.
+ * `0` disables truncation and forwards the full text.
  */
-const MAX_SELFTEXT_LENGTH = 10000;
+const MAX_SELFTEXT_LENGTH = 0;
 
-/** Maximum number of README characters forwarded to the model. */
-const MAX_README_LENGTH = 12000;
+/**
+ * Maximum number of README characters forwarded to the model.
+ * `0` disables truncation and forwards the full text.
+ */
+const MAX_README_LENGTH = 0;
 
-/** Maximum number of current-page body characters forwarded to the model. */
-const MAX_BODY_LENGTH = 4000;
+/**
+ * Maximum number of current-page body characters forwarded to the model.
+ * `0` disables truncation and forwards the full text.
+ */
+const MAX_BODY_LENGTH = 0;
 
 /** Schema validating the media array of an existing page. */
 const mediaArraySchema = z.array(mediaItemSchema);
@@ -118,9 +125,12 @@ export const UPDATE_SYSTEM_PROMPT = [
   'release (the provided release URL ends with "/releases/latest").',
 ].join('\n');
 
-/** Truncate a string to `max` characters, appending an ellipsis when cut. */
+/**
+ * Truncate a string to `max` characters, appending an ellipsis when cut.
+ * A non-positive `max` disables truncation and returns the text unchanged.
+ */
 function truncate(text: string, max: number): string {
-  return text.length <= max ? text : `${text.slice(0, max - 1)}…`;
+  return max <= 0 || text.length <= max ? text : `${text.slice(0, max - 1)}…`;
 }
 
 /** Read a string field from parsed frontmatter, falling back to `fallback`. */
@@ -585,6 +595,7 @@ export async function updatePage(
     ...(options.maxRepairAttempts !== undefined
       ? { maxRepairAttempts: options.maxRepairAttempts }
       : {}),
+    ...(options.onUsage !== undefined ? { onUsage: options.onUsage } : {}),
   });
   const patch = sanitizeUpdatePatch(rawPatch);
 
@@ -604,5 +615,24 @@ export async function updatePage(
     markdown: renderPage(applied.page),
     media: applied.media,
     changed: applied.changed,
+  };
+}
+
+/**
+ * Create the update agent. A thin wrapper over {@link updatePage} that keeps the
+ * generation engine (LLM) as the only backend; agent-level options (the logger)
+ * are merged with the per-call options, the per-call value taking precedence.
+ */
+export function createUpdateAgent(
+  options: UpdateAgentOptions = {},
+): UpdateAgent {
+  return {
+    updatePage(
+      page: ContentPage,
+      entry: ReportEntry,
+      callOptions: UpdateOptions = {},
+    ): Promise<UpdateResult> {
+      return updatePage(page, entry, { ...options, ...callOptions });
+    },
   };
 }

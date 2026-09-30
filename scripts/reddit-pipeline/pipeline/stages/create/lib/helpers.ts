@@ -1,6 +1,10 @@
 import { join } from 'node:path';
 
-import { createPage as defaultCreate } from '../../../../agents/create';
+import { createCategoryAgent } from '../../../../agents/category';
+import {
+  createPage as defaultCreate,
+  type CreateOptions,
+} from '../../../../agents/create';
 import {
   downloadMediaPlan,
   saveImage as defaultSaveImage,
@@ -11,11 +15,43 @@ import {
   PUBLIC_CONTENT_DIR,
 } from '../../../../shared/lib/constants';
 import { writeTextFile } from '../../../../shared/lib/fs';
+import { createLogger } from '../../../../shared/lib/logger';
 import type { ReportEntry } from '../../../../shared/lib/types';
+import type { ProjectCategory } from '../../../../../../lib/categories';
 import type { CreateStageOptions, CreateStageResult } from './types';
 
 /** File name of a page inside its slug directory. */
 const PAGE_FILE = 'index.md';
+
+/**
+ * Resolve the page category via the category agent. A failure of the agent (or
+ * of an injected classifier) is logged and swallowed — returning `undefined` —
+ * so the create agent can fall back to the category the model picks itself and
+ * a missing category never aborts the page generation.
+ */
+async function resolveCategoryOverride(
+  entry: ReportEntry,
+  options: CreateStageOptions,
+): Promise<ProjectCategory | undefined> {
+  const logger =
+    options.categoryOptions?.logger ??
+    options.createOptions?.logger ??
+    createLogger();
+  try {
+    if (options.classifyCategory !== undefined) {
+      return await options.classifyCategory(entry);
+    }
+    const agent = createCategoryAgent({ ...options.categoryOptions });
+    return await agent.classifyCategory(entry);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    logger.warn(
+      'create: category classification failed; keeping the model category',
+      { id: entry.id, error: message },
+    );
+    return undefined;
+  }
+}
 
 /**
  * Generate a new page with the create agent and write it deterministically:
@@ -30,7 +66,12 @@ export async function runCreateStage(
   options: CreateStageOptions = {},
 ): Promise<CreateStageResult> {
   const create = options.create ?? defaultCreate;
-  const result = await create(entry, options.createOptions ?? {});
+  const categoryOverride = await resolveCategoryOverride(entry, options);
+  const createOptions: CreateOptions = {
+    ...options.createOptions,
+    ...(categoryOverride !== undefined ? { categoryOverride } : {}),
+  };
+  const result = await create(entry, createOptions);
 
   if (options.dryRun === true) {
     return {

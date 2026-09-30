@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { DEFAULT_MODELS } from '../../shared/lib/constants';
+import {
+  DEFAULT_DECISIONS_BASE_URL,
+  DEFAULT_DECISIONS_MODEL,
+  DEFAULT_MODELS,
+} from '../../shared/lib/constants';
 import { loadConfig } from '../index';
 
 describe('loadConfig', () => {
@@ -16,8 +20,21 @@ describe('loadConfig', () => {
     expect(config.models.match).toBe(DEFAULT_MODELS.match);
     expect(config.models.create).toBe(DEFAULT_MODELS.create);
     expect(config.models.update).toBe(DEFAULT_MODELS.update);
+    expect(config.models.category).toBe(DEFAULT_MODELS.category);
     expect(config.openrouter.defaultModel).toBe(DEFAULT_MODELS.fallback);
     expect(config.openrouter.baseUrl).toBeUndefined();
+    expect(config.decisions.baseUrl).toBe(DEFAULT_DECISIONS_BASE_URL);
+    expect(config.decisions.model).toBe(DEFAULT_DECISIONS_MODEL);
+    expect(config.backends).toEqual({
+      filter: 'llm',
+      match: 'llm',
+      category: 'llm',
+    });
+    expect(config.thresholds).toEqual({
+      filter: 0.8,
+      match: 0.8,
+      category: 0.8,
+    });
     expect(config.pr.branch).toBe('reddit-pipeline/auto');
     expect(config.pr.base).toBe('main');
     expect(config.pr.labels).toEqual(['automation', 'reddit']);
@@ -63,5 +80,89 @@ describe('loadConfig', () => {
 
   it('throws a zod error for an invalid boolean', () => {
     expect(() => loadConfig({ REDDIT_DRY_RUN: 'maybe' })).toThrow();
+  });
+
+  it('parses explicit backend and threshold values', () => {
+    const config = loadConfig({
+      REDDIT_FILTER_BACKEND: 'jev',
+      REDDIT_MATCH_BACKEND: 'llm',
+      REDDIT_CATEGORY_BACKEND: 'jev',
+      REDDIT_FILTER_THRESHOLD: '0.65',
+      REDDIT_MATCH_THRESHOLD: '0.5',
+      REDDIT_CATEGORY_THRESHOLD: '0.9',
+    });
+
+    expect(config.backends).toEqual({
+      filter: 'jev',
+      match: 'llm',
+      category: 'jev',
+    });
+    expect(config.thresholds).toEqual({
+      filter: 0.65,
+      match: 0.5,
+      category: 0.9,
+    });
+  });
+
+  it('coerces a string threshold into a number', () => {
+    const config = loadConfig({ REDDIT_FILTER_THRESHOLD: '0.9' });
+
+    expect(config.thresholds.filter).toBe(0.9);
+  });
+
+  it('treats blank backend and threshold values as unset', () => {
+    const config = loadConfig({
+      REDDIT_FILTER_BACKEND: '   ',
+      REDDIT_MATCH_BACKEND: '',
+      REDDIT_CATEGORY_BACKEND: '',
+      REDDIT_FILTER_THRESHOLD: '',
+      REDDIT_MATCH_THRESHOLD: '   ',
+      REDDIT_CATEGORY_THRESHOLD: '',
+    });
+
+    expect(config.backends).toEqual({
+      filter: 'llm',
+      match: 'llm',
+      category: 'llm',
+    });
+    expect(config.thresholds).toEqual({
+      filter: 0.8,
+      match: 0.8,
+      category: 0.8,
+    });
+  });
+
+  it('throws a zod error for an invalid backend', () => {
+    expect(() => loadConfig({ REDDIT_FILTER_BACKEND: 'gpt' })).toThrow();
+  });
+
+  it('throws a zod error for a threshold above 1', () => {
+    expect(() => loadConfig({ REDDIT_MATCH_THRESHOLD: '2' })).toThrow();
+  });
+
+  it('throws a zod error for a negative threshold', () => {
+    expect(() => loadConfig({ REDDIT_CATEGORY_THRESHOLD: '-1' })).toThrow();
+  });
+
+  it('reads explicit decisions settings', () => {
+    const config = loadConfig({
+      OPENROUTER_DECISIONS_BASE_URL: 'https://example.test/api',
+      REDDIT_DECISIONS_MODEL: 'custom/jev',
+      REDDIT_CATEGORY_MODEL: 'custom/category',
+    });
+
+    expect(config.decisions.baseUrl).toBe('https://example.test/api');
+    expect(config.decisions.model).toBe('custom/jev');
+    expect(config.models.category).toBe('custom/category');
+  });
+
+  it('falls back to the default decisions settings for blank values', () => {
+    const config = loadConfig({
+      OPENROUTER_DECISIONS_BASE_URL: '',
+      REDDIT_DECISIONS_MODEL: '   ',
+    });
+
+    expect(config.decisions.baseUrl).toBe(DEFAULT_DECISIONS_BASE_URL);
+    expect(config.decisions.model).toBe(DEFAULT_DECISIONS_MODEL);
   });
 });

@@ -18,11 +18,13 @@
     "convert:previews:all": "node scripts/convert-previews.js --all",
     "reddit:pipeline": "tsx scripts/reddit-pipeline/index.ts",
     "reddit:create": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts create",
-    "reddit:update": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts update"
+    "reddit:update": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts update",
+    "reddit:compare": "tsx scripts/reddit-pipeline/scripts/compare-backends.ts"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.0",
     "@openrouter/ai-sdk-provider": "^0.4.5",
+    "@typesafe-ai/sdk": "^0.6.0",
     "ai": "^4.3.16",
     "firebase": "^12.14.0",
     "gray-matter": "^4.0.3",

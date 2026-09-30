@@ -36,7 +36,7 @@ function isMainModule(): boolean {
 async function main(): Promise<number> {
   try {
     const { runCli } = await import('./lib/helpers');
-    const { exitCode } = await runCli();
+    const { exitCode } = await runCli({ argv: process.argv.slice(2) });
     return exitCode;
   } catch (error) {
     createLogger().error('pipeline run failed', { error: errorMessage(error) });

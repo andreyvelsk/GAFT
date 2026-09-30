@@ -6,6 +6,7 @@ import type { GitHubSearchItem } from '../../../github/client';
 import { fetchPostById, parsePostId } from '../../../reddit/client';
 import { postToReport } from '../../../reddit/normalize';
 import { AgentError } from '../../../shared/lib/errors';
+import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
 import {
   REPAIR_INSTRUCTION,
@@ -13,12 +14,13 @@ import {
   type GenerateObjectLike,
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
-} from '../../provider';
-import { readContentPage, type ContentPage } from '../../tools/content-read';
+} from '../../../engines/generation';
+import { readContentPage, type ContentPage } from '../../../tools/content-read';
 import {
   UPDATE_SYSTEM_PROMPT,
   applyPatch,
   buildUpdatePrompt,
+  createUpdateAgent,
   gatherUpdateContext,
   sanitizeUpdatePatch,
   updatePage,
@@ -812,6 +814,94 @@ describe('updatePage', () => {
         maxRepairAttempts: 0,
       }),
     ).rejects.toBeInstanceOf(AgentError);
+  });
+});
+
+describe('createUpdateAgent', () => {
+  it('returns a working updatePage identical to the direct call', async () => {
+    const { generate } = staticGenerator({ reason: 'no-op' });
+    const agent = createUpdateAgent();
+    const options = { generate, model: testModel(), context: makeContext() };
+
+    const viaAgent = await agent.updatePage(makePage(), makeEntry(), options);
+    const direct = await updatePage(makePage(), makeEntry(), options);
+
+    expect(viaAgent).toEqual(direct);
+  });
+
+  it('uses the injected generator from the per-call options', async () => {
+    const { generate, calls } = staticGenerator({ reason: 'no-op' });
+    const agent = createUpdateAgent();
+
+    await agent.updatePage(makePage(), makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.schemaName).toBe('update_patch');
+  });
+
+  it('forwards the agent-level logger to updatePage', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const fetchImpl = staticFetch(jsonResponse({ total_count: 0, items: [] }));
+    const { generate } = staticGenerator({ reason: 'no-op' });
+    const agent = createUpdateAgent({ logger });
+
+    await agent.updatePage(
+      makePage(),
+      makeEntry({ title: 'Nonexistent', external_url: '' }),
+      { generate, model: testModel(), repoOptions: { fetchImpl } },
+    );
+
+    expect(
+      lines.some((line) => line.includes('update: researching repositories')),
+    ).toBe(true);
+  });
+
+  it('lets the per-call logger override the agent-level logger', async () => {
+    const agentLines: string[] = [];
+    const callLines: string[] = [];
+    const agentLogger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        agentLines.push(line);
+      },
+    });
+    const callLogger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        callLines.push(line);
+      },
+    });
+    const fetchImpl = staticFetch(jsonResponse({ total_count: 0, items: [] }));
+    const { generate } = staticGenerator({ reason: 'no-op' });
+    const agent = createUpdateAgent({ logger: agentLogger });
+
+    await agent.updatePage(
+      makePage(),
+      makeEntry({ title: 'Nonexistent', external_url: '' }),
+      {
+        generate,
+        model: testModel(),
+        repoOptions: { fetchImpl },
+        logger: callLogger,
+      },
+    );
+
+    expect(
+      callLines.some((line) => line.includes('update: researching repositories')),
+    ).toBe(true);
+    expect(
+      agentLines.some((line) => line.includes('update: researching repositories')),
+    ).toBe(false);
   });
 });
 

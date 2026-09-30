@@ -9,6 +9,7 @@ export {
   writeReportMarkdown,
 } from './lib/helpers';
 export type {
+  AgentUsage,
   PostAction,
   PostReportEntry,
   ReportBuilder,
@@ -16,6 +17,7 @@ export type {
   ReportCounts,
   ReportSummary,
   RunReport,
+  RunUsage,
   WriteReportMarkdownOptions,
   WriteReportOptions,
 } from './lib/types';

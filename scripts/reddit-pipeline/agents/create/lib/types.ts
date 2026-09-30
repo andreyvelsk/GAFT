@@ -7,17 +7,18 @@ import {
   projectCategorySchema,
   type PageInput,
 } from '../../../content/template';
-import type { ContentCandidate } from '../../tools/content-search';
+import type { ContentCandidate } from '../../../tools/content-search';
 import type {
   GitHubRepo,
   ReleaseInfo,
   RepoOptions,
 } from '../../../github/repo';
-import type { Logger, ReportEntry } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
-} from '../../provider/lib/types';
+} from '../../../engines/generation/lib/types';
+import type { ProjectCategory } from '../../../../../lib/categories';
 
 /**
  * Draft page produced by the create agent (LLM output).
@@ -115,6 +116,9 @@ export interface CreateOptions {
   /** Number of repair attempts on invalid output (defaults to `1`). */
   maxRepairAttempts?: number;
 
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
+
   /** GitHub request options (token, fetch, retries). */
   repoOptions?: RepoOptions;
 
@@ -124,11 +128,30 @@ export interface CreateOptions {
   /** Timestamp used for the page date (defaults to now). */
   now?: Date;
 
+  /**
+   * Category resolved by the category agent. When provided, it takes
+   * precedence over the category the model put in the draft, so the page is
+   * filed under the deterministic decision.
+   */
+  categoryOverride?: ProjectCategory;
+
   /** Pre-loaded content index used to reconcile the slug (used by tests). */
   contentIndex?: readonly ContentCandidate[];
 
   /** Content directory override used to reconcile the slug. */
   contentDir?: string;
+}
+
+/** Options accepted by {@link createCreateAgent}. */
+export interface CreateAgentOptions {
+  /** Structured logger shared by every call (per-call options take precedence). */
+  logger?: Logger;
+}
+
+/** Create agent: generates a new project page from a post. */
+export interface CreateAgent {
+  /** Generate a new project page for a post. */
+  createPage(entry: ReportEntry, options?: CreateOptions): Promise<CreateResult>;
 }
 
 /** Input accepted by {@link buildCreatePageInput}. */

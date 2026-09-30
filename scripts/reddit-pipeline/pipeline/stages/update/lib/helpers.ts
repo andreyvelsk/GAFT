@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 
-import { readContentPage as defaultReadPage } from '../../../../agents/tools/content-read';
+import { readContentPage as defaultReadPage } from '../../../../tools/content-read';
 import { updatePage as defaultUpdate } from '../../../../agents/update';
 import {
   downloadMediaPlan,

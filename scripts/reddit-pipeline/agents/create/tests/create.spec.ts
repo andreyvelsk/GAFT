@@ -6,6 +6,7 @@ import type { GitHubRepo } from '../../../github/repo';
 import { fetchPostById, parsePostId } from '../../../reddit/client';
 import { postToReport } from '../../../reddit/normalize';
 import { AgentError } from '../../../shared/lib/errors';
+import { createLogger } from '../../../shared/lib/logger';
 import type { ReportEntry } from '../../../shared/lib/types';
 import {
   REPAIR_INSTRUCTION,
@@ -13,12 +14,13 @@ import {
   type GenerateObjectLike,
   type GenerateObjectOptions,
   type GenerateObjectResultLike,
-} from '../../provider';
+} from '../../../engines/generation';
 import {
   CREATE_SYSTEM_PROMPT,
   buildCreatePageInput,
   buildCreatePrompt,
   buildMediaPlan,
+  createCreateAgent,
   createDraftSchema,
   createPage,
   gatherCreateContext,
@@ -244,12 +246,11 @@ describe('buildCreatePrompt', () => {
     expect(prompt).toContain('null');
   });
 
-  it('truncates a very long selftext', () => {
+  it('does not truncate a very long selftext by default', () => {
     const long = 'x'.repeat(12000);
     const prompt = buildCreatePrompt(makeEntry({ selftext: long }), makeContext());
 
-    expect(prompt).not.toContain(long);
-    expect(prompt).toContain('…');
+    expect(prompt).toContain(long);
   });
 
   it('lists the repository candidates from the context', () => {
@@ -933,6 +934,171 @@ describe('createPage', () => {
         maxRepairAttempts: 0,
       }),
     ).rejects.toBeInstanceOf(AgentError);
+  });
+
+  it('overrides the draft category with categoryOverride', async () => {
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+
+    const result = await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      now: new Date('2026-09-26T10:16:00Z'),
+      categoryOverride: 'tool',
+    });
+
+    expect(result.draft.category).toBe('tool');
+    expect(result.page.frontmatter.category).toBe('tool');
+    expect(result.markdown).toMatch(/category: ["']?tool["']?/);
+  });
+
+  it('keeps the draft category when there is no override', async () => {
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+
+    const result = await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(result.draft.category).toBe('game');
+    expect(result.page.frontmatter.category).toBe('game');
+  });
+
+  it('logs a debug line when the override differs from the draft category', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+
+    await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'tool',
+      logger,
+    });
+
+    expect(
+      lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(true);
+  });
+
+  it('does not log when the override matches the draft category', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'app' }));
+
+    await createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'app',
+      logger,
+    });
+
+    expect(
+      lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(false);
+  });
+});
+
+describe('createCreateAgent', () => {
+  it('returns a working createPage identical to the direct call', async () => {
+    const { generate } = staticGenerator(makeDraft());
+    const agent = createCreateAgent();
+    const options = {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      now: new Date('2026-09-26T10:16:00Z'),
+    };
+
+    const viaAgent = await agent.createPage(makeEntry(), options);
+    const direct = await createPage(makeEntry(), options);
+
+    expect(viaAgent).toEqual(direct);
+  });
+
+  it('uses the injected generator from the per-call options', async () => {
+    const { generate, calls } = staticGenerator(makeDraft());
+    const agent = createCreateAgent();
+
+    await agent.createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+    });
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.schemaName).toBe('create_page');
+  });
+
+  it('forwards the agent-level logger to createPage', async () => {
+    const lines: string[] = [];
+    const logger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        lines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+    const agent = createCreateAgent({ logger });
+
+    await agent.createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'tool',
+    });
+
+    expect(
+      lines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(true);
+  });
+
+  it('lets the per-call logger override the agent-level logger', async () => {
+    const agentLines: string[] = [];
+    const callLines: string[] = [];
+    const agentLogger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        agentLines.push(line);
+      },
+    });
+    const callLogger = createLogger({
+      level: 'debug',
+      write: (line): void => {
+        callLines.push(line);
+      },
+    });
+    const { generate } = staticGenerator(makeDraft({ category: 'game' }));
+    const agent = createCreateAgent({ logger: agentLogger });
+
+    await agent.createPage(makeEntry(), {
+      generate,
+      model: testModel(),
+      context: makeContext(),
+      categoryOverride: 'tool',
+      logger: callLogger,
+    });
+
+    expect(
+      callLines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(true);
+    expect(
+      agentLines.some((line) => line.includes('create: overriding draft category')),
+    ).toBe(false);
   });
 });
 

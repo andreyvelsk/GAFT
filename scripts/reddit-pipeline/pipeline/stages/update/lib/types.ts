@@ -2,7 +2,7 @@ import type { UpdateOptions, UpdateResult } from '../../../../agents/update';
 import type {
   ContentPage,
   ContentReadOptions,
-} from '../../../../agents/tools/content-read';
+} from '../../../../tools/content-read';
 import type {
   DownloadImageOptions,
   MediaPlanItem,

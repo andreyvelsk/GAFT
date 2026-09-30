@@ -12,11 +12,12 @@ import type {
   ReleaseInfo,
   RepoOptions,
 } from '../../../github/repo';
-import type { Logger } from '../../../shared/lib/types';
+import type { Logger, ModelUsage, ReportEntry } from '../../../shared/lib/types';
 import type {
   GenerateObjectLike,
   ProviderOptions,
-} from '../../provider/lib/types';
+} from '../../../engines/generation/lib/types';
+import type { ContentPage } from '../../../tools/content-read';
 
 /**
  * Patch produced by the update agent. Only the fields that actually change are
@@ -106,6 +107,22 @@ export interface UpdateResult {
   changed: string[];
 }
 
+/** Options accepted by {@link createUpdateAgent}. */
+export interface UpdateAgentOptions {
+  /** Structured logger shared by every call (per-call options take precedence). */
+  logger?: Logger;
+}
+
+/** Update agent: applies a new post to an existing project page. */
+export interface UpdateAgent {
+  /** Update an existing project page from a new post. */
+  updatePage(
+    page: ContentPage,
+    entry: ReportEntry,
+    options?: UpdateOptions,
+  ): Promise<UpdateResult>;
+}
+
 /** Options accepted by the update agent. */
 export interface UpdateOptions {
   /** Structured logger for progress output (defaults to a stdout logger). */
@@ -122,6 +139,9 @@ export interface UpdateOptions {
 
   /** Number of repair attempts on invalid output (defaults to `1`). */
   maxRepairAttempts?: number;
+
+  /** Called after every model call with its token usage. */
+  onUsage?: (usage: ModelUsage) => void;
 
   /** GitHub request options (token, fetch, retries). */
   repoOptions?: RepoOptions;

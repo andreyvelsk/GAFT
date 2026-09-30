@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { CreateResult } from '../../../agents/create';
 import type { AppConfig } from '../../../config/lib/types';
@@ -13,10 +13,23 @@ import {
 } from '../../../content/media';
 import type { PageInput } from '../../../content/template';
 import { createLogger } from '../../../shared/lib/logger';
+import { buildPricingTable, emptyPricingTable } from '../../../shared/lib/pricing';
 import type { Logger, RawPost, ReportEntry } from '../../../shared/lib/types';
+import type { CreateStageResult } from '../../stages/create';
 import type { FetchStageResult } from '../../stages/fetch';
+import type { FilterStageResult } from '../../stages/filter';
 import type { MatchStageResult } from '../../stages/match';
 import { runPipeline, type OrchestratorDependencies } from '../index';
+
+/** Mock of the category agent module (hoisted so `vi.mock` can use it). */
+const categoryMock = vi.hoisted(() => ({
+  createCategoryAgent: vi.fn(),
+  classifyCategory: vi.fn(),
+}));
+
+vi.mock('../../../../agents/category', () => ({
+  createCategoryAgent: categoryMock.createCategoryAgent,
+}));
 
 /** Whether the media integration tests should run. */
 const RUN_INTEGRATION = process.env.RUN_MEDIA_INTEGRATION === 'true';
@@ -32,11 +45,15 @@ const PNG_BASE64 =
 function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
   return {
     openrouter: { apiKey: '', baseUrl: undefined, defaultModel: 'test/model' },
+    decisions: { baseUrl: 'https://openrouter.ai/api', model: 'test/jev' },
+    backends: { filter: 'llm', match: 'llm', category: 'llm' },
+    thresholds: { filter: 0.8, match: 0.8, category: 0.8 },
     models: {
       filter: 'test/model',
       match: 'test/model',
       create: 'test/model',
       update: 'test/model',
+      category: 'test/model',
     },
     reddit: {
       subreddit: 'AynThor',
@@ -44,6 +61,7 @@ function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
       batchSize: 10,
       maxPosts: 0,
       dryRun: false,
+      prefilter: true,
       ...overrides,
     },
     pr: { branch: 'reddit-pipeline/auto', base: 'main', labels: [] },
@@ -153,7 +171,7 @@ function makeDeps(
       Promise.resolve({
         decisions: input.map((entry) => ({
           entry,
-          decision: { action: 'CREATE', slug: entry.id, reason: 'new' },
+          decision: { action: 'CREATE', slug: entry.id },
         })),
       }),
     createStage: (entry) =>
@@ -177,6 +195,14 @@ function makeDeps(
 describe('runPipeline', () => {
   let dir: string | null = null;
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+    categoryMock.createCategoryAgent.mockReturnValue({
+      classifyCategory: categoryMock.classifyCategory,
+    });
+    categoryMock.classifyCategory.mockResolvedValue('app');
+  });
+
   afterEach(async () => {
     if (dir !== null) {
       await rm(dir, { recursive: true, force: true });
@@ -195,6 +221,7 @@ describe('runPipeline', () => {
       config: makeConfig({ dryRun: true }),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       reportPath,
       deps: makeDeps(entries, ['a']),
       stages: {
@@ -217,6 +244,24 @@ describe('runPipeline', () => {
     expect(result.reportPath).toBe(reportPath);
     const raw = await readFile(reportPath, 'utf8');
     expect(raw).toContain('"created": 1');
+    // The report reason is synthesized from the decision, not taken from it.
+    expect(result.report.posts[0]?.reason).toBe('match: CREATE a');
+    expect(raw).toContain('match: CREATE a');
+  });
+
+  it('does not invoke the category agent when a create stage is injected', async () => {
+    const entries = [makeEntry({ id: 'a' })];
+
+    await runPipeline({
+      config: makeConfig(),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      deps: makeDeps(entries, ['a']),
+    });
+
+    expect(categoryMock.createCategoryAgent).not.toHaveBeenCalled();
   });
 
   it('processes exactly one post when maxPosts is 1', async () => {
@@ -225,6 +270,7 @@ describe('runPipeline', () => {
       config: makeConfig({ maxPosts: 1 }),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps,
       stages: {
@@ -253,7 +299,7 @@ describe('runPipeline', () => {
       return Promise.resolve({
         decisions: input.map((entry) => ({
           entry,
-          decision: { action: 'CREATE', slug: entry.id, reason: 'new' },
+          decision: { action: 'CREATE', slug: entry.id },
         })),
       });
     };
@@ -262,6 +308,7 @@ describe('runPipeline', () => {
       config: makeConfig(),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps,
     });
@@ -271,6 +318,100 @@ describe('runPipeline', () => {
     const failed = result.report.posts.find((post) => post.id === 'b');
     expect(failed?.action).toBe('error');
     expect(failed?.error).toBe('agent failed');
+  });
+
+  it('aggregates per-agent usage and estimates the LLM cost', async () => {
+    const entries = [makeEntry({ id: 'a' })];
+    const deps = makeDeps(entries, ['a']);
+    deps.filterStage = (input, options): Promise<FilterStageResult> => {
+      options.filterOptions?.onUsage?.({ inputTokens: 1000, outputTokens: 500 });
+      return Promise.resolve({ relevant: [...input], skipped: [] });
+    };
+    deps.createStage = (entry, options): Promise<CreateStageResult> => {
+      options.createOptions?.onUsage?.({ inputTokens: 2000, outputTokens: 1000 });
+      return Promise.resolve({
+        slug: entry.id,
+        markdown: 'md',
+        media: [],
+        written: true,
+      });
+    };
+
+    const result = await runPipeline({
+      config: makeConfig(),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: buildPricingTable({
+        data: [
+          {
+            id: 'test/model',
+            pricing: { prompt: '0.000001', completion: '0.000002' },
+          },
+        ],
+      }),
+      writeReport: false,
+      deps,
+    });
+
+    const filter = result.report.usage.byAgent.find(
+      (entry) => entry.agent === 'filter',
+    );
+    const create = result.report.usage.byAgent.find(
+      (entry) => entry.agent === 'create',
+    );
+    expect(filter).toMatchObject({
+      agent: 'filter',
+      model: 'test/model',
+      backend: 'llm',
+      calls: 1,
+      inputTokens: 1000,
+      outputTokens: 500,
+    });
+    // 1000/1e6*1 + 500/1e6*2 = 0.002
+    expect(filter?.cost).toBeCloseTo(0.002, 10);
+    // 2000/1e6*1 + 1000/1e6*2 = 0.004
+    expect(create?.cost).toBeCloseTo(0.004, 10);
+    expect(result.report.usage.total.calls).toBe(2);
+    expect(result.report.usage.total.cost).toBeCloseTo(0.006, 10);
+  });
+
+  it('forwards the configured backend to the filter stage and reports the Jev model', async () => {
+    const entries = [makeEntry({ id: 'a' })];
+    const deps = makeDeps(entries, ['a']);
+    let receivedBackend: string | undefined;
+    deps.filterStage = (input, options): Promise<FilterStageResult> => {
+      receivedBackend = options.backend;
+      options.filterOptions?.onUsage?.({
+        inputTokens: 10,
+        outputTokens: 5,
+        cost: 0.001,
+      });
+      return Promise.resolve({ relevant: [...input], skipped: [] });
+    };
+
+    const config = makeConfig();
+    config.backends = { filter: 'jev', match: 'jev', category: 'jev' };
+
+    const result = await runPipeline({
+      config,
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      deps,
+    });
+
+    expect(receivedBackend).toBe('jev');
+    const filter = result.report.usage.byAgent.find(
+      (entry) => entry.agent === 'filter',
+    );
+    expect(filter).toMatchObject({
+      agent: 'filter',
+      backend: 'jev',
+      model: 'test/jev',
+      calls: 1,
+      cost: 0.001,
+    });
   });
 
   it('propagates a fatal fetch error', async () => {
@@ -283,6 +424,7 @@ describe('runPipeline', () => {
         config: makeConfig(),
         now: NOW,
         logger: silentLogger(),
+        pricing: emptyPricingTable(),
         writeReport: false,
         deps,
       }),
@@ -317,6 +459,7 @@ describe.skipIf(!RUN_INTEGRATION)('runPipeline (integration)', () => {
       config: makeConfig(),
       now: NOW,
       logger: silentLogger(),
+      pricing: emptyPricingTable(),
       writeReport: false,
       deps,
       stages: {

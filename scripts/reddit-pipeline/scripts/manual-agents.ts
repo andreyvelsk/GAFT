@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 
 import { createPage } from '../agents/create';
 import { updatePage } from '../agents/update';
-import { readContentPage } from '../agents/tools/content-read';
+import { readContentPage } from '../tools/content-read';
 import { fetchPostById, parsePostId } from '../reddit/client';
 import { postToReport } from '../reddit/normalize';
 import type { ReportEntry } from '../shared/lib/types';

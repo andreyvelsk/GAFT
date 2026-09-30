@@ -1,3 +1,7 @@
+import type {
+  CategoryAgentOptions,
+  CategoryContext,
+} from '../../../../agents/category';
 import type { CreateOptions, CreateResult } from '../../../../agents/create';
 import type {
   DownloadImageOptions,
@@ -5,6 +9,7 @@ import type {
   MediaResult,
 } from '../../../../content/media';
 import type { ReportEntry } from '../../../../shared/lib/types';
+import type { ProjectCategory } from '../../../../../../lib/categories';
 
 /** Options accepted by the create stage. */
 export interface CreateStageOptions {
@@ -16,6 +21,18 @@ export interface CreateStageOptions {
     entry: ReportEntry,
     options: CreateOptions,
   ) => Promise<CreateResult>;
+
+  /**
+   * Options forwarded to the category agent (backend, threshold, model, …).
+   * The stage resolves the page category before calling the create agent.
+   */
+  categoryOptions?: CategoryAgentOptions;
+
+  /** Injected category classifier (used by tests). */
+  classifyCategory?: (
+    entry: ReportEntry,
+    context?: CategoryContext,
+  ) => Promise<ProjectCategory>;
 
   /** When `true`, no content or media file is written. */
   dryRun?: boolean;

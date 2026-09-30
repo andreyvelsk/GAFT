@@ -47,48 +47,6 @@ See the [How to Add](content/how-to/index.md) guide for detailed instructions.
 ## Reddit Pipeline
 
 The `scripts/reddit-pipeline` tooling scans r/AynThor, filters relevant posts and
-generates/updates project pages under `content/<slug>/index.md`.
-
-### GitHub token
-
-The pipeline reads repositories, READMEs and releases through the GitHub REST
-API. Without a token the API is limited to **60 requests per hour per IP**,
-which a single run can exhaust. Set a personal access token to raise the limit
-to 5000 requests/hour:
-
-```bash
-export GITHUB_TOKEN=ghp_xxx
-```
-
-Use a classic PAT with the `public_repo` scope (or a fine-grained token with
-read-only **Contents** access). In GitHub Actions the token is provided
-automatically. When the token is missing the pipeline logs a one-time warning
-and continues in the degraded mode.
-
-### Running the agents manually
-
-The `.env` file at the project root is loaded automatically by the pipeline
-config, so **no `--env-file` flag is needed**. Make sure `OPENROUTER_API_KEY`
-and (ideally) `GITHUB_TOKEN` are set in `.env`, then run:
-
-```bash
-# Create a page for one post (prints the generated index.md to stdout).
-npm run reddit:create -- https://www.reddit.com/r/AynThor/comments/<id>/<slug>/
-
-# Create pages for a list of links (one per line, lines starting with # ignored).
-npm run reddit:create -- --file scripts/reddit-pipeline/scripts/tmp-links.txt
-
-# Update an existing page from a new post.
-npm run reddit:update -- <slug> https://www.reddit.com/r/AynThor/comments/<id>/<slug>/
-
-# Full pipeline: fetch → filter → match → create/update.
-npm run reddit:pipeline
-```
-
-`manual-agents.ts` only prints the result — it does not write files (writing is
-done by the pipeline stage). Batch mode continues on a per-post error and exits
-with a non-zero code if any post failed.
-
-If a run reports `401 Unauthorized`, the API key was not loaded: check that
-`OPENROUTER_API_KEY` is set in `.env` (not just exported in a shell) and is not
-overridden by an empty value.
+generates/updates project pages under `content/<slug>/index.md`. See
+[`scripts/reddit-pipeline/README.md`](scripts/reddit-pipeline/README.md) for the
+architecture, decision backends and command-line options.
