@@ -375,6 +375,45 @@ describe('runPipeline', () => {
     expect(result.report.usage.total.cost).toBeCloseTo(0.006, 10);
   });
 
+  it('forwards the configured backend to the filter stage and reports the Jev model', async () => {
+    const entries = [makeEntry({ id: 'a' })];
+    const deps = makeDeps(entries, ['a']);
+    let receivedBackend: string | undefined;
+    deps.filterStage = (input, options): Promise<FilterStageResult> => {
+      receivedBackend = options.backend;
+      options.filterOptions?.onUsage?.({
+        inputTokens: 10,
+        outputTokens: 5,
+        cost: 0.001,
+      });
+      return Promise.resolve({ relevant: [...input], skipped: [] });
+    };
+
+    const config = makeConfig();
+    config.backends = { filter: 'jev', match: 'jev', category: 'jev' };
+
+    const result = await runPipeline({
+      config,
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      deps,
+    });
+
+    expect(receivedBackend).toBe('jev');
+    const filter = result.report.usage.byAgent.find(
+      (entry) => entry.agent === 'filter',
+    );
+    expect(filter).toMatchObject({
+      agent: 'filter',
+      backend: 'jev',
+      model: 'test/jev',
+      calls: 1,
+      cost: 0.001,
+    });
+  });
+
   it('propagates a fatal fetch error', async () => {
     const deps = makeDeps([], []);
     deps.fetchStage = (): Promise<FetchStageResult> =>

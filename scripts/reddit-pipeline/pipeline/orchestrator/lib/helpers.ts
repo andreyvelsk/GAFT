@@ -133,9 +133,15 @@ export async function runPipeline(
         continue;
       }
       const backend = backendForAgent(cfg.backends, agent);
+      // The Jev backend answers with the System One model, not the OpenRouter
+      // model configured for the LLM backend, so report the model actually used.
+      const model =
+        backend === 'jev'
+          ? cfg.decisions.model
+          : modelForAgent(cfg.models, agent) ?? '';
       byAgent.push({
         agent,
-        model: modelForAgent(cfg.models, agent) ?? '',
+        model,
         ...(backend !== undefined ? { backend } : {}),
         ...agentTotals,
       });
@@ -192,6 +198,9 @@ export async function runPipeline(
   });
   const filterResult = await filterStage(filterEntries, {
     batchSize: cfg.reddit.batchSize,
+    backend: cfg.backends.filter,
+    threshold: cfg.thresholds.filter,
+    logger,
     ...stages.filter,
     filterOptions: {
       ...stages.filter?.filterOptions,
@@ -236,6 +245,9 @@ export async function runPipeline(
     });
     try {
       const matchResult = await matchStage([entry], {
+        backend: cfg.backends.match,
+        threshold: cfg.thresholds.match,
+        logger,
         ...stages.match,
         matchOptions: {
           ...stages.match?.matchOptions,
@@ -268,6 +280,8 @@ export async function runPipeline(
             logger,
           },
           categoryOptions: {
+            backend: cfg.backends.category,
+            threshold: cfg.thresholds.category,
             ...stages.create?.categoryOptions,
             onUsage: (reported): void => {
               tracker.record('category', reported);

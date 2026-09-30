@@ -1,4 +1,8 @@
-import { classifyPosts as defaultClassify } from '../../../../agents/filter';
+import {
+  createFilterAgent,
+  type FilterOptions,
+  type FilterVerdicts,
+} from '../../../../agents/filter';
 import { config } from '../../../../config';
 import type { ReportEntry } from '../../../../shared/lib/types';
 import type {
@@ -10,6 +14,9 @@ import type {
 /**
  * Classify the posts in batches and split them into relevant and skipped.
  * The verdicts are reconciled by the agent, so every input post gets a verdict.
+ *
+ * The agent is built from the stage options so the configured decision backend
+ * (`jev` or `llm`) is actually used; an injected `classify` bypasses it.
  */
 export async function runFilterStage(
   entries: readonly ReportEntry[],
@@ -19,7 +26,17 @@ export async function runFilterStage(
     return { relevant: [], skipped: [] };
   }
 
-  const classify = options.classify ?? defaultClassify;
+  const agent = createFilterAgent({
+    ...(options.backend !== undefined ? { backend: options.backend } : {}),
+    ...(options.threshold !== undefined ? { threshold: options.threshold } : {}),
+    ...(options.logger !== undefined ? { logger: options.logger } : {}),
+  });
+  const classify =
+    options.classify ??
+    ((
+      input: readonly ReportEntry[],
+      callOptions: FilterOptions,
+    ): Promise<FilterVerdicts> => agent.classifyPosts(input, callOptions));
   const batchSize = options.batchSize ?? config.reddit.batchSize;
   const verdicts = await classify(entries, {
     ...options.filterOptions,

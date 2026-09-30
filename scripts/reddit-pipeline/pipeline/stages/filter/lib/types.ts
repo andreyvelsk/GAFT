@@ -1,10 +1,20 @@
 import type { FilterOptions, FilterVerdicts } from '../../../../agents/filter';
-import type { ReportEntry } from '../../../../shared/lib/types';
+import type { DecisionBackend } from '../../../../engines/decision';
+import type { Logger, ReportEntry } from '../../../../shared/lib/types';
 
 /** Options accepted by the filter stage. */
 export interface FilterStageOptions {
   /** Number of posts per LLM request (defaults to the config value). */
   batchSize?: number;
+
+  /** Decision backend of the filter agent (`llm` by default). */
+  backend?: DecisionBackend;
+
+  /** Jev: probability threshold above which a post is relevant. */
+  threshold?: number;
+
+  /** Structured logger shared with the filter agent. */
+  logger?: Logger;
 
   /** Options forwarded to the filter agent (model, generator, …). */
   filterOptions?: FilterOptions;
