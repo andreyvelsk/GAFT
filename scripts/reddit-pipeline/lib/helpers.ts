@@ -2,7 +2,13 @@ import { loadConfig } from '../config';
 import { runPipeline } from '../pipeline/orchestrator';
 import type { RunReport } from '../pipeline/report';
 import { createLogger } from '../shared/lib/logger';
-import type { CliDependencies, CliResult } from './types';
+import {
+  applyArgs,
+  orchestratorOptionsFromArgs,
+  parseArgs,
+  USAGE,
+} from './args';
+import type { CliArgs, CliDependencies, CliResult } from './types';
 
 /** Human-readable message of an unknown error. */
 function errorMessage(error: unknown): string {
@@ -35,9 +41,12 @@ export function formatReport(report: RunReport): string {
 }
 
 /**
- * Run the CLI: load the configuration, execute the pipeline and print the run
- * report. Fatal errors are logged and reported through a non-zero exit code;
- * per-post errors are already handled by the orchestrator.
+ * Run the CLI: parse the command-line arguments, load the configuration,
+ * apply the argument overrides, execute the pipeline and print the run report.
+ *
+ * Argument errors are printed (with the usage help) and reported through a
+ * non-zero exit code. Fatal errors are logged; per-post errors are already
+ * handled by the orchestrator.
  */
 export async function runCli(deps: CliDependencies = {}): Promise<CliResult> {
   const logger = (deps.createLogger ?? createLogger)();
@@ -47,9 +56,28 @@ export async function runCli(deps: CliDependencies = {}): Promise<CliResult> {
       process.stdout.write(`${line}\n`);
     });
 
+  let args: CliArgs;
   try {
-    const config = (deps.loadConfig ?? loadConfig)();
-    const result = await (deps.runPipeline ?? runPipeline)({ config, logger });
+    args = parseArgs(deps.argv ?? []);
+  } catch (error) {
+    write(`error: ${errorMessage(error)}`);
+    write(USAGE);
+    return { exitCode: 1, result: null };
+  }
+
+  if (args.help) {
+    write(USAGE);
+    return { exitCode: 0, result: null };
+  }
+
+  try {
+    const baseConfig = (deps.loadConfig ?? loadConfig)();
+    const config = applyArgs(baseConfig, args);
+    const result = await (deps.runPipeline ?? runPipeline)({
+      config,
+      logger,
+      ...orchestratorOptionsFromArgs(args),
+    });
     write(formatReport(result.report));
     return { exitCode: 0, result };
   } catch (error) {
