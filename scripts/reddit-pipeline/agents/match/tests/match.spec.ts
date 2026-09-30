@@ -211,12 +211,11 @@ describe('buildMatchPrompt', () => {
     expect(prompt).toContain('[]');
   });
 
-  it('truncates a very long selftext', () => {
+  it('does not truncate a very long selftext by default', () => {
     const long = 'x'.repeat(2000);
     const prompt = buildMatchPrompt(makeEntry({ selftext: long }), []);
 
-    expect(prompt).not.toContain(long);
-    expect(prompt).toContain('…');
+    expect(prompt).toContain(long);
   });
 
   it('requests only action and slug (no reason)', () => {
@@ -691,7 +690,7 @@ describe('createMatchAgent (jev backend)', () => {
     expect(Object.keys(question.criteria)).toEqual([MATCH_NEW_OPTION]);
   });
 
-  it('truncates a very long selftext before sending it to the port', async () => {
+  it('does not truncate a very long selftext before sending it to the port', async () => {
     const { decision, calls } = mockChoiceDecision(() => ({
       choice: MATCH_NEW_OPTION,
     }));
@@ -703,8 +702,7 @@ describe('createMatchAgent (jev backend)', () => {
     );
 
     const state = JSON.stringify(calls[0]?.state);
-    expect(state).not.toContain(long);
-    expect(state).toContain('…');
+    expect(state).toContain(long);
   });
 
   it('forwards the injected index to the deterministic candidate search', async () => {

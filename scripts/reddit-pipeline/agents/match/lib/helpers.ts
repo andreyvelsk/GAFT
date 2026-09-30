@@ -21,8 +21,11 @@ import {
   type MatchOptions,
 } from './types';
 
-/** Maximum number of `selftext` characters forwarded to the model. */
-const MAX_SELFTEXT_LENGTH = 800;
+/**
+ * Maximum number of `selftext` characters forwarded to the model.
+ * `0` disables truncation and forwards the full text.
+ */
+const MAX_SELFTEXT_LENGTH = 0;
 
 /** Criteria key selecting a brand-new project (CREATE) in the Jev branch. */
 export const MATCH_NEW_OPTION = '__new__';
@@ -59,9 +62,12 @@ export const MATCH_SYSTEM_PROMPT = [
   '{"action": "CREATE" | "UPDATE", "slug": "..."}.',
 ].join('\n');
 
-/** Truncate a string to `max` characters, appending an ellipsis when cut. */
+/**
+ * Truncate a string to `max` characters, appending an ellipsis when cut.
+ * A non-positive `max` disables truncation and returns the text unchanged.
+ */
 function truncate(text: string, max: number): string {
-  return text.length <= max ? text : `${text.slice(0, max - 1)}…`;
+  return max <= 0 || text.length <= max ? text : `${text.slice(0, max - 1)}…`;
 }
 
 /** Compact view of a candidate sent to the model. */

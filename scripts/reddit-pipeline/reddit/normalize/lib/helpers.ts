@@ -71,19 +71,63 @@ export function extractVideoUrl(post: RawPost): string {
   return '';
 }
 
+/** Return the first non-empty string, or the last value when all are empty. */
+function firstNonEmpty(
+  ...values: readonly (string | null | undefined)[]
+): string | null | undefined {
+  for (const value of values) {
+    if (value !== null && value !== undefined && value !== '') {
+      return value;
+    }
+  }
+  return values[values.length - 1];
+}
+
+/**
+ * Resolve the post whose content should be normalized. A crosspost carries an
+ * empty body and a reddit-internal link; the real text, images and external
+ * link live in `crosspost_parent_list[0]`. Fall back to the parent's content
+ * when the post itself has none, keeping the post's own identity fields.
+ */
+function resolveContentPost(post: RawPost): RawPost {
+  const parent = post.crosspost_parent_list?.[0];
+  if (parent === undefined) {
+    return post;
+  }
+  const hasMedia =
+    post.media_metadata !== null &&
+    post.media_metadata !== undefined &&
+    Object.keys(post.media_metadata).length > 0;
+  return {
+    ...post,
+    selftext: firstNonEmpty(post.selftext, parent.selftext),
+    // The post's own `url` is the crosspost target (a reddit-internal link),
+    // so the parent's destination is the meaningful one.
+    url: firstNonEmpty(parent.url, post.url),
+    url_overridden_by_dest: firstNonEmpty(
+      parent.url_overridden_by_dest,
+      post.url_overridden_by_dest,
+    ),
+    media_metadata: hasMedia ? post.media_metadata : parent.media_metadata,
+    gallery_data: post.gallery_data ?? parent.gallery_data,
+    post_hint: post.post_hint ?? parent.post_hint,
+  };
+}
+
 /** Normalize a raw post into a report entry. */
 export function postToReport(post: RawPost): ReportEntry {
+  const content = resolveContentPost(post);
   const permalink = post.permalink ?? `/r/AynThor/comments/${post.id}/`;
   const fullUrl = permalink.startsWith('http')
     ? permalink
     : `https://www.reddit.com${permalink}`;
 
-  let external = post.url_overridden_by_dest ?? post.url ?? '';
+  let external = content.url_overridden_by_dest ?? content.url ?? '';
   if (external.startsWith('/r/') || external.includes('reddit.com')) {
     external = '';
   }
 
-  const rawSelftext = (post.selftext ?? '').trim();
+  const rawSelftext = (content.selftext ?? '').trim();
   if (isRemovedSelftext(rawSelftext)) {
     console.warn(
       `post ${post.id} body is "${rawSelftext}" (removed by Reddit); treating it as empty`,
@@ -99,7 +143,7 @@ export function postToReport(post: RawPost): ReportEntry {
     selftext: isRemovedSelftext(rawSelftext) ? '' : rawSelftext,
     external_url: external,
     flair: post.link_flair_text ?? '',
-    images: extractImages(post),
-    video_url: extractVideoUrl(post),
+    images: extractImages(content),
+    video_url: extractVideoUrl(content),
   };
 }

@@ -56,16 +56,21 @@ import {
 
 /**
  * Maximum number of `selftext` characters forwarded to the model.
- * Long release posts (feature lists, changelogs) routinely exceed 10k
- * characters; truncating them too aggressively yields a thin page.
+ * `0` disables truncation and forwards the full text.
  */
-const MAX_SELFTEXT_LENGTH = 10000;
+const MAX_SELFTEXT_LENGTH = 0;
 
-/** Maximum number of README characters forwarded to the model. */
-const MAX_README_LENGTH = 12000;
+/**
+ * Maximum number of README characters forwarded to the model.
+ * `0` disables truncation and forwards the full text.
+ */
+const MAX_README_LENGTH = 0;
 
-/** Maximum number of current-page body characters forwarded to the model. */
-const MAX_BODY_LENGTH = 4000;
+/**
+ * Maximum number of current-page body characters forwarded to the model.
+ * `0` disables truncation and forwards the full text.
+ */
+const MAX_BODY_LENGTH = 0;
 
 /** Schema validating the media array of an existing page. */
 const mediaArraySchema = z.array(mediaItemSchema);
@@ -120,9 +125,12 @@ export const UPDATE_SYSTEM_PROMPT = [
   'release (the provided release URL ends with "/releases/latest").',
 ].join('\n');
 
-/** Truncate a string to `max` characters, appending an ellipsis when cut. */
+/**
+ * Truncate a string to `max` characters, appending an ellipsis when cut.
+ * A non-positive `max` disables truncation and returns the text unchanged.
+ */
 function truncate(text: string, max: number): string {
-  return text.length <= max ? text : `${text.slice(0, max - 1)}…`;
+  return max <= 0 || text.length <= max ? text : `${text.slice(0, max - 1)}…`;
 }
 
 /** Read a string field from parsed frontmatter, falling back to `fallback`. */

@@ -246,12 +246,11 @@ describe('buildCreatePrompt', () => {
     expect(prompt).toContain('null');
   });
 
-  it('truncates a very long selftext', () => {
+  it('does not truncate a very long selftext by default', () => {
     const long = 'x'.repeat(12000);
     const prompt = buildCreatePrompt(makeEntry({ selftext: long }), makeContext());
 
-    expect(prompt).not.toContain(long);
-    expect(prompt).toContain('…');
+    expect(prompt).toContain(long);
   });
 
   it('lists the repository candidates from the context', () => {

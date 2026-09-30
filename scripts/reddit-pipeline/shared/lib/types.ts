@@ -20,6 +20,30 @@ export const galleryDataSchema = z
 export type GalleryData = z.infer<typeof galleryDataSchema>;
 
 /**
+ * A crossposted post embedded in `crosspost_parent_list`. A crosspost carries
+ * an empty body and a reddit-internal link; the real text, images and external
+ * link live in this parent post.
+ */
+export const crosspostParentSchema = z
+  .object({
+    id: z.string().optional(),
+    title: z.string().optional(),
+    author: z.string().optional(),
+    created_utc: z.coerce.number().optional(),
+    permalink: z.string().nullish(),
+    selftext: z.string().nullish(),
+    url: z.string().nullish(),
+    url_overridden_by_dest: z.string().nullish(),
+    link_flair_text: z.string().nullish(),
+    media_metadata: z.record(mediaMetadataSchema).nullish(),
+    gallery_data: galleryDataSchema.nullish(),
+    post_hint: z.string().nullish(),
+  })
+  .passthrough();
+
+export type CrosspostParent = z.infer<typeof crosspostParentSchema>;
+
+/**
  * Raw post as returned by the Reddit mirrors. Only the fields the pipeline
  * relies on are declared; unknown fields are preserved via `passthrough`.
  */
@@ -37,6 +61,7 @@ export const rawPostSchema = z
     media_metadata: z.record(mediaMetadataSchema).nullish(),
     gallery_data: galleryDataSchema.nullish(),
     post_hint: z.string().nullish(),
+    crosspost_parent_list: z.array(crosspostParentSchema).nullish(),
   })
   .passthrough();
 

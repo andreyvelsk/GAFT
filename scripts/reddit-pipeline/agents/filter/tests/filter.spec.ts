@@ -173,12 +173,11 @@ describe('buildFilterPrompt', () => {
     expect(prompt.indexOf('"one"')).toBeLessThan(prompt.indexOf('"two"'));
   });
 
-  it('truncates a very long selftext', () => {
+  it('does not truncate a very long selftext by default', () => {
     const long = 'x'.repeat(2000);
     const prompt = buildFilterPrompt([makeEntry({ selftext: long })]);
 
-    expect(prompt).not.toContain(long);
-    expect(prompt).toContain('…');
+    expect(prompt).toContain(long);
   });
 });
 

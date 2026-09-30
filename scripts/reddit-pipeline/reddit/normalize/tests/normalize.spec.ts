@@ -53,6 +53,50 @@ describe('postToReport', () => {
     expect(entry.selftext).toBe('hello');
     expect(entry.flair).toBe('');
   });
+
+  it('unwraps a crosspost and uses the parent content', () => {
+    const entry = postToReport(
+      makePost({
+        selftext: '',
+        url: '/r/zomdroid/comments/1wpt9fs/zomboidds/',
+        url_overridden_by_dest: '/r/zomdroid/comments/1wpt9fs/zomboidds/',
+        crosspost_parent_list: [
+          {
+            id: '1wpt9fs',
+            selftext: 'Dualscreen mod for PZ',
+            url_overridden_by_dest: 'https://github.com/Space001000/ZomboidDS',
+            media_metadata: {
+              a: {
+                status: 'valid',
+                s: { u: 'https://preview.redd.it/a.png' },
+              },
+            },
+          },
+        ],
+      }),
+    );
+
+    expect(entry.selftext).toBe('Dualscreen mod for PZ');
+    expect(entry.external_url).toBe('https://github.com/Space001000/ZomboidDS');
+    expect(entry.images).toEqual(['https://preview.redd.it/a.png']);
+  });
+
+  it('keeps the post identity when unwrapping a crosspost', () => {
+    const entry = postToReport(
+      makePost({
+        id: 'AbC123',
+        title: 'ZomboidDS: Dualscreen mod',
+        selftext: '',
+        crosspost_parent_list: [{ id: '1wpt9fs', selftext: 'parent body' }],
+      }),
+    );
+
+    expect(entry.id).toBe('abc123');
+    expect(entry.title).toBe('ZomboidDS: Dualscreen mod');
+    expect(entry.permalink).toBe(
+      'https://www.reddit.com/r/AynThor/comments/AbC123/my_app/',
+    );
+  });
 });
 
 describe('extractImages', () => {

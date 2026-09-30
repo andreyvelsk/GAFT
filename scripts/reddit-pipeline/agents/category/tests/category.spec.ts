@@ -297,7 +297,7 @@ describe('createCategoryAgent (jev backend)', () => {
     expect(warns[0]).toMatchObject({ error: 'boom', fallback: 'app' });
   });
 
-  it('sends the post, repo and readme in the state (truncated)', async () => {
+  it('sends the full post, repo and readme in the state (not truncated)', async () => {
     const { decision, calls } = mockDecision(() => choice('game'));
     const longText = 'x'.repeat(2000);
     const longReadme = 'y'.repeat(5000);
@@ -318,7 +318,7 @@ describe('createCategoryAgent (jev backend)', () => {
       post: {
         id: 'p1',
         title: 'A title',
-        selftext: `${'x'.repeat(799)}…`,
+        selftext: longText,
         external_url: 'https://example.com',
         flair: 'Release',
       },
@@ -326,7 +326,7 @@ describe('createCategoryAgent (jev backend)', () => {
         fullName: 'someone/my-app',
         description: 'A dual-screen app',
       },
-      readme: `${'y'.repeat(1999)}…`,
+      readme: longReadme,
     });
   });
 
