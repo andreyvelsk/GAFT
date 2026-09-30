@@ -13,14 +13,109 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
     inputs:
+      # --- Run mode ---
       dry_run:
         description: 'Dry run: do not write any files'
         type: boolean
         default: false
+      prefilter:
+        description: 'Run the deterministic prefilter'
+        type: boolean
+        default: true
+      # --- Fetch window ---
+      lookback_hours:
+        description: 'Lookback window in hours'
+        type: string
+        default: '24'
       max_posts:
         description: 'Max posts to process (0 = no limit)'
         type: string
         default: '0'
+      subreddit:
+        description: 'Subreddit to scan'
+        type: string
+        default: 'AynThor'
+      batch_size:
+        description: 'Posts per LLM batch'
+        type: string
+        default: '10'
+      # --- Decision backends (filter / match / category) ---
+      backend:
+        description: 'Decision backend for all agents: jev|llm'
+        type: string
+        default: 'llm'
+      filter_backend:
+        description: 'Backend for the filter agent: jev|llm'
+        type: string
+        default: 'llm'
+      match_backend:
+        description: 'Backend for the match agent: jev|llm'
+        type: string
+        default: 'llm'
+      category_backend:
+        description: 'Backend for the category agent: jev|llm'
+        type: string
+        default: 'llm'
+      decisions_base_url:
+        description: 'Jev (System One) base URL'
+        type: string
+        default: 'https://openrouter.ai/api'
+      decisions_model:
+        description: 'Jev (System One) model'
+        type: string
+        default: 'typesafe/jev-1.13'
+      # --- Models ---
+      model:
+        description: 'Model for all agents'
+        type: string
+        default: '~deepseek/deepseek-v4-flash-latest'
+      filter_model:
+        description: 'Model for the filter agent'
+        type: string
+        default: '~deepseek/deepseek-v4-flash-latest'
+      match_model:
+        description: 'Model for the match agent'
+        type: string
+        default: '~deepseek/deepseek-v4-flash-latest'
+      create_model:
+        description: 'Model for the create agent'
+        type: string
+        default: '~deepseek/deepseek-v4-flash-latest'
+      update_model:
+        description: 'Model for the update agent'
+        type: string
+        default: '~deepseek/deepseek-v4-flash-latest'
+      category_model:
+        description: 'Model for the category agent'
+        type: string
+        default: '~deepseek/deepseek-v4-flash-latest'
+      # --- Thresholds (0..1) ---
+      threshold:
+        description: 'Threshold for all agents'
+        type: string
+        default: '0.8'
+      filter_threshold:
+        description: 'Threshold for the filter agent'
+        type: string
+        default: '0.8'
+      match_threshold:
+        description: 'Threshold for the match agent'
+        type: string
+        default: '0.8'
+      category_threshold:
+        description: 'Threshold for the category agent'
+        type: string
+        default: '0.8'
+      # --- Pull request ---
+      pr_branch:
+        description: 'Branch to create/update for the pull request'
+        type: string
+        default: 'reddit-pipeline/auto'
+      # --- Misc ---
+      now:
+        description: 'Reference time for the fetch window, ISO-8601 (empty = now)'
+        type: string
+        default: ''
 
 # Needed to push the automation branch, open/update the pull request and
 # create/find the labels applied to it (labels use the Issues API).
@@ -55,7 +150,7 @@ jobs:
       REDDIT_MAX_POSTS: ${{ github.event.inputs.max_posts || vars.REDDIT_MAX_POSTS }}
       REDDIT_DRY_RUN: ${{ github.event.inputs.dry_run || vars.REDDIT_DRY_RUN }}
       # --- Pull request ---
-      PR_BRANCH: ${{ vars.PR_BRANCH || 'reddit-pipeline/auto' }}
+      PR_BRANCH: ${{ github.event.inputs.pr_branch || vars.PR_BRANCH || 'reddit-pipeline/auto' }}
       PR_BASE: ${{ vars.PR_BASE || 'main' }}
       PR_LABELS: ${{ vars.PR_LABELS || 'automation,reddit' }}
       # --- GitHub API (provided automatically by Actions) ---
@@ -113,7 +208,71 @@ jobs:
           esac
 
       - name: Run the reddit pipeline
-        run: npx tsx scripts/reddit-pipeline/index.ts
+        env:
+          # Manual dispatch inputs. Empty values are skipped so the CLI falls
+          # back to the repository variables / defaults.
+          IN_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          IN_PREFILTER: ${{ github.event.inputs.prefilter }}
+          IN_LOOKBACK_HOURS: ${{ github.event.inputs.lookback_hours }}
+          IN_MAX_POSTS: ${{ github.event.inputs.max_posts }}
+          IN_SUBREDDIT: ${{ github.event.inputs.subreddit }}
+          IN_BATCH_SIZE: ${{ github.event.inputs.batch_size }}
+          IN_BACKEND: ${{ github.event.inputs.backend }}
+          IN_FILTER_BACKEND: ${{ github.event.inputs.filter_backend }}
+          IN_MATCH_BACKEND: ${{ github.event.inputs.match_backend }}
+          IN_CATEGORY_BACKEND: ${{ github.event.inputs.category_backend }}
+          IN_DECISIONS_BASE_URL: ${{ github.event.inputs.decisions_base_url }}
+          IN_DECISIONS_MODEL: ${{ github.event.inputs.decisions_model }}
+          IN_MODEL: ${{ github.event.inputs.model }}
+          IN_FILTER_MODEL: ${{ github.event.inputs.filter_model }}
+          IN_MATCH_MODEL: ${{ github.event.inputs.match_model }}
+          IN_CREATE_MODEL: ${{ github.event.inputs.create_model }}
+          IN_UPDATE_MODEL: ${{ github.event.inputs.update_model }}
+          IN_CATEGORY_MODEL: ${{ github.event.inputs.category_model }}
+          IN_THRESHOLD: ${{ github.event.inputs.threshold }}
+          IN_FILTER_THRESHOLD: ${{ github.event.inputs.filter_threshold }}
+          IN_MATCH_THRESHOLD: ${{ github.event.inputs.match_threshold }}
+          IN_CATEGORY_THRESHOLD: ${{ github.event.inputs.category_threshold }}
+          IN_NOW: ${{ github.event.inputs.now }}
+        run: |
+          # Build the CLI arguments from the manual dispatch inputs. Empty
+          # inputs are skipped so the CLI keeps the repository-variable value.
+          args=()
+          add() { if [ -n "$2" ]; then args+=("$1" "$2"); fi; }
+
+          add --hours "$IN_LOOKBACK_HOURS"
+          add --max-posts "$IN_MAX_POSTS"
+          add --subreddit "$IN_SUBREDDIT"
+          add --batch-size "$IN_BATCH_SIZE"
+          add --backend "$IN_BACKEND"
+          add --filter-backend "$IN_FILTER_BACKEND"
+          add --match-backend "$IN_MATCH_BACKEND"
+          add --category-backend "$IN_CATEGORY_BACKEND"
+          add --decisions-base-url "$IN_DECISIONS_BASE_URL"
+          add --decisions-model "$IN_DECISIONS_MODEL"
+          add --model "$IN_MODEL"
+          add --filter-model "$IN_FILTER_MODEL"
+          add --match-model "$IN_MATCH_MODEL"
+          add --create-model "$IN_CREATE_MODEL"
+          add --update-model "$IN_UPDATE_MODEL"
+          add --category-model "$IN_CATEGORY_MODEL"
+          add --threshold "$IN_THRESHOLD"
+          add --filter-threshold "$IN_FILTER_THRESHOLD"
+          add --match-threshold "$IN_MATCH_THRESHOLD"
+          add --category-threshold "$IN_CATEGORY_THRESHOLD"
+          add --now "$IN_NOW"
+
+          case "$(echo "$IN_PREFILTER" | tr '[:upper:]' '[:lower:]')" in
+            true|1|yes) args+=(--prefilter) ;;
+            false|0|no) args+=(--no-prefilter) ;;
+          esac
+          case "$(echo "$IN_DRY_RUN" | tr '[:upper:]' '[:lower:]')" in
+            true|1|yes) args+=(--dry-run) ;;
+            false|0|no) args+=(--no-dry-run) ;;
+          esac
+
+          echo "Running: npx tsx scripts/reddit-pipeline/index.ts ${args[*]}"
+          npx tsx scripts/reddit-pipeline/index.ts "${args[@]}"
 
       - name: Detect content changes
         id: changes
