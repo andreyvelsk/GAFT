@@ -54,23 +54,31 @@ export const FILTER_SYSTEM_PROMPT = [
 const FILTER_NOUL_INSTRUCTIONS = [
   'Decide whether this Reddit post presents a concrete project (a game, an app,',
   'a port, an emulator, a launcher, a tool or a companion utility) built or',
-  'released for the AYN Thor handheld with its two screens. Report the',
-  'probability that a blog listing such projects should include this post.',
+  'released for the AYN Thor handheld with its two screens, or for the',
+  'dual-screen Android handhelds it belongs to. Posts about updates, new',
+  'versions or releases of an already-released project are equally relevant.',
+  'Report the probability that a blog listing such projects should include this',
+  'post.',
 ].join(' ');
 
 /** Both outcomes of the Jev relevance question, reworded from the prompt. */
 export const FILTER_NOUL_CRITERIA: { true: string; false: string } = {
   true: [
-    'The post presents a concrete project the author built or released for the',
-    'AYN Thor (a game, an app, a port, an emulator, a launcher, a tool or a',
-    'companion utility), with a repository, release, download or screenshot link.',
+    'The post presents a concrete project (or an update, new version or release',
+    'of one) the author built or released for the AYN Thor or a dual-screen',
+    'Android handheld (a game, an app, a port, an emulator, a launcher, a tool or',
+    'a companion utility), and a repository, release, download, screenshot or',
+    'store link exists anywhere in the post (title, body/selftext or external',
+    'link). A post in r/AynThor that showcases such a project is relevant.',
+    'Positive signals: a "Showcase" or "Release" flair, version numbers, "now',
+    'available", demo screenshots.',
   ].join(' '),
   false: [
     'The post is a question, a support or help request, a shipping/delivery',
     'update, a purchase advice thread, a poll, a meme, a device photo, a general',
     'discussion or news with no project; or a work-in-progress announcement, a',
-    'teaser or a "coming soon" post without a downloadable release, APK or',
-    'repository link.',
+    'teaser or a "coming soon" post that has NO release, download, APK,',
+    'repository or screenshot link anywhere.',
   ].join(' '),
 };
 
