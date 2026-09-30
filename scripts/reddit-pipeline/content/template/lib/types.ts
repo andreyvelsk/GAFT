@@ -1,6 +1,25 @@
 import { z } from 'zod';
 
+import {
+  CATEGORY_DEFINITIONS,
+  PAGE_CATEGORIES,
+  PROJECT_CATEGORIES,
+} from '../../../../../lib/categories';
 import { MEDIA_LIMITS } from '../../../shared/lib/constants';
+
+export {
+  CATEGORY_DEFINITIONS,
+  CATEGORY_LABELS,
+  PAGE_CATEGORIES,
+  PROJECT_CATEGORIES,
+  SYSTEM_CATEGORIES,
+  isPageCategory,
+  isProjectCategory,
+  isSystemCategory,
+  type PageCategory,
+  type ProjectCategory,
+  type SystemCategory,
+} from '../../../../../lib/categories';
 
 /** A single media entry of a page. */
 export const mediaItemSchema = z.object({
@@ -21,18 +40,26 @@ export const pageSectionSchema = z.object({
 
 export type PageSection = z.infer<typeof pageSectionSchema>;
 
-/** Controlled vocabulary of page categories. */
-export const PAGE_CATEGORIES = [
-  'game',
-  'app',
-  'companion',
-  'emulator',
-  'port',
-  'tool',
-] as const;
+/**
+ * Validated project category (one of {@link PROJECT_CATEGORIES}). Used by the
+ * create/update agents, which may only produce project pages.
+ */
+export const projectCategorySchema = z.enum(PROJECT_CATEGORIES);
 
-/** Validated page category (one of {@link PAGE_CATEGORIES}). */
+/**
+ * Validated page category (one of {@link PAGE_CATEGORIES}). Used to validate
+ * the frontmatter of any content page, including system pages.
+ */
 export const pageCategorySchema = z.enum(PAGE_CATEGORIES);
+
+/**
+ * Prompt fragment listing the project categories with their definitions.
+ * Derived from the single source of truth so the agents always describe the
+ * categories exactly as the docs and the UI do.
+ */
+export const CATEGORY_PROMPT_GUIDE = PROJECT_CATEGORIES.map(
+  (category) => `  - "${category}": ${CATEGORY_DEFINITIONS[category]}`,
+).join('\n');
 
 /** Hard limit on the number of `## <heading>` sections of a page. */
 export const MAX_PAGE_SECTIONS = 4;
@@ -81,7 +108,7 @@ export const pageFrontmatterSchema = z
     description: z.string().min(1),
     date: z.string().min(1),
     slug: z.string().min(1),
-    category: z.string().min(1),
+    category: pageCategorySchema,
     media: z
       .array(mediaItemSchema)
       .nullish()

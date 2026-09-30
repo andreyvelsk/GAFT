@@ -67,7 +67,7 @@ const RICH_RAW = [
   'description: "An emulator fork"',
   'date: "2026-08-29 12:59"',
   'slug: "eden-ds"',
-  'category: "emulation"',
+  'category: "emulator"',
   'tags:',
   '  - "emulator"',
   '  - "zelda"',
@@ -275,15 +275,17 @@ describe('UPDATE_SYSTEM_PROMPT', () => {
 
 describe('updatePatchSchema', () => {
   it('accepts a valid category', () => {
-    expect(updatePatchSchema.parse({ category: 'port', reason: 'r' }).category).toBe(
-      'port',
-    );
+    expect(
+      updatePatchSchema.parse({ category: 'tool', reason: 'r' }).category,
+    ).toBe('tool');
   });
 
-  it('rejects an unknown category', () => {
-    expect(() =>
-      updatePatchSchema.parse({ category: 'emulation', reason: 'r' }),
-    ).toThrow();
+  it('rejects a legacy, system or unknown category', () => {
+    for (const category of ['port', 'guide', 'emulation', 'page', 'unknown']) {
+      expect(() =>
+        updatePatchSchema.parse({ category, reason: 'r' }),
+      ).toThrow();
+    }
   });
 
   it('rejects more than five sections', () => {

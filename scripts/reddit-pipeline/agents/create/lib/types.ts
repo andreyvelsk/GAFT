@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 import type { MediaPlanItem } from '../../../content/media';
 import {
-  pageCategorySchema,
   pageSectionsSchema,
+  projectCategorySchema,
   type PageInput,
 } from '../../../content/template';
 import type { ContentCandidate } from '../../tools/content-search';
@@ -32,8 +32,8 @@ export const createDraftSchema = z.object({
   /** One or two sentences for the page frontmatter. */
   description: z.string().min(1),
 
-  /** Category from the controlled vocabulary (e.g. `game`, `app`, `port`). */
-  category: pageCategorySchema,
+  /** Category from the controlled vocabulary (e.g. `game`, `app`, `tool`). */
+  category: projectCategorySchema,
 
   /** Kebab-case slug derived from the project name. */
   slug: z.string().min(1),

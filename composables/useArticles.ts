@@ -1,3 +1,5 @@
+import { SYSTEM_CATEGORIES } from '~/lib/categories'
+
 export interface ArticleMedia {
   type: 'image' | 'video'
   url: string
@@ -54,8 +56,11 @@ export const useArticles = (): UseArticlesReturn => {
       sortOrder = 'desc',
     } = options
 
-    // Build query for @nuxt/content — exclude standalone pages (e.g. how-to guide)
-    const query = queryContent<Article>('/').where({ category: { $ne: 'guide' } })
+    // Build query for @nuxt/content — exclude system pages (e.g. how-to guide).
+    // @nuxt/content v2 has no `$nin`, so negate `$in` instead.
+    const query = queryContent<Article>('/').where({
+      category: { $not: { $in: [...SYSTEM_CATEGORIES] } },
+    })
 
     // Sorting
     switch (sortField) {

@@ -3,7 +3,7 @@ title: "DualScreen Launcher"
 description: "An Android game launcher that adds dual-screen mods and configs for supported PC and Switch games"
 date: "2026-09-07 15:00"
 slug: "dualscreen-launcher"
-category: "app"
+category: "tool"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=sxXRPmRHnT8"

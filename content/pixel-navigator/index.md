@@ -3,7 +3,7 @@ title: "Pixel Navigator"
 description: "Android map companion for emulated games — maps, player tracking and BattleDex for dozens of Pokémon ROM hacks, Zelda and more, ideal for the Thor's second screen."
 date: "2026-09-26 10:16"
 slug: "pixel-navigator"
-category: "app"
+category: "companion"
 media:
   - type: "image"
     url: "/content/pixel-navigator/preview.webp"

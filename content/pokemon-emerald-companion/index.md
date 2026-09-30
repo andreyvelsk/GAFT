@@ -3,7 +3,7 @@ title: "Pokémon Emerald Companion"
 description: "Companion app for the Thor's bottom screen that reads Pokémon Emerald's memory via RetroArch and shows live party, battle, IVs/EVs, encounters and map info."
 date: "2026-09-26 09:53"
 slug: "pokemon-emerald-companion"
-category: "app"
+category: "companion"
 media:
   - type: "image"
     url: "/content/pokemon-emerald-companion/preview.webp"

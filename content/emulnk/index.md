@@ -3,7 +3,7 @@ title: "Emulnk"
 description: "Emulator companion app that turns your second screen into a themed dashboard, built for dual-display handhelds"
 date: "2026-06-15 11:00"
 slug: "emulnk"
-category: "emulation"
+category: "emulator"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=u7MSK2YUFw8"

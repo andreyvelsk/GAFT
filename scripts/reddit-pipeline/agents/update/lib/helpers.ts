@@ -8,12 +8,15 @@ import {
   type MediaPlanItem,
 } from '../../../content/media';
 import {
+  CATEGORY_PROMPT_GUIDE,
+  isPageCategory,
   mediaItemSchema,
   normalizeReleaseLinks,
   normalizeSectionBody,
   parsePageBody,
   renderPage,
   type MediaItem,
+  type PageCategory,
   type PageInput,
   type PageSection,
 } from '../../../content/template';
@@ -90,8 +93,8 @@ export const UPDATE_SYSTEM_PROMPT = [
   '  do NOT repeat the "Description" section text. The "ONE short sentence"',
   '  rule applies to this frontmatter field only: inside the page sections write',
   '  as much detail as the sources support.',
-  '- "category": exactly one of "game", "app", "companion", "emulator", "port",',
-  '  "tool".',
+  '- "category": exactly one of the following project categories:',
+  CATEGORY_PROMPT_GUIDE,
   '- "media": an array of image URLs from the post.',
   '- "project_url": the canonical link to the project (repository, store page',
   '  or official site), when it changes.',
@@ -157,13 +160,26 @@ function sameSections(
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
+/**
+ * Read the category of an existing page, validating it against the controlled
+ * vocabulary. Throws when the page carries an unknown category so bad data is
+ * surfaced rather than silently rewritten.
+ */
+function readCategory(data: FrontmatterData): PageCategory {
+  const value = data.category;
+  if (!isPageCategory(value)) {
+    throw new Error(`invalid page category: ${String(value)}`);
+  }
+  return value;
+}
+
 /** Return the next value, recording the field name when it actually changes. */
-function pickChanged(
+function pickChanged<T>(
   name: string,
-  next: string | undefined,
-  current: string,
+  next: T | undefined,
+  current: T,
   changed: string[],
-): string {
+): T {
   if (next === undefined) {
     return current;
   }
@@ -414,10 +430,10 @@ export function applyPatch(
     readString(data, 'description', ''),
     changed,
   );
-  const category = pickChanged(
+  const category = pickChanged<PageCategory>(
     'category',
     patch.category,
-    readString(data, 'category', ''),
+    readCategory(data),
     changed,
   );
 

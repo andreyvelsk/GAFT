@@ -3,7 +3,7 @@ title: "Showdown!"
 description: "Native Android Pokémon Showdown! client for the AYN Thor dual screens: live battles, replays and teams with two-screen playback."
 date: "2026-09-26 10:23"
 slug: "showdown-ds"
-category: "app"
+category: "companion"
 media:
   - type: "image"
     url: "/content/showdown-ds/preview.webp"

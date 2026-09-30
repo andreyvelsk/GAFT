@@ -3,7 +3,7 @@ title: "SleepManager"
 description: "Android sleep/wake manager that cuts standby battery drain on the AYN Thor and other handhelds."
 date: "2026-09-27 18:22"
 slug: "sleepmanager"
-category: "app"
+category: "tool"
 generated: "ai"
 media:
   - type: "video"

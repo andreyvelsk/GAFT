@@ -3,7 +3,7 @@ title: "Eden DS"
 description: "An Android-focused fork of the Eden emulator with a dedicated dual-screen companion for the AYN Thor. Currently supports The Legend of Zelda: Breath of the Wild and Mario Kart 8 Deluxe."
 date: "2026-08-29 12:59"
 slug: "eden-ds"
-category: "emulation"
+category: "emulator"
 media:
   - type: "image"
     url: "/content/eden-ds/preview.webp"

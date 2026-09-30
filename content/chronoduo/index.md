@@ -2,7 +2,7 @@
 title: "ChronoDuo"
 description: "A DS-style second screen for the official Chrono Trigger Android game: live world map, party status and the battle menu on the bottom display"
 date: "2026-09-08 12:00"
-slug: "chronoduo"
+slug: "companion"
 category: "game"
 media:
   - type: "image"
