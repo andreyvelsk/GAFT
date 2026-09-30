@@ -6,6 +6,8 @@ slug: "megingiard"
 category: "companion"
 generated: "ai"
 media:
+  - type: "image"
+    url: "/content/megingiard/preview.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=vgs6X9piswA"
 ---
