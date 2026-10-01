@@ -2,8 +2,9 @@ name: Reddit pipeline — reject page
 
 # Interactive companion to the Reddit pipeline. A user with write access to the
 # repository can comment `/reject <slug> [<slug> ...]` on any pull request to
-# drop one or more generated pages (and their images) from that PR. Slugs may be
-# separated by spaces and/or commas.
+# undo the pipeline's changes for those pages: pages created by the PR are
+# deleted, while pages that already existed are reverted to the base branch.
+# Slugs may be separated by spaces and/or commas.
 #
 # No persistent denylist is required: the pipeline only looks back a fixed
 # window (REDDIT_LOOKBACK_HOURS, default 24h) and runs once a day, so a rejected
@@ -65,7 +66,9 @@ jobs:
         run: |
           head_ref="$(gh pr view "$PR_NUMBER" --json headRefName --jq '.headRefName')"
           head_repo="$(gh pr view "$PR_NUMBER" --json headRepository --jq '.headRepository.nameWithOwner')"
+          base_ref="$(gh pr view "$PR_NUMBER" --json baseRefName --jq '.baseRefName')"
           echo "head_ref=$head_ref" >> "$GITHUB_OUTPUT"
+          echo "base_ref=$base_ref" >> "$GITHUB_OUTPUT"
 
           if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
             echo "::error::PR #$PR_NUMBER comes from a fork ($head_repo); refusing to act."
@@ -121,48 +124,101 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-      - name: Remove the pages and their images
+      - name: Delete created pages and revert updated ones
         id: remove
         if: steps.permission.outputs.allowed == 'true'
         run: |
           slugs="${{ steps.cmd.outputs.slugs }}"
+          base="${{ steps.pr.outputs.base_ref }}"
+          # Make sure the base branch is available locally for the comparison
+          # and the revert (checkout already fetched all history, this is a
+          # best-effort safety net).
+          git fetch --no-tags origin "$base" >/dev/null 2>&1 || true
+
           removed=""
+          reverted=""
           missing=""
           for slug in $slugs; do
-            if [ -e "content/$slug" ] || [ -e "public/content/$slug" ]; then
-              git rm -r --ignore-unmatch "content/$slug" "public/content/$slug"
+            in_base=false
+            if git cat-file -e "origin/$base:content/$slug" 2>/dev/null || \
+               git cat-file -e "origin/$base:public/content/$slug" 2>/dev/null; then
+              in_base=true
+            fi
+
+            if [ "$in_base" = true ]; then
+              # The page already existed before this PR: revert it to the base
+              # branch state instead of deleting it. Remove the current files
+              # first so that files added by the PR (e.g. new screenshots) are
+              # dropped, then restore the base versions.
+              git rm -r --ignore-unmatch "content/$slug" "public/content/$slug" >/dev/null
+              for path in "content/$slug" "public/content/$slug"; do
+                if git cat-file -e "origin/$base:$path" 2>/dev/null; then
+                  git checkout "origin/$base" -- "$path"
+                fi
+              done
+              reverted="$reverted $slug"
+            elif [ -e "content/$slug" ] || [ -e "public/content/$slug" ]; then
+              # The page was created by this PR: delete it.
+              git rm -r --ignore-unmatch "content/$slug" "public/content/$slug" >/dev/null
               removed="$removed $slug"
             else
               missing="$missing $slug"
             fi
           done
           removed="$(printf '%s' "$removed" | xargs)"
+          reverted="$(printf '%s' "$reverted" | xargs)"
           missing="$(printf '%s' "$missing" | xargs)"
 
           echo "removed=$removed" >> "$GITHUB_OUTPUT"
+          echo "reverted=$reverted" >> "$GITHUB_OUTPUT"
           echo "missing=$missing" >> "$GITHUB_OUTPUT"
 
-          if [ -z "$removed" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            gh pr comment "$PR_NUMBER" --body "ℹ️ Nothing to remove: no page found for slug(s) \`$missing\` in this pull request."
-          else
+          if [ -n "$(git status --porcelain)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            if [ -n "$missing" ]; then
+              gh pr comment "$PR_NUMBER" --body "ℹ️ Nothing to change: no page found for slug(s) \`$missing\` in this pull request."
+            else
+              gh pr comment "$PR_NUMBER" --body "ℹ️ Nothing to change: the requested page(s) already match the base branch."
+            fi
           fi
 
       - name: Commit and push
         if: steps.remove.outputs.changed == 'true'
         run: |
-          slugs="${{ steps.remove.outputs.removed }}"
-          git commit -m "chore(reddit): reject pages $slugs"
+          removed="${{ steps.remove.outputs.removed }}"
+          reverted="${{ steps.remove.outputs.reverted }}"
+          message="chore(reddit): reject pages"
+          if [ -n "$removed" ]; then
+            message="$message; removed $removed"
+          fi
+          if [ -n "$reverted" ]; then
+            message="$message; reverted $reverted"
+          fi
+          git commit -m "$message"
           git push origin "HEAD:${{ steps.pr.outputs.head_ref }}"
 
       - name: Confirm
         if: steps.remove.outputs.changed == 'true'
         run: |
           removed="${{ steps.remove.outputs.removed }}"
+          reverted="${{ steps.remove.outputs.reverted }}"
           missing="${{ steps.remove.outputs.missing }}"
-          message="✅ Removed from this pull request: \`$removed\` (both \`content/<slug>\` and \`public/content/<slug>\`)."
+          message=""
+          if [ -n "$removed" ]; then
+            message="🗑️ Deleted created page(s): \`$removed\` (both \`content/<slug>\` and \`public/content/<slug>\`)."
+          fi
+          if [ -n "$reverted" ]; then
+            if [ -n "$message" ]; then
+              message="$message"$'\n\n'
+            fi
+            message="${message}↩️ Reverted updated page(s) to the base branch: \`$reverted\`."
+          fi
           if [ -n "$missing" ]; then
-            message="$(printf '%s\n\nℹ️ Not found and skipped: `%s`.' "$message" "$missing")"
+            if [ -n "$message" ]; then
+              message="$message"$'\n\n'
+            fi
+            message="${message}ℹ️ Not found and skipped: \`$missing\`."
           fi
           gh pr comment "$PR_NUMBER" --body "$message"
