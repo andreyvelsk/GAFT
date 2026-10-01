@@ -1,9 +1,9 @@
 name: Reddit pipeline — reject page
 
 # Interactive companion to the Reddit pipeline. A user with write access to the
-# repository can comment `/reject <slug> [<slug> ...]` on the automation pull
-# request to drop one or more generated pages (and their images) from the active
-# PR. Slugs may be separated by spaces and/or commas.
+# repository can comment `/reject <slug> [<slug> ...]` on any pull request to
+# drop one or more generated pages (and their images) from that PR. Slugs may be
+# separated by spaces and/or commas.
 #
 # No persistent denylist is required: the pipeline only looks back a fixed
 # window (REDDIT_LOOKBACK_HOURS, default 24h) and runs once a day, so a rejected
@@ -13,7 +13,7 @@ on:
   issue_comment:
     types: [created]
 
-# Needed to push the automation branch and to post the confirmation comment.
+# Needed to push the pull request branch and to post the confirmation comment.
 permissions:
   contents: write
   pull-requests: write
@@ -37,7 +37,6 @@ jobs:
       # `gh` runs before actions/checkout, so it cannot infer the repository
       # from a git remote — point it at the repository explicitly.
       GH_REPO: ${{ github.repository }}
-      PR_BRANCH: ${{ vars.PR_BRANCH || 'reddit-pipeline/auto' }}
       COMMENT_BODY: ${{ github.event.comment.body }}
       COMMENTER: ${{ github.event.comment.user.login }}
       PR_NUMBER: ${{ github.event.issue.number }}
@@ -71,12 +70,6 @@ jobs:
           if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
             echo "::error::PR #$PR_NUMBER comes from a fork ($head_repo); refusing to act."
             gh pr comment "$PR_NUMBER" --body "🚫 \`/reject\` only works on pull requests opened from this repository."
-            exit 1
-          fi
-
-          if [ "$head_ref" != "$PR_BRANCH" ]; then
-            echo "::error::PR #$PR_NUMBER targets '$head_ref', not the automation branch '$PR_BRANCH'."
-            gh pr comment "$PR_NUMBER" --body "🚫 \`/reject\` only works on the automation pull request (branch \`$PR_BRANCH\`)."
             exit 1
           fi
 
@@ -115,7 +108,7 @@ jobs:
 
           echo "slugs=$valid" >> "$GITHUB_OUTPUT"
 
-      - name: Checkout the automation branch
+      - name: Checkout the pull request branch
         if: steps.permission.outputs.allowed == 'true'
         uses: actions/checkout@v4
         with:
@@ -161,7 +154,7 @@ jobs:
         run: |
           slugs="${{ steps.remove.outputs.removed }}"
           git commit -m "chore(reddit): reject pages $slugs"
-          git push origin "HEAD:$PR_BRANCH"
+          git push origin "HEAD:${{ steps.pr.outputs.head_ref }}"
 
       - name: Confirm
         if: steps.remove.outputs.changed == 'true'
