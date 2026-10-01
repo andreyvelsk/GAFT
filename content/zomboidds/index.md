@@ -12,12 +12,6 @@ media:
     url: "/content/zomboidds/screenshot-2.webp"
   - type: "image"
     url: "/content/zomboidds/screenshot-3.webp"
-  - type: "image"
-    url: "/content/zomboidds/screenshot-4.webp"
-  - type: "image"
-    url: "/content/zomboidds/screenshot-5.webp"
-  - type: "image"
-    url: "/content/zomboidds/screenshot-6.webp"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wptab9/zomboidds_dualscreen_mod_for_pz_on_zomdroid/)
