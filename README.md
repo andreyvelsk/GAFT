@@ -2,6 +2,8 @@
 
 A curated collection of games and apps that truly shine on the **AYN Thor** dual-screen handheld console — from companion app pairings to native dual-screen Android ports.
 
+Projects are discovered automatically from the [/AynThor subreddit](https://www.reddit.com/r/AynThor/) via the [reddit-pipeline](scripts/reddit-pipeline/README.md).
+
 Built with **Nuxt 3** (SSG), **@nuxt/content**, **Tailwind CSS**, and **Firebase**.
 
 🔗 **Live site:** [GAFT](https://andreyvelsk.github.io/GAFT/)
