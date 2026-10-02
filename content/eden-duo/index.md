@@ -8,6 +8,10 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/eden-duo/preview.webp"
+  - type: "image"
+    url: "/content/eden-duo/screenshot-2.webp"
+  - type: "image"
+    url: "/content/eden-duo/screenshot-3.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=LaLfNIwAwHU"
 ---
