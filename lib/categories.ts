@@ -82,6 +82,53 @@ export const CATEGORY_LABELS: Record<PageCategory, string> = {
   page: 'Pages',
 };
 
+/**
+ * Color theme of a category badge/chip.
+ *
+ * The UI does not use Tailwind utility classes here on purpose — colors are
+ * applied as inline styles so a category can be recolored in a single place
+ * without having to safelist dynamically-built class names.
+ *
+ * - `text` — foreground (label / dot) color.
+ * - `bg` — translucent background for the inactive state.
+ * - `border` — border color.
+ */
+export interface CategoryColor {
+  text: string;
+  bg: string;
+  border: string;
+}
+
+/**
+ * Configurable color map: every category has its own color. Tweak the values
+ * here to recolor badges and filter chips across the whole site.
+ */
+export const CATEGORY_COLORS: Record<PageCategory, CategoryColor> = {
+  game: { text: '#8aa4c8', bg: 'rgba(138, 164, 200, 0.10)', border: 'rgba(138, 164, 200, 0.28)' },
+  app: { text: '#8fb89a', bg: 'rgba(143, 184, 154, 0.10)', border: 'rgba(143, 184, 154, 0.28)' },
+  companion: { text: '#c9b98a', bg: 'rgba(201, 185, 138, 0.10)', border: 'rgba(201, 185, 138, 0.28)' },
+  emulator: { text: '#a99bc4', bg: 'rgba(169, 155, 196, 0.10)', border: 'rgba(169, 155, 196, 0.28)' },
+  tool: { text: '#c795a5', bg: 'rgba(199, 149, 165, 0.10)', border: 'rgba(199, 149, 165, 0.28)' },
+  page: { text: '#8fb8b0', bg: 'rgba(143, 184, 176, 0.10)', border: 'rgba(143, 184, 176, 0.28)' },
+};
+
+/** Neutral fallback used when a page has an unknown category value. */
+const FALLBACK_CATEGORY_COLOR: CategoryColor = {
+  text: '#8b93a7',
+  bg: 'rgba(139, 147, 167, 0.10)',
+  border: 'rgba(139, 147, 167, 0.28)',
+};
+
+/** Resolve the color theme for an arbitrary category string (safe fallback). */
+export function getCategoryColor(category: string): CategoryColor {
+  return isPageCategory(category) ? CATEGORY_COLORS[category] : FALLBACK_CATEGORY_COLOR;
+}
+
+/** Resolve the short label for an arbitrary category string (safe fallback). */
+export function getCategoryLabel(category: string): string {
+  return isPageCategory(category) ? CATEGORY_LABELS[category] : category;
+}
+
 /** Set view of {@link PROJECT_CATEGORIES} for fast membership checks. */
 const PROJECT_CATEGORY_SET = new Set<string>(PROJECT_CATEGORIES);
 

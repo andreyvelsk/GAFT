@@ -15,7 +15,10 @@ export interface UseArticlesListReturn {
   navigateToPage: (page: number) => void
 }
 
-export async function useArticlesList(pageNumber: Ref<number>): Promise<UseArticlesListReturn> {
+export async function useArticlesList(
+  pageNumber: Ref<number>,
+  category: Ref<string | null> = ref<string | null>(null),
+): Promise<UseArticlesListReturn> {
   const router = useRouter()
 
   // Shared state — survives navigation between pages
@@ -28,7 +31,7 @@ export async function useArticlesList(pageNumber: Ref<number>): Promise<UseArtic
   const totalPages = ref(1)
   const totalCount = ref(0)
 
-  const { getArticles, filterArticles, sortArticles, paginateArticles, ARTICLES_PER_PAGE } = useArticles()
+  const { getArticles, filterArticles, filterByCategory, sortArticles, paginateArticles, ARTICLES_PER_PAGE } = useArticles()
   const { setArticles, articles: storeArticles } = useArticlesStore()
 
   // Await is REQUIRED: without it SSR renders an empty list while the client
@@ -43,14 +46,18 @@ export async function useArticlesList(pageNumber: Ref<number>): Promise<UseArtic
   function applyFilterAndPaginate(): void {
     const raw = storeArticles.value.length > 0 ? storeArticles.value : (allArticles.value ?? [])
     const sorted = sortArticles(raw, sortField.value, sortOrder.value)
-    const filtered = filterArticles(sorted, searchQuery.value)
+    const searched = filterArticles(sorted, searchQuery.value)
+    const filtered = filterByCategory(searched, category.value)
     totalCount.value = filtered.length
     totalPages.value = Math.max(1, Math.ceil(filtered.length / ARTICLES_PER_PAGE))
     articles.value = paginateArticles(filtered, pageNumber.value, ARTICLES_PER_PAGE)
   }
 
   function navigateToPage(page: number): void {
-    const path = page === 1 ? '/' : `/page/${page}`
+    const base = category.value !== null && category.value !== '' ? `/category/${category.value}` : '/'
+    const path = page === 1
+      ? base
+      : `${base === '/' ? '' : base}/page/${page}`
     if (router.currentRoute.value.path !== path) {
       void router.push(path)
     } else {
@@ -75,6 +82,11 @@ export async function useArticlesList(pageNumber: Ref<number>): Promise<UseArtic
 
   // Sort changes always reset to page 1
   watch([sortField, sortOrder], () => {
+    navigateToPage(1)
+  })
+
+  // Category changes always reset to page 1
+  watch(category, () => {
     navigateToPage(1)
   })
 

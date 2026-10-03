@@ -17,6 +17,11 @@
         </p>
       </div>
 
+      <!-- Category (z-30 stays above the overlay link) -->
+      <div class="relative z-30 mb-3">
+        <CategoryBadge :category="article.category" />
+      </div>
+
       <!-- Footer -->
       <div class="flex items-center justify-between text-xs text-gray-500">
         <div class="flex items-center gap-3">

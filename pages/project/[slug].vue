@@ -52,6 +52,10 @@
 
     <!-- Article Header -->
     <header class="mb-8">
+      <CategoryBadge
+        :category="article.category"
+        class="mb-4"
+      />
       <!-- Category & Date & Like -->
       <div class="flex items-center gap-3 mb-4">
         <span class="text-sm text-gray-500">{{ formatDate(article.date) }}</span>

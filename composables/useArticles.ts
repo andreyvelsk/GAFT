@@ -1,4 +1,5 @@
 import { SYSTEM_CATEGORIES } from '~/lib/categories'
+import { ARTICLES_PER_PAGE } from '~/lib/constants'
 
 export interface ArticleMedia {
   type: 'image' | 'video'
@@ -39,14 +40,13 @@ export interface UseArticlesReturn {
   getArticle: (slug: string) => Promise<Article | null>
   getArticlesCount: () => Promise<number>
   filterArticles: (articles: Article[], searchQuery: string) => Article[]
+  filterByCategory: (articles: Article[], category: string | null) => Article[]
   sortArticles: (list: Article[], sortField: SortField, sortOrder: SortOrder) => Article[]
   paginateArticles: (articles: Article[], page: number, pageSize: number) => Article[]
   ARTICLES_PER_PAGE: number
 }
 
 export const useArticles = (): UseArticlesReturn => {
-  const ARTICLES_PER_PAGE = 18
-
   /**
    * Fetch all articles with sorting and search support
    */
@@ -95,6 +95,15 @@ export const useArticles = (): UseArticlesReturn => {
       article.description.toLowerCase().includes(lowerQuery) ||
       (article.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)) ?? false)
     )
+  }
+
+  /**
+   * Filter articles by category. `null` (or an empty string) returns the list
+   * unchanged, which represents the "All" state of the category filter.
+   */
+  const filterByCategory = (articles: Article[], category: string | null): Article[] => {
+    if (category === null || category === '') return articles
+    return articles.filter((article) => article.category === category)
   }
 
   /**
@@ -152,6 +161,7 @@ export const useArticles = (): UseArticlesReturn => {
     getArticle,
     getArticlesCount,
     filterArticles,
+    filterByCategory,
     sortArticles,
     paginateArticles,
     ARTICLES_PER_PAGE
