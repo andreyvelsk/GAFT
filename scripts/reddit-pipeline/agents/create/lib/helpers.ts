@@ -3,6 +3,7 @@ import type { LanguageModel } from 'ai';
 import { mediaFileName, selectImages } from '../../../content/media';
 import {
   CATEGORY_PROMPT_GUIDE,
+  dropNonFactualSections,
   normalizeReleaseLinks,
   normalizeSectionBody,
   renderPage,
@@ -88,11 +89,22 @@ export const CREATE_SYSTEM_PROMPT = [
   '  or official site) taken from the post or README. Omit it when there is no',
   '  such link.',
   '- "sections": an ordered array of {"heading", "body"} objects. "Description"',
-  '  and "Setup guide" are REQUIRED. Add at most two extra sections (e.g.',
-  '  "Features", "Known issues") only when the project needs them — never',
-  '  more than 4 sections in total. Each "body" must contain ONLY',
-  '  the section text — no "## …" heading, no "source:" line and no project link.',
+  '  and "Setup guide" are REQUIRED. Add at most two extra sections, and only',
+  '  from this list: "Features", "Requirements", "Supported games", "Known',
+  '  issues". Never add any other section — in particular never add "Status",',
+  '  "News", "Roadmap", "About", "Community" or similar. Each "body" must',
+  '  contain ONLY the section text — no "## …" heading, no "source:" line and',
+  '  no project link.',
   '- "media": an array of image URLs chosen from the provided post images.',
+  '',
+  'Content rules:',
+  '- The page must contain ONLY factual information about the app and its',
+  '  features. Never include the developer\'s feelings, opinions, plans, wishes,',
+  '  progress updates, community chatter or calls for feedback.',
+  '- When a section lists several items (games, features, requirements, steps),',
+  '  format them as a Markdown bullet list: one item per line, each line',
+  '  starting with "- ". Never write an enumeration as a run-on sentence or as',
+  '  inline comma-separated prose.',
   '',
   'Write for the END USER who wants to use the project, never for its',
   'developer. Do NOT include build or development instructions (compilers,',
@@ -410,16 +422,18 @@ export function buildCreatePageInput(
   if (entry.video_url !== undefined && entry.video_url !== '') {
     media.push({ type: 'video', url: entry.video_url });
   }
-  const sections: PageSection[] = draft.sections.map((section) => {
-    const heading = section.heading.trim();
-    return {
-      heading,
-      body: normalizeReleaseLinks(
-        normalizeSectionBody(section.body, heading),
-        repoUrl,
-      ),
-    };
-  });
+  const sections: PageSection[] = dropNonFactualSections(draft.sections).map(
+    (section) => {
+      const heading = section.heading.trim();
+      return {
+        heading,
+        body: normalizeReleaseLinks(
+          normalizeSectionBody(section.body, heading),
+          repoUrl,
+        ),
+      };
+    },
+  );
   const projectUrl = resolveProjectUrl(
     context.repo?.htmlUrl ?? null,
     draft.project_url,

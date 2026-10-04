@@ -273,6 +273,22 @@ describe('UPDATE_SYSTEM_PROMPT', () => {
     expect(UPDATE_SYSTEM_PROMPT).toContain('PROJECT NAME');
     expect(UPDATE_SYSTEM_PROMPT).toContain('"Setup guide" are REQUIRED');
   });
+
+  it('requires bullet lists for enumerations', () => {
+    expect(UPDATE_SYSTEM_PROMPT).toContain('Markdown bullet list');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('one item per line');
+  });
+
+  it('forbids non-factual sections and developer feelings', () => {
+    expect(UPDATE_SYSTEM_PROMPT).toContain('"Status"');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('ONLY factual information');
+  });
+
+  it('requires preserving existing facts, links and videos', () => {
+    expect(UPDATE_SYSTEM_PROMPT).toContain('Preservation rules');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('Never drop an');
+    expect(UPDATE_SYSTEM_PROMPT).toContain('Keep general or collection links');
+  });
 });
 
 describe('updatePatchSchema', () => {
@@ -396,6 +412,30 @@ describe('applyPatch', () => {
 
     expect(applied.changed).toEqual(['sections']);
     expect(applied.page.sections.sections[0]?.body).toBe('New description.');
+  });
+
+  it('drops non-factual sections such as Status', () => {
+    const patch: UpdatePatch = {
+      sections: [
+        { heading: 'Description', body: 'New description.' },
+        { heading: 'Features', body: '- A' },
+        { heading: 'Status', body: 'The developer is happy.' },
+        { heading: 'Setup guide', body: '1. Old step.' },
+      ],
+      reason: 'new release',
+    };
+
+    const applied = applyPatch(
+      makePage(),
+      patch,
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
+    expect(applied.page.sections.sections.map((section) => section.heading)).toEqual(
+      ['Description', 'Features', 'Setup guide'],
+    );
   });
 
   it('preserves the fields that are not in the patch', () => {

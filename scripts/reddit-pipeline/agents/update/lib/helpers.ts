@@ -9,6 +9,7 @@ import {
 } from '../../../content/media';
 import {
   CATEGORY_PROMPT_GUIDE,
+  dropNonFactualSections,
   isPageCategory,
   mediaItemSchema,
   normalizeReleaseLinks,
@@ -112,6 +113,26 @@ export const UPDATE_SYSTEM_PROMPT = [
   '  "## …" heading, no "source:" line and no project link.',
   '- Include a field only when it actually changes; omit unchanged fields.',
   '- Always include "reason": a short English sentence explaining the update.',
+  '',
+  'Content rules:',
+  '- The page must contain ONLY factual information about the app and its',
+  '  features. Never add a "Status", "News", "Roadmap", "About", "Community" or',
+  '  similar section, and never include the developer\'s feelings, opinions,',
+  '  plans, wishes, progress updates or calls for feedback.',
+  '- When a section lists several items (games, features, requirements, steps),',
+  '  format them as a Markdown bullet list: one item per line, each line',
+  '  starting with "- ". Never write an enumeration as a run-on sentence or as',
+  '  inline comma-separated prose.',
+  '',
+  'Preservation rules (critical):',
+  '- When you return the full "sections" array, keep every existing fact, link,',
+  '  video and detail from the current page. Only ADD new information and REMOVE',
+  '  information that the new post explicitly makes outdated. Never drop an',
+  '  existing link, video or detail just because the new post does not mention it.',
+  '- Keep general or collection links exactly as they are (for example a',
+  '  repository or a list of companion packages). Never replace a general link',
+  '  with a link to a specific release or a specific item unless the new post',
+  '  explicitly supersedes it.',
   '',
   'Write for the END USER who wants to use the project, never for its',
   'developer. Do NOT include build or development instructions (compilers,',
@@ -450,7 +471,9 @@ export function applyPatch(
   const currentBody = parsePageBody(page.content);
   let sections = currentBody.sections;
   if (patch.sections !== undefined) {
-    const nextSections: PageSection[] = patch.sections.map((section) => {
+    const nextSections: PageSection[] = dropNonFactualSections(
+      patch.sections,
+    ).map((section) => {
       const heading = section.heading.trim();
       return {
         heading,
