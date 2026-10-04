@@ -222,6 +222,16 @@ describe('CREATE_SYSTEM_PROMPT', () => {
     expect(CREATE_SYSTEM_PROMPT).toContain('PROJECT NAME');
     expect(CREATE_SYSTEM_PROMPT).toContain('"Setup guide" are REQUIRED');
   });
+
+  it('requires bullet lists for enumerations', () => {
+    expect(CREATE_SYSTEM_PROMPT).toContain('Markdown bullet list');
+    expect(CREATE_SYSTEM_PROMPT).toContain('one item per line');
+  });
+
+  it('forbids non-factual sections and developer feelings', () => {
+    expect(CREATE_SYSTEM_PROMPT).toContain('"Status"');
+    expect(CREATE_SYSTEM_PROMPT).toContain('ONLY factual information');
+  });
 });
 
 describe('buildCreatePrompt', () => {
@@ -447,6 +457,30 @@ describe('buildCreatePageInput', () => {
         heading: 'Setup guide',
         body: '1. Download the APK from the latest release.',
       },
+    ]);
+  });
+
+  it('drops non-factual sections such as Status', () => {
+    const page = buildCreatePageInput({
+      draft: makeDraft({
+        sections: [
+          { heading: 'Description', body: 'D.' },
+          { heading: 'Features', body: '- A' },
+          { heading: 'Status', body: 'The developer is happy.' },
+          { heading: 'Setup guide', body: 'S.' },
+        ],
+      }),
+      entry: makeEntry(),
+      context: makeContext(),
+      mediaUrls: [],
+      slug: 'pixel-navigator',
+      now: new Date('2026-09-26T10:16:00Z'),
+    });
+
+    expect(page.sections.sections.map((section) => section.heading)).toEqual([
+      'Description',
+      'Features',
+      'Setup guide',
     ]);
   });
 

@@ -174,6 +174,34 @@ export function normalizeSectionBody(text: string, heading: string): string {
 }
 
 /**
+ * Section headings that carry no factual product information (progress
+ * updates, plans, feelings, community chatter) and must never appear on a
+ * project page. Matched case-insensitively against the trimmed heading.
+ */
+const NON_FACTUAL_HEADING_RE =
+  /^(status|news|updates?|roadmap|future( plans?)?|plans?|about( the (developer|author))?|community|feedback|personal( notes)?|acknowledge?ments?|thanks|donations?|support( the developer)?|changelog|history)$/i;
+
+/** Whether a section heading carries no factual product information. */
+export function isNonFactualSectionHeading(heading: string): boolean {
+  return NON_FACTUAL_HEADING_RE.test(heading.trim());
+}
+
+/**
+ * Drop the sections whose heading carries no factual product information
+ * (e.g. "Status", "News", "Roadmap", "About"). The page must describe the app
+ * and its features only, so a model that adds a progress-update or
+ * feelings section never reaches the rendered page. Required sections
+ * ("Description", "Setup guide") are never matched and are always kept.
+ */
+export function dropNonFactualSections(
+  sections: readonly PageSection[],
+): PageSection[] {
+  return sections.filter(
+    (section) => !isNonFactualSectionHeading(section.heading),
+  );
+}
+
+/**
  * Rewrite every release link of a repository to its canonical
  * `.../releases/latest` form, so a page never points at a specific tag.
  */

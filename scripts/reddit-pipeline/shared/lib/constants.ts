@@ -68,7 +68,7 @@ export const MEDIA_LIMITS = {
    * Hard cap on images of an existing page. Higher than {@link maxImages} so
    * that updating a page never drops images it already had.
    */
-  maxImagesHard: 6,
+  maxImagesHard: 3,
 
   /** Maximum number of videos a page may use. */
   maxVideos: 1,

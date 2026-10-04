@@ -1,5 +1,7 @@
 export {
   buildPageBody,
+  dropNonFactualSections,
+  isNonFactualSectionHeading,
   normalizeReleaseLinks,
   normalizeSectionBody,
   parsePageBody,

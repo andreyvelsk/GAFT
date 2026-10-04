@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 
 import {
   buildPageBody,
+  dropNonFactualSections,
+  isNonFactualSectionHeading,
   normalizeReleaseLinks,
   normalizeSectionBody,
   parsePageBody,
@@ -57,14 +59,14 @@ describe('validateFrontmatter', () => {
   });
 
   it('accepts up to the hard image limit', () => {
-    const parsed = validateFrontmatter(makeFrontmatter({ media: images(6) }));
+    const parsed = validateFrontmatter(makeFrontmatter({ media: images(3) }));
 
-    expect(parsed.media).toHaveLength(6);
+    expect(parsed.media).toHaveLength(3);
   });
 
   it('rejects more than the hard image limit', () => {
     expect(() =>
-      validateFrontmatter(makeFrontmatter({ media: images(7) })),
+      validateFrontmatter(makeFrontmatter({ media: images(4) })),
     ).toThrow();
   });
 
@@ -281,6 +283,53 @@ describe('normalizeReleaseLinks', () => {
     const text = `See ${repoUrl}/releases/tag/v1.2.0.`;
 
     expect(normalizeReleaseLinks(text, null)).toBe(text);
+  });
+});
+
+describe('dropNonFactualSections', () => {
+  it('flags progress-update and feelings headings as non-factual', () => {
+    for (const heading of [
+      'Status',
+      'status',
+      'News',
+      'Roadmap',
+      'Future plans',
+      'About',
+      'About the developer',
+      'Community',
+      'Feedback',
+      'Changelog',
+    ]) {
+      expect(isNonFactualSectionHeading(heading)).toBe(true);
+    }
+  });
+
+  it('keeps factual product headings', () => {
+    for (const heading of [
+      'Description',
+      'Features',
+      'Requirements',
+      'Supported games',
+      'Known issues',
+      'Setup guide',
+    ]) {
+      expect(isNonFactualSectionHeading(heading)).toBe(false);
+    }
+  });
+
+  it('drops non-factual sections and preserves the order of the rest', () => {
+    const sections = [
+      { heading: 'Description', body: 'D.' },
+      { heading: 'Features', body: '- A' },
+      { heading: 'Status', body: 'The developer is happy.' },
+      { heading: 'Setup guide', body: '1. Install.' },
+    ];
+
+    expect(dropNonFactualSections(sections).map((s) => s.heading)).toEqual([
+      'Description',
+      'Features',
+      'Setup guide',
+    ]);
   });
 });
 

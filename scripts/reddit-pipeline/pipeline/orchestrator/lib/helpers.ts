@@ -19,7 +19,7 @@ import {
 import { runCreateStage } from '../../stages/create';
 import { runFetchStage } from '../../stages/fetch';
 import { runFilterStage } from '../../stages/filter';
-import { runMatchStage } from '../../stages/match';
+import { runMatchStage, type MatchedPost } from '../../stages/match';
 import { runUpdateStage } from '../../stages/update';
 import type { OrchestratorOptions, OrchestratorResult } from './types';
 
@@ -236,8 +236,11 @@ export async function runPipeline(
     count: relevant.length,
   });
 
+  // Phase 1: match every relevant post. The match stage is per-post so a
+  // failure on one post is isolated and does not abort the run.
+  const matchedEntries: MatchedPost[] = [];
   for (const [index, entry] of relevant.entries()) {
-    logger.info('post: processing', {
+    logger.info('post: matching', {
       index: index + 1,
       total: relevant.length,
       id: entry.id,
@@ -260,14 +263,60 @@ export async function runPipeline(
       if (matched === undefined) {
         throw new Error('match stage returned no decision');
       }
-      const { decision } = matched;
-      const matchReason = `match: ${decision.action} ${decision.slug}`;
-      logger.info('stage match: decided', {
-        id: entry.id,
-        action: decision.action,
-        slug: decision.slug,
-      });
+      matchedEntries.push(matched);
+    } catch (error) {
+      const message = errorMessage(error);
+      logger.error('post matching failed', { id: entry.id, error: message });
+      builder.add(
+        postEntry(entry, 'error', 'processing failed', { error: message }),
+      );
+    }
+  }
 
+  // Phase 2: several posts of a single run can resolve to the same page slug
+  // (e.g. cross-posts or reposts of the same project). Keep only the latest
+  // post per slug and skip the rest, so a page is never created/updated twice
+  // within one run.
+  const latestBySlug = new Map<string, MatchedPost>();
+  for (const matched of matchedEntries) {
+    const current = latestBySlug.get(matched.decision.slug);
+    if (
+      current === undefined ||
+      matched.entry.created_utc > current.entry.created_utc
+    ) {
+      latestBySlug.set(matched.decision.slug, matched);
+    }
+  }
+  const kept = new Set<MatchedPost>(latestBySlug.values());
+
+  // Phase 3: create/update the kept posts and skip the duplicate slugs.
+  for (const matched of matchedEntries) {
+    const { entry, decision } = matched;
+    if (!kept.has(matched)) {
+      const keeper = latestBySlug.get(decision.slug);
+      logger.info('post: skipped duplicate slug', {
+        id: entry.id,
+        slug: decision.slug,
+        keptId: keeper?.entry.id,
+      });
+      builder.add(
+        postEntry(
+          entry,
+          'skipped',
+          `duplicate slug: ${decision.slug} (kept latest post ${keeper?.entry.id ?? ''})`,
+        ),
+      );
+      continue;
+    }
+
+    const matchReason = `match: ${decision.action} ${decision.slug}`;
+    logger.info('stage match: decided', {
+      id: entry.id,
+      action: decision.action,
+      slug: decision.slug,
+    });
+
+    try {
       if (decision.action === 'CREATE') {
         const created = await createStage(entry, {
           ...stages.create,
