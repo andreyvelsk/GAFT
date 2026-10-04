@@ -320,6 +320,42 @@ describe('runPipeline', () => {
     expect(failed?.error).toBe('agent failed');
   });
 
+  it('keeps only the latest post per slug and skips the duplicate slugs', async () => {
+    const entries = [
+      makeEntry({ id: 'a', created_utc: 1700000000 }),
+      makeEntry({ id: 'b', created_utc: 1700000200 }),
+      makeEntry({ id: 'c', created_utc: 1700000100 }),
+    ];
+    const deps = makeDeps(entries, ['a', 'b', 'c']);
+    deps.matchStage = (input): Promise<MatchStageResult> =>
+      Promise.resolve({
+        decisions: input.map((entry) => ({
+          entry,
+          decision: { action: 'CREATE', slug: 'simple-trackpad' },
+        })),
+      });
+
+    const result = await runPipeline({
+      config: makeConfig(),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      deps,
+    });
+
+    expect(result.report.counts.created).toBe(1);
+    expect(result.report.counts.skipped).toBe(2);
+    const created = result.report.posts.find(
+      (post) => post.action === 'created',
+    );
+    expect(created?.id).toBe('b');
+    const skipped = result.report.posts.filter(
+      (post) => post.action === 'skipped',
+    );
+    expect(skipped.map((post) => post.id).sort()).toEqual(['a', 'c']);
+  });
+
   it('aggregates per-agent usage and estimates the LLM cost', async () => {
     const entries = [makeEntry({ id: 'a' })];
     const deps = makeDeps(entries, ['a']);
