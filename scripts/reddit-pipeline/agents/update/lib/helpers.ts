@@ -103,7 +103,8 @@ export const UPDATE_SYSTEM_PROMPT = [
   '  as much detail as the sources support.',
   '- "category": exactly one of the following project categories:',
   CATEGORY_PROMPT_GUIDE,
-  '- "media": an array of image URLs from the post.',
+  '- "media": an array of image URLs from the post. Only used when the page',
+  '  has no images yet; existing screenshots are never replaced.',
   '- "project_url": the canonical link to the project (repository, store page',
   '  or official site), when it changes.',
   '- "sections": the FULL ordered array of {"heading", "body"} objects when the',
@@ -490,10 +491,14 @@ export function applyPatch(
   }
 
   const currentMedia = readMedia(data);
+  const currentImages = currentMedia.filter((item) => item.type === 'image');
   const currentVideos = currentMedia.filter((item) => item.type === 'video');
   let mediaItems = currentMedia;
   let mediaPlan: MediaPlanItem[] = [];
-  if (patch.media !== undefined) {
+  // Existing screenshots are never replaced: media is downloaded only when the
+  // page has no images yet. Re-downloading on every update would overwrite the
+  // same files and add a new blob to git history, growing the repository.
+  if (patch.media !== undefined && currentImages.length === 0) {
     const urls = selectImages(
       entry.images,
       patch.media,
@@ -503,9 +508,6 @@ export function applyPatch(
       type: 'image',
       url: `/content/${page.slug}/${mediaFileName(index + 1)}`,
     }));
-    // The page stores only the local file paths, so a different source image
-    // can map onto the same path. Any explicit media selection is therefore
-    // treated as a change and re-downloaded. Existing videos are preserved.
     changed.push('media');
     mediaItems = [...nextItems, ...currentVideos];
     mediaPlan = urls.map((url, index) => ({

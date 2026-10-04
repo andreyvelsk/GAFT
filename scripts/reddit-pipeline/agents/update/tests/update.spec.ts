@@ -547,7 +547,7 @@ describe('applyPatch', () => {
     expect(applied.page.frontmatter.date).toBe('2026-09-01 10:00');
   });
 
-  it('preserves an existing video when the patch replaces images', () => {
+  it('preserves an existing video when the patch provides new images', () => {
     const page = pageFromRaw(
       [
         '---',
@@ -617,7 +617,7 @@ describe('applyPatch', () => {
     expect(applied.page.frontmatter.media).toHaveLength(2);
   });
 
-  it('replaces the media when the patch provides new images', () => {
+  it('preserves existing images when the patch provides new ones', () => {
     const patch: UpdatePatch = { media: [IMAGE_B], reason: 'new screenshot' };
 
     const applied = applyPatch(
@@ -628,10 +628,47 @@ describe('applyPatch', () => {
       new Date('2026-09-26T10:16:00Z'),
     );
 
+    expect(applied.changed).toEqual([]);
+    expect(applied.media).toEqual([]);
+    expect(applied.page.frontmatter.media).toEqual([
+      { type: 'image', url: '/content/pixel-navigator/preview.webp' },
+    ]);
+  });
+
+  it('downloads media when the page has no images yet', () => {
+    const page = pageFromRaw(
+      [
+        '---',
+        'title: "X"',
+        'description: "D"',
+        'date: "2026-09-01 10:00"',
+        'slug: "x"',
+        'category: "app"',
+        '---',
+        '',
+        '## Description',
+        '',
+        'Body.',
+        '',
+        '## Setup guide',
+        '',
+        'Steps.',
+      ].join('\n'),
+      'x',
+    );
+
+    const applied = applyPatch(
+      page,
+      { media: [IMAGE_B], reason: 'first screenshot' },
+      makeEntry(),
+      makeContext(),
+      new Date('2026-09-26T10:16:00Z'),
+    );
+
     expect(applied.changed).toEqual(['media']);
     expect(applied.media).toEqual([{ url: IMAGE_B, fileName: 'preview.webp' }]);
     expect(applied.page.frontmatter.media).toEqual([
-      { type: 'image', url: '/content/pixel-navigator/preview.webp' },
+      { type: 'image', url: '/content/x/preview.webp' },
     ]);
   });
 

@@ -59,14 +59,14 @@ describe('validateFrontmatter', () => {
   });
 
   it('accepts up to the hard image limit', () => {
-    const parsed = validateFrontmatter(makeFrontmatter({ media: images(6) }));
+    const parsed = validateFrontmatter(makeFrontmatter({ media: images(3) }));
 
-    expect(parsed.media).toHaveLength(6);
+    expect(parsed.media).toHaveLength(3);
   });
 
   it('rejects more than the hard image limit', () => {
     expect(() =>
-      validateFrontmatter(makeFrontmatter({ media: images(7) })),
+      validateFrontmatter(makeFrontmatter({ media: images(4) })),
     ).toThrow();
   });
 
