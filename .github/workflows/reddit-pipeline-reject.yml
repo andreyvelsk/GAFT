@@ -184,6 +184,71 @@ jobs:
             fi
           fi
 
+      - name: Setup Node.js
+        if: steps.remove.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'node'
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Install dependencies
+        if: steps.remove.outputs.changed == 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Mark rejected posts in the review ledger
+        id: ledger
+        if: steps.remove.outputs.changed == 'true'
+        run: |
+          # The ledger is keyed by Reddit post id, while `/reject` works with
+          # page slugs. Map the rolled-back slugs back to their ledger entries
+          # (an approved post stores its slug) and mark them `rejected`.
+          if [ ! -f plans/reddit-pipeline-review.json ]; then
+            echo "No review ledger on this branch; nothing to mark."
+            echo "marked=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          slugs="${{ steps.remove.outputs.removed }} ${{ steps.remove.outputs.reverted }}"
+          script=".reddit-mark-rejected.ts"
+          marked_file=".reddit-marked.txt"
+          trap 'rm -f "$script" "$marked_file"' EXIT
+
+          cat > "$script" <<'EOF'
+          import { writeFile } from 'node:fs/promises';
+
+          import {
+            loadReviewLedger,
+            markReviewRejected,
+            saveReviewLedger,
+          } from './scripts/reddit-pipeline/pipeline/review';
+
+          const slugs = (process.env.REJECTED_SLUGS ?? '')
+            .split(/\s+/)
+            .filter((slug) => slug.length > 0);
+
+          let ledger = await loadReviewLedger();
+          const marked: string[] = [];
+          for (const post of ledger.posts) {
+            if (
+              post.slug !== undefined &&
+              post.status === 'approved' &&
+              slugs.includes(post.slug)
+            ) {
+              ledger = markReviewRejected(ledger, post.id);
+              marked.push(post.id);
+            }
+          }
+          await saveReviewLedger(ledger);
+          if (process.env.MARKED_FILE !== undefined) {
+            await writeFile(process.env.MARKED_FILE, marked.join(' '));
+          }
+          EOF
+
+          REJECTED_SLUGS="$slugs" MARKED_FILE="$marked_file" npx tsx "$script"
+          marked="$(cat "$marked_file" 2>/dev/null || true)"
+          echo "marked=$marked" >> "$GITHUB_OUTPUT"
+
       - name: Commit and push
         if: steps.remove.outputs.changed == 'true'
         run: |
@@ -196,6 +261,9 @@ jobs:
           if [ -n "$reverted" ]; then
             message="$message; reverted $reverted"
           fi
+          for f in plans/reddit-pipeline-review.json plans/reddit-pipeline-review.md; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
           git commit -m "$message"
           git push origin "HEAD:${{ steps.pr.outputs.head_ref }}"
 
@@ -205,6 +273,7 @@ jobs:
           removed="${{ steps.remove.outputs.removed }}"
           reverted="${{ steps.remove.outputs.reverted }}"
           missing="${{ steps.remove.outputs.missing }}"
+          marked="${{ steps.ledger.outputs.marked }}"
           message=""
           if [ -n "$removed" ]; then
             message="🗑️ Deleted created page(s): \`$removed\` (both \`content/<slug>\` and \`public/content/<slug>\`)."
@@ -220,5 +289,11 @@ jobs:
               message="$message"$'\n\n'
             fi
             message="${message}ℹ️ Not found and skipped: \`$missing\`."
+          fi
+          if [ -n "$marked" ]; then
+            if [ -n "$message" ]; then
+              message="$message"$'\n\n'
+            fi
+            message="${message}📝 Marked post id(s) \`$marked\` as \`rejected\` in the review ledger."
           fi
           gh pr comment "$PR_NUMBER" --body "$message"

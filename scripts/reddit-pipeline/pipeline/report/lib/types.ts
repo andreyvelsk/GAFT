@@ -4,7 +4,12 @@ import type { Logger } from '../../../shared/lib/types';
 import type { UsageTotals } from '../../../shared/lib/usage';
 
 /** Outcome of a single post in a pipeline run. */
-export type PostAction = 'created' | 'updated' | 'skipped' | 'error';
+export type PostAction =
+  | 'created'
+  | 'updated'
+  | 'skipped'
+  | 'error'
+  | 'relevant';
 
 /** Per-post detail of a pipeline run. */
 export interface PostReportEntry {
@@ -43,6 +48,12 @@ export interface ReportCounts {
 
   /** Number of posts skipped (prefilter or filter). */
   skipped: number;
+
+  /**
+   * Number of relevant posts awaiting approval (review mode). They are recorded
+   * in the review ledger and are not processed any further.
+   */
+  relevant: number;
 
   /** Number of posts that failed during processing. */
   errors: number;
@@ -148,6 +159,9 @@ export interface ReportSummary {
 
   /** Posts skipped for any other reason. */
   otherSkipped: number;
+
+  /** Relevant posts awaiting approval (review mode). */
+  relevant: PostReportEntry[];
 
   /** Entries of the pages created during the run. */
   created: PostReportEntry[];

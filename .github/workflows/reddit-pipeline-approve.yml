@@ -1,0 +1,198 @@
+name: Reddit pipeline — approve posts
+
+# Interactive companion to the Reddit pipeline. A user with write access to the
+# repository can comment `/approved <id> [<id> ...]` on the pipeline pull request
+# to run `match → category → create/update` for those Reddit posts and push the
+# generated pages into the same pull request. Ids may be separated by spaces
+# and/or commas.
+#
+# The approval key is the Reddit post id (e.g. `1abc2d3`), because at the review
+# stage the real page slug is not known yet (it is produced by the match agent).
+
+on:
+  issue_comment:
+    types: [created]
+
+# Needed to push the pull request branch and to post the confirmation comment.
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+# Share the pipeline's concurrency group so an approval never races a run that
+# is pushing to the same branch.
+concurrency:
+  group: reddit-pipeline
+  cancel-in-progress: false
+
+jobs:
+  approve:
+    # Only react to `/approved ...` comments left on pull requests.
+    if: |
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/approved')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # `gh` runs before actions/checkout, so it cannot infer the repository
+      # from a git remote — point it at the repository explicitly.
+      GH_REPO: ${{ github.repository }}
+      COMMENT_BODY: ${{ github.event.comment.body }}
+      COMMENTER: ${{ github.event.comment.user.login }}
+      PR_NUMBER: ${{ github.event.issue.number }}
+      # --- OpenRouter (secret) ---
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      # --- Non-secret configuration (Repository variables) ---
+      # Empty values fall back to the defaults in shared/lib/constants.ts.
+      OPENROUTER_BASE_URL: ${{ vars.OPENROUTER_BASE_URL }}
+      OPENROUTER_DEFAULT_MODEL: ${{ vars.OPENROUTER_DEFAULT_MODEL }}
+      REDDIT_FILTER_MODEL: ${{ vars.REDDIT_FILTER_MODEL }}
+      REDDIT_MATCH_MODEL: ${{ vars.REDDIT_MATCH_MODEL }}
+      REDDIT_CREATE_MODEL: ${{ vars.REDDIT_CREATE_MODEL }}
+      REDDIT_UPDATE_MODEL: ${{ vars.REDDIT_UPDATE_MODEL }}
+      REDDIT_CATEGORY_MODEL: ${{ vars.REDDIT_CATEGORY_MODEL }}
+      REDDIT_SUBREDDIT: ${{ vars.REDDIT_SUBREDDIT }}
+      REDDIT_LOOKBACK_HOURS: ${{ vars.REDDIT_LOOKBACK_HOURS }}
+      REDDIT_BATCH_SIZE: ${{ vars.REDDIT_BATCH_SIZE }}
+      # The `--approve` flag also enables approve mode; the env keeps the two in
+      # sync for the ledger/commit steps.
+      REDDIT_MODE: approve
+      # --- GitHub API (provided automatically by Actions) ---
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Verify the commenter can write to the repository
+        id: permission
+        run: |
+          # The collaborators permission endpoint returns admin/maintain/write/
+          # read/none (or 404 for non-collaborators, mapped to `none`).
+          permission="$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$COMMENTER/permission" --jq '.permission' 2>/dev/null || echo 'none')"
+          echo "Commenter '$COMMENTER' permission: $permission"
+          case "$permission" in
+            admin|maintain|write)
+              echo "allowed=true" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "allowed=false" >> "$GITHUB_OUTPUT"
+              gh pr comment "$PR_NUMBER" --body "🚫 @$COMMENTER, only users with write access to this repository can run \`/approved\`."
+              ;;
+          esac
+
+      - name: Resolve the pull request
+        id: pr
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          head_ref="$(gh pr view "$PR_NUMBER" --json headRefName --jq '.headRefName')"
+          head_repo="$(gh pr view "$PR_NUMBER" --json headRepository --jq '.headRepository.nameWithOwner')"
+          base_ref="$(gh pr view "$PR_NUMBER" --json baseRefName --jq '.baseRefName')"
+          echo "head_ref=$head_ref" >> "$GITHUB_OUTPUT"
+          echo "base_ref=$base_ref" >> "$GITHUB_OUTPUT"
+
+          if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::error::PR #$PR_NUMBER comes from a fork ($head_repo); refusing to act."
+            gh pr comment "$PR_NUMBER" --body "🚫 \`/approved\` only works on pull requests opened from this repository."
+            exit 1
+          fi
+
+      - name: Parse the command
+        id: cmd
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          # Accept one or more Reddit post ids, separated by spaces and/or
+          # commas: `/approved 1abc2d3 4ef5g6,7hi8j9`
+          first_line="$(printf '%s\n' "$COMMENT_BODY" | head -n 1)"
+          args="$(printf '%s' "$first_line" | sed -E 's/^[[:space:]]*\/approved[[:space:]]*//')"
+          ids="$(printf '%s' "$args" | tr ',' ' ' | tr -s '[:space:]' ' ' | xargs)"
+
+          if [ -z "$ids" ]; then
+            echo "::error::Missing post id(s) in the '/approved' command."
+            gh pr comment "$PR_NUMBER" --body "🚫 Usage: \`/approved <id> [<id> ...]\` — e.g. \`/approved 1abc2d3 4ef5g6\`. Ids may be separated by spaces or commas."
+            exit 1
+          fi
+
+          valid=""
+          invalid=""
+          for id in $ids; do
+            if printf '%s' "$id" | grep -Eq '^[A-Za-z0-9]+$'; then
+              valid="$valid $id"
+            else
+              invalid="$invalid $id"
+            fi
+          done
+          valid="$(printf '%s' "$valid" | xargs)"
+
+          if [ -n "$invalid" ]; then
+            echo "::error::Invalid post id(s):$invalid"
+            gh pr comment "$PR_NUMBER" --body "🚫 Invalid post id(s): \`$(printf '%s' "$invalid" | xargs)\`. Reddit post ids are alphanumeric."
+            exit 1
+          fi
+
+          echo "ids=$valid" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout the pull request branch
+        if: steps.permission.outputs.allowed == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.head_ref }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        if: steps.permission.outputs.allowed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'node'
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Install dependencies
+        if: steps.permission.outputs.allowed == 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Configure git user
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Run the pipeline in approve mode
+        id: approve
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          ids="${{ steps.cmd.outputs.ids }}"
+          echo "Approving post id(s): $ids"
+          npx tsx scripts/reddit-pipeline/index.ts --approve "$ids"
+
+      - name: Detect changes
+        id: changes
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          # content/, public/ and the review ledger are committed; the run
+          # report is an artifact and is not pushed.
+          status="$(git status --porcelain content/ public/ plans/reddit-pipeline-review.json plans/reddit-pipeline-review.md)"
+          echo "git status (content/, public/, review ledger):"
+          echo "${status:-<clean>}"
+          if [ -n "$status" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git add content/ public/
+          for f in plans/reddit-pipeline-review.json plans/reddit-pipeline-review.md; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+          git commit -m "chore(reddit): approve posts ${{ steps.cmd.outputs.ids }}"
+          git push origin "HEAD:${{ steps.pr.outputs.head_ref }}"
+
+      - name: Confirm
+        if: steps.permission.outputs.allowed == 'true'
+        run: |
+          ids="${{ steps.cmd.outputs.ids }}"
+          if [ "${{ steps.changes.outputs.changed }}" = "true" ]; then
+            gh pr comment "$PR_NUMBER" --body "✅ Approved post id(s): \`$ids\`. The generated pages were pushed to this pull request."
+          else
+            gh pr comment "$PR_NUMBER" --body "ℹ️ Nothing to change for post id(s) \`$ids\` (no page was generated). Check the run log for details."
+          fi

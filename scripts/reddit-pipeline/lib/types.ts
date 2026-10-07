@@ -1,4 +1,4 @@
-import type { AppConfig } from '../config/lib/types';
+import type { AppConfig, PipelineMode } from '../config/lib/types';
 import type { DecisionBackend } from '../engines/decision';
 import type {
   OrchestratorOptions,
@@ -35,6 +35,15 @@ export interface CliArgs {
 
   /** Whether to run the deterministic prefilter (overrides `REDDIT_PREFILTER`). */
   prefilter?: boolean;
+
+  /** Pipeline mode (overrides `REDDIT_MODE`). */
+  mode?: PipelineMode;
+
+  /**
+   * Reddit post ids to approve. When set, the run uses `approve` mode: the
+   * posts are fetched by id and `filter` is skipped.
+   */
+  approveIds?: string[];
 
   // --- Decision backends (filter / match / category) ---
   /** Backend for the filter agent (overrides `REDDIT_FILTER_BACKEND`). */

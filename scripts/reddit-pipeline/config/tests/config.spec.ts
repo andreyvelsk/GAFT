@@ -16,6 +16,7 @@ describe('loadConfig', () => {
     expect(config.reddit.batchSize).toBe(10);
     expect(config.reddit.maxPosts).toBe(0);
     expect(config.reddit.dryRun).toBe(false);
+    expect(config.reddit.mode).toBe('review');
     expect(config.models.filter).toBe(DEFAULT_MODELS.filter);
     expect(config.models.match).toBe(DEFAULT_MODELS.match);
     expect(config.models.create).toBe(DEFAULT_MODELS.create);
@@ -72,6 +73,16 @@ describe('loadConfig', () => {
     expect(config.reddit.subreddit).toBe('AynThor');
     expect(config.reddit.lookbackHours).toBe(24);
     expect(config.reddit.dryRun).toBe(false);
+  });
+
+  it('reads the pipeline mode from the environment', () => {
+    expect(loadConfig({ REDDIT_MODE: 'full' }).reddit.mode).toBe('full');
+    expect(loadConfig({ REDDIT_MODE: 'approve' }).reddit.mode).toBe('approve');
+    expect(loadConfig({ REDDIT_MODE: '   ' }).reddit.mode).toBe('review');
+  });
+
+  it('throws a zod error for an invalid pipeline mode', () => {
+    expect(() => loadConfig({ REDDIT_MODE: 'bogus' })).toThrow();
   });
 
   it('throws a zod error for an invalid number', () => {
