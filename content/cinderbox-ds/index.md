@@ -2,8 +2,8 @@
 title: "Thor Dual Screen"
 description: "A free, open-source SMAPI mod that turns the AYN Thor's second screen into a touch companion for Stardew Valley running in Cinderbox."
 date: "2026-10-06 06:24"
-slug: "stardew"
-category: "companion"
+slug: "cinderbox-ds"
+category: "game"
 generated: "ai"
 media:
   - type: "image"
