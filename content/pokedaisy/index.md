@@ -4,12 +4,13 @@ description: "A GBA player for dual-screen handhelds that runs Gen 3 Pokémon on
 date: "2026-10-07 06:21"
 slug: "pokedaisy"
 category: "emulator"
-generated: "ai"
 media:
   - type: "image"
     url: "/content/pokedaisy/preview.webp"
+  - type: "image"
+    url: "/content/pokedaisy/cover.webp"
   - type: "video"
-    url: "https://www.youtube.com/shorts/BGDGJgtDap8"
+    url: "https://www.youtube.com/watch?v=gMy6bqpS-LU"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wz5msk/yet_another_pokemon_dual_screen_app_but_it_also/)
@@ -30,7 +31,7 @@ Made for the AYN Thor. It should also work on the Retroid Pocket Duo / Duo Lite 
 - **GUIDE** – hints first, answers on a second tap: what's catchable here, the next gym leader's team, evolutions, plus "WHERE IS" and "STUCK?" pages.
 - **CARD** – your trainer card, drawn exactly like the game's, front and back.
 - **STATES** – 10 save-state slots with screenshots.
-- **CHEEVOS** – RetroAchievements (beta, softcore): your progress and challenges, unlock popups, leaderboards and the game's own level-up fanfare on every unlock. Sign in from the top-screen Settings; your password is used once and never stored, only your username and RA's login token stay on the device.
+- **CHEEVOS** – RetroAchievements (beta, softcore): your progress and challenges, unlock popups, leaderboards and the game's own level-up fanfare on every unlock. Sign in from the top-screen Settings; your password is used once and never stored, only your username and RA's login token stay on the device, and the app talks only to RetroAchievements. Hardcore isn't available yet: RetroAchievements only accepts it from emulators it has validated, which takes 6+ months of the app being public.
 - Customizable tabs: pick which ones show up in the tab bar.
 - App text in English, Japanese, French, German, Italian and Spanish. It follows the ROM's language by default; change it with the LANGUAGE row in Settings. Pokémon, move and item names stay as the game has them.
 - Smart fast-forward: drops to 1x in menus and keeps battles fast, plus slow motion.
@@ -44,7 +45,7 @@ Made for the AYN Thor. It should also work on the Retroid Pocket Duo / Duo Lite 
 
 ## Supported games
 
-Any GBA game plays. The companion needs one of the games below, in the exact version listed (ROM hacks are recognized by their file, so another version shows a "not supported" notice). ✅ works · ◐ partly · — not yet.
+Any GBA game plays. The companion needs one of the games below, in the exact version listed (games are recognized by the ROM's contents, not its file name, so another version or a re-patched copy shows a "not supported" notice). ✅ works · ◐ partly · — not yet.
 
 - Pokémon FireRed (USA/Europe, rev 0 and 1): ✅ Party, Bag, Battle, Map, Pokédex, Guide
 - Pokémon LeafGreen (USA/Europe, rev 0 and 1): ◐ Battle
