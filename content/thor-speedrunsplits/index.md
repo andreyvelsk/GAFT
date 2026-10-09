@@ -17,6 +17,8 @@ tags:
 ## Setup guide
 
 Build the application yourself or download the APK via the Releases section.
+Link to project: [github.com](https://github.com/JonJon2005/Thor-SpeedrunSplits)
+
 
 ## Features
 
