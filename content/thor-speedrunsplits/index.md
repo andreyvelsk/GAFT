@@ -6,7 +6,7 @@ slug: "thor-speedrunsplits"
 category: "companion"
 media:
   - type: "image"
-    url: "/content/thor-speedrunsplits"
+    url: "/content/thor-speedrunsplits/preview.webp"
   
 tags:
   - speedrunning
