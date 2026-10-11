@@ -22,7 +22,7 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_
 
 Eden Duo is a fork of the Eden Nintendo Switch emulator for Android devices with two screens, such as the AYN Thor. The game runs on the top screen as usual, while the bottom screen shows a touch companion for the game you are playing: maps, party and inventory menus, status, and more, all driven by the running game's live state.
 
-Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for eight games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, **Mario Kart 8 Deluxe**, **Super Mario Bros. Wonder**, **Animal Crossing: New Horizons**, **Fire Emblem: Three Houses**, and **The Binding of Isaac: Afterbirth+ and Repentance DLC**.
+Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for thirteen games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, **Mario Kart 8 Deluxe**, **Super Mario Bros. Wonder**, **Animal Crossing: New Horizons**, **Fire Emblem: Three Houses**, **The Binding of Isaac: Afterbirth+ and Repentance DLC**, **Pokémon Brilliant Diamond**, **Pokémon Shining Pearl**, **Crash Team Racing Nitro-Fueled**, **Dragon Quest III HD-2D Remake**, and **Chained Echoes**.
 
 ## Features
 
@@ -33,6 +33,7 @@ Companions are separate, installable `.dsmod.zip` packages, one per game, so a c
 - **Touch that feels native** — taps, press-and-hold gestures, drag and drop, animated page and layout changes, and haptic feedback on the second screen.
 - **Second screen your way** — swap the screens, stretch the companion, or open another app on the second screen for games without a companion.
 - **Built for handhelds** — change-driven partial redraws, tile-based texture uploads and an optional GPU compositor keep the second screen at full frame rate without costing the game frames.
+- **Follows Eden Nightly** — upstream fixes and improvements arrive sooner; this release is based on the October 8, 2026 nightly.
 
 ### Requirements
 
@@ -51,6 +52,10 @@ Companions are separate, installable `.dsmod.zip` packages, one per game, so a c
 - **Animal Crossing: New Horizons (3.0.3)**
 - **Fire Emblem: Three Houses (1.2.0)** — combat information, maps, academy information and more on the second screen. [Watch a video showcase](https://www.youtube.com/watch?v=gt7DaUXBABY).
 - **The Binding of Isaac: Afterbirth+ and Repentance DLC (1.7.9b)**
+- **Pokémon Brilliant Diamond / Shining Pearl (1.3.0)** — a field map, party, bag, Pokédex, Pokétch and battle controls. Two packages, one for Brilliant Diamond and one for Shining Pearl; each works with vanilla or Luminescent Platinum 2.2F.
+- **Crash Team Racing Nitro-Fueled (1.0.15)** — live standings with portraits, racer positions on the course map, lap and race clock, and options to hide the native HUD.
+- **Dragon Quest III HD-2D Remake (1.1.0.0)** — field map, party status and gear, bag, journal, Heal All and battle info, including possible enemy spells.
+- **Chained Echoes (1.41)** — area map and objectives, battle turn strip and Overdrive, skills, crystals and formation.
 
 Compatibility is intentionally strict: each companion is written for one exact game build and checks the running build before it loads. On any other version it does not load and shows a notice, instead of reading memory it does not understand.
 
@@ -58,7 +63,7 @@ Details, screenshots and downloads for each companion: [Eden Duo Companions](htt
 
 ## Setup guide
 
-1. Download the latest EdenDuo APK (1.1.0 or newer) from the [Releases page](https://github.com/igawa6/eden-duo/releases/latest) and install it.
+1. Download the latest EdenDuo APK (1.2.0 or newer) from the [Releases page](https://github.com/igawa6/eden-duo/releases/latest) and install it.
 2. Set up the emulator as usual: keys, firmware, and your games folder.
 3. Download a companion package from the [Eden Duo Companions repository](https://github.com/igawa6/eden-duo-companions).
 4. In Eden Duo, long-press the game, open **Add-ons** and tap **Install**. In the **Content type** dialog choose **Dual screen mods**, tap **OK**, then select the `.dsmod.zip` file. The companion appears in the Add-ons list as `Name-version`, for example `MetroidDreadDS-1.0.0`.
