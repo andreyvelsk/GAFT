@@ -4,7 +4,6 @@ description: "A GBA player for dual-screen handhelds that runs Gen 3 Pokémon on
 date: "2026-10-07 06:21"
 slug: "pokedaisy"
 category: "emulator"
-generated: "ai"
 media:
   - type: "image"
     url: "/content/pokedaisy/preview.webp"
@@ -85,4 +84,4 @@ No games are included — use your own legally dumped ROMs. PokeDaisy checks for
 
 Frontends: step-by-step guides to launch games from [iiSU](https://github.com/lidor30/pokedaisy/blob/main/docs/iisu/README.md) and [ES-DE](https://github.com/lidor30/pokedaisy/blob/main/docs/es-de/README.md).
 
-See the project page: [github.com](https://github.com/exojosh/AynThorSecondScreen)
+See the project page: [github.com](https://github.com/lidor30/pokedaisy)
