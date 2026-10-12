@@ -23,3 +23,7 @@ node_modules/
 # Reddit pipeline run reports (generated; uploaded as CI artifacts)
 plans/reddit-pipeline-report.json
 plans/reddit-pipeline-report.md
+
+# The review ledger (plans/reddit-pipeline-review.json and .md) is intentionally
+# committed: it is the persistent pending/approved/rejected state shared with the
+# /approved and /reject workflows.

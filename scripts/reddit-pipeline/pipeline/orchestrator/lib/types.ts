@@ -73,6 +73,22 @@ export interface OrchestratorOptions {
   reportPath?: string;
 
   /**
+   * Reddit post ids to approve (approve mode). When set together with
+   * `config.reddit.mode === 'approve'`, only these posts are fetched and
+   * processed.
+   */
+  approvePostIds?: readonly string[];
+
+  /** Destination of the review ledger JSON (defaults to the shared `REVIEW_FILE`). */
+  reviewPath?: string;
+
+  /**
+   * Destination of the review ledger Markdown (defaults to the shared
+   * `REVIEW_MARKDOWN_FILE`).
+   */
+  reviewMarkdownPath?: string;
+
+  /**
    * Model price table used to estimate LLM costs. When omitted it is loaded
    * from OpenRouter at the start of the run (degrading to an empty table on
    * failure).

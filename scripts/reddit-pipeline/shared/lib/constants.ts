@@ -28,6 +28,21 @@ export const REPORT_MARKDOWN_FILE = join(
   'reddit-pipeline-report.md',
 );
 
+/** Default path of the machine-readable review ledger (JSON). */
+export const REVIEW_FILE = join(PLANS_DIR, 'reddit-pipeline-review.json');
+
+/** Default path of the human-readable review ledger (Markdown). */
+export const REVIEW_MARKDOWN_FILE = join(
+  PLANS_DIR,
+  'reddit-pipeline-review.md',
+);
+
+/**
+ * Default retention window (in days) after which decided review entries
+ * (`approved`/`rejected`) are pruned from the ledger.
+ */
+export const DEFAULT_REVIEW_RETENTION_DAYS = 30;
+
 /** arctic-shift posts search endpoint (primary Reddit source). */
 export const ARCTIC_SHIFT_API =
   'https://arctic-shift.photon-reddit.com/api/posts/search';
@@ -108,6 +123,9 @@ export const DEFAULT_BATCH_SIZE = 10;
 
 /** Default post limit per run (0 = unlimited). */
 export const DEFAULT_MAX_POSTS = 0;
+
+/** Default pipeline mode when neither the CLI nor the environment sets one. */
+export const DEFAULT_PIPELINE_MODE = 'review';
 
 /** Default branch used to accumulate pipeline changes. */
 export const DEFAULT_PR_BRANCH = 'reddit-pipeline/auto';

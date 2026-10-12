@@ -119,6 +119,75 @@ npm run reddit:pipeline
 done by the pipeline stage). Batch mode continues on a per-post error and exits
 with a non-zero code if any post failed.
 
+## Pipeline modes (`review` / `full` / `approve`)
+
+The pipeline runs in one of three modes, selected with `--mode` (or the
+`REDDIT_MODE` environment variable, default `review`):
+
+| Mode | Behaviour |
+| --- | --- |
+| `review` | `fetch → prefilter → filter`, then record the relevant posts in the review ledger and stop. `match`/`category`/`create`/`update` are **not** run. |
+| `full` | The full `fetch → filter → match → create/update` cycle. |
+| `approve` | Enabled by `--approve <id1,id2>`: the listed posts are fetched by id (no prefilter, no `filter`), then `match → category → create/update` runs. |
+
+```bash
+# Review mode (default): only build the review ledger, do not create pages.
+npm run reddit:pipeline
+
+# Full mode: create/update pages in one go.
+npm run reddit:pipeline -- --mode full
+
+# Approve mode: process the listed Reddit post ids.
+npm run reddit:pipeline -- --approve 1abc2d3,4ef5g6
+```
+
+## Review ledger and the `/approved` command
+
+In `review` mode the pipeline appends the relevant posts to a committed ledger:
+
+- `plans/reddit-pipeline-review.json` — machine-readable state;
+- `plans/reddit-pipeline-review.md` — human-readable render.
+
+The ledger is **merged, never overwritten**: a new post is added as `pending`,
+while an existing entry keeps its `approved`/`rejected` decision. The Markdown
+render has **Pending / Approved / Rejected** sections; the Pending section ends
+with a ready-to-copy `/approved id1 id2 ...` line:
+
+````markdown
+# Reddit pipeline review
+
+> Pending: 2 · Approved: 1 · Rejected: 0
+
+## Pending (2)
+
+- `1abc2d3` — My new project — [source](https://www.reddit.com/r/AynThor/comments/1abc2d3/)
+- `4ef5g6` — Another project — [source](https://www.reddit.com/r/AynThor/comments/4ef5g6/)
+
+To approve, comment on this pull request:
+
+```
+/approved 1abc2d3 4ef5g6
+```
+
+## Approved (1)
+
+- `7hi8j9` → `my-project` — Already approved — [source](https://www.reddit.com/r/AynThor/comments/7hi8j9/)
+
+## Rejected (0)
+
+_None._
+````
+
+The daily CI run opens/updates a pull request with this ledger. A user with
+write access reviews it and comments on the pull request:
+
+- `/approved <id> [<id> ...]` — run `match → category → create/update` for those
+  Reddit post ids and push the generated pages into the same pull request;
+- `/reject <slug> [<slug> ...]` — delete/revert the generated pages and mark the
+  matching posts `rejected` in the ledger.
+
+Ids and slugs may be separated by spaces and/or commas.
+
 ## Command-line options
 
 `npm run reddit:pipeline` accepts options that override the corresponding
@@ -182,6 +251,8 @@ npm run reddit:pipeline -- --dry-run --report plans/my-report.json
 
 | Option | Aliases | Overrides | Description |
 | --- | --- | --- | --- |
+| `--mode <review\|full>` | — | `REDDIT_MODE` | Pipeline mode (default `review`). |
+| `--approve <id1,id2>` | — | — | Approve the listed Reddit post ids (enables `approve` mode). |
 | `--dry-run` | — | `REDDIT_DRY_RUN` | Do not write any files. |
 | `--no-dry-run` | — | `REDDIT_DRY_RUN` | Force writing files. |
 | `--prefilter` | — | `REDDIT_PREFILTER` | Run the deterministic prefilter (default). |

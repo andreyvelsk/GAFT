@@ -36,6 +36,17 @@ export interface ThresholdConfig {
   category: number;
 }
 
+/**
+ * Pipeline execution mode.
+ *
+ * - `review` — `fetch → prefilter → filter`, then record the relevant posts
+ *   into the review ledger (no `match`/`create`/`update`).
+ * - `full` — the full `fetch → filter → match → create/update` cycle.
+ * - `approve` — fetch the approved posts by id (no prefilter/filter) and run
+ *   `match → category → create/update`.
+ */
+export type PipelineMode = 'review' | 'full' | 'approve';
+
 /** Reddit fetch / processing settings. */
 export interface RedditConfig {
   subreddit: string;
@@ -46,6 +57,9 @@ export interface RedditConfig {
 
   /** Whether the deterministic prefilter runs before the filter agent. */
   prefilter: boolean;
+
+  /** Pipeline execution mode. */
+  mode: PipelineMode;
 }
 
 /** Pull request settings consumed by the CI workflow. */

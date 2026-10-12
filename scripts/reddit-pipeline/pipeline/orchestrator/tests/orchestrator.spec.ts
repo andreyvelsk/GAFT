@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { z } from 'zod';
 
 import type { CreateResult } from '../../../agents/create';
 import type { AppConfig } from '../../../config/lib/types';
@@ -16,9 +17,14 @@ import { createLogger } from '../../../shared/lib/logger';
 import { buildPricingTable, emptyPricingTable } from '../../../shared/lib/pricing';
 import type { Logger, RawPost, ReportEntry } from '../../../shared/lib/types';
 import type { CreateStageResult } from '../../stages/create';
-import type { FetchStageResult } from '../../stages/fetch';
+import type { FetchStageOptions, FetchStageResult } from '../../stages/fetch';
 import type { FilterStageResult } from '../../stages/filter';
 import type { MatchStageResult } from '../../stages/match';
+import {
+  emptyReviewLedger,
+  mergeReviewPosts,
+  saveReviewLedger,
+} from '../../review';
 import { runPipeline, type OrchestratorDependencies } from '../index';
 
 /** Mock of the category agent module (hoisted so `vi.mock` can use it). */
@@ -36,6 +42,18 @@ const RUN_INTEGRATION = process.env.RUN_MEDIA_INTEGRATION === 'true';
 
 /** Fixed reference time used to keep the run deterministic. */
 const NOW = new Date('2026-01-01T12:00:00.000Z');
+
+/** Schema of the review-ledger fields asserted by the tests. */
+const ledgerSchema = z.object({
+  posts: z.array(
+    z.object({
+      id: z.string(),
+      status: z.enum(['pending', 'approved', 'rejected']),
+      slug: z.string().optional(),
+      error: z.string().optional(),
+    }),
+  ),
+});
 
 /** 1×1 transparent PNG used by the integration test. */
 const PNG_BASE64 =
@@ -62,6 +80,8 @@ function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
       maxPosts: 0,
       dryRun: false,
       prefilter: true,
+      // The default is `review`; the existing tests exercise the full cycle.
+      mode: 'full',
       ...overrides,
     },
     pr: { branch: 'reddit-pipeline/auto', base: 'main', labels: [] },
@@ -239,6 +259,7 @@ describe('runPipeline', () => {
       created: 1,
       updated: 0,
       skipped: 0,
+      relevant: 0,
       errors: 0,
     });
     expect(result.reportPath).toBe(reportPath);
@@ -465,6 +486,155 @@ describe('runPipeline', () => {
         deps,
       }),
     ).rejects.toThrow('config broken');
+  });
+
+  it('review mode records relevant posts in the ledger and stops after filter', async () => {
+    dir = await mkdtemp(join(tmpdir(), 'orchestrator-review-'));
+    const reviewPath = join(dir, 'review.json');
+    const reviewMarkdownPath = join(dir, 'review.md');
+    const entries = [makeEntry({ id: 'a' }), makeEntry({ id: 'b' })];
+    const deps = makeDeps(entries, ['a']);
+    let matchCalled = false;
+    deps.matchStage = (input): Promise<MatchStageResult> => {
+      matchCalled = true;
+      return Promise.resolve({
+        decisions: input.map((entry) => ({
+          entry,
+          decision: { action: 'CREATE', slug: entry.id },
+        })),
+      });
+    };
+
+    const result = await runPipeline({
+      config: makeConfig({ mode: 'review' }),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      reviewPath,
+      reviewMarkdownPath,
+      deps,
+    });
+
+    expect(matchCalled).toBe(false);
+    expect(result.report.counts.relevant).toBe(1);
+    expect(result.report.counts.created).toBe(0);
+    const relevant = result.report.posts.find(
+      (post) => post.action === 'relevant',
+    );
+    expect(relevant?.id).toBe('a');
+
+    const parsed: unknown = JSON.parse(await readFile(reviewPath, 'utf8'));
+    const ledger = ledgerSchema.parse(parsed);
+    expect(ledger.posts.map((post) => [post.id, post.status])).toEqual([
+      ['a', 'pending'],
+    ]);
+  });
+
+  it('approve mode fetches by id, skips filter and marks the ledger', async () => {
+    dir = await mkdtemp(join(tmpdir(), 'orchestrator-approve-'));
+    const reviewPath = join(dir, 'review.json');
+    const reviewMarkdownPath = join(dir, 'review.md');
+    const entries = [makeEntry({ id: 'a' }), makeEntry({ id: 'b' })];
+    // The pending ids normally come from a previous review run.
+    await saveReviewLedger(
+      mergeReviewPosts(
+        emptyReviewLedger(),
+        [
+          { id: 'a', title: 'Post a', permalink: 'https://x/a', createdUtc: 1 },
+          { id: 'b', title: 'Post b', permalink: 'https://x/b', createdUtc: 2 },
+          { id: 'c', title: 'Post c', permalink: 'https://x/c', createdUtc: 3 },
+        ],
+        { now: () => NOW },
+      ),
+      { path: reviewPath, markdownPath: reviewMarkdownPath },
+    );
+    const deps = makeDeps(entries, []);
+    let filterCalled = false;
+    deps.filterStage = (): Promise<FilterStageResult> => {
+      filterCalled = true;
+      return Promise.resolve({ relevant: [], skipped: [] });
+    };
+    let seen: FetchStageOptions | undefined;
+    deps.fetchStage = (options): Promise<FetchStageResult> => {
+      seen = options;
+      return Promise.resolve({
+        window: { subreddit: 'AynThor', after: 0, before: 0 },
+        fetched: entries.length,
+        entries: [...entries],
+        dropped: [],
+        errors: [{ id: 'c', message: 'post not found' }],
+      });
+    };
+
+    const result = await runPipeline({
+      config: makeConfig({ mode: 'approve' }),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      approvePostIds: ['a', 'b', 'c'],
+      reviewPath,
+      reviewMarkdownPath,
+      deps,
+    });
+
+    expect(filterCalled).toBe(false);
+    expect(seen?.postIds).toEqual(['a', 'b', 'c']);
+    expect(seen?.prefilter).toBe(false);
+    expect(result.report.counts.created).toBe(2);
+    expect(result.report.counts.errors).toBe(1);
+
+    const parsed: unknown = JSON.parse(await readFile(reviewPath, 'utf8'));
+    const ledger = ledgerSchema.parse(parsed);
+    expect(ledger.posts.map((post) => [post.id, post.status])).toEqual([
+      ['a', 'approved'],
+      ['b', 'approved'],
+      ['c', 'pending'],
+    ]);
+    expect(ledger.posts[0]?.slug).toBe('a');
+  });
+
+  it('approve mode keeps a failed post pending with the error', async () => {
+    dir = await mkdtemp(join(tmpdir(), 'orchestrator-approve-fail-'));
+    const reviewPath = join(dir, 'review.json');
+    const reviewMarkdownPath = join(dir, 'review.md');
+    const entries = [makeEntry({ id: 'a' }), makeEntry({ id: 'b' })];
+    const deps = makeDeps(entries, []);
+    deps.createStage = (entry): Promise<CreateStageResult> => {
+      if (entry.id === 'b') {
+        return Promise.reject(new Error('create failed'));
+      }
+      return Promise.resolve({
+        slug: entry.id,
+        markdown: 'md',
+        media: [],
+        written: true,
+      });
+    };
+
+    const result = await runPipeline({
+      config: makeConfig({ mode: 'approve' }),
+      now: NOW,
+      logger: silentLogger(),
+      pricing: emptyPricingTable(),
+      writeReport: false,
+      approvePostIds: ['a', 'b'],
+      reviewPath,
+      reviewMarkdownPath,
+      deps,
+    });
+
+    expect(result.report.counts.created).toBe(1);
+    expect(result.report.counts.errors).toBe(1);
+
+    const parsed: unknown = JSON.parse(await readFile(reviewPath, 'utf8'));
+    const ledger = ledgerSchema.parse(parsed);
+    const approved = ledger.posts.find((post) => post.id === 'a');
+    const failed = ledger.posts.find((post) => post.id === 'b');
+    expect(approved?.status).toBe('approved');
+    expect(failed?.status).toBe('pending');
+    expect(failed?.error).toBe('create failed');
   });
 });
 

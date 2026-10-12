@@ -96,4 +96,46 @@ describe('runFetchStage', () => {
 
     expect(result.entries).toHaveLength(2);
   });
+
+  it('fetches posts by id without applying the prefilter', async () => {
+    const result = await runFetchStage({
+      now: NOW,
+      postIds: ['keep', 'drop'],
+      fetchPostById: (id) =>
+        Promise.resolve(
+          id === 'drop'
+            ? rawPost({ id, link_flair_text: 'Support' })
+            : rawPost({ id }),
+        ),
+    });
+
+    expect(result.entries.map((entry) => entry.id)).toEqual(['keep', 'drop']);
+    expect(result.dropped).toHaveLength(0);
+    expect(result.errors).toEqual([]);
+  });
+
+  it('records missing ids as errors', async () => {
+    const result = await runFetchStage({
+      now: NOW,
+      postIds: ['found', 'missing'],
+      fetchPostById: (id) =>
+        Promise.resolve(id === 'found' ? rawPost({ id }) : null),
+    });
+
+    expect(result.entries.map((entry) => entry.id)).toEqual(['found']);
+    expect(result.errors).toEqual([
+      { id: 'missing', message: 'post not found' },
+    ]);
+  });
+
+  it('records a fetch failure as an error', async () => {
+    const result = await runFetchStage({
+      now: NOW,
+      postIds: ['boom'],
+      fetchPostById: () => Promise.reject(new Error('network down')),
+    });
+
+    expect(result.entries).toHaveLength(0);
+    expect(result.errors).toEqual([{ id: 'boom', message: 'network down' }]);
+  });
 });

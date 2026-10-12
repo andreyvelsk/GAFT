@@ -35,6 +35,7 @@ function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
       maxPosts: 0,
       dryRun: false,
       prefilter: true,
+      mode: 'review',
       ...overrides,
     },
     pr: { branch: 'reddit-pipeline/auto', base: 'main', labels: [] },
@@ -48,7 +49,7 @@ function makeReport(overrides: Partial<RunReport> = {}): RunReport {
     startedAt: '2026-01-01T00:00:00.000Z',
     finishedAt: '2026-01-01T00:00:01.000Z',
     dryRun: false,
-    counts: { total: 0, created: 0, updated: 0, skipped: 0, errors: 0 },
+    counts: { total: 0, created: 0, updated: 0, skipped: 0, relevant: 0, errors: 0 },
     posts: [],
     usage: {
       byAgent: [],
@@ -82,7 +83,14 @@ function collector(): { lines: string[]; write: (line: string) => void } {
 describe('formatReport', () => {
   it('renders counts and per-post details including slug and error', () => {
     const report = makeReport({
-      counts: { total: 3, created: 1, updated: 1, skipped: 0, errors: 1 },
+      counts: {
+        total: 3,
+        created: 1,
+        updated: 1,
+        skipped: 0,
+        relevant: 0,
+        errors: 1,
+      },
       posts: [
         {
           id: 'a',
@@ -131,7 +139,14 @@ describe('runCli', () => {
   it('prints the report and exits with code 0 on success', async () => {
     const { lines, write } = collector();
     const report = makeReport({
-      counts: { total: 1, created: 1, updated: 0, skipped: 0, errors: 0 },
+      counts: {
+        total: 1,
+        created: 1,
+        updated: 0,
+        skipped: 0,
+        relevant: 0,
+        errors: 0,
+      },
       posts: [
         {
           id: 'a',

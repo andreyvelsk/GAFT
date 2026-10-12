@@ -38,6 +38,7 @@ function makeConfig(overrides: Partial<AppConfig['reddit']> = {}): AppConfig {
       maxPosts: 0,
       dryRun: false,
       prefilter: true,
+      mode: 'review',
       ...overrides,
     },
     pr: { branch: 'reddit-pipeline/auto', base: 'main', labels: [] },
@@ -51,7 +52,7 @@ function makeReport(): RunReport {
     startedAt: '2026-01-01T00:00:00.000Z',
     finishedAt: '2026-01-01T00:00:01.000Z',
     dryRun: false,
-    counts: { total: 0, created: 0, updated: 0, skipped: 0, errors: 0 },
+    counts: { total: 0, created: 0, updated: 0, skipped: 0, relevant: 0, errors: 0 },
     posts: [],
     usage: {
       byAgent: [],
@@ -142,6 +143,26 @@ describe('parseArgs', () => {
     expect(parseArgs(['--write-report']).writeReport).toBe(true);
   });
 
+  it('parses the pipeline mode in both --flag value and --flag=value forms', () => {
+    expect(parseArgs(['--mode', 'full']).mode).toBe('full');
+    expect(parseArgs(['--mode=review']).mode).toBe('review');
+  });
+
+  it('parses the approve list and enables approve mode', () => {
+    const args = parseArgs(['--approve', 'a1,b2 c3']);
+    expect(args.approveIds).toEqual(['a1', 'b2', 'c3']);
+    expect(args.mode).toBe('approve');
+  });
+
+  it('rejects an invalid pipeline mode and an empty approve list', () => {
+    expect(() => parseArgs(['--mode', 'approve'])).toThrow(
+      /expected "review" or "full"/,
+    );
+    expect(() => parseArgs(['--approve', ' , '])).toThrow(
+      /at least one post id/,
+    );
+  });
+
   it('parses the decision connection, now and help flags', () => {
     const args = parseArgs([
       '--decisions-base-url',
@@ -223,6 +244,7 @@ describe('applyArgs', () => {
       maxPosts: 5,
       dryRun: true,
       prefilter: true,
+      mode: 'review',
     });
     expect(result.backends).toEqual({
       filter: 'jev',
@@ -249,6 +271,14 @@ describe('applyArgs', () => {
     expect(result.pr).toEqual(config.pr);
     expect(result.github).toEqual(config.github);
   });
+
+  it('applies the pipeline mode override', () => {
+    const config = makeConfig();
+    expect(applyArgs(config, { help: false, mode: 'full' }).reddit.mode).toBe(
+      'full',
+    );
+    expect(applyArgs(config, { help: false }).reddit.mode).toBe('review');
+  });
 });
 
 describe('orchestratorOptionsFromArgs', () => {
@@ -266,6 +296,12 @@ describe('orchestratorOptionsFromArgs', () => {
         now,
       }),
     ).toEqual({ reportPath: 'tmp/r.json', writeReport: false, now });
+  });
+
+  it('maps the approved post ids', () => {
+    expect(
+      orchestratorOptionsFromArgs({ help: false, approveIds: ['a', 'b'] }),
+    ).toEqual({ approvePostIds: ['a', 'b'] });
   });
 });
 

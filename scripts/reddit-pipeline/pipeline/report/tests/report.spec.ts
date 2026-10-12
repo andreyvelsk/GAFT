@@ -59,8 +59,16 @@ describe('countEntries', () => {
       created: 2,
       updated: 1,
       skipped: 1,
+      relevant: 0,
       errors: 1,
     });
+  });
+
+  it('counts relevant (awaiting approval) posts', () => {
+    const counts = countEntries([makeEntry({ action: 'relevant' })]);
+
+    expect(counts.relevant).toBe(1);
+    expect(counts.errors).toBe(0);
   });
 
   it('returns zeroed counters for an empty list', () => {
@@ -69,6 +77,7 @@ describe('countEntries', () => {
       created: 0,
       updated: 0,
       skipped: 0,
+      relevant: 0,
       errors: 0,
     });
   });
@@ -90,6 +99,7 @@ describe('createReportBuilder', () => {
       created: 1,
       updated: 0,
       skipped: 0,
+      relevant: 0,
       errors: 1,
     });
     expect(report.posts).toHaveLength(2);
@@ -171,6 +181,22 @@ describe('summarizeReport', () => {
     expect(summary.errors.map((entry) => entry.id)).toEqual(['e']);
   });
 
+  it('groups relevant (awaiting approval) posts', () => {
+    const report = buildReport(
+      [
+        makeEntry({ id: 'r1', action: 'relevant', reason: 'awaiting approval' }),
+        makeEntry({ id: 'r2', action: 'relevant', reason: 'awaiting approval' }),
+        makeEntry({ id: 's', action: 'skipped', reason: 'filter: not relevant' }),
+      ],
+      { now: () => FIXED },
+    );
+
+    const summary = summarizeReport(report);
+
+    expect(summary.relevant.map((entry) => entry.id)).toEqual(['r1', 'r2']);
+    expect(summary.filter).toBe(1);
+  });
+
   it('returns empty groups for an empty report', () => {
     const summary = summarizeReport(buildReport([], { now: () => FIXED }));
 
@@ -178,6 +204,7 @@ describe('summarizeReport', () => {
       prefilter: 0,
       filter: 0,
       otherSkipped: 0,
+      relevant: [],
       created: [],
       updated: [],
       errors: [],
@@ -254,6 +281,33 @@ describe('formatReportMarkdown', () => {
     expect(markdown).toContain('**Dry run**');
     expect(markdown).not.toContain('### Created pages');
     expect(markdown).not.toContain('### Errors');
+  });
+
+  it('renders the relevant section with a ready-to-copy /approved line', () => {
+    const report = buildReport(
+      [
+        makeEntry({
+          id: 'abc',
+          title: 'Alpha',
+          action: 'relevant',
+          reason: 'awaiting approval',
+        }),
+        makeEntry({
+          id: 'def',
+          title: 'Beta',
+          action: 'relevant',
+          reason: 'awaiting approval',
+        }),
+      ],
+      { now: () => FIXED },
+    );
+
+    const markdown = formatReportMarkdown(report);
+
+    expect(markdown).toContain('| Relevant (awaiting approval) | 2 |');
+    expect(markdown).toContain('### Relevant (awaiting approval) (2)');
+    expect(markdown).toContain('`abc` — Alpha — [source]');
+    expect(markdown).toContain('/approved abc def');
   });
 
   it('renders the per-agent cost table when usage is present', () => {

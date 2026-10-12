@@ -25,6 +25,7 @@ export function countEntries(
     created: 0,
     updated: 0,
     skipped: 0,
+    relevant: 0,
     errors: 0,
   };
   for (const entry of entries) {
@@ -34,6 +35,8 @@ export function countEntries(
       counts.updated += 1;
     } else if (entry.action === 'skipped') {
       counts.skipped += 1;
+    } else if (entry.action === 'relevant') {
+      counts.relevant += 1;
     } else {
       counts.errors += 1;
     }
@@ -114,6 +117,7 @@ export function summarizeReport(report: RunReport): ReportSummary {
     prefilter: 0,
     filter: 0,
     otherSkipped: 0,
+    relevant: [],
     created: [],
     updated: [],
     errors: [],
@@ -124,6 +128,8 @@ export function summarizeReport(report: RunReport): ReportSummary {
       summary.created.push(entry);
     } else if (entry.action === 'updated') {
       summary.updated.push(entry);
+    } else if (entry.action === 'relevant') {
+      summary.relevant.push(entry);
     } else if (entry.action === 'error') {
       summary.errors.push(entry);
     } else if (entry.reason.startsWith(PREFILTER_PREFIX)) {
@@ -197,6 +203,31 @@ function appendEntrySection(
 }
 
 /**
+ * Append the review-mode section: the relevant posts awaiting approval with a
+ * ready-to-copy `/approved id1 id2 ...` line.
+ */
+function appendRelevantSection(
+  lines: string[],
+  entries: readonly PostReportEntry[],
+): void {
+  if (entries.length === 0) {
+    return;
+  }
+  lines.push(`### Relevant (awaiting approval) (${entries.length})`);
+  lines.push('');
+  for (const entry of entries) {
+    lines.push(`- \`${entry.id}\` — ${entry.title} — [source](${entry.permalink})`);
+  }
+  lines.push('');
+  lines.push('To approve, comment on the pull request:');
+  lines.push('');
+  lines.push('```');
+  lines.push(`/approved ${entries.map((entry) => entry.id).join(' ')}`);
+  lines.push('```');
+  lines.push('');
+}
+
+/**
  * Render a run report as a human-readable Markdown document. Used for the
  * GitHub Actions job summary and the pull request description.
  */
@@ -224,6 +255,9 @@ export function formatReportMarkdown(report: RunReport): string {
   if (summary.otherSkipped > 0) {
     lines.push(`| Skipped (other) | ${summary.otherSkipped} |`);
   }
+  if (summary.relevant.length > 0) {
+    lines.push(`| Relevant (awaiting approval) | ${summary.relevant.length} |`);
+  }
   lines.push(`| Created | ${counts.created} |`);
   lines.push(`| Updated | ${counts.updated} |`);
   lines.push(`| Errors | ${counts.errors} |`);
@@ -231,6 +265,7 @@ export function formatReportMarkdown(report: RunReport): string {
 
   appendUsageSection(lines, report.usage);
 
+  appendRelevantSection(lines, summary.relevant);
   appendEntrySection(lines, 'Created pages', summary.created);
   appendEntrySection(lines, 'Updated pages', summary.updated);
   appendEntrySection(lines, 'Errors', summary.errors);
