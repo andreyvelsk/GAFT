@@ -5,7 +5,9 @@ date: "2026-10-12 06:31"
 slug: "grand-theft-companion"
 category: "companion"
 generated: "ai"
-media: []
+media:
+  - type: "image"
+    url: "https://raw.githubusercontent.com/BrianJr03/GrandTheftCompanion/refs/heads/main/assets/screenshot_v.png"
 ---
 
 source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x3m1nx/built_a_bottom_screen_companion_app_for_gta_iv_v/)
