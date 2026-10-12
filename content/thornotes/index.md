@@ -1,35 +1,26 @@
 ---
-title: "Thorn"
-description: "A customizable and extensible utility mod for ULTRAKILL with draggable HUD elements, key input overlays, and gameplay modifiers."
-date: "2026-10-12 06:29"
+title: "ThorNotes"
+description: "Small bottom-screen notebook app"
+date: "2026-06-19 13:44"
 slug: "thornotes"
-category: "game"
-generated: "ai"
-media: []
+category: "companion"
+media:
+  - type: "image"
+    url: "/content/thornotes/preview.webp"
 ---
 
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x39j8n/end_of_abyss_gamenative/)
+source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u7i7p1/thornotes_yet_another_bottom_screen_companion/)
 
 ## Description
+When you play lots of games and switch between them, it is easy to forget what was happening in each one. ThorNotes helps by letting you quickly save in-game screenshots or OCR text from a selected screen region, then browse everything later in a clean bottom-screen interface.
 
-Thorn is a customizable and extensible utility mod for ULTRAKILL. It adds freely draggable HUD elements, a key input overlay, wireframe-style weapons and enemies, and a set of gameplay modifiers, all adjustable through an in-game config system.
-
-## Features
-
-- Freely draggable HUD elements
-- Key input overlay
-- Wireframe-style weapons and enemies
-- Gameplay modifiers: Submerged, Force-radiance, Enemy multiplication, Floor is Lava
-- Config menu brought up with a keybind (RightShift by default)
-- Modern NocturnalOS-style UI, familiar to Minecraft client users
-- Extensible: can be used as a library by other mods, with a wiki and fully XML-documented classes and methods
-
-## Supported games
-
-- ULTRAKILL
+## Main Features
+- Save screenshots into notebook pages; or OCR a selected screen region and save the recognized text
+- Multiple notebook pages for quick switch between different games
+- Browsing: screenshot thumbnails for quick jumping; pin/star important screenshots
+- OLED blackout mode: double-tap the time to make the bottom screen black, double-tap again to restore
+- Floating overlay button to hide/restore the app
+- Data safety: every notebook page is stored in json and plain image files, can be migrated if needed
 
 ## Setup guide
-
-Download and install the [latest release](https://github.com/end-4/ultrakill-thorn-client/releases/latest) of Thorn. Launch ULTRAKILL and press RightShift (the default keybind) to open the config menu, where you can customize HUD elements, the key input overlay, and gameplay modifiers.
-
-See the project page: [github.com](https://github.com/end-4/ultrakill-thorn-client)
+Link to project: [github.com](https://github.com/xade93/thornote)
