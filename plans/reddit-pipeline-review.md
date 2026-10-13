@@ -1,6 +1,6 @@
 # Reddit pipeline review
 
-> Pending: 7 · Approved: 1 · Rejected: 0
+> Pending: 7 · Approved: 0 · Rejected: 1
 
 ## Pending (7)
 
@@ -18,10 +18,10 @@ To approve, comment on this pull request:
 /approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8
 ```
 
-## Approved (1)
-
-- `1x48hzj` → `duofrost` — DuoFrost 2.5.0 is out — LED control for AYN devices, with a new GUI and Smart Scenes — [source](https://www.reddit.com/r/AynThor/comments/1x48hzj/duofrost_250_is_out_led_control_for_ayn_devices/)
-
-## Rejected (0)
+## Approved (0)
 
 _None._
+
+## Rejected (1)
+
+- `1x48hzj` — DuoFrost 2.5.0 is out — LED control for AYN devices, with a new GUI and Smart Scenes — [source](https://www.reddit.com/r/AynThor/comments/1x48hzj/duofrost_250_is_out_led_control_for_ayn_devices/)
