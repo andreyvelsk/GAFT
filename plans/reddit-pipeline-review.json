@@ -1,0 +1,120 @@
+{
+  "posts": [
+    {
+      "id": "1x3zrn9",
+      "title": "DuoBeam: stream both Thor screens to a TV over Wi-Fi (Samsung Tizen + Android TV, no PC). Open source, AI-coded with Claude Code",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x3zrn9/duobeam_stream_both_thor_screens_to_a_tv_over/",
+      "createdUtc": 1791805803,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x48hzj",
+      "title": "DuoFrost 2.5.0 is out — LED control for AYN devices, with a new GUI and Smart Scenes",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x48hzj/duofrost_250_is_out_led_control_for_ayn_devices/",
+      "createdUtc": 1791826929,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "rejected",
+      "slug": "duofrost",
+      "decidedAt": "2026-10-13T05:55:39.015Z"
+    },
+    {
+      "id": "1x4c3gq",
+      "title": "Dragon Ball Raging Blast 2 - Native Android Port",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4c3gq/dragon_ball_raging_blast_2_native_android_port/",
+      "createdUtc": 1791834846,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4cp1c",
+      "title": "Tony Hawks Project 8 - Native Android Port",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4cp1c/tony_hawks_project_8_native_android_port/",
+      "createdUtc": 1791836213,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4crif",
+      "title": "Dragon Ball Raging Blast 2 - Native Android Port",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4crif/dragon_ball_raging_blast_2_native_android_port/",
+      "createdUtc": 1791836373,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4d0as",
+      "title": "New form: The Gacha TCG Launcher",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4d0as/new_form_the_gacha_tcg_launcher/",
+      "createdUtc": 1791836940,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4ef3n",
+      "title": "Successfully Running Overwatch Using DroidDeck + A Patch",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4ef3n/successfully_running_overwatch_using_droiddeck_a/",
+      "createdUtc": 1791840234,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4llv8",
+      "title": "Neat Pokemon widget for Home Screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4llv8/neat_pokemon_widget_for_home_screen/",
+      "createdUtc": 1791860415,
+      "firstSeenAt": "2026-10-13T04:50:02.852Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4qepz",
+      "title": "I made an Android app that downloads any Mario Maker 2 level by course code and puts it in your Coursebot on Eden",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4qepz/i_made_an_android_app_that_downloads_any_mario/",
+      "createdUtc": 1791877080,
+      "firstSeenAt": "2026-10-14T06:15:09.981Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x4u6hy",
+      "title": "Measuring how games actually run on the Thor: I built a Windows tool for it and need a few testers (Thor Lite and GameHub especially)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x4u6hy/measuring_how_games_actually_run_on_the_thor_i/",
+      "createdUtc": 1791891116,
+      "firstSeenAt": "2026-10-14T06:15:09.981Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x51y9g",
+      "title": "v0.6.1 of Thor-SpeedrunSplits is out now!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x51y9g/v061_of_thorspeedrunsplits_is_out_now/",
+      "createdUtc": 1791910301,
+      "firstSeenAt": "2026-10-14T06:15:09.981Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x523sf",
+      "title": "How I got a stranger to buy me a McGriddle",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x523sf/how_i_got_a_stranger_to_buy_me_a_mcgriddle/",
+      "createdUtc": 1791910639,
+      "firstSeenAt": "2026-10-14T06:15:09.981Z",
+      "status": "approved",
+      "slug": "ds-forever",
+      "decidedAt": "2026-10-14T07:45:35.652Z"
+    },
+    {
+      "id": "1x53p2r",
+      "title": "PokeDaisy 1.2.0 is out: smoother and faster, widescreen with zoom out, use items and Fly from the companion, 9 new games",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x53p2r/pokedaisy_120_is_out_smoother_and_faster/",
+      "createdUtc": 1791914099,
+      "firstSeenAt": "2026-10-14T06:15:09.981Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x5asba",
+      "title": "100% free 1 click set and forget cooling control app",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x5asba/100_free_1_click_set_and_forget_cooling_control/",
+      "createdUtc": 1791930660,
+      "firstSeenAt": "2026-10-14T06:15:09.981Z",
+      "status": "pending"
+    }
+  ]
+}
