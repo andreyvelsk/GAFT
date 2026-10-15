@@ -130,7 +130,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1x61fci/generals_zero_hour_ported_to_ayn_thor/",
       "createdUtc": 1792007965,
       "firstSeenAt": "2026-10-15T06:15:56.074Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-rts",
+      "decidedAt": "2026-10-15T09:09:17.998Z"
     }
   ]
 }
