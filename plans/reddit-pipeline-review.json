@@ -133,6 +133,48 @@
       "status": "approved",
       "slug": "thor-rts",
       "decidedAt": "2026-10-15T09:09:17.998Z"
+    },
+    {
+      "id": "1x6q66j",
+      "title": "Hi everyone, PokeDaisy v1.2.1 is out with quick menu, HUD and single-screen support! Plus more games and fixes",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x6q66j/hi_everyone_pokedaisy_v121_is_out_with_quick_menu/",
+      "createdUtc": 1792081344,
+      "firstSeenAt": "2026-10-16T06:15:45.538Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x71e8w",
+      "title": "Rate my launcher",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x71e8w/rate_my_launcher/",
+      "createdUtc": 1792108433,
+      "firstSeenAt": "2026-10-16T06:15:45.538Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x72txv",
+      "title": "I made a YouTube app for the Thor because the official app sucks",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x72txv/i_made_a_youtube_app_for_the_thor_because_the/",
+      "createdUtc": 1792112478,
+      "firstSeenAt": "2026-10-16T06:15:45.538Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x73xnl",
+      "title": "I made an Unofficial Ayn Thor Modpack for Minecraft",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x73xnl/i_made_an_unofficial_ayn_thor_modpack_for/",
+      "createdUtc": 1792115818,
+      "firstSeenAt": "2026-10-16T06:15:45.538Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x74l9b",
+      "title": "Build your own GBA companion with GBA Duo",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/",
+      "createdUtc": 1792117874,
+      "firstSeenAt": "2026-10-16T06:15:45.538Z",
+      "status": "approved",
+      "slug": "gba-duo",
+      "decidedAt": "2026-10-16T07:31:03.389Z"
     }
   ]
 }

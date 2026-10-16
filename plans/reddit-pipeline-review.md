@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 13 · Approved: 2 · Rejected: 1
+> Pending: 17 · Approved: 3 · Rejected: 1
 
-## Pending (13)
+## Pending (17)
 
 - `1x3zrn9` — DuoBeam: stream both Thor screens to a TV over Wi-Fi (Samsung Tizen + Android TV, no PC). Open source, AI-coded with Claude Code — [source](https://www.reddit.com/r/AynThor/comments/1x3zrn9/duobeam_stream_both_thor_screens_to_a_tv_over/)
 - `1x4c3gq` — Dragon Ball Raging Blast 2 - Native Android Port — [source](https://www.reddit.com/r/AynThor/comments/1x4c3gq/dragon_ball_raging_blast_2_native_android_port/)
@@ -17,17 +17,22 @@
 - `1x53p2r` — PokeDaisy 1.2.0 is out: smoother and faster, widescreen with zoom out, use items and Fly from the companion, 9 new games — [source](https://www.reddit.com/r/AynThor/comments/1x53p2r/pokedaisy_120_is_out_smoother_and_faster/)
 - `1x5asba` — 100% free 1 click set and forget cooling control app — [source](https://www.reddit.com/r/AynThor/comments/1x5asba/100_free_1_click_set_and_forget_cooling_control/)
 - `1x5lgmv` — WoW Forever Running on ArmadaOS — [source](https://www.reddit.com/r/AynThor/comments/1x5lgmv/wow_forever_running_on_armadaos/)
+- `1x6q66j` — Hi everyone, PokeDaisy v1.2.1 is out with quick menu, HUD and single-screen support! Plus more games and fixes — [source](https://www.reddit.com/r/AynThor/comments/1x6q66j/hi_everyone_pokedaisy_v121_is_out_with_quick_menu/)
+- `1x71e8w` — Rate my launcher — [source](https://www.reddit.com/r/AynThor/comments/1x71e8w/rate_my_launcher/)
+- `1x72txv` — I made a YouTube app for the Thor because the official app sucks — [source](https://www.reddit.com/r/AynThor/comments/1x72txv/i_made_a_youtube_app_for_the_thor_because_the/)
+- `1x73xnl` — I made an Unofficial Ayn Thor Modpack for Minecraft — [source](https://www.reddit.com/r/AynThor/comments/1x73xnl/i_made_an_unofficial_ayn_thor_modpack_for/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv
+/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl
 ```
 
-## Approved (2)
+## Approved (3)
 
 - `1x523sf` → `ds-forever` — How I got a stranger to buy me a McGriddle — [source](https://www.reddit.com/r/AynThor/comments/1x523sf/how_i_got_a_stranger_to_buy_me_a_mcgriddle/)
 - `1x61fci` → `thor-rts` — generals zero hour ported to AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1x61fci/generals_zero_hour_ported_to_ayn_thor/)
+- `1x74l9b` → `gba-duo` — Build your own GBA companion with GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/)
 
 ## Rejected (1)
 
