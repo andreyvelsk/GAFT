@@ -172,7 +172,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/",
       "createdUtc": 1792117874,
       "firstSeenAt": "2026-10-16T06:15:45.538Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "gba-duo",
+      "decidedAt": "2026-10-16T07:31:03.389Z"
     }
   ]
 }

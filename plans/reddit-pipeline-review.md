@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 18 · Approved: 2 · Rejected: 1
+> Pending: 17 · Approved: 3 · Rejected: 1
 
-## Pending (18)
+## Pending (17)
 
 - `1x3zrn9` — DuoBeam: stream both Thor screens to a TV over Wi-Fi (Samsung Tizen + Android TV, no PC). Open source, AI-coded with Claude Code — [source](https://www.reddit.com/r/AynThor/comments/1x3zrn9/duobeam_stream_both_thor_screens_to_a_tv_over/)
 - `1x4c3gq` — Dragon Ball Raging Blast 2 - Native Android Port — [source](https://www.reddit.com/r/AynThor/comments/1x4c3gq/dragon_ball_raging_blast_2_native_android_port/)
@@ -21,18 +21,18 @@
 - `1x71e8w` — Rate my launcher — [source](https://www.reddit.com/r/AynThor/comments/1x71e8w/rate_my_launcher/)
 - `1x72txv` — I made a YouTube app for the Thor because the official app sucks — [source](https://www.reddit.com/r/AynThor/comments/1x72txv/i_made_a_youtube_app_for_the_thor_because_the/)
 - `1x73xnl` — I made an Unofficial Ayn Thor Modpack for Minecraft — [source](https://www.reddit.com/r/AynThor/comments/1x73xnl/i_made_an_unofficial_ayn_thor_modpack_for/)
-- `1x74l9b` — Build your own GBA companion with GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl 1x74l9b
+/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl
 ```
 
-## Approved (2)
+## Approved (3)
 
 - `1x523sf` → `ds-forever` — How I got a stranger to buy me a McGriddle — [source](https://www.reddit.com/r/AynThor/comments/1x523sf/how_i_got_a_stranger_to_buy_me_a_mcgriddle/)
 - `1x61fci` → `thor-rts` — generals zero hour ported to AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1x61fci/generals_zero_hour_ported_to_ayn_thor/)
+- `1x74l9b` → `gba-duo` — Build your own GBA companion with GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/)
 
 ## Rejected (1)
 
