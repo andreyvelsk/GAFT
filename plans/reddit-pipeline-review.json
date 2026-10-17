@@ -175,6 +175,54 @@
       "status": "approved",
       "slug": "gba-duo",
       "decidedAt": "2026-10-16T07:31:03.389Z"
+    },
+    {
+      "id": "1x7e3m9",
+      "title": "I built RomCore: designed to be an All-in-one emulator on the Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7e3m9/i_built_romcore_designed_to_be_an_allinone/",
+      "createdUtc": 1792151419,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7hv7a",
+      "title": "AYN Thor + PokeDaisy",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7hv7a/ayn_thor_pokedaisy/",
+      "createdUtc": 1792161243,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7kyuo",
+      "title": "Joycon2Android v2.1.0 allows you to use Switch 2 Joy-Cons and now NSO Gamecube Controllers on Android!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7kyuo/joycon2android_v210_allows_you_to_use_switch_2/",
+      "createdUtc": 1792168362,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7tayw",
+      "title": "Hitman Blood Money on Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7tayw/hitman_blood_money_on_thor/",
+      "createdUtc": 1792187975,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7trwl",
+      "title": "Diablo 1 - first person mod",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7trwl/diablo_1_first_person_mod/",
+      "createdUtc": 1792189176,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7yoho",
+      "title": "Zelda: The Minish Cap + Metroid Fusion GBA Companion with GBA Duo",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7yoho/zelda_the_minish_cap_metroid_fusion_gba_companion/",
+      "createdUtc": 1792203547,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
     }
   ]
 }

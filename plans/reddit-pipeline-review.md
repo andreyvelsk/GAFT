@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 17 · Approved: 3 · Rejected: 1
+> Pending: 23 · Approved: 3 · Rejected: 1
 
-## Pending (17)
+## Pending (23)
 
 - `1x3zrn9` — DuoBeam: stream both Thor screens to a TV over Wi-Fi (Samsung Tizen + Android TV, no PC). Open source, AI-coded with Claude Code — [source](https://www.reddit.com/r/AynThor/comments/1x3zrn9/duobeam_stream_both_thor_screens_to_a_tv_over/)
 - `1x4c3gq` — Dragon Ball Raging Blast 2 - Native Android Port — [source](https://www.reddit.com/r/AynThor/comments/1x4c3gq/dragon_ball_raging_blast_2_native_android_port/)
@@ -21,11 +21,17 @@
 - `1x71e8w` — Rate my launcher — [source](https://www.reddit.com/r/AynThor/comments/1x71e8w/rate_my_launcher/)
 - `1x72txv` — I made a YouTube app for the Thor because the official app sucks — [source](https://www.reddit.com/r/AynThor/comments/1x72txv/i_made_a_youtube_app_for_the_thor_because_the/)
 - `1x73xnl` — I made an Unofficial Ayn Thor Modpack for Minecraft — [source](https://www.reddit.com/r/AynThor/comments/1x73xnl/i_made_an_unofficial_ayn_thor_modpack_for/)
+- `1x7e3m9` — I built RomCore: designed to be an All-in-one emulator on the Thor — [source](https://www.reddit.com/r/AynThor/comments/1x7e3m9/i_built_romcore_designed_to_be_an_allinone/)
+- `1x7hv7a` — AYN Thor + PokeDaisy — [source](https://www.reddit.com/r/AynThor/comments/1x7hv7a/ayn_thor_pokedaisy/)
+- `1x7kyuo` — Joycon2Android v2.1.0 allows you to use Switch 2 Joy-Cons and now NSO Gamecube Controllers on Android! — [source](https://www.reddit.com/r/AynThor/comments/1x7kyuo/joycon2android_v210_allows_you_to_use_switch_2/)
+- `1x7tayw` — Hitman Blood Money on Thor — [source](https://www.reddit.com/r/AynThor/comments/1x7tayw/hitman_blood_money_on_thor/)
+- `1x7trwl` — Diablo 1 - first person mod — [source](https://www.reddit.com/r/AynThor/comments/1x7trwl/diablo_1_first_person_mod/)
+- `1x7yoho` — Zelda: The Minish Cap + Metroid Fusion GBA Companion with GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1x7yoho/zelda_the_minish_cap_metroid_fusion_gba_companion/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl
+/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl 1x7e3m9 1x7hv7a 1x7kyuo 1x7tayw 1x7trwl 1x7yoho
 ```
 
 ## Approved (3)
