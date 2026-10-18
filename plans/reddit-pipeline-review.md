@@ -28,6 +28,7 @@
 - `1x7trwl` — Diablo 1 - first person mod — [source](https://www.reddit.com/r/AynThor/comments/1x7trwl/diablo_1_first_person_mod/)
 - `1x7yoho` — Zelda: The Minish Cap + Metroid Fusion GBA Companion with GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1x7yoho/zelda_the_minish_cap_metroid_fusion_gba_companion/)
 - `1x87kiu` — Eden Duo 1.3.0: New QoL Feature. Yoru Tomosu, Diablo III and Farming Simulator — [source](https://www.reddit.com/r/AynThor/comments/1x87kiu/eden_duo_130_new_qol_feature_yoru_tomosu_diablo/)
+  - error: agent "update" failed to produce valid structured output after 2 attempt(s)
 - `1x8csjt` — Introducing VA-11 Hall-A - Eden duo companion — [source](https://www.reddit.com/r/AynThor/comments/1x8csjt/introducing_va11_halla_eden_duo_companion/)
 - `1x8gblu` — DBZ Raging Blast 2 Android Port by Wonderful-Cat-447 — [source](https://www.reddit.com/r/AynThor/comments/1x8gblu/dbz_raging_blast_2_android_port_by_wonderfulcat447/)
 - `1x8r8eh` — [3DS] Pokémon Ultra Sun 60 FPS mod for Azahar (v0.1, early test release) — [source](https://www.reddit.com/r/AynThor/comments/1x8r8eh/3ds_pokémon_ultra_sun_60_fps_mod_for_azahar_v01/)

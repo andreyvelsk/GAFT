@@ -230,7 +230,8 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1x87kiu/eden_duo_130_new_qol_feature_yoru_tomosu_diablo/",
       "createdUtc": 1792235285,
       "firstSeenAt": "2026-10-18T06:13:47.843Z",
-      "status": "pending"
+      "status": "pending",
+      "error": "agent \"update\" failed to produce valid structured output after 2 attempt(s)"
     },
     {
       "id": "1x8csjt",
