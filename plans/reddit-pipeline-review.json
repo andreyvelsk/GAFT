@@ -303,7 +303,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1x9la7y/ratchet_and_clank_1_dual_screen_mod_rerac_fork/",
       "createdUtc": 1792377218,
       "firstSeenAt": "2026-10-19T06:21:42.911Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "rerac-for-android-dual-screen-mod",
+      "decidedAt": "2026-10-19T07:08:05.248Z"
     },
     {
       "id": "1x9lc92",
@@ -319,7 +321,8 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1x9li22/zelda_the_minish_cap_companion_update_for_gbaduo/",
       "createdUtc": 1792377905,
       "firstSeenAt": "2026-10-19T06:21:42.911Z",
-      "status": "pending"
+      "status": "pending",
+      "error": "agent \"create\" failed to produce valid structured output after 2 attempt(s)"
     }
   ]
 }
