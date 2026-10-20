@@ -175,6 +175,154 @@
       "status": "approved",
       "slug": "gba-duo",
       "decidedAt": "2026-10-16T07:31:03.389Z"
+    },
+    {
+      "id": "1x7e3m9",
+      "title": "I built RomCore: designed to be an All-in-one emulator on the Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7e3m9/i_built_romcore_designed_to_be_an_allinone/",
+      "createdUtc": 1792151419,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7hv7a",
+      "title": "AYN Thor + PokeDaisy",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7hv7a/ayn_thor_pokedaisy/",
+      "createdUtc": 1792161243,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7kyuo",
+      "title": "Joycon2Android v2.1.0 allows you to use Switch 2 Joy-Cons and now NSO Gamecube Controllers on Android!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7kyuo/joycon2android_v210_allows_you_to_use_switch_2/",
+      "createdUtc": 1792168362,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7tayw",
+      "title": "Hitman Blood Money on Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7tayw/hitman_blood_money_on_thor/",
+      "createdUtc": 1792187975,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7trwl",
+      "title": "Diablo 1 - first person mod",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7trwl/diablo_1_first_person_mod/",
+      "createdUtc": 1792189176,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x7yoho",
+      "title": "Zelda: The Minish Cap + Metroid Fusion GBA Companion with GBA Duo",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x7yoho/zelda_the_minish_cap_metroid_fusion_gba_companion/",
+      "createdUtc": 1792203547,
+      "firstSeenAt": "2026-10-17T06:14:16.963Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x87kiu",
+      "title": "Eden Duo 1.3.0: New QoL Feature. Yoru Tomosu, Diablo III and Farming Simulator",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x87kiu/eden_duo_130_new_qol_feature_yoru_tomosu_diablo/",
+      "createdUtc": 1792235285,
+      "firstSeenAt": "2026-10-18T06:13:47.843Z",
+      "status": "pending",
+      "error": "agent \"update\" failed to produce valid structured output after 2 attempt(s)"
+    },
+    {
+      "id": "1x8csjt",
+      "title": "Introducing VA-11 Hall-A - Eden duo companion",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x8csjt/introducing_va11_halla_eden_duo_companion/",
+      "createdUtc": 1792250295,
+      "firstSeenAt": "2026-10-18T06:13:47.843Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x8gblu",
+      "title": "DBZ Raging Blast 2 Android Port by Wonderful-Cat-447",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x8gblu/dbz_raging_blast_2_android_port_by_wonderfulcat447/",
+      "createdUtc": 1792258887,
+      "firstSeenAt": "2026-10-18T06:13:47.843Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x8r8eh",
+      "title": "[3DS] Pokémon Ultra Sun 60 FPS mod for Azahar (v0.1, early test release)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x8r8eh/3ds_pokémon_ultra_sun_60_fps_mod_for_azahar_v01/",
+      "createdUtc": 1792288504,
+      "firstSeenAt": "2026-10-18T06:13:47.843Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x8vgek",
+      "title": "Installation Guide: Marvel: Ultimate Alliance 1 (Modded) on Android via GameHub",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x8vgek/installation_guide_marvel_ultimate_alliance_1/",
+      "createdUtc": 1792302731,
+      "firstSeenAt": "2026-10-18T06:13:47.843Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x909wc",
+      "title": "Dragon’s Crown Pro (PS4) running though OpenCrownPC on an AYN Thor under Bannerhub with Online Play",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x909wc/dragons_crown_pro_ps4_running_though_opencrownpc/",
+      "createdUtc": 1792320691,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x9aoez",
+      "title": "Bottom screen navigation bar fix (new app)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x9aoez/bottom_screen_navigation_bar_fix_new_app/",
+      "createdUtc": 1792348567,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x9ctta",
+      "title": "DroidDeck 0.5.0 is out, share your latest experiences with update!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x9ctta/droiddeck_050_is_out_share_your_latest/",
+      "createdUtc": 1792353677,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x9hax7",
+      "title": "TWWHD Recomp",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x9hax7/twwhd_recomp/",
+      "createdUtc": 1792365309,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x9la7y",
+      "title": "Ratchet And Clank 1 Dual screen mod (rerac fork)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x9la7y/ratchet_and_clank_1_dual_screen_mod_rerac_fork/",
+      "createdUtc": 1792377218,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "approved",
+      "slug": "rerac-for-android-dual-screen-mod",
+      "decidedAt": "2026-10-19T07:08:05.248Z"
+    },
+    {
+      "id": "1x9lc92",
+      "title": "Ratchet and Clank 1 Dual screen mod (rerac fork)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x9lc92/ratchet_and_clank_1_dual_screen_mod_rerac_fork/",
+      "createdUtc": 1792377394,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "pending"
+    },
+    {
+      "id": "1x9li22",
+      "title": "Zelda The Minish Cap Companion Update for GBADuo",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1x9li22/zelda_the_minish_cap_companion_update_for_gbaduo/",
+      "createdUtc": 1792377905,
+      "firstSeenAt": "2026-10-19T06:21:42.911Z",
+      "status": "pending",
+      "error": "agent \"create\" failed to produce valid structured output after 2 attempt(s)"
     }
   ]
 }
