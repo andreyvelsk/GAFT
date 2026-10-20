@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 34 · Approved: 4 · Rejected: 1
+> Pending: 36 · Approved: 4 · Rejected: 1
 
-## Pending (34)
+## Pending (36)
 
 - `1x3zrn9` — DuoBeam: stream both Thor screens to a TV over Wi-Fi (Samsung Tizen + Android TV, no PC). Open source, AI-coded with Claude Code — [source](https://www.reddit.com/r/AynThor/comments/1x3zrn9/duobeam_stream_both_thor_screens_to_a_tv_over/)
 - `1x4c3gq` — Dragon Ball Raging Blast 2 - Native Android Port — [source](https://www.reddit.com/r/AynThor/comments/1x4c3gq/dragon_ball_raging_blast_2_native_android_port/)
@@ -40,11 +40,13 @@
 - `1x9lc92` — Ratchet and Clank 1 Dual screen mod (rerac fork) — [source](https://www.reddit.com/r/AynThor/comments/1x9lc92/ratchet_and_clank_1_dual_screen_mod_rerac_fork/)
 - `1x9li22` — Zelda The Minish Cap Companion Update for GBADuo — [source](https://www.reddit.com/r/AynThor/comments/1x9li22/zelda_the_minish_cap_companion_update_for_gbaduo/)
   - error: agent "create" failed to produce valid structured output after 2 attempt(s)
+- `1xajm6v` — Cyberpunk 2077 DS — [source](https://www.reddit.com/r/AynThor/comments/1xajm6v/cyberpunk_2077_ds/)
+- `1xa87y8` — I made an unofficial Pokébonk app for the AYN Thor. Native controls, no touch mapping — [source](https://www.reddit.com/r/AynThor/comments/1xa87y8/i_made_an_unofficial_pokébonk_app_for_the_ayn/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl 1x7e3m9 1x7hv7a 1x7kyuo 1x7tayw 1x7trwl 1x7yoho 1x87kiu 1x8csjt 1x8gblu 1x8r8eh 1x8vgek 1x909wc 1x9aoez 1x9ctta 1x9hax7 1x9lc92 1x9li22
+/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl 1x7e3m9 1x7hv7a 1x7kyuo 1x7tayw 1x7trwl 1x7yoho 1x87kiu 1x8csjt 1x8gblu 1x8r8eh 1x8vgek 1x909wc 1x9aoez 1x9ctta 1x9hax7 1x9lc92 1x9li22 1xajm6v 1xa87y8
 ```
 
 ## Approved (4)

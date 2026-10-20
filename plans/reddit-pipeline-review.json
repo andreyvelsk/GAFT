@@ -323,6 +323,22 @@
       "firstSeenAt": "2026-10-19T06:21:42.911Z",
       "status": "pending",
       "error": "agent \"create\" failed to produce valid structured output after 2 attempt(s)"
+    },
+    {
+      "id": "1xajm6v",
+      "title": "Cyberpunk 2077 DS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xajm6v/cyberpunk_2077_ds/",
+      "createdUtc": 1792473753,
+      "firstSeenAt": "2026-10-20T06:14:41.846Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xa87y8",
+      "title": "I made an unofficial Pokébonk app for the AYN Thor. Native controls, no touch mapping",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xa87y8/i_made_an_unofficial_pokébonk_app_for_the_ayn/",
+      "createdUtc": 1792441981,
+      "firstSeenAt": "2026-10-20T06:14:41.846Z",
+      "status": "pending"
     }
   ]
 }
