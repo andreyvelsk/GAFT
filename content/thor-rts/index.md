@@ -1,6 +1,6 @@
 ---
 title: "Thor RTS"
-description: "A native Android port of Command &amp; Conquer: Generals Zero Hour for the AYN Thor, with controller support and a two-screen command deck."
+description: "A native Android port of Command & Conquer: Generals Zero Hour for the AYN Thor, with controller support and a two-screen command deck."
 date: "2026-10-15 09:09"
 slug: "thor-rts"
 category: "game"

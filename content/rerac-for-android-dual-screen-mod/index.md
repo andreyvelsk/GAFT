@@ -1,6 +1,6 @@
 ---
 title: "ReRAC for Android — Dual-Screen Mod"
-description: "A dual-screen Android adaptation of Ratchet &amp; Clank (2002) built for the AYN Thor."
+description: "A dual-screen Android adaptation of Ratchet & Clank (2002) built for the AYN Thor."
 date: "2026-10-19 06:46"
 slug: "rerac-for-android-dual-screen-mod"
 category: "emulator"
