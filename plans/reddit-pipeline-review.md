@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 36 · Approved: 4 · Rejected: 1
+> Pending: 45 · Approved: 4 · Rejected: 1
 
-## Pending (36)
+## Pending (45)
 
 - `1x3zrn9` — DuoBeam: stream both Thor screens to a TV over Wi-Fi (Samsung Tizen + Android TV, no PC). Open source, AI-coded with Claude Code — [source](https://www.reddit.com/r/AynThor/comments/1x3zrn9/duobeam_stream_both_thor_screens_to_a_tv_over/)
 - `1x4c3gq` — Dragon Ball Raging Blast 2 - Native Android Port — [source](https://www.reddit.com/r/AynThor/comments/1x4c3gq/dragon_ball_raging_blast_2_native_android_port/)
@@ -42,11 +42,20 @@
   - error: agent "create" failed to produce valid structured output after 2 attempt(s)
 - `1xajm6v` — Cyberpunk 2077 DS — [source](https://www.reddit.com/r/AynThor/comments/1xajm6v/cyberpunk_2077_ds/)
 - `1xa87y8` — I made an unofficial Pokébonk app for the AYN Thor. Native controls, no touch mapping — [source](https://www.reddit.com/r/AynThor/comments/1xa87y8/i_made_an_unofficial_pokébonk_app_for_the_ayn/)
+- `1xauknx` — (Claude) Made a little app to turn my Thor into the media hub of the house. One-week beta, testers welcome *****the apk is made by Claude/Chatgtp**** — [source](https://www.reddit.com/r/AynThor/comments/1xauknx/claude_made_a_little_app_to_turn_my_thor_into_the/)
+- `1xay9fi` — PokeDaisy 1.3.0 is out! DS games (Platinum, & HGSS), Red/Blue/Gold/Silver, Polished Crystal and a lot more — [source](https://www.reddit.com/r/AynThor/comments/1xay9fi/pokedaisy_130_is_out_ds_games_platinum_hgss/)
+- `1xb1ml1` — I made a fork for the halo ce android port that adds dual screen functionality, fixes lots of bugs and runs better. You can download it it now for free — [source](https://www.reddit.com/r/AynThor/comments/1xb1ml1/i_made_a_fork_for_the_halo_ce_android_port_that/)
+- `1xb1thg` — QuestCompanion — a Pokémon companion app for Android — [source](https://www.reddit.com/r/AynThor/comments/1xb1thg/questcompanion_a_pokémon_companion_app_for_android/)
+- `1xb1x09` — I made a fork for the halo ce android port that adds dual screen functionality, fixes lots of bugs and runs better. You can download it now for free — [source](https://www.reddit.com/r/AynThor/comments/1xb1x09/i_made_a_fork_for_the_halo_ce_android_port_that/)
+- `1xb29ou` — Blip 1.3.0 is out on Google Play: a new Home, themes, manuals and 13 more systems — [source](https://www.reddit.com/r/AynThor/comments/1xb29ou/blip_130_is_out_on_google_play_a_new_home_themes/)
+- `1xb3zc1` — SquareDS - Spotify and YouTube Music — [source](https://www.reddit.com/r/AynThor/comments/1xb3zc1/squareds_spotify_and_youtube_music/)
+- `1xbcj65` — Update 0.0.4 Of the Rabbit hole is out — [source](https://www.reddit.com/r/AynThor/comments/1xbcj65/update_004_of_the_rabbit_hole_is_out/)
+- `1xbdp1h` — Links awakening port — [source](https://www.reddit.com/r/AynThor/comments/1xbdp1h/links_awakening_port/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl 1x7e3m9 1x7hv7a 1x7kyuo 1x7tayw 1x7trwl 1x7yoho 1x87kiu 1x8csjt 1x8gblu 1x8r8eh 1x8vgek 1x909wc 1x9aoez 1x9ctta 1x9hax7 1x9lc92 1x9li22 1xajm6v 1xa87y8
+/approved 1x3zrn9 1x4c3gq 1x4cp1c 1x4crif 1x4d0as 1x4ef3n 1x4llv8 1x4qepz 1x4u6hy 1x51y9g 1x53p2r 1x5asba 1x5lgmv 1x6q66j 1x71e8w 1x72txv 1x73xnl 1x7e3m9 1x7hv7a 1x7kyuo 1x7tayw 1x7trwl 1x7yoho 1x87kiu 1x8csjt 1x8gblu 1x8r8eh 1x8vgek 1x909wc 1x9aoez 1x9ctta 1x9hax7 1x9lc92 1x9li22 1xajm6v 1xa87y8 1xauknx 1xay9fi 1xb1ml1 1xb1thg 1xb1x09 1xb29ou 1xb3zc1 1xbcj65 1xbdp1h
 ```
 
 ## Approved (4)
