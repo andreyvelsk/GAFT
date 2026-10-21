@@ -14,7 +14,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xay9fi/pokedaisy_130_is_out_ds_games_platinum_hgss/",
       "createdUtc": 1792516942,
       "firstSeenAt": "2026-10-21T06:25:22.332Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "pokedaisy",
+      "decidedAt": "2026-10-21T06:47:17.485Z"
     },
     {
       "id": "1xb29ou",
@@ -30,7 +32,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xb3zc1/squareds_spotify_and_youtube_music/",
       "createdUtc": 1792529859,
       "firstSeenAt": "2026-10-21T06:25:22.332Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "square-ds",
+      "decidedAt": "2026-10-21T06:47:17.485Z"
     }
   ]
 }
