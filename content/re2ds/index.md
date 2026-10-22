@@ -42,4 +42,4 @@ RE2DS is a modified Dolphin emulator that brings a new way to experience **Resid
   - Select **RE2DS-GameCube.json**.
 - Select **RE2DS** as the emulator for Resident Evil 2.
 
-See the project page: [mediafire.com](https://www.mediafire.com/file/t36zobcfawausto/RE2DS-0.73.apk/file)
+See the project page: [github.com](https://github.com/mesho3d/RE2DS)
