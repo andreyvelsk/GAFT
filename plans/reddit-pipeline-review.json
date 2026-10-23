@@ -22,7 +22,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xcfl3f/i_made_a_live_secondscreen_companion_for_final/",
       "createdUtc": 1792667234,
       "firstSeenAt": "2026-10-23T06:15:25.107Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "ffxii-thor-companion",
+      "decidedAt": "2026-10-23T07:00:33.251Z"
     },
     {
       "id": "1xci70t",
@@ -46,7 +48,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xcodmi/update_wiids_v10_live_now/",
       "createdUtc": 1792688790,
       "firstSeenAt": "2026-10-23T06:15:25.107Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "wiids",
+      "decidedAt": "2026-10-23T07:00:33.251Z"
     },
     {
       "id": "1xcr4hm",
@@ -62,7 +66,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xd0rrf/gba_duo_plugandplay_companion_packs_for_your_game/",
       "createdUtc": 1792718978,
       "firstSeenAt": "2026-10-23T06:15:25.107Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "gba-duo",
+      "decidedAt": "2026-10-23T07:00:33.251Z"
     },
     {
       "id": "1xd437y",
