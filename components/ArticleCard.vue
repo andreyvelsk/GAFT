@@ -73,8 +73,11 @@ const props = defineProps<{
 const DEFAULT_CARD_IMAGE = '/default_card.webp'
 
 const media = computed<ArticleMedia[]>(() => {
-  if (props.article.media.length) {
-    return props.article.media
+  const articleMedia = props.article.media
+  const mediaLength = articleMedia?.length
+
+  if (articleMedia && typeof mediaLength === 'number' && Number.isFinite(mediaLength) && mediaLength > 0) {
+    return articleMedia
   }
 
   return [{ type: 'image', url: DEFAULT_CARD_IMAGE }]

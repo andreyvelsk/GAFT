@@ -13,7 +13,7 @@ export interface Article {
   date: string
   slug: string
   category: string
-  media: ArticleMedia[]
+  media?: ArticleMedia[]
   tags?: string[]
   status?: string
   // Marks content generated automatically from a source (e.g. "ai")
