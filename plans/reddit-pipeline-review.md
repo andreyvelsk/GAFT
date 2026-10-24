@@ -12,6 +12,7 @@
 - `1xd437y` — Ocarina of Time 3D -Android Native — [source](https://www.reddit.com/r/AynThor/comments/1xd437y/ocarina_of_time_3d_android_native/)
 - `1xdgi51` — DuoBeam v0.8.9: stream both Thor screens to Android TV, Samsung (Tizen) TVs and now Windows PCs — [source](https://www.reddit.com/r/AynThor/comments/1xdgi51/duobeam_v089_stream_both_thor_screens_to_android/)
 - `1xdhuw7` — Eden Duo 1.3.2: Breath of the Wild and Castlevania: Belmont's Curse companions, plus a library that shows every dualscreen game — [source](https://www.reddit.com/r/AynThor/comments/1xdhuw7/eden_duo_132_breath_of_the_wild_and_castlevania/)
+  - error: agent "update" failed to produce valid structured output after 2 attempt(s)
 - `1xdkytk` — Kingdom Hearts 358/2 Days running natively on the AYN Thor, both screens (open-source Android port, beta 2) — [source](https://www.reddit.com/r/AynThor/comments/1xdkytk/kingdom_hearts_3582_days_running_natively_on_the/)
 - `1xdmdsi` — Thor Auto Translate — translate game dialogue on your Thor’s lower screen — [source](https://www.reddit.com/r/AynThor/comments/1xdmdsi/thor_auto_translate_translate_game_dialogue_on/)
 - `1xdnywg` — Online Dragon’s Crown running natively with PC crossplatform through OpenCrown! — [source](https://www.reddit.com/r/AynThor/comments/1xdnywg/online_dragons_crown_running_natively_with_pc/)
