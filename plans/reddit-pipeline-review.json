@@ -92,8 +92,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xdhuw7/eden_duo_132_breath_of_the_wild_and_castlevania/",
       "createdUtc": 1792770841,
       "firstSeenAt": "2026-10-24T06:14:04.807Z",
-      "status": "pending",
-      "error": "agent \"update\" failed to produce valid structured output after 2 attempt(s)"
+      "status": "approved",
+      "slug": "eden-duo",
+      "decidedAt": "2026-10-24T20:34:01.310Z"
     },
     {
       "id": "1xdkytk",
