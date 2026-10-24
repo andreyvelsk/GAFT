@@ -77,6 +77,87 @@
       "createdUtc": 1792729003,
       "firstSeenAt": "2026-10-23T06:15:25.107Z",
       "status": "pending"
+    },
+    {
+      "id": "1xdgi51",
+      "title": "DuoBeam v0.8.9: stream both Thor screens to Android TV, Samsung (Tizen) TVs and now Windows PCs",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdgi51/duobeam_v089_stream_both_thor_screens_to_android/",
+      "createdUtc": 1792767756,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdhuw7",
+      "title": "Eden Duo 1.3.2: Breath of the Wild and Castlevania: Belmont's Curse companions, plus a library that shows every dualscreen game",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdhuw7/eden_duo_132_breath_of_the_wild_and_castlevania/",
+      "createdUtc": 1792770841,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending",
+      "error": "agent \"update\" failed to produce valid structured output after 2 attempt(s)"
+    },
+    {
+      "id": "1xdkytk",
+      "title": "Kingdom Hearts 358/2 Days running natively on the AYN Thor, both screens (open-source Android port, beta 2)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdkytk/kingdom_hearts_3582_days_running_natively_on_the/",
+      "createdUtc": 1792777792,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdmdsi",
+      "title": "Thor Auto Translate — translate game dialogue on your Thor’s lower screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdmdsi/thor_auto_translate_translate_game_dialogue_on/",
+      "createdUtc": 1792780980,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdnywg",
+      "title": "Online Dragon’s Crown running natively with PC crossplatform through OpenCrown!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdnywg/online_dragons_crown_running_natively_with_pc/",
+      "createdUtc": 1792784572,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdpuec",
+      "title": "ZomboidDS 1.5: Project Zomboid on Android with two screens. TVs and radios, building, tailoring and your own tab order on the bottom screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdpuec/zomboidds_15_project_zomboid_on_android_with_two/",
+      "createdUtc": 1792789002,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdqu9z",
+      "title": "GOW 3 port",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdqu9z/gow_3_port/",
+      "createdUtc": 1792791400,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdt761",
+      "title": "Game Log - Tracker (RA Companion App)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdt761/game_log_tracker_ra_companion_app/",
+      "createdUtc": 1792797648,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdzfxg",
+      "title": "I made a Kid Icarus Uprising: C-Stick & Gyro Patch",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdzfxg/i_made_a_kid_icarus_uprising_cstick_gyro_patch/",
+      "createdUtc": 1792816861,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xdzijy",
+      "title": "I made a Kid Icarus Uprising: C-Stick & Gyro Patch",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xdzijy/i_made_a_kid_icarus_uprising_cstick_gyro_patch/",
+      "createdUtc": 1792817106,
+      "firstSeenAt": "2026-10-24T06:14:04.807Z",
+      "status": "pending"
     }
   ]
 }
