@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 15 · Approved: 4 · Rejected: 0
+> Pending: 21 · Approved: 4 · Rejected: 0
 
-## Pending (15)
+## Pending (21)
 
 - `1xcd4u2` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xcd4u2/runelight_a_simpler_led_app_for_the_thor_based_on/)
 - `1xce1s4` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xce1s4/runelight_a_simpler_led_app_for_the_thor_based_on/)
@@ -19,11 +19,17 @@
 - `1xdt761` — Game Log - Tracker (RA Companion App) — [source](https://www.reddit.com/r/AynThor/comments/1xdt761/game_log_tracker_ra_companion_app/)
 - `1xdzfxg` — I made a Kid Icarus Uprising: C-Stick & Gyro Patch — [source](https://www.reddit.com/r/AynThor/comments/1xdzfxg/i_made_a_kid_icarus_uprising_cstick_gyro_patch/)
 - `1xdzijy` — I made a Kid Icarus Uprising: C-Stick & Gyro Patch — [source](https://www.reddit.com/r/AynThor/comments/1xdzijy/i_made_a_kid_icarus_uprising_cstick_gyro_patch/)
+- `1xe1pl6` — NakamaList (MAL client) proper dualscreen support — [source](https://www.reddit.com/r/AynThor/comments/1xe1pl6/nakamalist_mal_client_proper_dualscreen_support/)
+- `1xe3krb` — Eden Duo 1.3.2.2: Super Mario Odyssey and Zelda: Echoes of Wisdom companions — [source](https://www.reddit.com/r/AynThor/comments/1xe3krb/eden_duo_1322_super_mario_odyssey_and_zelda/)
+- `1xe54zj` — Durarara!! 3way standoff -alley- V English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xe54zj/durarara_3way_standoff_alley_v_english/)
+- `1xe8e2t` — GitHub - mtklein/thorhud: Bottom-screen performance dashboard for the AYN Thor on Armada OS — [source](https://www.reddit.com/r/AynThor/comments/1xe8e2t/github_mtkleinthorhud_bottomscreen_performance/)
+- `1xeiv1c` — [Beta] BOTWRecompAndroid: Breath of the Wild statically recompiled for Android — [source](https://www.reddit.com/r/AynThor/comments/1xeiv1c/beta_botwrecompandroid_breath_of_the_wild/)
+- `1xelf8r` — Papaya 1.1.0 is out! New advanced search function, custom collections and more — [source](https://www.reddit.com/r/AynThor/comments/1xelf8r/papaya_110_is_out_new_advanced_search_function/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy
+/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r
 ```
 
 ## Approved (4)
