@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 21 · Approved: 4 · Rejected: 0
+> Pending: 31 · Approved: 4 · Rejected: 0
 
-## Pending (21)
+## Pending (31)
 
 - `1xcd4u2` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xcd4u2/runelight_a_simpler_led_app_for_the_thor_based_on/)
 - `1xce1s4` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xce1s4/runelight_a_simpler_led_app_for_the_thor_based_on/)
@@ -25,11 +25,21 @@
 - `1xe8e2t` — GitHub - mtklein/thorhud: Bottom-screen performance dashboard for the AYN Thor on Armada OS — [source](https://www.reddit.com/r/AynThor/comments/1xe8e2t/github_mtkleinthorhud_bottomscreen_performance/)
 - `1xeiv1c` — [Beta] BOTWRecompAndroid: Breath of the Wild statically recompiled for Android — [source](https://www.reddit.com/r/AynThor/comments/1xeiv1c/beta_botwrecompandroid_breath_of_the_wild/)
 - `1xelf8r` — Papaya 1.1.0 is out! New advanced search function, custom collections and more — [source](https://www.reddit.com/r/AynThor/comments/1xelf8r/papaya_110_is_out_new_advanced_search_function/)
+- `1xew036` — OpenFusion:Pocket v2.0 — FusionFall on Android with a Dual-Screen Companion — [source](https://www.reddit.com/r/AynThor/comments/1xew036/openfusionpocket_v20_fusionfall_on_android_with_a/)
+- `1xez6zt` — FFXII companion 0.16 for the Thor: the map fills in as you explore now, plus new icons and a much lighter game script — [source](https://www.reddit.com/r/AynThor/comments/1xez6zt/ffxii_companion_016_for_the_thor_the_map_fills_in/)
+- `1xf551o` — Paper Mario 64 3DS Port Works on AYN Thor! — [source](https://www.reddit.com/r/AynThor/comments/1xf551o/paper_mario_64_3ds_port_works_on_ayn_thor/)
+- `1xf70dc` — Thor Back Button Hero — [source](https://www.reddit.com/r/AynThor/comments/1xf70dc/thor_back_button_hero/)
+- `1xfag6g` — I made a fork of RGC's ES-DE Directories to match the updated versions of ES-DE — [source](https://www.reddit.com/r/AynThor/comments/1xfag6g/i_made_a_fork_of_rgcs_esde_directories_to_match/)
+- `1xfbmoi` — We're now able to use Switch 2 Joycons as a mouse and keyboard on Android! (and as gamepads and motion controllers) — [source](https://www.reddit.com/r/AynThor/comments/1xfbmoi/were_now_able_to_use_switch_2_joycons_as_a_mouse/)
+- `1xfd949` — SquareDS - Update — [source](https://www.reddit.com/r/AynThor/comments/1xfd949/squareds_update/)
+- `1xfi47c` — WiiDS 1.1 is out! New mod, Dolphin save imports, Cocoon shortcuts, Galaxy fixes, Discord, and more — [source](https://www.reddit.com/r/AynThor/comments/1xfi47c/wiids_11_is_out_new_mod_dolphin_save_imports/)
+- `1xfj5ew` — Back Button Hero 1.3.0: one button, many possibilities — [source](https://www.reddit.com/r/AynThor/comments/1xfj5ew/back_button_hero_130_one_button_many_possibilities/)
+- `1xfnz74` — Introducing Cemu LD+: an Android Cemu build made for LEGO Dimensions (fixed lighting at 720p and 1080p, a Toy Pad on the second screen, abilities, teams) — [source](https://www.reddit.com/r/AynThor/comments/1xfnz74/introducing_cemu_ld_an_android_cemu_build_made/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r
+/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r 1xew036 1xez6zt 1xf551o 1xf70dc 1xfag6g 1xfbmoi 1xfd949 1xfi47c 1xfj5ew 1xfnz74
 ```
 
 ## Approved (4)
