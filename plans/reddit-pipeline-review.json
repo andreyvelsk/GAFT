@@ -159,6 +159,140 @@
       "createdUtc": 1792817106,
       "firstSeenAt": "2026-10-24T06:14:04.807Z",
       "status": "pending"
+    },
+    {
+      "id": "1xe1pl6",
+      "title": "NakamaList (MAL client) proper dualscreen support",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xe1pl6/nakamalist_mal_client_proper_dualscreen_support/",
+      "createdUtc": 1792824760,
+      "firstSeenAt": "2026-10-25T06:14:19.100Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xe3krb",
+      "title": "Eden Duo 1.3.2.2: Super Mario Odyssey and Zelda: Echoes of Wisdom companions",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xe3krb/eden_duo_1322_super_mario_odyssey_and_zelda/",
+      "createdUtc": 1792831671,
+      "firstSeenAt": "2026-10-25T06:14:19.100Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xe54zj",
+      "title": "Durarara!! 3way standoff -alley- V English Translation Complete",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xe54zj/durarara_3way_standoff_alley_v_english/",
+      "createdUtc": 1792837460,
+      "firstSeenAt": "2026-10-25T06:14:19.100Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xe8e2t",
+      "title": "GitHub - mtklein/thorhud: Bottom-screen performance dashboard for the AYN Thor on Armada OS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xe8e2t/github_mtkleinthorhud_bottomscreen_performance/",
+      "createdUtc": 1792847738,
+      "firstSeenAt": "2026-10-25T06:14:19.100Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xeiv1c",
+      "title": "[Beta] BOTWRecompAndroid: Breath of the Wild statically recompiled for Android",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xeiv1c/beta_botwrecompandroid_breath_of_the_wild/",
+      "createdUtc": 1792873379,
+      "firstSeenAt": "2026-10-25T06:14:19.100Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xelf8r",
+      "title": "Papaya 1.1.0 is out! New advanced search function, custom collections and more",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xelf8r/papaya_110_is_out_new_advanced_search_function/",
+      "createdUtc": 1792880033,
+      "firstSeenAt": "2026-10-25T06:14:19.100Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xew036",
+      "title": "OpenFusion:Pocket v2.0 — FusionFall on Android with a Dual-Screen Companion",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xew036/openfusionpocket_v20_fusionfall_on_android_with_a/",
+      "createdUtc": 1792913420,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "approved",
+      "slug": "openfusion-pocket",
+      "decidedAt": "2026-10-26T07:32:08.462Z"
+    },
+    {
+      "id": "1xez6zt",
+      "title": "FFXII companion 0.16 for the Thor: the map fills in as you explore now, plus new icons and a much lighter game script",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xez6zt/ffxii_companion_016_for_the_thor_the_map_fills_in/",
+      "createdUtc": 1792925104,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "approved",
+      "slug": "ffxii-thor-companion",
+      "decidedAt": "2026-10-26T07:32:08.462Z"
+    },
+    {
+      "id": "1xf551o",
+      "title": "Paper Mario 64 3DS Port Works on AYN Thor!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xf551o/paper_mario_64_3ds_port_works_on_ayn_thor/",
+      "createdUtc": 1792941763,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xf70dc",
+      "title": "Thor Back Button Hero",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xf70dc/thor_back_button_hero/",
+      "createdUtc": 1792946177,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xfag6g",
+      "title": "I made a fork of RGC's ES-DE Directories to match the updated versions of ES-DE",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfag6g/i_made_a_fork_of_rgcs_esde_directories_to_match/",
+      "createdUtc": 1792954305,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xfbmoi",
+      "title": "We're now able to use Switch 2 Joycons as a mouse and keyboard on Android! (and as gamepads and motion controllers)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfbmoi/were_now_able_to_use_switch_2_joycons_as_a_mouse/",
+      "createdUtc": 1792957107,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xfd949",
+      "title": "SquareDS - Update",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfd949/squareds_update/",
+      "createdUtc": 1792960940,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xfi47c",
+      "title": "WiiDS 1.1 is out! New mod, Dolphin save imports, Cocoon shortcuts, Galaxy fixes, Discord, and more",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfi47c/wiids_11_is_out_new_mod_dolphin_save_imports/",
+      "createdUtc": 1792973626,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "approved",
+      "slug": "wiids",
+      "decidedAt": "2026-10-26T07:32:08.462Z"
+    },
+    {
+      "id": "1xfj5ew",
+      "title": "Back Button Hero 1.3.0: one button, many possibilities",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfj5ew/back_button_hero_130_one_button_many_possibilities/",
+      "createdUtc": 1792976478,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xfnz74",
+      "title": "Introducing Cemu LD+: an Android Cemu build made for LEGO Dimensions (fixed lighting at 720p and 1080p, a Toy Pad on the second screen, abilities, teams)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfnz74/introducing_cemu_ld_an_android_cemu_build_made/",
+      "createdUtc": 1792991402,
+      "firstSeenAt": "2026-10-26T06:19:52.025Z",
+      "status": "pending"
     }
   ]
 }
