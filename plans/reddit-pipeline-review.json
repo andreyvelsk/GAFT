@@ -214,7 +214,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xew036/openfusionpocket_v20_fusionfall_on_android_with_a/",
       "createdUtc": 1792913420,
       "firstSeenAt": "2026-10-26T06:19:52.025Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "openfusion-pocket",
+      "decidedAt": "2026-10-26T07:32:08.462Z"
     },
     {
       "id": "1xez6zt",
@@ -222,7 +224,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xez6zt/ffxii_companion_016_for_the_thor_the_map_fills_in/",
       "createdUtc": 1792925104,
       "firstSeenAt": "2026-10-26T06:19:52.025Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "ffxii-thor-companion",
+      "decidedAt": "2026-10-26T07:32:08.462Z"
     },
     {
       "id": "1xf551o",
@@ -270,7 +274,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xfi47c/wiids_11_is_out_new_mod_dolphin_save_imports/",
       "createdUtc": 1792973626,
       "firstSeenAt": "2026-10-26T06:19:52.025Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "wiids",
+      "decidedAt": "2026-10-26T07:32:08.462Z"
     },
     {
       "id": "1xfj5ew",
