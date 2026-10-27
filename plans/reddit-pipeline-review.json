@@ -293,6 +293,40 @@
       "createdUtc": 1792991402,
       "firstSeenAt": "2026-10-26T06:19:52.025Z",
       "status": "pending"
+    },
+    {
+      "id": "1xfq4lc",
+      "title": "I made a bottom-screen keyboard and touchpad for my Thor on ArmadaOS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfq4lc/i_made_a_bottomscreen_keyboard_and_touchpad_for/",
+      "createdUtc": 1792999466,
+      "firstSeenAt": "2026-10-27T06:51:04.689Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xfrmok",
+      "title": "Svr 2011 Recomp Working on Ayn Thor Max",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xfrmok/svr_2011_recomp_working_on_ayn_thor_max/",
+      "createdUtc": 1793005270,
+      "firstSeenAt": "2026-10-27T06:51:04.689Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xgevz2",
+      "title": "Cocoon 3.1 - Game Switching Demo (OUT NOW)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xgevz2/cocoon_31_game_switching_demo_out_now/",
+      "createdUtc": 1793063077,
+      "firstSeenAt": "2026-10-27T06:51:04.689Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xggig9",
+      "title": "WalkThor Update: a free companion app for your bottom screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/",
+      "createdUtc": 1793067562,
+      "firstSeenAt": "2026-10-27T06:51:04.689Z",
+      "status": "approved",
+      "slug": "walkthor",
+      "decidedAt": "2026-10-27T07:40:53.483Z"
     }
   ]
 }
