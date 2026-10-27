@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 28 · Approved: 7 · Rejected: 0
+> Pending: 32 · Approved: 7 · Rejected: 0
 
-## Pending (28)
+## Pending (32)
 
 - `1xcd4u2` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xcd4u2/runelight_a_simpler_led_app_for_the_thor_based_on/)
 - `1xce1s4` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xce1s4/runelight_a_simpler_led_app_for_the_thor_based_on/)
@@ -32,11 +32,15 @@
 - `1xfd949` — SquareDS - Update — [source](https://www.reddit.com/r/AynThor/comments/1xfd949/squareds_update/)
 - `1xfj5ew` — Back Button Hero 1.3.0: one button, many possibilities — [source](https://www.reddit.com/r/AynThor/comments/1xfj5ew/back_button_hero_130_one_button_many_possibilities/)
 - `1xfnz74` — Introducing Cemu LD+: an Android Cemu build made for LEGO Dimensions (fixed lighting at 720p and 1080p, a Toy Pad on the second screen, abilities, teams) — [source](https://www.reddit.com/r/AynThor/comments/1xfnz74/introducing_cemu_ld_an_android_cemu_build_made/)
+- `1xfq4lc` — I made a bottom-screen keyboard and touchpad for my Thor on ArmadaOS — [source](https://www.reddit.com/r/AynThor/comments/1xfq4lc/i_made_a_bottomscreen_keyboard_and_touchpad_for/)
+- `1xfrmok` — Svr 2011 Recomp Working on Ayn Thor Max — [source](https://www.reddit.com/r/AynThor/comments/1xfrmok/svr_2011_recomp_working_on_ayn_thor_max/)
+- `1xgevz2` — Cocoon 3.1 - Game Switching Demo (OUT NOW) — [source](https://www.reddit.com/r/AynThor/comments/1xgevz2/cocoon_31_game_switching_demo_out_now/)
+- `1xggig9` — WalkThor Update: a free companion app for your bottom screen — [source](https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r 1xf551o 1xf70dc 1xfag6g 1xfbmoi 1xfd949 1xfj5ew 1xfnz74
+/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r 1xf551o 1xf70dc 1xfag6g 1xfbmoi 1xfd949 1xfj5ew 1xfnz74 1xfq4lc 1xfrmok 1xgevz2 1xggig9
 ```
 
 ## Approved (7)
