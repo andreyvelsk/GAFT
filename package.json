@@ -18,6 +18,7 @@
     "convert:previews:all": "node scripts/convert-previews.js --all",
     "reddit:pipeline": "tsx scripts/reddit-pipeline/index.ts",
     "reddit:create": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts create",
+    "github:create": "tsx scripts/github-create.ts",
     "reddit:update": "tsx scripts/reddit-pipeline/scripts/manual-agents.ts update",
     "reddit:compare": "tsx scripts/reddit-pipeline/scripts/compare-backends.ts"
   },
