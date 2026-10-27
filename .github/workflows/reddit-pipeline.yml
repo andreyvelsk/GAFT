@@ -38,8 +38,8 @@ on:
         description: 'Max posts to process (0 = no limit)'
         type: string
         default: '0'
-      subreddit:
-        description: 'Subreddit to scan'
+      subreddits:
+        description: 'Subreddits to scan as JSON array or comma/space separated (run sequentially)'
         type: string
         default: 'AynThor'
       batch_size:
@@ -151,6 +151,7 @@ jobs:
       REDDIT_CREATE_MODEL: ${{ vars.REDDIT_CREATE_MODEL }}
       REDDIT_UPDATE_MODEL: ${{ vars.REDDIT_UPDATE_MODEL }}
       REDDIT_SUBREDDIT: ${{ vars.REDDIT_SUBREDDIT }}
+      REDDIT_SUBREDDITS: ${{ vars.REDDIT_SUBREDDITS }}
       REDDIT_LOOKBACK_HOURS: ${{ vars.REDDIT_LOOKBACK_HOURS }}
       REDDIT_BATCH_SIZE: ${{ vars.REDDIT_BATCH_SIZE }}
       # Manual dispatch inputs override the repository variables.
@@ -237,6 +238,7 @@ jobs:
             plans/reddit-pipeline-report.md \
             plans/reddit-pipeline-review.json \
             plans/reddit-pipeline-review.md
+          rm -rf plans/reddit-pipeline-reports
 
       - name: Run the reddit pipeline
         env:
@@ -247,7 +249,7 @@ jobs:
           IN_PREFILTER: ${{ github.event.inputs.prefilter }}
           IN_LOOKBACK_HOURS: ${{ github.event.inputs.lookback_hours }}
           IN_MAX_POSTS: ${{ github.event.inputs.max_posts }}
-          IN_SUBREDDIT: ${{ github.event.inputs.subreddit }}
+          IN_SUBREDDITS: ${{ github.event.inputs.subreddits }}
           IN_BATCH_SIZE: ${{ github.event.inputs.batch_size }}
           IN_BACKEND: ${{ github.event.inputs.backend }}
           IN_FILTER_BACKEND: ${{ github.event.inputs.filter_backend }}
@@ -267,15 +269,14 @@ jobs:
           IN_CATEGORY_THRESHOLD: ${{ github.event.inputs.category_threshold }}
           IN_NOW: ${{ github.event.inputs.now }}
         run: |
-          # Build the CLI arguments from the manual dispatch inputs. Empty
-          # inputs are skipped so the CLI keeps the repository-variable value.
+          # Build the common CLI arguments once, then run each subreddit
+          # sequentially so all runs share the same checked-out branch and PR.
           args=()
           add() { if [ -n "$2" ]; then args+=("$1" "$2"); fi; }
 
           add --mode "$IN_MODE"
           add --hours "$IN_LOOKBACK_HOURS"
           add --max-posts "$IN_MAX_POSTS"
-          add --subreddit "$IN_SUBREDDIT"
           add --batch-size "$IN_BATCH_SIZE"
           add --backend "$IN_BACKEND"
           add --filter-backend "$IN_FILTER_BACKEND"
@@ -304,8 +305,40 @@ jobs:
             false|0|no) args+=(--no-dry-run) ;;
           esac
 
-          echo "Running: npx tsx scripts/reddit-pipeline/index.ts ${args[*]}"
-          npx tsx scripts/reddit-pipeline/index.ts "${args[@]}"
+          subreddits="${IN_SUBREDDITS:-${REDDIT_SUBREDDITS:-${REDDIT_SUBREDDIT:-AynThor}}}"
+          subreddit_list=()
+          if [[ "${subreddits//[[:space:]]/}" == \[* ]]; then
+            # Repository variables and workflow inputs are strings, so accept a
+            # JSON array as the structured form: ["AynThor", "NintendoDS"]
+            if ! parsed_subreddits="$(jq -er 'if type == "array" and length > 0 and all(.[]; type == "string" and test("^[A-Za-z0-9_]+$")) then .[] else error("Expected a non-empty array of subreddit names") end' <<< "$subreddits")"; then
+              echo '::error::Invalid subreddit JSON array.'
+              exit 1
+            fi
+            mapfile -t subreddit_list <<< "$parsed_subreddits"
+          else
+            IFS=', ' read -ra subreddit_list <<< "$subreddits"
+          fi
+
+          for subreddit in "${subreddit_list[@]}"; do
+            [ -n "$subreddit" ] || continue
+            if [[ ! "$subreddit" =~ ^[A-Za-z0-9_]+$ ]]; then
+              echo '::error::Invalid subreddit name; use names without the r/ prefix.'
+              exit 1
+            fi
+          done
+          mkdir -p plans/reddit-pipeline-reports
+          valid_subreddit=false
+          for subreddit in "${subreddit_list[@]}"; do
+            [ -n "$subreddit" ] || continue
+            valid_subreddit=true
+            run_args=("${args[@]}" --subreddit "$subreddit" --report-path "plans/reddit-pipeline-reports/$subreddit.json")
+            echo "Running: npx tsx scripts/reddit-pipeline/index.ts ${run_args[*]}"
+            npx tsx scripts/reddit-pipeline/index.ts "${run_args[@]}"
+          done
+          if [ "$valid_subreddit" = false ]; then
+            echo '::error::At least one subreddit must be configured.'
+            exit 1
+          fi
 
       - name: Detect content changes
         id: changes
@@ -329,9 +362,9 @@ jobs:
             if [ -f "$f" ]; then git add "$f"; fi
           done
           if [ "$REDDIT_MODE" = "review" ]; then
-            git commit -m "chore(reddit): update review ledger from r/AynThor"
+            git commit -m "chore(reddit): update review ledger from configured subreddits"
           else
-            git commit -m "chore(reddit): update project pages from r/AynThor"
+            git commit -m "chore(reddit): update project pages from configured subreddits"
           fi
           git push -u origin "$PR_BRANCH"
 
@@ -354,14 +387,14 @@ jobs:
           fi
           body_file="$(mktemp)"
           {
-            echo "Automated update generated by the r/AynThor pipeline."
+            echo "Automated update generated by the configured Reddit pipeline subreddits."
             echo ""
             if [ -f plans/reddit-pipeline-review.md ]; then
               cat plans/reddit-pipeline-review.md
               echo ""
             fi
-            if [ -f plans/reddit-pipeline-report.md ]; then
-              cat plans/reddit-pipeline-report.md
+            if compgen -G 'plans/reddit-pipeline-reports/*.md' > /dev/null; then
+              cat plans/reddit-pipeline-reports/*.md
             else
               echo "_Run report is available as the \`reddit-pipeline-report\` artifact._"
             fi
@@ -397,16 +430,16 @@ jobs:
       - name: Publish run report to the job summary
         if: always()
         run: |
-          if [ -f plans/reddit-pipeline-report.md ]; then
-            cat plans/reddit-pipeline-report.md >> "$GITHUB_STEP_SUMMARY"
+          if compgen -G 'plans/reddit-pipeline-reports/*.md' > /dev/null; then
+            cat plans/reddit-pipeline-reports/*.md >> "$GITHUB_STEP_SUMMARY"
             echo "" >> "$GITHUB_STEP_SUMMARY"
           fi
-          if [ -f plans/reddit-pipeline-report.json ]; then
+          if compgen -G 'plans/reddit-pipeline-reports/*.json' > /dev/null; then
             {
               echo '<details><summary>Raw JSON report</summary>'
               echo ''
               echo '```json'
-              cat plans/reddit-pipeline-report.json
+              cat plans/reddit-pipeline-reports/*.json
               echo '```'
               echo ''
               echo '</details>'
@@ -419,6 +452,5 @@ jobs:
         with:
           name: reddit-pipeline-report
           path: |
-            plans/reddit-pipeline-report.json
-            plans/reddit-pipeline-report.md
+            plans/reddit-pipeline-reports/
           if-no-files-found: warn
