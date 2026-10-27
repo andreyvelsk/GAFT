@@ -1,8 +1,8 @@
 # Reddit pipeline review
 
-> Pending: 32 · Approved: 7 · Rejected: 0
+> Pending: 31 · Approved: 8 · Rejected: 0
 
-## Pending (32)
+## Pending (31)
 
 - `1xcd4u2` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xcd4u2/runelight_a_simpler_led_app_for_the_thor_based_on/)
 - `1xce1s4` — Runelight — a simpler LED app for the Thor, based on Bifrost — [source](https://www.reddit.com/r/AynThor/comments/1xce1s4/runelight_a_simpler_led_app_for_the_thor_based_on/)
@@ -35,15 +35,14 @@
 - `1xfq4lc` — I made a bottom-screen keyboard and touchpad for my Thor on ArmadaOS — [source](https://www.reddit.com/r/AynThor/comments/1xfq4lc/i_made_a_bottomscreen_keyboard_and_touchpad_for/)
 - `1xfrmok` — Svr 2011 Recomp Working on Ayn Thor Max — [source](https://www.reddit.com/r/AynThor/comments/1xfrmok/svr_2011_recomp_working_on_ayn_thor_max/)
 - `1xgevz2` — Cocoon 3.1 - Game Switching Demo (OUT NOW) — [source](https://www.reddit.com/r/AynThor/comments/1xgevz2/cocoon_31_game_switching_demo_out_now/)
-- `1xggig9` — WalkThor Update: a free companion app for your bottom screen — [source](https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r 1xf551o 1xf70dc 1xfag6g 1xfbmoi 1xfd949 1xfj5ew 1xfnz74 1xfq4lc 1xfrmok 1xgevz2 1xggig9
+/approved 1xcd4u2 1xce1s4 1xci70t 1xcn36j 1xcr4hm 1xd437y 1xdgi51 1xdkytk 1xdmdsi 1xdnywg 1xdpuec 1xdqu9z 1xdt761 1xdzfxg 1xdzijy 1xe1pl6 1xe3krb 1xe54zj 1xe8e2t 1xeiv1c 1xelf8r 1xf551o 1xf70dc 1xfag6g 1xfbmoi 1xfd949 1xfj5ew 1xfnz74 1xfq4lc 1xfrmok 1xgevz2
 ```
 
-## Approved (7)
+## Approved (8)
 
 - `1xcfl3f` → `ffxii-thor-companion` — I made a live second-screen companion for Final Fantasy XII on the Thor. Public beta is out (free, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xcfl3f/i_made_a_live_secondscreen_companion_for_final/)
 - `1xcodmi` → `wiids` — UPDATE: WiiDS v1.0 LIVE NOW — [source](https://www.reddit.com/r/AynThor/comments/1xcodmi/update_wiids_v10_live_now/)
@@ -52,6 +51,7 @@ To approve, comment on this pull request:
 - `1xew036` → `openfusion-pocket` — OpenFusion:Pocket v2.0 — FusionFall on Android with a Dual-Screen Companion — [source](https://www.reddit.com/r/AynThor/comments/1xew036/openfusionpocket_v20_fusionfall_on_android_with_a/)
 - `1xez6zt` → `ffxii-thor-companion` — FFXII companion 0.16 for the Thor: the map fills in as you explore now, plus new icons and a much lighter game script — [source](https://www.reddit.com/r/AynThor/comments/1xez6zt/ffxii_companion_016_for_the_thor_the_map_fills_in/)
 - `1xfi47c` → `wiids` — WiiDS 1.1 is out! New mod, Dolphin save imports, Cocoon shortcuts, Galaxy fixes, Discord, and more — [source](https://www.reddit.com/r/AynThor/comments/1xfi47c/wiids_11_is_out_new_mod_dolphin_save_imports/)
+- `1xggig9` → `walkthor` — WalkThor Update: a free companion app for your bottom screen — [source](https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/)
 
 ## Rejected (0)
 

@@ -324,7 +324,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/",
       "createdUtc": 1793067562,
       "firstSeenAt": "2026-10-27T06:51:04.689Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "walkthor",
+      "decidedAt": "2026-10-27T07:40:53.483Z"
     }
   ]
 }
