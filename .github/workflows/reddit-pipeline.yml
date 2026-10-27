@@ -215,6 +215,29 @@ jobs:
               ;;
           esac
 
+      - name: Detect pull request state
+        id: pr_state
+        run: |
+          open_pr="$(gh pr list --head "$PR_BRANCH" --state open --json number --jq '.[0].number')"
+          if [ -n "$open_pr" ]; then
+            echo "existing=true" >> "$GITHUB_OUTPUT"
+            echo "Open pull request #$open_pr already exists; preserving plans/ files."
+          else
+            echo "existing=false" >> "$GITHUB_OUTPUT"
+            echo "No open pull request exists; the next run will create a fresh report."
+          fi
+
+      - name: Clear stale pipeline reports for a new pull request
+        if: steps.pr_state.outputs.existing == 'false'
+        run: |
+          # Reports are run artifacts, not durable state. The review ledger is
+          # also reset here because a new PR must not inherit old decisions.
+          rm -f \
+            plans/reddit-pipeline-report.json \
+            plans/reddit-pipeline-report.md \
+            plans/reddit-pipeline-review.json \
+            plans/reddit-pipeline-review.md
+
       - name: Run the reddit pipeline
         env:
           # Manual dispatch inputs. Empty values are skipped so the CLI falls
