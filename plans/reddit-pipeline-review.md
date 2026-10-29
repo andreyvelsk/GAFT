@@ -1,6 +1,6 @@
 # Reddit pipeline review
 
-> Pending: 1 · Approved: 3 · Rejected: 0
+> Pending: 1 · Approved: 2 · Rejected: 1
 
 ## Pending (1)
 
@@ -12,12 +12,11 @@ To approve, comment on this pull request:
 /approved 1xhwnxm
 ```
 
-## Approved (3)
+## Approved (2)
 
 - `1xi1dit` → `zeewolf-style-helicopter-game` — Zeewolf-style low-poly helicopter game using Thor’s two screens — [source](https://www.reddit.com/r/AynThor/comments/1xi1dit/zeewolfstyle_lowpoly_helicopter_game_using_thors/)
-- `1xi1h1k` → `eden-duo` — Dave The Diver DS Mod for Eden Duo is out now! Enjoy your new diving companion — [source](https://www.reddit.com/r/AynThor/comments/1xi1h1k/dave_the_diver_ds_mod_for_eden_duo_is_out_now/)
 - `1xi7ttr` → `pokedaisy` — POKEDAISY GEN 5 SUPPORT — [source](https://www.reddit.com/r/AynThor/comments/1xi7ttr/pokedaisy_gen_5_support/)
 
-## Rejected (0)
+## Rejected (1)
 
-_None._
+- `1xi1h1k` — Dave The Diver DS Mod for Eden Duo is out now! Enjoy your new diving companion — [source](https://www.reddit.com/r/AynThor/comments/1xi1h1k/dave_the_diver_ds_mod_for_eden_duo_is_out_now/)
