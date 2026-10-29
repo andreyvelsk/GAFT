@@ -14,7 +14,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xi1dit/zeewolfstyle_lowpoly_helicopter_game_using_thors/",
       "createdUtc": 1793223474,
       "firstSeenAt": "2026-10-29T06:12:10.013Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "zeewolf-style-helicopter-game",
+      "decidedAt": "2026-10-29T07:01:02.043Z"
     },
     {
       "id": "1xi1h1k",
@@ -22,7 +24,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xi1h1k/dave_the_diver_ds_mod_for_eden_duo_is_out_now/",
       "createdUtc": 1793223718,
       "firstSeenAt": "2026-10-29T06:12:10.013Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "eden-duo",
+      "decidedAt": "2026-10-29T07:01:02.043Z"
     },
     {
       "id": "1xi7ttr",
@@ -30,7 +34,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xi7ttr/pokedaisy_gen_5_support/",
       "createdUtc": 1793240280,
       "firstSeenAt": "2026-10-29T06:12:10.013Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "pokedaisy",
+      "decidedAt": "2026-10-29T07:01:02.043Z"
     }
   ]
 }
