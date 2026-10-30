@@ -48,7 +48,9 @@
           rel="noopener noreferrer"
         >project page</a>
       </template>
-      <template v-else>a source</template>
+      <template v-else>
+        a source
+      </template>
       and may contain inaccuracies or outdated information. Please verify
       details with the original source.
     </p>
