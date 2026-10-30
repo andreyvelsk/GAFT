@@ -6,7 +6,7 @@
     <!-- Back link -->
     <NuxtLink
       to="/"
-      class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors mb-8 group"
+      class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors mb-4 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 rounded"
     >
       <svg
         class="w-4 h-4 transition-transform group-hover:-translate-x-1"
@@ -32,18 +32,17 @@
     />
 
     <!-- Article Header -->
-    <header class="mb-8">
-      <CategoryBadge
-        :category="article.category"
-        class="mb-4"
-      />
+    <header class="mb-6">
       <!-- Category & Date & Like -->
-      <div class="flex items-center gap-3 mb-4">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <CategoryBadge
+          :category="article.category"
+        />
         <span class="text-sm text-gray-500">{{ formatDate(article.date) }}</span>
-        <span class="text-gray-700">·</span>
         <LikeButton
           :slug="article.slug"
           variant="inline"
+          class="ml-auto"
         />
       </div>
 
@@ -58,20 +57,12 @@
       </p>
     </header>
 
-    <!-- Source & project page links (from frontmatter config) -->
-    <SourceLinks
-      v-if="article.source || article.project_page"
+    <!-- Unified action group -->
+    <ProjectActions
       :source="article.source"
       :project-page="article.project_page"
+      class="mb-6"
     />
-
-    <!-- Obtainium deep link (only for GitHub project pages) -->
-    <div
-      v-if="article.project_page"
-      class="mb-8"
-    >
-      <ObtainiumButton :project-page="article.project_page" />
-    </div>
 
     <!-- Media Carousel -->
     <div
@@ -81,7 +72,7 @@
       <MediaCarousel :media="article.media" />
     </div>
 
-    <div class="prose mx-auto">
+    <div class="prose">
       <ContentRenderer :value="article">
         <template #empty>
           <div class="text-center py-12 text-gray-500">
