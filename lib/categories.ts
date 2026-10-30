@@ -74,12 +74,12 @@ export const CATEGORY_DEFINITIONS: Record<PageCategory, string> = {
 
 /** Short labels for the category filter UI. */
 export const CATEGORY_LABELS: Record<PageCategory, string> = {
-  game: 'Games',
-  app: 'Apps',
-  companion: 'Companions',
-  emulator: 'Emulators',
-  tool: 'Tools',
-  page: 'Pages',
+  game: 'Game',
+  app: 'App',
+  companion: 'Companion',
+  emulator: 'Emulator',
+  tool: 'Tool',
+  page: 'Page',
 };
 
 /**
