@@ -1,6 +1,6 @@
 ---
 title: "PokeDaisy"
-description: "A Game Boy, Game Boy Color, GBA and DS player for Android handhelds with two screens or one, with a live companion for Pokémon games and ROM hacks."
+description: "A Game Boy, Game Boy Color, GBA and DS player for Android handhelds with two screens or one, with a live companion for Pokémon games and ROM hacks of every generation from Red to Black."
 date: "2026-10-07 06:21"
 slug: "pokedaisy"
 category: "emulator"
@@ -18,7 +18,7 @@ project_page: "https://github.com/lidor30/pokedaisy"
 
 ## Description
 
-PokeDaisy is a Game Boy, Game Boy Color, GBA and Nintendo DS player for Android handhelds with two screens or one, made for Pokémon FireRed, LeafGreen, Emerald, Ruby, Sapphire, Red, Blue, Yellow, Gold, Silver, Crystal, Platinum, HeartGold, SoulSilver and popular ROM hacks of every generation. The game runs on the top screen. The bottom screen is a live companion that reads your game's memory as you play, so it always shows your real party, bag, map, battle matchups, Pokédex and a spoiler-free guide, drawn in the game's own menu style. It is free and open source, with no ads, accounts or tracking, and it updates itself. No games are included — bring your own legally dumped ROMs.
+PokeDaisy is a Game Boy, Game Boy Color, GBA and Nintendo DS player for Android handhelds with two screens or one, made for Pokémon FireRed, LeafGreen, Emerald, Ruby, Sapphire, Red, Blue, Yellow, Gold, Silver, Crystal, Platinum, HeartGold, SoulSilver, Black and popular ROM hacks of every generation. The game runs on the top screen. The bottom screen is a live companion that reads your game's memory as you play, so it always shows your real party, bag, map, battle matchups, Pokédex and a spoiler-free guide, drawn in the game's own menu style. It is free and open source, with no ads, accounts or tracking, and it updates itself. No games are included — bring your own legally dumped ROMs.
 
 Made for the AYN Thor. It also works on the Retroid Pocket Duo Lite (its 4:3 bottom screen has its own layout) and the Retroid Pocket 6 (single screen, tested), and should work on the Retroid Pocket Duo and the Anbernic RG DS, though not yet tested on real hardware. Any Android 8.0+ device runs the games. On a dual-screen device the companion gets the bottom screen to itself, and swapping screens is an option. On a single-screen device the companion is a panel beside the game: press BACK to slide it in over the game, tap the padlock on its edge to lock it beside the game, and drag that tab sideways to resize it; held upright, the game sits across the top with the companion docked under it. A HUD keeps your party, a minimap and your bag on the game screen, and the quick menu (L3) opens a ring of actions like a modern game's weapon wheel. For DS games, the touch screen goes on the bottom screen and one tap swaps it for the companion and back. Cast or plug in a TV and the game goes on the big screen while the companion stays in your hand.
 
@@ -37,6 +37,7 @@ Site and manual: [pokedaisy.com](https://pokedaisy.com). Video review: [youtube.
 - **CARD** – your trainer card, drawn exactly like the game's, front and back.
 - **STATES** – 10 save-state slots with screenshots.
 - **CHEEVOS** – RetroAchievements (beta, softcore): your progress and challenges, unlock popups, leaderboards and the game's own level-up fanfare on every unlock. Sign in from the top-screen Settings; your password is used once and never stored, only your username and RA's login token stay on the device, and the app talks only to RetroAchievements. Hardcore isn't available yet: RetroAchievements only accepts it from emulators it has validated, which takes 6+ months of the app being public.
+- **NUZLOCKE** – per game (GBA games, except Emerald Rogue): keeps score of a Nuzlocke run, the first encounter in each area and every fainted Pokémon out for good, with a gravestone on its party slot.
 - **CHEATS** – GameShark, Action Replay and CodeBreaker, toggled from the companion.
 - Customizable tabs: pick which ones show up in the tab bar; the rest wait as app icons in the MORE tab.
 
@@ -75,6 +76,7 @@ Site and manual: [pokedaisy.com](https://pokedaisy.com). Video review: [youtube.
 Any Game Boy, Game Boy Color, GBA or DS game plays. The companion needs one of the games below, in the exact version listed (ROM hacks are recognized by their file, so another version shows a "not supported" notice). ✅ works · ◐ partly · — not yet.
 
 - Pokémon Red / Blue (GB, USA/Europe): ✅ Party, Bag, Map, Dex · ◐ Battle · — Guide
+- PureRed / PureBlue (GB, 2.7.6): ✅ Party, Bag, Map, Dex · ◐ Battle · — Guide
 - Pokémon Yellow (GB, USA/Europe): ✅ Party, Bag, Map, Dex · ◐ Battle · — Guide
 - Pokémon Yellow (GB, DE / FR / IT / ES): ✅ Party, Bag, Map, Dex · ◐ Battle · — Guide
 - Pokémon Gold / Silver (GBC, USA/Europe): ✅ Party, Bag, Map, Dex · ◐ Battle · — Guide
@@ -95,6 +97,7 @@ Any Game Boy, Game Boy Color, GBA or DS game plays. The companion needs one of t
 - Pokémon Platinum (DS, USA rev 1): ✅ Party, Bag, Map, Dex, Guide · ◐ Battle
 - Pokémon HeartGold (DS, USA): ✅ Party, Bag, Map, Dex, Guide · — Battle
 - Pokémon SoulSilver (DS, USA): ✅ Party, Bag, Map, Dex, Guide · — Battle
+- Pokémon Black (DS, USA/Europe): ✅ Party, Bag, Map, Dex, Guide · ◐ Battle
 - Pokémon Unbound (2.1.1.1): ✅ Party, Bag, Map, Dex, Guide · ◐ Battle
 - Pokémon Unbound (2.1.1.1 French): ✅ Party, Bag, Map, Dex, Guide · ◐ Battle
 - Pokémon Radical Red (4.1): ✅ Party, Bag, Map, Dex, Guide · ◐ Battle
@@ -125,15 +128,18 @@ Any Game Boy, Game Boy Color, GBA or DS game plays. The companion needs one of t
 - Super Mariomon (1.2.1–1.3, 1.5.1, 1.5.2): ✅ Party, Bag, Map, Dex · ◐ Battle, ◐ Guide
 - Recharged Emerald (2.2.5, 2.2.8, Rebalanced): ✅ Party, Bag, Map, Dex · ◐ Battle, ◐ Guide
 - Elite Redux (2.65.3b, 2.65.4.1b): ✅ Party, Bag, Map, Dex · ◐ Battle, ◐ Guide
+- Team Rocket Dragonsden (1.5): ✅ Party, Bag · ◐ Battle, ◐ Map · — Dex · ◐ Guide
+- Wishes of Tomorrow (1.2.6): ✅ Party, Bag, Map, Dex · ◐ Battle, ◐ Guide
+- Dreamstone Mysteries (the one release): ✅ Party, Bag, Map, Dex · ◐ Battle, ◐ Guide
 - Emerald Rogue (2.2.1-EX): ✅ Party, Bag, Battle, Map, Dex · — Guide
 - Pokémon SoulGold (1.1.4, 1.2): ✅ Party, Bag, Map, Dex · ◐ Battle, ◐ Guide
 - Pokémon R.O.W.E. (2.1.9.1 Experimental): ✅ Party, Bag · ◐ Battle, ◐ Map, ◐ Dex · — Guide
 
 Red, Blue, Yellow, Gold, Silver, Crystal and the Crystal hacks Crystal Clear, Prism and Polished Crystal are the Game Boy games the companion reads, each in the game's own look (its font, icons and town maps, rebuilt from your ROM; Red and Blue in the colours a Super Game Boy gives them). The German, French, Italian and Spanish Yellows show their own names, Pokédex pages and battle words. Prism shows its own Pokémon, moves, types, six town maps and its own Pokédex. Polished Crystal shows its own Pokémon (regional forms included), moves, types, items, its Johto, Kanto and Orange Islands maps and its 289 in National order; its faithful builds keep the original games' types and moves.
 
-Platinum, HeartGold and SoulSilver are the DS games the companion reads, in the USA release listed (Platinum's revision 1); their pictures, Pokédex pages and maps come from your cart. Platinum's battles show in the BATTLE tab, HeartGold's and SoulSilver's not yet, and on the DS the battle buttons don't press the game's menus yet. On a one-screen device a DS game shows its top screen; the touch screen needs a second screen for now.
+Platinum, HeartGold, SoulSilver and Black are the DS games the companion reads, in the releases listed (Platinum's revision 1, Black's USA/Europe release); their pictures, Pokédex pages and maps come from your cart. Platinum's and Black's battles show in the BATTLE tab, HeartGold's and SoulSilver's not yet, and on the DS the battle buttons don't press the game's menus yet. On a one-screen device a DS game shows its top screen; the touch screen needs a second screen for now.
 
-Map ◐ means place names only, without the map picture. Guide ◐ means the live pages only (the wild encounters here and the next boss), without the area lists. Battle ◐ means the battle panes work but haven't been checked in every kind of battle. The guides were written from each game's own data and may contain mistakes; the app says so the first time you open one.
+Map ◐ means place names only, without the map picture. Guide ◐ means the live pages only (the wild encounters here and the next boss), without the area lists. Battle ◐ means the battle panes work but haven't been checked in every kind of battle. Team Rocket Dragonsden is DragonsdenTV's Team Rocket Edition, not FireRed Rocket Edition. With Wishes of Tomorrow's randomizer on, the guide and the Pokédex's AREA show the wild Pokémon your save meets. The guides were written from each game's own data and may contain mistakes; the app says so the first time you open one.
 
 ## Setup guide
 
