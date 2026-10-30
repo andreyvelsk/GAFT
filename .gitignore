@@ -16,6 +16,11 @@ node_modules/
 .idea/
 .playwright-mcp/
 
+# Playwright test artifacts
+test-results/
+playwright-report/
+blob-report/
+
 # Local env files
 .env
 .env.local
