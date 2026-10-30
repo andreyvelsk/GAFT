@@ -8,6 +8,11 @@ generated: "ai"
 media: []
 source: "https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/"
 project_page: "https://github.com/FabianZettl/armadalive"
+media:
+  - type: "image"
+    url: "https://raw.githubusercontent.com/FabianZettl/armadalive/refs/heads/master/docs/images/apps.png"
+  - type: "image"
+    url: "https://raw.githubusercontent.com/FabianZettl/armadalive/refs/heads/master/docs/images/steam-ori.png"
 ---
 
 ## Description
