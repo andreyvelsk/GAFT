@@ -17,6 +17,7 @@ tags:
   - emulator
   - dual-screen
 source: "https://github.com/kyannon/gba-ds"
+project_page: "https://github.com/kyannon/gba-ds"
 ---
 
 ## Description
