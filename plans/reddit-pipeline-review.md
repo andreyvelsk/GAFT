@@ -1,22 +1,26 @@
 # Reddit pipeline review
 
-> Pending: 1 · Approved: 2 · Rejected: 1
+> Pending: 6 · Approved: 0 · Rejected: 0
 
-## Pending (1)
+## Pending (6)
 
-- `1xhwnxm` — I Got MapleStory Classic World Running on the AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1xhwnxm/i_got_maplestory_classic_world_running_on_the_ayn/)
+- `1xiep46` — Dual-screen Fallout 2 on the AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1xiep46/dualscreen_fallout_2_on_the_ayn_thor/)
+- `1xii9nh` — ARMADALive | Dual screen companion app for the AYN Thor on Armada OS — [source](https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/)
+- `1xijzd3` — Plumemu: a launcher I made for my Thor — [source](https://www.reddit.com/r/AynThor/comments/1xijzd3/plumemu_a_launcher_i_made_for_my_thor/)
+- `1xik9ei` — WalkThor Update: a free companion app for your bottom screen, now with screenshots, captions, and ES-DE support! — [source](https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/)
+- `1xiwnx0` — Loose Hinge/top Screen DIY repair — [source](https://www.reddit.com/r/AynThor/comments/1xiwnx0/loose_hingetop_screen_diy_repair/)
+- `1xj35vo` — Fate/Unlimited Codes PS2 Translation Complete + PSP costumes added — [source](https://www.reddit.com/r/AynThor/comments/1xj35vo/fateunlimited_codes_ps2_translation_complete_psp/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xhwnxm
+/approved 1xiep46 1xii9nh 1xijzd3 1xik9ei 1xiwnx0 1xj35vo
 ```
 
-## Approved (2)
+## Approved (0)
 
-- `1xi1dit` → `zeewolf-style-helicopter-game` — Zeewolf-style low-poly helicopter game using Thor’s two screens — [source](https://www.reddit.com/r/AynThor/comments/1xi1dit/zeewolfstyle_lowpoly_helicopter_game_using_thors/)
-- `1xi7ttr` → `pokedaisy` — POKEDAISY GEN 5 SUPPORT — [source](https://www.reddit.com/r/AynThor/comments/1xi7ttr/pokedaisy_gen_5_support/)
+_None._
 
-## Rejected (1)
+## Rejected (0)
 
-- `1xi1h1k` — Dave The Diver DS Mod for Eden Duo is out now! Enjoy your new diving companion — [source](https://www.reddit.com/r/AynThor/comments/1xi1h1k/dave_the_diver_ds_mod_for_eden_duo_is_out_now/)
+_None._
