@@ -5,7 +5,6 @@ date: "2026-10-30 11:33"
 slug: "armadalive"
 category: "companion"
 generated: "ai"
-media: []
 source: "https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/"
 project_page: "https://github.com/FabianZettl/armadalive"
 media:
