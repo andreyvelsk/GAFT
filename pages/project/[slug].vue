@@ -65,6 +65,14 @@
       :project-page="article.project_page"
     />
 
+    <!-- Obtainium deep link (only for GitHub project pages) -->
+    <div
+      v-if="article.project_page"
+      class="mb-8"
+    >
+      <ObtainiumButton :project-page="article.project_page" />
+    </div>
+
     <!-- Media Carousel -->
     <div
       v-if="article.media?.length"
