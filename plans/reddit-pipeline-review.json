@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xiep46/dualscreen_fallout_2_on_the_ayn_thor/",
       "createdUtc": 1793264081,
       "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "fallout-2-ce-mobile-dual-screen",
+      "decidedAt": "2026-10-30T11:33:43.685Z"
     },
     {
       "id": "1xii9nh",
@@ -14,7 +16,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/",
       "createdUtc": 1793275939,
       "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "armadalive",
+      "decidedAt": "2026-10-30T11:33:43.685Z"
     },
     {
       "id": "1xijzd3",
@@ -30,7 +34,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/",
       "createdUtc": 1793281194,
       "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "walkthor",
+      "decidedAt": "2026-10-30T11:33:43.685Z"
     },
     {
       "id": "1xiwnx0",
