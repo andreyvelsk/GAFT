@@ -6,9 +6,9 @@ slug: "zeewolf-style-helicopter-game"
 category: "game"
 generated: "ai"
 media: []
+source: https://www.reddit.com/r/AynThor/comments/1xi1dit/zeewolfstyle_lowpoly_helicopter_game_using_thors/
+project_page: https://play.google.com/store/apps/details?id=com.bhg.game
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xi1dit/zeewolfstyle_lowpoly_helicopter_game_using_thors/)
 
 ## Description
 
@@ -26,5 +26,3 @@ A low-poly helicopter game inspired by Zeewolf on the Amiga, featuring a bullet 
 ## Setup guide
 
 Download and install the game from Google Play on your AYN Thor. Launch the game to play the 7 free missions; the remaining 14 missions can be unlocked with a one-time in-app purchase.
-
-See the project page: [play.google.com](https://play.google.com/store/apps/details?id=com.bhg.game)
