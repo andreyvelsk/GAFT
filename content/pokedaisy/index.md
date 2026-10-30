@@ -12,9 +12,9 @@ media:
     url: "/content/pokedaisy/cover.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=gMy6bqpS-LU"
+source: "https://www.reddit.com/r/AynThor/comments/1wz5msk/yet_another_pokemon_dual_screen_app_but_it_also/"
+project_page: "https://github.com/lidor30/pokedaisy"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wz5msk/yet_another_pokemon_dual_screen_app_but_it_also/)
 
 ## Description
 
@@ -156,5 +156,3 @@ Map ◐ means place names only, without the map picture. Guide ◐ means the liv
 No games are included — use your own legally dumped ROMs. PokeDaisy checks for a new version each time you open it and offers to install it; you can also check from Settings > VERSION.
 
 Frontends: step-by-step guides to launch games from [iiSU](https://github.com/lidor30/pokedaisy/blob/main/docs/iisu/README.md) and [ES-DE](https://github.com/lidor30/pokedaisy/blob/main/docs/es-de/README.md). ES-DE, Cocoon and iiSU can launch a game straight into PokeDaisy.
-
-See the project page: [github.com](https://github.com/lidor30/pokedaisy)

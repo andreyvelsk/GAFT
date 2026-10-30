@@ -12,9 +12,9 @@ media:
     url: "/content/ppsspp-duo/screenshot-2.webp"
   - type: "image"
     url: "/content/ppsspp-duo/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wvsixa/ppsspp_duo_dual_screen_psp_emulator/"
+project_page: "https://github.com/mkaflowski/PPSSPP-Duo"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wvsixa/ppsspp_duo_dual_screen_psp_emulator/)
 
 ## Description
 
@@ -31,5 +31,3 @@ When one of these games starts, its mod opens on the second screen by itself: Pa
 ## Setup guide
 
 Download the APK from the latest release and install it — it doesn't replace regular PPSSPP. Start a game: the second screen turns on by itself on dual-screen devices, while on a single-screen phone the app works like plain PPSSPP. The second screen can be turned off in Settings → System → Use second screen, or with the button at the bottom of its own settings page.
-
-See the project page: [github.com](https://github.com/mkaflowski/PPSSPP-Duo)

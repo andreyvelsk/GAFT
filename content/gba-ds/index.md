@@ -16,9 +16,9 @@ tags:
   - gba
   - emulator
   - dual-screen
+source: "https://github.com/kyannon/gba-ds"
+project_page: "https://github.com/kyannon/gba-ds"
 ---
-
-source: [github.com](https://github.com/kyannon/gba-ds)
 
 ## Description
 GBA DS is a Game Boy Advance emulator for dual-screen handhelds. The game runs on one screen while the second screen displays the game's own map or other useful information, bringing a DS-style experience to GBA games.

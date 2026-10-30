@@ -9,9 +9,9 @@ media:
     url: "/content/pokemon-emerald-companion/preview.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=FVqNzKuIjeQ"
+source: "https://www.reddit.com/r/AynThor/comments/1wngmnf/pok%C3%A9mon_emerald_companion/"
+project_page: "https://github.com/pazukishin/PokeEmeraldThorCompanion"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wngmnf/pok%C3%A9mon_emerald_companion/)
 
 ## Description
 
@@ -31,5 +31,3 @@ The project was developed entirely with AI assistance; the author notes it worke
 1. You need your own **Pokémon Emerald Version 1.0 (USA)** ROM (the RetroAchievements version) running in RetroArch with the **V.GBA-Next** core. No ROM is included with the app.
 2. In RetroArch, enable `Settings > Network > Network Control Interface or Network Commands` (with memory reading allowed) and configure the UDP port used by the app. Note: some RetroArch builds show the option but it doesn't actually work — enable it, save, restart RetroArch, and check it's still enabled; if not, use another build.
 3. Install a prebuilt APK from the repository's `releases/` folder (or build from Android Studio, Android SDK 35). The device must be able to reach the Thor's IP address.
-
-See the project page: [github.com](https://github.com/pazukishin/PokeEmeraldThorCompanion)

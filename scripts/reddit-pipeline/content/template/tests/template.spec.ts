@@ -93,7 +93,7 @@ describe('validateFrontmatter', () => {
 });
 
 describe('buildPageBody', () => {
-  it('renders the source line, sections and project link', () => {
+  it('renders only the sections (source/project links live in frontmatter)', () => {
     const body = buildPageBody({
       sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
       sections: [
@@ -103,14 +103,22 @@ describe('buildPageBody', () => {
       projectUrl: 'https://github.com/user/repo',
     });
 
-    expect(body).toContain(
-      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc/)',
+    expect(body).toBe(
+      '## Description\n\nA test app.\n\n## Setup guide\n\n1. Install it.',
     );
-    expect(body).toContain('## Description\n\nA test app.');
-    expect(body).toContain('## Setup guide\n\n1. Install it.');
-    expect(body).toContain(
-      'See the project page: [github.com](https://github.com/user/repo)',
-    );
+  });
+
+  it('drops sections with an empty body', () => {
+    const body = buildPageBody({
+      sourceUrl: '',
+      sections: [
+        { heading: 'Description', body: 'A test app.' },
+        { heading: 'Setup guide', body: '  \n' },
+      ],
+      projectUrl: 'https://github.com/user/repo',
+    });
+
+    expect(body).toBe('## Description\n\nA test app.');
   });
 
   it('omits the source line and project link when empty', () => {
@@ -123,26 +131,6 @@ describe('buildPageBody', () => {
     expect(body).not.toContain('source:');
     expect(body).not.toContain('See the project page:');
     expect(body).toBe('## Description\n\nA test app.');
-  });
-
-  it('labels the project link from the URL host', () => {
-    const cases: [string, string][] = [
-      ['https://github.com/user/repo', 'github.com'],
-      ['https://gitlab.com/user/repo', 'gitlab.com'],
-      ['https://play.google.com/store/apps/details?id=x', 'play.google.com'],
-      ['https://user.itch.io/game', 'itch.io'],
-      ['https://example.com/app', 'example.com'],
-    ];
-
-    for (const [url, label] of cases) {
-      const body = buildPageBody({
-        sourceUrl: '',
-        sections: [{ heading: 'Description', body: 'x' }],
-        projectUrl: url,
-      });
-
-      expect(body).toContain(`See the project page: [${label}](${url})`);
-    }
   });
 });
 
@@ -177,17 +165,35 @@ describe('parsePageBody', () => {
     });
   });
 
-  it('round-trips through buildPageBody', () => {
+  it('round-trips the sections through buildPageBody', () => {
     const sections = {
-      sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
+      sourceUrl: '',
       sections: [
         { heading: 'Description', body: 'A test app.' },
         { heading: 'Setup guide', body: '1. Install it.' },
       ],
-      projectUrl: 'https://github.com/user/repo',
+      projectUrl: '',
     };
 
     expect(parsePageBody(buildPageBody(sections))).toEqual(sections);
+  });
+
+  it('still parses legacy pages that carry the source/project lines in the body', () => {
+    const body = [
+      'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/abc/)',
+      '',
+      '## Description',
+      '',
+      'A test app.',
+      '',
+      'See the project page: [github.com](https://github.com/user/repo)',
+    ].join('\n');
+
+    expect(parsePageBody(body)).toEqual({
+      sourceUrl: 'https://www.reddit.com/r/AynThor/comments/abc/',
+      sections: [{ heading: 'Description', body: 'A test app.' }],
+      projectUrl: 'https://github.com/user/repo',
+    });
   });
 
   it('handles a body without a source line or project link', () => {
@@ -351,8 +357,27 @@ describe('renderPage', () => {
     expect(output).toContain('## Description');
     expect(output).toContain('## Setup guide');
     expect(output).toContain(
-      'See the project page: [github.com](https://github.com/user/repo)',
+      'source: "https://www.reddit.com/r/AynThor/comments/abc/"',
     );
+    expect(output).toContain('project_page: "https://github.com/user/repo"');
+    expect(output).not.toContain('See the project page:');
+  });
+
+  it('drops sections with an empty body', () => {
+    const output = renderPage({
+      frontmatter: validateFrontmatter(validFrontmatter),
+      sections: {
+        sourceUrl: '',
+        sections: [
+          { heading: 'Description', body: 'A test app.' },
+          { heading: 'Setup guide', body: '   \n' },
+        ],
+        projectUrl: 'https://github.com/user/repo',
+      },
+    });
+
+    expect(output).toContain('## Description');
+    expect(output).not.toContain('## Setup guide');
   });
 
   it('renders an empty media array as "media: []"', () => {

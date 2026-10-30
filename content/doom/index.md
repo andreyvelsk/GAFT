@@ -7,12 +7,11 @@ category: "game"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=FAGRYqWGUQw"
+source: "https://www.reddit.com/r/AynThor/comments/1tvk122/doom_but_on_2_screens/"
+project_page: "https://github.com/andreyvelsk/com.mobilerpgpack.phone"
 ---
 
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1tvk122/doom_but_on_2_screens/)
-
 ## Setup guide
-Link to project: [github.com](https://github.com/andreyvelsk/com.mobilerpgpack.phone)
 
 - Download the latest .apk file from GitHub.
 - Add your own .WAD files.

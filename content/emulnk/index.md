@@ -7,6 +7,7 @@ category: "emulator"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=u7MSK2YUFw8"
+project_page: "https://github.com/EmuLnk/emulnk"
 ---
 
 ## Description
@@ -25,6 +26,5 @@ EmuLnk connects to emulators over UDP, reads game memory in real time, and rende
 > Each emulator fork adds the EmuLnk binary UDP protocol. Install the fork alongside EmuLnk to use it.
 
 ## Setup guide
-Link to project: [github.com](https://github.com/EmuLnk/emulnk)
 
-List of supported games: [github.com](https://github.com/EmuLnk/emulnk-repo) 
+List of supported games: [github.com](https://github.com/EmuLnk/emulnk-repo)

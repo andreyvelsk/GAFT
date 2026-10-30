@@ -7,9 +7,8 @@ category: "game"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=tvqnW6J6KU0"
+project_page: "https://github.com/aabrole/HuntersRecomp"
 ---
-
-See actual dual-screen gameplay in source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1w7pl20/metroid_prime_hunters_recomp_is_now_available_for/)
 
 ## Description
 The top screen fills the Thor's main display, while the bottom screen lives on the second panel with working touch (stylus) input. Controls are twin-stick Prime-style: the left stick moves, the right stick aims, and the triggers shoot — melonPrimeDS-style bindings. Rendering is handled by the desktop GL 4.3 compute renderer ported to GLES 3.2, running on the Adreno 740 with up to 4x internal resolution and xBR texture upscaling.
@@ -26,5 +25,3 @@ Every touchscreen-mapped action can be rebound to physical buttons from the sett
    ```
    (or copy it there with any file manager after launching the app once)
 3. Launch **Hunters Recomp**, adjust settings if you like, press **PLAY**.
-
-See the project page: [github.com](https://github.com/aabrole/HuntersRecomp)

@@ -12,9 +12,9 @@ media:
     url: "/content/gba-duo/screenshot-2.webp"
   - type: "image"
     url: "/content/gba-duo/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/"
+project_page: "https://github.com/khumam/gba-duo"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x74l9b/build_your_own_gba_companion_with_gba_duo/)
 
 ## Description
 
@@ -56,5 +56,3 @@ Companion packs live in the [gba-duo-companions](https://github.com/khumam/gba-d
 
 - Pokémon FireRed (US) - `pokemon-firered-companion`: party, bag pockets, trainer card, and a battle page with both Pokémon's live stats.
 - Harvest Moon: Friends of Mineral Town (EU/US) - `harvest-moon-fomt-companion`: gold, date and time, stamina, held tool and rucksack, affection, and Harvest Sprites' work.
-
-See the project page: [github.com](https://github.com/khumam/gba-duo)

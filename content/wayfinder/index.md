@@ -12,9 +12,9 @@ media:
     url: "/content/wayfinder/screenshot-2.webp"
   - type: "video"
     url: "https://youtu.be/YkOjooy4elU?is=mel4LaQrhch-pV4Z"
+source: "https://www.reddit.com/r/AynThor/comments/1wsiwyo/wayfinder_is_a_necessity/"
+project_page: "https://github.com/Thor-Wayfinder/thor-wayfinder"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wsiwyo/wayfinder_is_a_necessity/)
 
 ## Description
 
@@ -31,5 +31,3 @@ Download the latest release from the GitHub releases page and install the APK on
 ## Known issues
 
 Since version 1.4, Wayfinder leaves the CPU to ClusterTune and Pulse, so they can stay installed together. With SleepManager, Wayfinder's sleep actions and lid guard stay off unless you turn them on. If another app does the same job as a part of Wayfinder (Mjolnir, BiFrost, OdinTools), the Hub tells you what to do. If ClusterTune and Wayfinder gave you trouble before, restart your Thor once after updating. A few heavy or unusual apps may restart or refuse to move when switched between screens.
-
-See the project page: [github.com](https://github.com/Thor-Wayfinder/thor-wayfinder)

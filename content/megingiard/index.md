@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=vgs6X9piswA"
+source: "https://www.reddit.com/r/AynThor/comments/1tlids6/rerelease_source_available_megingiard_a/"
+project_page: "https://github.com/stormpanda/megingiard"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1tlids6/rerelease_source_available_megingiard_a/)
 
 ## Description
 
@@ -29,5 +29,3 @@ Megingiard is a bespoke companion application designed specifically for the AYN 
 ## Setup guide
 
 Download and install the latest release of Megingiard from the [releases page](https://github.com/stormpanda/megingiard/releases/latest). The app targets the AYN Thor running Android 13 or newer; single-screen devices are not supported. After installation, launch the app and grant the requested permissions to use the mirror, MacroPad, keyboard, and touchpad on the secondary display.
-
-See the project page: [github.com](https://github.com/stormpanda/megingiard)

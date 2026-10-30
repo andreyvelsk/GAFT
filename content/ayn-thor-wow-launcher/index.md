@@ -6,9 +6,9 @@ slug: "ayn-thor-wow-launcher"
 category: "app"
 generated: "ai"
 media: []
+source: "https://www.reddit.com/r/AynThor/comments/1x0wgrn/wow_launcher_all_versions_bottom_screen_support/"
+project_page: "https://github.com/jaredgei/wow-forever-android"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x0wgrn/wow_launcher_all_versions_bottom_screen_support/)
 
 ## Description
 
@@ -38,5 +38,3 @@ The AYN Thor WoW Launcher plays all versions of World of Warcraft — Classic, R
 - On your PC, make sure the WoW version you want to play (Classic, Retail, or Forever) is installed through Battle.net.
 - Copy the Data folder and the .build.info file from your PC's WoW install into a folder on the Thor (the default is /storage/emulated/0/WoW Forever/).
 - Open the launcher. Once your game files are configured, the app launches straight into the game.
-
-See the project page: [github.com](https://github.com/jaredgei/wow-forever-android)

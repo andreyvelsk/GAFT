@@ -59,6 +59,7 @@ description: "A short one-line description of the project."
 date: "YYYY-MM-DD HH:MM"
 slug: "your-project-slug"
 category: "companion"
+project_page: "https://github.com/username/repository"
 media:
   - type: "image"
     url: "https://example.com/screenshot.png"
@@ -91,6 +92,7 @@ Explain how to install and run the project.
 | `date` | ✅ | Publication date in `YYYY-MM-DD HH:MM` format |
 | `slug` | ✅ | URL-friendly identifier (must match the directory name) |
 | `category` | ✅ | One of the project categories listed below |
+| `project_page` | ❌ | Direct link to the project itself (e.g. GitHub repo or release page). Used as the main "Open project" button |
 | `media` | ❌ | List of images or videos for the carousel |
 | `tags` | ❌ | List of tags for categorization |
 
@@ -106,13 +108,25 @@ Each project page must use exactly one of the following categories:
 | `emulator` | An emulator of a system that has a feature using the second screen. |
 | `tool` | A utility for flexible configuration or for improving how the system works overall. |
 
-
 ### Media Items
 
 Each media entry supports two types:
 
 - **Image**: `type: "image"` with a direct URL to the image file
 - **Video**: `type: "video"` with a YouTube URL
+
+### Project Link
+
+The optional `project_page` field points to the project itself (a GitHub repository, a release page, a store listing, etc.). It is used as the main **Open project** button on the project page, so it should lead directly to the source code or the download.
+
+```yaml
+project_page: "https://github.com/username/repository"
+```
+
+If the project has no dedicated page yet, the field can simply be omitted.
+
+> **Note about the "Add to Obtainium" button**
+> The button is rendered **only** from `project_page`, and only when that value is a link to a GitHub repository (`https://github.com/<author>/<repo>`). If `project_page` is missing, points to a non-GitHub URL, or the repository is private, the button is not shown. To make it appear, make sure `project_page` contains a direct GitHub repository link, e.g. `https://github.com/username/repository`.
 
 ## Step 5 — Preview Locally (Optional)
 

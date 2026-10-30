@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "https://raw.githubusercontent.com/BrianJr03/GrandTheftCompanion/refs/heads/main/assets/screenshot_v.png"
+source: "https://www.reddit.com/r/AynThor/comments/1x3m1nx/built_a_bottom_screen_companion_app_for_gta_iv_v/"
+project_page: "https://github.com/BrianJr03/GrandTheftCompanion"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x3m1nx/built_a_bottom_screen_companion_app_for_gta_iv_v/)
 
 ## Description
 
@@ -45,5 +45,3 @@ A small plugin sits in your game folder and sends the game info to the Android a
 - The map page's crop is a fixed per-game preset measured on a Thor at default HUD settings; if your game resolution, aspect ratio or safe-zone differs, the minimap may sit off-centre.
 - The map is a magnified copy of a small patch of the screen, so it is soft, and it shows whatever is in that patch when the game hides the minimap (cutscenes, pause menu).
 - GTA V is story mode only; in GTA Online the plugin publishes nothing but an "online" flag.
-
-See the project page: [github.com](https://github.com/BrianJr03/GrandTheftCompanion)

@@ -4,6 +4,7 @@ description: "Screenshots with a floating button for dual-screen devices: captur
 date: "2026-10-22 12:00"
 slug: "multishot"
 category: "tool"
+project_page: "https://github.com/mkaflowski/MultiShot/releases/latest"
 tags:
   - screenshot
   - dual-screen

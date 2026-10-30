@@ -19,13 +19,12 @@ tags:
   - ayn-thor
   - retroarch
   - dual-screen
+project_page: "https://github.com/enrique-paulino/DualScreenDex"
 ---
 
 ## Description
 DualScreenDex is a companion Pokedex app designed specifically for dual-screen Android gaming handhelds (like the Ayn Thor). It uses live OCR screen scanning to automatically detect the Pokémon currently on your screen and display their stats, weaknesses, and resistances instantly.
 
-## Setup guide
-Link to project: [github.com](https://github.com/enrique-paulino/DualScreenDex)
 
 ## Forks
 

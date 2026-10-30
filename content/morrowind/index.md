@@ -9,6 +9,7 @@ media:
     url: "/content/morrowind/preview.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=kmzqThgJWYY&start=375"
+project_page: "https://github.com/Josh-Daniels/OpenMW-DS"
 ---
 
 ## Features
@@ -26,6 +27,3 @@ media:
   contrast between vanilla resolution and OpenMW-DS lower screen resolution.
 - **Optional Touch Contols**: Alpha3 uses the left thumbstick as a mouse for menus. This version allows the use of touch
   input instead (Activated at the bottom of the OpenMW-DS Options page).
-
-## Setup guide
-Link to project: [github.com](https://github.com/Josh-Daniels/OpenMW-DS)

@@ -75,11 +75,21 @@ async function withTempContentDir(
 }
 
 describe('extractProjectUrl', () => {
-  it('reads the labelled "See the project page" link', () => {
+  it('reads the project_page frontmatter key', () => {
+    const data = {
+      project_page: 'https://github.com/ChimeraGaming/PixelNavigator',
+    };
+
+    expect(extractProjectUrl(data, '')).toBe(
+      'https://github.com/ChimeraGaming/PixelNavigator',
+    );
+  });
+
+  it('reads the labelled "See the project page" link as a fallback', () => {
     const body =
       'See the project page: [github.com](https://github.com/ChimeraGaming/PixelNavigator)';
 
-    expect(extractProjectUrl(body)).toBe(
+    expect(extractProjectUrl({}, body)).toBe(
       'https://github.com/ChimeraGaming/PixelNavigator',
     );
   });
@@ -87,26 +97,36 @@ describe('extractProjectUrl', () => {
   it('falls back to the first GitHub URL in the body', () => {
     const body = 'Check https://github.com/example/thing for details.';
 
-    expect(extractProjectUrl(body)).toBe('https://github.com/example/thing');
+    expect(extractProjectUrl({}, body)).toBe('https://github.com/example/thing');
   });
 
   it('returns an empty string when there is no project URL', () => {
-    expect(extractProjectUrl('No links here.')).toBe('');
+    expect(extractProjectUrl({}, 'No links here.')).toBe('');
   });
 });
 
 describe('extractSourceUrl', () => {
-  it('reads the labelled source permalink', () => {
+  it('reads the source frontmatter key', () => {
+    const data = {
+      source: 'https://www.reddit.com/r/AynThor/comments/1wfm4hc/x/',
+    };
+
+    expect(extractSourceUrl(data, '')).toBe(
+      'https://www.reddit.com/r/AynThor/comments/1wfm4hc/x/',
+    );
+  });
+
+  it('reads the labelled source permalink as a fallback', () => {
     const body =
       'source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wfm4hc/x/)';
 
-    expect(extractSourceUrl(body)).toBe(
+    expect(extractSourceUrl({}, body)).toBe(
       'https://www.reddit.com/r/AynThor/comments/1wfm4hc/x/',
     );
   });
 
   it('returns an empty string when there is no source link', () => {
-    expect(extractSourceUrl('No source.')).toBe('');
+    expect(extractSourceUrl({}, 'No source.')).toBe('');
   });
 });
 

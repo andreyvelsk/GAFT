@@ -6,9 +6,9 @@ slug: "ds-forever"
 category: "companion"
 generated: "ai"
 media: []
+source: "https://www.reddit.com/r/AynThor/comments/1x523sf/how_i_got_a_stranger_to_buy_me_a_mcgriddle/"
+project_page: "https://github.com/Jreese702/DS-Forever"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x523sf/how_i_got_a_stranger_to_buy_me_a_mcgriddle/)
 
 ## Description
 
@@ -43,5 +43,3 @@ It is an unofficial community project, not affiliated with or endorsed by Blizza
 - Complete the seven required steps; any required failure offers "Try again". QuestieDB downloads after the art check.
 - Use Login / Update Login to manage sign-in; updating login restarts the game to read it.
 - The app updater checks for and installs updates; offline checks do not block play.
-
-See the project page: [github.com](https://github.com/Jreese702/DS-Forever)

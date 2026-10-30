@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "nuxt prepare",
     "dev": "nuxt dev",
+    "dev:lan": "nuxt dev --host 0.0.0.0",
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

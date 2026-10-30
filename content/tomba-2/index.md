@@ -7,9 +7,9 @@ category: "game"
 media:
   - type: "image"
     url: "/content/tomba-2/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wdwd2w/tomba_2_recompiled_dual_screen/"
+project_page: "https://github.com/igawa6/Tomba2RecompDS"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wdwd2w/tomba_2_recompiled_dual_screen/)
 
 ## Description
 Tomba! 2 Recompiled Dual Screen is a static recompilation of **Tomba! 2 — The Evil Swine Return (USA, SCUS-94454)** running natively on Android, with a live second-screen companion for clamshell handhelds like the AYN Thor. This fork adds the Android port and the dual-screen features.
@@ -24,5 +24,3 @@ Other features include native widescreen (16:9 / adaptive rendering that reveals
 1. Install the APK from the [Releases](https://github.com/igawa6/Tomba2RecompDS/releases) page.
 2. Open it, choose **Add your disc**, and pick your disc image.
 3. Press **Play**. (First launch unpacks the native code cache, so it takes longer than later ones.)
-
-See the project page: [github.com](https://github.com/igawa6/Tomba2RecompDS)

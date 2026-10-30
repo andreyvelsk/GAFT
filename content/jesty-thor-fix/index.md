@@ -6,9 +6,9 @@ slug: "jesty-thor-fix"
 category: "tool"
 generated: "ai"
 media: []
+source: "https://www.reddit.com/r/AynThor/comments/1wrsmmo/found_two_weird_ayn_thor_issues_top_only_doesnt/"
+project_page: "https://github.com/JestyLabs/Jesty-Thor-Fix"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrsmmo/found_two_weird_ayn_thor_issues_top_only_doesnt/)
 
 ## Description
 
@@ -28,5 +28,3 @@ The app also shows live telemetry — the current display mode, CPU clocks and a
 ## Setup guide
 
 Download and install the latest release ([v1.3.0](https://github.com/JestyLabs/Jesty-Thor-Fix/releases/latest)). No Magisk, no terminal and no rooting are required. Open the app once, enable the fix or fixes you need, then close it — the fixes keep working in the background. Use **Check now** to verify the current display and CPU state. Note that enabling or changing the AYN Dashboard CPU Fix restarts the Android framework once and closes open apps; the displays stay black briefly while Android returns.
-
-See the project page: [github.com](https://github.com/JestyLabs/Jesty-Thor-Fix)

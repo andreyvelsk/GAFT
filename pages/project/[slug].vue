@@ -6,7 +6,7 @@
     <!-- Back link -->
     <NuxtLink
       to="/"
-      class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors mb-8 group"
+      class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors mb-4 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 rounded"
     >
       <svg
         class="w-4 h-4 transition-transform group-hover:-translate-x-1"
@@ -25,44 +25,24 @@
     </NuxtLink>
 
     <!-- AI-generated content disclaimer -->
-    <div
+    <AiGeneratedDisclaimer
       v-if="article.generated === 'ai'"
-      class="flex items-start gap-3 mb-8 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30"
-    >
-      <svg
-        class="w-5 h-5 flex-shrink-0 text-amber-400 mt-0.5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-        />
-      </svg>
-      <p class="text-sm text-amber-200/90 leading-relaxed">
-        <span class="font-semibold text-amber-300">AI-generated page.</span>
-        This page was automatically generated from a source and may contain
-        inaccuracies or outdated information. Please verify details with the
-        original source.
-      </p>
-    </div>
+      :source="article.source"
+      :project-page="article.project_page"
+    />
 
     <!-- Article Header -->
-    <header class="mb-8">
-      <CategoryBadge
-        :category="article.category"
-        class="mb-4"
-      />
+    <header class="mb-6">
       <!-- Category & Date & Like -->
-      <div class="flex items-center gap-3 mb-4">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <CategoryBadge
+          :category="article.category"
+        />
         <span class="text-sm text-gray-500">{{ formatDate(article.date) }}</span>
-        <span class="text-gray-700">·</span>
         <LikeButton
           :slug="article.slug"
           variant="inline"
+          class="ml-auto"
         />
       </div>
 
@@ -77,6 +57,13 @@
       </p>
     </header>
 
+    <!-- Unified action group -->
+    <ProjectActions
+      :source="article.source"
+      :project-page="article.project_page"
+      class="mb-6"
+    />
+
     <!-- Media Carousel -->
     <div
       v-if="article.media?.length"
@@ -85,8 +72,7 @@
       <MediaCarousel :media="article.media" />
     </div>
 
-    <!-- Article Content (Markdown rendered) -->
-    <div class="prose mx-auto">
+    <div class="prose">
       <ContentRenderer :value="article">
         <template #empty>
           <div class="text-center py-12 text-gray-500">

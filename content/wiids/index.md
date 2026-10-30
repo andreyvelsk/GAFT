@@ -12,9 +12,9 @@ media:
     url: "/content/wiids/screenshot-2.webp"
   - type: "image"
     url: "/content/wiids/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1xcodmi/update_wiids_v10_live_now/"
+project_page: "https://github.com/Maddex712/WiiDS"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xcodmi/update_wiids_v10_live_now/)
 
 ## Description
 
@@ -49,5 +49,3 @@ Download the latest release from the GitHub repository and install the APK on yo
 To update from v1.0, close your game and install 1.1 over the existing app — don't uninstall or clear your data. The GitHub has a very easy-to-follow installation guide with more information.
 
 Join the WiiDS Discord: https://discord.gg/vTEKP8wpQm
-
-See the project page: [github.com](https://github.com/Maddex712/WiiDS)

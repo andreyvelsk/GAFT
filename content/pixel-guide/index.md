@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/pixel-guide/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wwrxit/pixel_guide_dev_here_a_quick_update/"
+project_page: "https://github.com/rexmont/Pixel-Guide-Android"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wwrxit/pixel_guide_dev_here_a_quick_update/)
 
 ## Description
 
@@ -52,5 +52,3 @@ The app is privacy-first: no telemetry, no tracking, and no background analytics
 ## Setup guide
 
 Download and install the latest release of Pixel Guide from GitHub Releases on your AYN Thor. The app supports Android 8.0 and newer, and a Universal APK option is available for broad device compatibility. Open the app on the second screen while playing a game to view guides, PDFs, maps, manuals or web content. Browse GameFAQs and Neoseeker guides, save walkthroughs, download manuals, or import your own files; saved and imported guide content can be read locally without a network connection.
-
-See the project page: [github.com](https://github.com/rexmont/Pixel-Guide-Android)

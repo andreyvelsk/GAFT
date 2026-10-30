@@ -12,9 +12,9 @@ media:
     url: "/content/square-ds/screenshot-2.webp"
   - type: "image"
     url: "/content/square-ds/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1xb3zc1/squareds_spotify_and_youtube_music/"
+project_page: "https://github.com/srBenjamin1/SquareDS"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xb3zc1/squareds_spotify_and_youtube_music/)
 
 ## Description
 
@@ -48,5 +48,3 @@ SquareDS is an unofficial fork of Square, adapted for Android devices with two i
 - Open Settings and enable the AYN Thor / dual-screen option.
 - Verify that the player appears on the upper display and navigation appears on the lower display.
 - At first launch the app asks which music service to use: YouTube Music playback works without signing in (Google account authentication is optional for personal library features), while Spotify requires a Premium account and, per the original Square setup, registering a Spotify developer application and configuring its client ID.
-
-See the project page: [github.com](https://github.com/srBenjamin1/SquareDS)

@@ -140,7 +140,7 @@ jobs:
         if: steps.permission.outputs.allowed == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: 'node'
+          node-version: 'lts/*'
           cache: yarn
           cache-dependency-path: yarn.lock
 

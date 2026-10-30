@@ -7,12 +7,9 @@ category: "game"
 media:
   - type: "image"
     url: "/content/stardew-valley/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1tt6ued/playing_stardew_vallew_at_work_3/"
+project_page: "https://github.com/JoeCorrell/AYN-Thor-Dualscreen-Mods"
 ---
-
-sources: 
-* [reddit](https://www.reddit.com/r/AynThor/comments/1vu04xe/stardew_valley_dualscreen_mod_v20_update/)
-* [reddit](https://www.reddit.com/r/AynThor/comments/1tt6ued/playing_stardew_vallew_at_work_3/)
-
 
 ## Description
 AYN Thor DualScreen Mods provides native lower-screen companions for games running through WEMU on the AYN Thor. The Android companion keeps useful information and touch controls on the lower display while the game remains playable on the upper display. The current release includes the DualScreen Android app and the Stardew Valley SMAPI integration.
@@ -23,6 +20,3 @@ The Today page places the backpack directly below the hotbar, L/R rotates every 
 
 ## Tips
 - Other way to launch Stardew Valley on Ayn Thor is [Cinderbox](https://github.com/Ekyso/Cinderbox) — a mods-compatible Android launcher for the PC version — together with [Gunther's Library](https://play.google.com/store/apps/details?id=com.guntherslibrary.app), a comprehensive, ad-free, and offline Stardew Valley wiki app with databases for items, villager preferences, community center bundles, and Ginger Island secrets.
-
-## Setup guide
-See the project page: [github.com](https://github.com/JoeCorrell/AYN-Thor-Dualscreen-Mods)

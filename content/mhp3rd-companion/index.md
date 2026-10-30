@@ -12,9 +12,9 @@ media:
     url: "/content/mhp3rd-companion/screenshot-2.webp"
   - type: "image"
     url: "/content/mhp3rd-companion/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1x0mlyq/mhp3rd_companion_app_release/"
+project_page: "https://github.com/waillio-pers/MHP3ThorCompanion"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x0mlyq/mhp3rd_companion_app_release/)
 
 ## Description
 
@@ -40,5 +40,3 @@ Download the latest release APK (MHP3rd-Companion-1.0.0.apk) from the [GitHub Re
 - Phone layouts are tested less thoroughly than the AYN Thor second screen.
 - Quests are not clickable.
 - Armor and felyne skills from drinks are not included.
-
-See the project page: [github.com](https://github.com/waillio-pers/MHP3ThorCompanion)

@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=bkn6ne7iINI"
+source: "https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid"
+project_page: "https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid"
 ---
-
-source: [github.com](https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid)
 
 ## Description
 
@@ -59,5 +59,3 @@ The app contains no game files. You bring your own copy of the game — a disc i
 2. Install the APK from the [latest release](https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid/releases/latest) and start it. Choose **Extract from your disc image or .wua…** and select that folder.
 3. The app extracts the game files, then prepares the game code for your device (once; about 6 minutes on a Snapdragon 7+ Gen 3, 9 minutes on a Snapdragon 855, 18 minutes on a Helio G85). A notification shows the progress and keeps the process alive.
 4. The game starts. The first visit to each place may stutter briefly while its shaders compile, then they are cached.
-
-See the project page: [github.com](https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid)

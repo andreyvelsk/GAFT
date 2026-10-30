@@ -830,8 +830,8 @@ describe('updatePage', () => {
 
     expect(countOccurrences(result.markdown, '## Description')).toBe(1);
     expect(countOccurrences(result.markdown, '## Setup guide')).toBe(1);
-    expect(countOccurrences(result.markdown, 'source: [reddit.com]')).toBe(1);
-    expect(countOccurrences(result.markdown, 'See the project page:')).toBe(1);
+    expect(countOccurrences(result.markdown, 'source: "')).toBe(1);
+    expect(countOccurrences(result.markdown, 'project_page: "')).toBe(1);
     expect(result.page.sections.sections).toEqual([
       { heading: 'Description', body: 'New description.' },
       { heading: 'Setup guide', body: '1. New step.' },
