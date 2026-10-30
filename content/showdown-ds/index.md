@@ -9,6 +9,7 @@ media:
     url: "/content/showdown-ds/preview.webp"
   - type: "image"
     url: "/content/showdown-ds/screenshot-2.webp"
+project_page: "https://github.com/castdrian/showdown-ds"
 ---
 
 ## Description
@@ -26,5 +27,3 @@ No ROM or BIOS dumps are required — everything runs through the official Poké
 1. Download the APK from the repository's [latest release](https://github.com/castdrian/showdown-ds/releases/latest) (file named `showdown-<tag>.apk`).
 2. Install the APK on the Thor and launch the app.
 3. Sign in to your Pokémon Showdown! account or play as a guest.
-
-See the project page: [github.com](https://github.com/castdrian/showdown-ds)

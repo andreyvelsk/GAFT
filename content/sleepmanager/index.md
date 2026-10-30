@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "video"
     url: "https://youtu.be/MATer9L8E1s?si=uhFrzt0F5maFB6eY"
+source: "https://www.reddit.com/r/AynThor/comments/1wr105i/make_your_ayn_thor_run_even_longer_sleepmanager/"
+project_page: "https://github.com/Baggio94/SleepManager"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wr105i/make_your_ayn_thor_run_even_longer_sleepmanager/)
 
 ## Description
 
@@ -37,5 +37,3 @@ SleepManager always tries to restore only what it changed — for example, if Wi
 ## AYN Thor
 
 SleepManager adds extra options when it detects the Thor lid sensor. **Closed-lid protection** puts the Thor back to sleep if it wakes unexpectedly while the lid is still closed, instead of restoring Wi-Fi, Bluetooth and other services too early — this needs Android **Device Admin** permission. It understands when an external display is connected, so docked use is not treated as a false wake. Optional Thor controls include **Sleep when external display disconnects** and **Power button sleeps with lid closed**.
-
-See the project page: [github.com](https://github.com/Baggio94/SleepManager)

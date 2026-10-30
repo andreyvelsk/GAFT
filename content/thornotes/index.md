@@ -7,9 +7,9 @@ category: "companion"
 media:
   - type: "image"
     url: "/content/thornotes/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1u7i7p1/thornotes_yet_another_bottom_screen_companion/"
+project_page: "https://github.com/xade93/thornote"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u7i7p1/thornotes_yet_another_bottom_screen_companion/)
 
 ## Description
 When you play lots of games and switch between them, it is easy to forget what was happening in each one. ThorNotes helps by letting you quickly save in-game screenshots or OCR text from a selected screen region, then browse everything later in a clean bottom-screen interface.
@@ -21,6 +21,3 @@ When you play lots of games and switch between them, it is easy to forget what w
 - OLED blackout mode: double-tap the time to make the bottom screen black, double-tap again to restore
 - Floating overlay button to hide/restore the app
 - Data safety: every notebook page is stored in json and plain image files, can be migrated if needed
-
-## Setup guide
-Link to project: [github.com](https://github.com/xade93/thornote)

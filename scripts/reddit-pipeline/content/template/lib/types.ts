@@ -109,6 +109,10 @@ export const pageFrontmatterSchema = z
     date: z.string().min(1),
     slug: z.string().min(1),
     category: pageCategorySchema,
+    /** Initial source page (e.g. Reddit post or GitHub repo). May be empty. */
+    source: z.string().optional(),
+    /** Link to the project itself (e.g. GitHub or Google Play). May be empty. */
+    project_page: z.string().optional(),
     media: z
       .array(mediaItemSchema)
       .nullish()

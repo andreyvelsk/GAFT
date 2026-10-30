@@ -6,9 +6,9 @@ slug: "rerac-for-android-dual-screen-mod"
 category: "emulator"
 generated: "ai"
 media: []
+source: "https://www.reddit.com/r/AynThor/comments/1x9la7y/ratchet_and_clank_1_dual_screen_mod_rerac_fork/"
+project_page: "https://github.com/HighDrexler/rerac-Android-APK-and-Ayn-Thor-Dual-Screen-Mod-Beta-"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x9la7y/ratchet_and_clank_1_dual_screen_mod_rerac_fork/)
 
 ## Description
 
@@ -37,5 +37,3 @@ ReRAC for Android is a dual-screen adaptation of Ratchet & Clank (2002) for Andr
 - In the launcher, import a supported original USA v1.00 (SCUS-97199) Ratchet & Clank ISO or compatible extracted game-data ZIP.
 - Choose the rendering resolution and enable Dual screen in Display settings for a companion display.
 - Use Setup in-game to select and customize the mobile controls.
-
-See the project page: [github.com](https://github.com/HighDrexler/rerac-Android-APK-and-Ayn-Thor-Dual-Screen-Mod-Beta-)

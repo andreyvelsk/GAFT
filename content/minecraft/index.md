@@ -9,9 +9,9 @@ media:
     url: "/content/minecraft/preview.webp"
   - type: "video"
     url: "https://www.youtube.com/shorts/oZP2SdNAIPc"
+source: "https://www.reddit.com/r/AynThor/comments/1vjvo8t/version_10_of_the_minecraft_dual_screen_mod_is/"
+project_page: "https://github.com/exojosh/AynThorSecondScreen"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1vjvo8t/version_10_of_the_minecraft_dual_screen_mod_is/)
 
 ## Features
 - Full HUD on bottom screen including absorption hearts, heart effects, hunger, armor, breathing, off-hand slot, touch to select item, mini map, etc.
@@ -27,6 +27,3 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1vjvo8t/version_1
 - Ability to individually enable and disable HUD elements on the bottom screen in the settings
 
 - Creative Mode menus (though they are currently a little buggy but useable).
-
-## Setup guide
-See the project page: [github.com](https://github.com/exojosh/AynThorSecondScreen)

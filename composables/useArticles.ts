@@ -15,6 +15,10 @@ export interface Article {
   category: string
   media?: ArticleMedia[]
   tags?: string[]
+  /** Initial source page where the project was found (e.g. Reddit post or GitHub repo). May be empty. */
+  source?: string
+  /** Link to the project itself (e.g. GitHub or Google Play). May be empty. */
+  project_page?: string
   status?: string
   // Marks content generated automatically from a source (e.g. "ai")
   generated?: string

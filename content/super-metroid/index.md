@@ -7,9 +7,9 @@ category: "game"
 media:
   - type: "image"
     url: "/content/super-metroid/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1vdopik/super_metroid_dual_screen_mod/"
+project_page: "https://github.com/Raekwon1603/super_metroid-android"
 ---
-
-source: [reddit](https://www.reddit.com/r/AynThor/comments/1vdopik/super_metroid_dual_screen_mod/)
 
 ## Description
 While you play on the main screen, the second panel shows a live map, your equipment, and your ammo, so you don't have to pause and dig through menus to check where you are or what you're carrying.
@@ -34,6 +34,5 @@ Gamepad input works out of the box. On the Thor specifically:
 - Quicksave/quickload: hold L1+R1 and press Start to save, Back/Select to load.
 
 ## Setup guide
-See the project page: [github.com](https://github.com/Raekwon1603/super_metroid-android)
 
 You need your own legally-dumped copy of the ROM (`sm.smc`/`.sfc`) to build or run this. The app reads graphics, audio, and level data from your ROM at runtime. No game assets are included anywhere in the repository or shipped in the built app.

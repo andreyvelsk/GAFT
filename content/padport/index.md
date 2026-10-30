@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/padport/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wuxhuo/look_outside_on_android_consoles_and_phones/"
+project_page: "https://github.com/mkaflowski/PadPort"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wuxhuo/look_outside_on_android_consoles_and_phones/)
 
 ## Description
 
@@ -27,5 +27,3 @@ PadPort plays RPG Maker MV and MZ games from their original PC folder, plus XP, 
 ## Two screens
 
 On devices with a second screen, such as the AYN Thor, PadPort can show extras there. This is experimental and works only with specific games: Look Outside (MZ) shows your party with portraits, HP, stamina, status and gear, plus an inventory button to pick and use items on the bottom screen; To the Moon (XP) shows a notebook with Characters, Notes and Items; Fear & Hunger (MV) shows your party with Body and Mind, lost limbs, conditions and equipment. When you add one of these games, PadPort asks if you want the second screen, and you can turn it on or off any time in the game's ⋮ menu. Battle commands and the game's own menus stay on the main screen.
-
-See the project page: [github.com](https://github.com/mkaflowski/PadPort)

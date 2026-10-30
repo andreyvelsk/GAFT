@@ -7,12 +7,11 @@ category: "companion"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=mN9_XvTjSi4"
+project_page: "https://github.com/andreyvelsk/SkyrimWebMonitor"
 ---
 
 ## Setup guide
 You can find the manual at the source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1sz0prj/skyrim_companion_app_you_already_can_try_it/)
-
-Link to project: [github.com](https://github.com/andreyvelsk/SkyrimWebMonitor)
 
 ## Tips
 - Tested and developed on the latest Steam version

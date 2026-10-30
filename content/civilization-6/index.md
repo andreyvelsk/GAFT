@@ -7,13 +7,11 @@ category: "companion"
 media:
   - type: "image"
     url: "/content/civilization-6/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1u3cn0b/my_civilization_vi_setup_on_the_ayn_thor/"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u3cn0b/my_civilization_vi_setup_on_the_ayn_thor/)
 
 ## Description
 Here is the description from the source:
-
 
 1. Steam version running through GameNative.
 

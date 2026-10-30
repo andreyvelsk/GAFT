@@ -12,9 +12,9 @@ media:
     url: "/content/openfusion-pocket/screenshot-2.webp"
   - type: "image"
     url: "/content/openfusion-pocket/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1xew036/openfusionpocket_v20_fusionfall_on_android_with_a/"
+project_page: "https://github.com/rsigristc/OpenFusion-Pocket"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xew036/openfusionpocket_v20_fusionfall_on_android_with_a/)
 
 ## Description
 
@@ -62,5 +62,3 @@ The build targets Android 6.0 / API 23 or newer, with ARMv7 and ARM64 included. 
 - Experimental Vulkan is not a guaranteed frame-rate boost.
 - Visual fidelity, loading time, memory use and input behavior can vary by device.
 - An external display alone is insufficient for the companion: physical secondary screens need usable dimensions and a touch confirmation in settings.
-
-See the project page: [github.com](https://github.com/rsigristc/OpenFusion-Pocket)

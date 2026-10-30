@@ -106,7 +106,6 @@ Each project page must use exactly one of the following categories:
 | `emulator` | An emulator of a system that has a feature using the second screen. |
 | `tool` | A utility for flexible configuration or for improving how the system works overall. |
 
-
 ### Media Items
 
 Each media entry supports two types:

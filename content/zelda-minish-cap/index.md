@@ -7,6 +7,7 @@ category: "game"
 media:
   - type: "image"
     url: "/content/zelda-minish-cap/preview.webp"
+project_page: "https://github.com/samyost1/tmc-android"
 ---
 
 ## What's on the panel
@@ -21,6 +22,3 @@ media:
 - **Items** — tap a ring to arm it, then tap an item to equip that slot.
 - **Settings** — hide the top HUD (the panel takes over your vitals), true
   widescreen, and the port-wide toggles the desktop build puts behind F8.
-
-## Setup guide
-See the project page: [github.com](https://github.com/samyost1/tmc-android)

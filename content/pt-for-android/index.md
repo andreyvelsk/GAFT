@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/pt-for-android/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1x2rynn/pt_on_android_an_experimental_port_of/"
+project_page: "https://github.com/StoneColdOS/pt-pc"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x2rynn/pt_on_android_an_experimental_port_of/)
 
 ## Description
 
@@ -46,5 +46,3 @@ Near the end the game asks you to say a name: say it out loud and the game hears
 - The speech recognizer is new on Android: if it doesn't hear you, hold both triggers.
 - The PC extras that need a desktop (upscalers, ray tracing, VR, enhanced textures, loop previews) are off.
 - A phone hooked up to a TV or monitor (USB-C to HDMI, or some casting setups) counts as a second screen, so the clock may show up on the TV while the game stays on the phone. Turn it off under Display > Second screen > Off.
-
-See the project page: [github.com](https://github.com/StoneColdOS/pt-pc)

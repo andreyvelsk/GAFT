@@ -12,9 +12,9 @@ media:
     url: "/content/zomboidds/screenshot-2.webp"
   - type: "image"
     url: "/content/zomboidds/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wptab9/zomboidds_dualscreen_mod_for_pz_on_zomdroid/"
+project_page: "https://github.com/Space001000/ZomboidDS"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wptab9/zomboidds_dualscreen_mod_for_pz_on_zomdroid/)
 
 ## Description
 
@@ -44,5 +44,3 @@ ZomboidDS is an unofficial mod, not affiliated with or endorsed by The Indie Sto
 4. Launch the game in Zomdroid on the top screen and the companion app on the bottom screen.
 
 A detailed user guide is included in the repository.
-
-See the project page: [github.com](https://github.com/Space001000/ZomboidDS)

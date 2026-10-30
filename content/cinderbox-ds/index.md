@@ -12,9 +12,9 @@ media:
     url: "/content/cinderbox-ds/screenshot-2.webp"
   - type: "image"
     url: "/content/cinderbox-ds/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wycrwz/free_opensource_dualscreen_mod_for_stardew_valley/"
+project_page: "https://github.com/hung-eggie-do-covergo/stardew-thor-dual-screen"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wycrwz/free_opensource_dualscreen_mod_for_stardew_valley/)
 
 ## Description
 
@@ -44,5 +44,3 @@ Thor Dual Screen is a free, open-source SMAPI mod that turns the AYN Thor's bott
 - Copy the folder to `/sdcard/StardewValley/desktop/Mods/ThorDualScreen/`
 - Start the game from Cinderbox. The bottom screen lights up on the title screen
 - Back up `/sdcard/StardewValley/desktop/Saves` before trying any new mod
-
-See the project page: [github.com](https://github.com/hung-eggie-do-covergo/stardew-thor-dual-screen)

@@ -7,9 +7,9 @@ category: "companion"
 media:
   - type: "image"
     url: "/content/pixel-navigator/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wfm4hc/its_amazing_how_every_rom_can_be_so_diverse_also/"
+project_page: "https://github.com/ChimeraGaming/PixelNavigator"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wfm4hc/its_amazing_how_every_rom_can_be_so_diverse_also/)
 
 ## Description
 
@@ -26,5 +26,3 @@ Game data is not included — you need your own legally obtained ROMs. Pixel Nav
 1. Download the APK from the [Releases](https://github.com/ChimeraGaming/PixelNavigator/releases) page and install it on the AYN Thor.
 2. Open the app and pick a supported game from the built-in game list (the full list is in the repository README).
 3. Play the game in your emulator as usual — the map and tracking appear on the second screen.
-
-See the project page: [github.com](https://github.com/ChimeraGaming/PixelNavigator)

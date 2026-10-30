@@ -9,11 +9,8 @@ media:
     url: "https://www.youtube.com/watch?v=hJZytgCXtF8&t=205s"
   - type: "video"
     url: "https://www.youtube.com/watch?v=rz2uE7rdKvI"
+source: "https://www.reddit.com/r/AynThor/comments/1rs6c7r/setup_guide_fallout_4_goty_pipboy_app_on_ayn_thor/"
 ---
-
-## Setup guide
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1rs6c7r/setup_guide_fallout_4_goty_pipboy_app_on_ayn_thor/)
 
 ## Tips
 

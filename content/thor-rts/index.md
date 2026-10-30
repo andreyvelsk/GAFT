@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/thor-rts/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1x61fci/generals_zero_hour_ported_to_ayn_thor/"
+project_page: "https://github.com/ROM-HackZ/generals-zero-hour-ayn-thor"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x61fci/generals_zero_hour_ported_to_ayn_thor/)
 
 ## Description
 
@@ -40,5 +40,3 @@ Thor RTS is a native Android port of Command & Conquer: Generals Zero Hour built
 - Connect the Thor: enable USB debugging, connect a USB data cable and accept the debugging prompt on the Thor.
 - Browse to the game folder. Under Advanced → Local APK, choose the alpha.5 APK. Refresh the device list and choose the Thor. The installer can download ADB if you need it.
 - Press Install on Thor. Once it finishes, open Thor RTS on the handheld and press Play.
-
-See the project page: [github.com](https://github.com/ROM-HackZ/generals-zero-hour-ayn-thor)

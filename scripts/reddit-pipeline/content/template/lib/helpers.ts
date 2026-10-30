@@ -1,4 +1,3 @@
-import { projectLinkLabel } from '../../../shared/lib/helpers';
 import { serializeFrontmatter, type FrontmatterData } from '../../frontmatter';
 import {
   pageFrontmatterSchema,
@@ -29,19 +28,20 @@ export function validateFrontmatter(data: unknown): PageFrontmatter {
 
 /**
  * Assemble the markdown body of a project page from its ordered sections.
- * The `source:` line and the trailing project link are omitted when empty.
+ * The source and project links live in the frontmatter (`source` /
+ * `project_page`) and are never part of the body.
+ *
+ * Sections with an empty body are dropped — the rendered page must never
+ * contain an empty `## …` section.
  */
 export function buildPageBody(sections: PageSections): string {
   const parts: string[] = [];
-  if (sections.sourceUrl !== '') {
-    parts.push(`source: [reddit.com](${sections.sourceUrl})`);
-  }
   for (const section of sections.sections) {
-    parts.push(`## ${section.heading}\n\n${section.body.trim()}`);
-  }
-  if (sections.projectUrl !== '') {
-    const label = projectLinkLabel(sections.projectUrl);
-    parts.push(`See the project page: [${label}](${sections.projectUrl})`);
+    const body = section.body.trim();
+    if (body === '') {
+      continue;
+    }
+    parts.push(`## ${section.heading}\n\n${body}`);
   }
   return parts.join('\n\n');
 }
@@ -223,6 +223,7 @@ export function normalizeReleaseLinks(
 /** Convert validated frontmatter into a plain serializable record. */
 function toFrontmatterData(
   frontmatter: PageFrontmatter,
+  sections: PageSections,
   extra: Record<string, unknown> | undefined,
 ): FrontmatterData {
   const data: FrontmatterData = {
@@ -233,6 +234,8 @@ function toFrontmatterData(
     category: frontmatter.category,
     generated: 'ai',
     media: frontmatter.media,
+    source: frontmatter.source ?? sections.sourceUrl,
+    project_page: frontmatter.project_page ?? sections.projectUrl,
   };
   if (extra !== undefined) {
     for (const [key, value] of Object.entries(extra)) {
@@ -270,6 +273,6 @@ export function withoutMediaFiles(
 export function renderPage(input: PageInput): string {
   const frontmatter = validateFrontmatter(input.frontmatter);
   const body = buildPageBody(input.sections);
-  const data = toFrontmatterData(frontmatter, input.extraFrontmatter);
+  const data = toFrontmatterData(frontmatter, input.sections, input.extraFrontmatter);
   return serializeFrontmatter(data, `\n${body}\n`);
 }

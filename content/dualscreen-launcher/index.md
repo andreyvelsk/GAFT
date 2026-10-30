@@ -7,6 +7,7 @@ category: "tool"
 media:
   - type: "video"
     url: "https://www.youtube.com/watch?v=sxXRPmRHnT8"
+project_page: "https://github.com/JoeCorrell/DualScreen-Launcher"
 ---
 
 ## Description
@@ -23,5 +24,3 @@ Access is available to active Patreon supporters or people who receive an access
 4. Sign in with the Patreon account that has the active membership, or enter your access code on the same screen
 
 Patreon memberships are securely rechecked periodically and must remain active. If you need help, join the [Discord server](https://discord.gg/j4tTYMHYRn).
-
-See the project page: [github.com](https://github.com/JoeCorrell/DualScreen-Launcher)

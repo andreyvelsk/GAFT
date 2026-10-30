@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/re2ds/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1xbfm3r/re2ds_resident_evil_2_dual_screen/"
+project_page: "https://github.com/mesho3d/RE2DS"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xbfm3r/re2ds_resident_evil_2_dual_screen/)
 
 ## Description
 
@@ -41,5 +41,3 @@ RE2DS is a modified Dolphin emulator that brings a new way to experience **Resid
   - Scroll down to **Import Custom Platforms**.
   - Select **RE2DS-GameCube.json**.
 - Select **RE2DS** as the emulator for Resident Evil 2.
-
-See the project page: [github.com](https://github.com/mesho3d/RE2DS)

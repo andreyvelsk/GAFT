@@ -26,8 +26,12 @@ const SCORE = {
   queryContainsTitle: 50,
 } as const;
 
-/** Extract the canonical project URL from a page body. */
-export function extractProjectUrl(content: string): string {
+/** Extract the canonical project URL from page frontmatter or body. */
+export function extractProjectUrl(data: Record<string, unknown>, content: string): string {
+  const fm = stringField(data, 'project_page', '');
+  if (fm !== '') {
+    return fm;
+  }
   const labelled = /See the project page:\s*\[[^\]]*\]\(([^)\s]+)\)/i.exec(
     content,
   );
@@ -38,8 +42,12 @@ export function extractProjectUrl(content: string): string {
   return github?.[0] ?? '';
 }
 
-/** Extract the source Reddit permalink from a page body. */
-export function extractSourceUrl(content: string): string {
+/** Extract the source permalink from page frontmatter or body. */
+export function extractSourceUrl(data: Record<string, unknown>, content: string): string {
+  const fm = stringField(data, 'source', '');
+  if (fm !== '') {
+    return fm;
+  }
   const labelled = /source:\s*\[[^\]]*\]\(([^)\s]+)\)/i.exec(content);
   return labelled?.[1] ?? '';
 }
@@ -102,8 +110,8 @@ export async function loadContentIndex(
       title: stringField(data, 'title', ''),
       description: stringField(data, 'description', ''),
       path,
-      projectUrl: extractProjectUrl(content),
-      sourceUrl: extractSourceUrl(content),
+      projectUrl: extractProjectUrl(data, content),
+      sourceUrl: extractSourceUrl(data, content),
     });
   }
 

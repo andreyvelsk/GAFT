@@ -6,9 +6,9 @@ slug: "ffxii-thor-companion"
 category: "companion"
 generated: "ai"
 media: []
+source: "https://www.reddit.com/r/AynThor/comments/1xcfl3f/i_made_a_live_secondscreen_companion_for_final/"
+project_page: "https://github.com/Cybranfox/ffxii-thor-companion"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xcfl3f/i_made_a_live_secondscreen_companion_for_final/)
 
 ## Description
 
@@ -56,5 +56,3 @@ Watch:
 - [0.16 video](https://github.com/Cybranfox/ffxii-thor-companion/releases/latest)
 - [0.15 setup walkthrough](https://github.com/Cybranfox/ffxii-thor-companion/releases/latest)
 - [first demo (0.9)](https://github.com/Cybranfox/ffxii-thor-companion/releases/latest)
-
-See the project page: [github.com](https://github.com/Cybranfox/ffxii-thor-companion)

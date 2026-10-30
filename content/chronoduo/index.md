@@ -15,9 +15,9 @@ tags:
   - chrono-trigger
   - dual-screen
   - companion
+source: "https://github.com/kalenjohnson/chrono-duo"
+project_page: "https://github.com/kalenjohnson/chrono-duo"
 ---
-
-source: [github.com](https://github.com/kalenjohnson/chrono-duo)
 
 ## Description
 ChronoDuo is a dual-screen host for **Chrono Trigger (Upgrade Ver.)** on the AYN Thor. The real game runs full-widescreen on the top screen while the bottom screen becomes a DS-style companion display, much like the Nintendo DS release.
@@ -38,8 +38,6 @@ The bottom screen shows:
 3. Launch **ChronoDuo** instead of Chrono Trigger. The game boots on the top screen and the companion display appears on the bottom.
 
 Tap the gear in the top-left corner of the bottom screen (outside battle) to open settings, import a DS ROM, or build the original pixel-art sheets.
-
-Full details on the project page: [github.com](https://github.com/kalenjohnson/chrono-duo)
 
 ## Known issues
 - Requires Android 8.0+ on an arm64 device; developed and tested on the AYN Thor Lite.

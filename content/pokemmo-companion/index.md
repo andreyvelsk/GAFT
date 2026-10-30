@@ -12,9 +12,9 @@ media:
     url: "/content/pokemmo-companion/screenshot-2.webp"
   - type: "image"
     url: "/content/pokemmo-companion/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wvy4r1/i_made_a_companion_app_for_pokemmo_for_the_thor/"
+project_page: "https://github.com/PokeMMOCompanion/pokemmo-companion"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wvy4r1/i_made_a_companion_app_for_pokemmo_for_the_thor/)
 
 ## Description
 
@@ -31,5 +31,3 @@ Alerts: a strong buzz and sound for shinies and for Pokémon still needed for yo
 ## Privacy
 
 Screen capture sounds scary, but nothing leaves your phone: frames are looked at in memory a couple of times a second and then thrown away — the app never saves screenshots or recordings and never uploads what's on your screen. There is no account, login, ads or tracking, and the app never asks for your PokeMMO login and has no way to control the game. Internet is only used when you tap Download (Pokémon sprites from PokemonDB), open GTL prices (PokeMMO Hub's price API), or check for app updates (at most twice a day; can be turned off in Settings → Updates) — none of these requests contain anything from your screen. Text recognition runs on the phone (Google ML Kit, bundled model); ML Kit sends Google anonymous performance stats (phone model, OS version, timing), never the images or the text it reads. What it keeps on the phone: your party, settings, berry timers, encounter counts and Pokédex progress. A diagnostic log of what it reads is off unless you turn it on (Settings → Privacy), and turning it off deletes it. Android shows its own warning when capture starts and a notification while it runs — tap the lens or the notification's Stop to end it any time. PokeMMO's rules forbid automating the game, modifying the client and reading its memory or network traffic; this app does none of that. It only looks at the screen and only notifies, vibrates, plays sounds and counts — a person always plays the game.
-
-See the project page: [github.com](https://github.com/PokeMMOCompanion/pokemmo-companion)

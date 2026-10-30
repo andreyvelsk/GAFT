@@ -7,13 +7,10 @@ category: "companion"
 media:
   - type: "image"
     url: "/content/thortranslate/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1rofite/i_made_an_ayn_thor_ingame_translation_app/"
+project_page: "https://github.com/magiobus/thortranslate"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1rofite/i_made_an_ayn_thor_ingame_translation_app/)
 
 ## Description
 
 An awesome Android app for translating and understanding foreign-language game screens in real time. Built for dual-screen devices like the Ayn Thor, where the game runs on the top screen and ThorLens runs on the bottom.
-
-## Setup guide
-Link to project: [github.com](https://github.com/magiobus/thortranslate)

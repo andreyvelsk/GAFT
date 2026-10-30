@@ -7,9 +7,9 @@ category: "emulator"
 media:
   - type: "image"
     url: "/content/zedex/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1w36zwn/zedex_zx_spectrum_emulator_with_dual_screen/"
+project_page: "https://github.com/dimitriuz/zedex"
 ---
-
-source: [reddit](https://www.reddit.com/r/AynThor/comments/1w36zwn/zedex_zx_spectrum_emulator_with_dual_screen/)
 
 ## Description
 Zedex is a ZX Spectrum that behaves like a modern console. Save at any moment, put the picture through the CRT you remember, pick up a controller and play. It runs on Android 11 and later, with unmodified [Fuse](http://fuse-emulator.sourceforge.net/) as the emulation core and a native front end.
@@ -28,6 +28,3 @@ With the library on, the panel shows whichever game is selected — its artwork,
 - **Cheats** — built-in pokes for 3,682 games, matched by file fingerprint
 - **Capture** — screenshots as PNG, recordings to GIF or MP4
 - **Machines** — Sinclair 16K–+3e, Timex, Pentagon, Scorpion and Spectrum SE
-
-## Setup guide
-See the project page: [github.com](https://github.com/dimitriuz/zedex)

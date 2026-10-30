@@ -12,9 +12,9 @@ media:
     url: "/content/thordirstat/screenshot-2.webp"
   - type: "image"
     url: "/content/thordirstat/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1x2hsll/thordirstat_windirstat_for_the_ayn_thor_see/"
+project_page: "https://github.com/ajhockey88/ThorDirStat"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1x2hsll/thordirstat_windirstat_for_the_ayn_thor_see/)
 
 ## Description
 
@@ -43,5 +43,3 @@ It also lists each installed app's own size, with App info a hold away to clear 
 4. Optional, for `Android/data` and `Android/obb`: start Shizuku, then tap **Allow ThorDirStat in Shizuku**. Android hides those folders from apps, and they often hold the biggest files (game data, emulator files); without Shizuku they show as "hidden by Android" and their space counts towards `<Unknown>`.
 5. Optional, for `<Apps>`: in **Drives**, tap **Allow usage access** and turn it on for ThorDirStat. Without it, apps' sizes count towards `<Unknown>`.
 6. To update, tap **Check for updates** at the bottom of Settings, or install the newest `ThorDirStat.apk` from the [latest release](https://github.com/ajhockey88/ThorDirStat/releases/latest) over the old one.
-
-See the project page: [github.com](https://github.com/ajhockey88/ThorDirStat)

@@ -14,9 +14,9 @@ media:
     url: "https://raw.githubusercontent.com/SibiryakovSA/SephiriaCompanion/codex/initial-import/docs/screenshots/backpack.png"
   - type: "image"
     url: "https://raw.githubusercontent.com/SibiryakovSA/SephiriaCompanion/codex/initial-import/docs/screenshots/combos.png"
+source: "https://github.com/SibiryakovSA/SephiriaCompanion"
+project_page: "https://github.com/SibiryakovSA/SephiriaCompanion"
 ---
-
-source: [github.com](https://github.com/SibiryakovSA/SephiriaCompanion)
 
 ## Description
 
@@ -47,5 +47,3 @@ The project has three parts: a C# AddOn that runs inside the game and reads its 
 4. Start Sephiria, load a save, open the companion and tap **Refresh**.
 
 Restart the game after replacing the AddOn. The current release is 0.4.2.
-
-See the project page: [github.com](https://github.com/SibiryakovSA/SephiriaCompanion)

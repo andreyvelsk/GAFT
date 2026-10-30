@@ -7,12 +7,11 @@ category: "game"
 media:
   - type: "image"
     url: "/content/banjo-kazooie/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1u5bmr9/banjo_kazooie_port_with_dual_screen_support/"
+project_page: "https://github.com/AurelioB/BanjoRecomp-Android"
 ---
 
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1u5bmr9/banjo_kazooie_port_with_dual_screen_support/)
-
 ## Setup guide
-Link to project: [github.com](https://github.com/AurelioB/BanjoRecomp-Android)
 
 - Download the latest .apk file from GitHub.
 - Add your own ROM file. You need the 1.0 ROM version.

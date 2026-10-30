@@ -14,9 +14,9 @@ media:
     url: "/content/eden-duo/screenshot-3.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=LaLfNIwAwHU"
+source: "https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_a_switch_emulator_fork_with_second/"
+project_page: "https://github.com/igawa6/eden-duo"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_a_switch_emulator_fork_with_second/)
 
 ## Description
 
@@ -85,5 +85,3 @@ Each companion needs an exact game version, listed in the companion repository. 
 Second-screen options are in **Settings → Graphics → Second Screen**, and each game can have its own values (long-press the game, then **Settings → Graphics → Second Screen**). You can swap which display runs the game, stretch the companion, or choose what the second screen shows for games without a companion — including launching another installed app on it.
 
 Eden Duo can also be launched from frontends: CocoonFE has built-in support (open **Settings → Library & Data → Refetch Platforms**, then set **Player Override** to **Eden Duo** for each game), and ES-DE (Android) works by copying the provided `es_systems.xml` and `es_find_rules.xml` into `ES-DE/custom_systems/` and restarting.
-
-See the project page: [github.com](https://github.com/igawa6/eden-duo)

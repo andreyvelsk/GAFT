@@ -77,6 +77,13 @@
       </p>
     </header>
 
+    <!-- Source & project page links (from frontmatter config) -->
+    <SourceLinks
+      v-if="article.source || article.project_page"
+      :source="article.source"
+      :project-page="article.project_page"
+    />
+
     <!-- Media Carousel -->
     <div
       v-if="article.media?.length"
@@ -85,7 +92,6 @@
       <MediaCarousel :media="article.media" />
     </div>
 
-    <!-- Article Content (Markdown rendered) -->
     <div class="prose mx-auto">
       <ContentRenderer :value="article">
         <template #empty>

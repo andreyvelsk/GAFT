@@ -830,8 +830,8 @@ describe('createPage', () => {
     expect(result.slug).toBe('pixel-navigator');
     expect(result.markdown).toContain('## Description');
     expect(result.markdown).toContain('## Setup guide');
-    expect(result.markdown).toContain('source: [reddit.com]');
-    expect(result.markdown).toContain(`See the project page: [github.com](${REPO_URL})`);
+    expect(result.markdown).toContain('source: "https://www.reddit.com/r/AynThor/comments/abc123/"');
+    expect(result.markdown).toContain(`project_page: "${REPO_URL}"`);
     expect(result.media).toEqual([{ url: IMAGE_A, fileName: 'preview.webp' }]);
   });
 
@@ -866,8 +866,8 @@ describe('createPage', () => {
 
     expect(countOccurrences(result.markdown, '## Description')).toBe(1);
     expect(countOccurrences(result.markdown, '## Setup guide')).toBe(1);
-    expect(countOccurrences(result.markdown, 'source: [reddit.com]')).toBe(1);
-    expect(countOccurrences(result.markdown, 'See the project page:')).toBe(1);
+    expect(countOccurrences(result.markdown, 'source: "')).toBe(1);
+    expect(countOccurrences(result.markdown, 'project_page: "')).toBe(1);
     expect(result.page.sections.sections).toEqual([
       { heading: 'Description', body: 'The description.' },
       { heading: 'Setup guide', body: '1. Install it.' },

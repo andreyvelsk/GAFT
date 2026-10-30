@@ -12,9 +12,9 @@ media:
     url: "/content/walkthor/screenshot-2.webp"
   - type: "image"
     url: "/content/walkthor/screenshot-3.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/"
+project_page: "https://github.com/nerf-herder-29/WalkThor"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1xggig9/walkthor_update_a_free_companion_app_for_your/)
 
 ## Description
 
@@ -60,5 +60,3 @@ Optional: link your artwork folder (Cocoon's media folder works) for game art, l
 - Scanned PDFs without a text layer display fine but can't be searched (no OCR).
 - Password-protected PDFs aren't supported.
 - Matches that span a page break in TXT guides aren't found.
-
-See the project page: [github.com](https://github.com/nerf-herder-29/WalkThor)

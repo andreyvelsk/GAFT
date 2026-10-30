@@ -7,9 +7,9 @@ category: "emulator"
 media:
   - type: "image"
     url: "/content/eden-ds/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1vya2n0/mario_kart_8_dualscreen_update_breath_of_the_wild/"
+project_page: "https://github.com/JoeCorrell/Eden-DS"
 ---
-
-source: [reddit](https://www.reddit.com/r/AynThor/comments/1vya2n0/mario_kart_8_dualscreen_update_breath_of_the_wild/)
 
 ## Description
 Eden DS is an Android-focused fork of the Eden emulator, that adds a dedicated, always-on companion interface for dual-screen devices. Gameplay stays on the primary display while a touch-first UI runs on Android's presentation display. The companion is integrated into the emulator and reads live guest state through build-checked bridges — it does not mirror the primary display or run a second copy of the game renderer.
@@ -23,6 +23,3 @@ The current supported games are:
 Compatibility is intentionally strict: the live-memory bridge is enabled only when both the title ID and the main-module Build ID match, so unsupported builds fail closed instead of reading unknown memory layouts.
 
 The actual list of supported games is on the project page and may change as new companions are added.
-
-## Setup guide
-See the project page: [github.com](https://github.com/JoeCorrell/Eden-DS)

@@ -8,9 +8,9 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/selaco/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1wr9m6u/selaco_android_port_with_dual_screen_support/"
+project_page: "https://github.com/danillogical/GZSelaco-android"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wr9m6u/selaco_android_port_with_dual_screen_support/)
 
 ## What's on the panel
 
@@ -34,5 +34,3 @@ You need to own Selaco — no game data is included. Copy `Selaco.ipk3` from you
 Steam install to `Internal storage/Selaco/`, install the APK, then pick your
 device on first launch. A gamepad is required (there are no touch controls) and
 Vulkan 1.1+ is mandatory.
-
-See the project page: [github.com](https://github.com/danillogical/GZSelaco-android)

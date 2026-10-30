@@ -6,9 +6,9 @@ slug: "thorstream"
 category: "app"
 generated: "ai"
 media: []
+source: "https://www.reddit.com/r/AynThor/comments/1wt09b4/thorstream_a_twitch_viewer_built_for_the_ayn/"
+project_page: "https://github.com/ajhockey88/ajhockey88.github.io"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1wt09b4/thorstream_a_twitch_viewer_built_for_the_ayn/)
 
 ## Description
 
@@ -25,5 +25,3 @@ Download and install the latest release from the [GitHub releases page](https://
 ## Privacy
 
 There's no backend, no database and no analytics anywhere in the app. Signing in with Twitch happens directly between you and Twitch, and your sign-in stays on your device — nothing about how you use the app is ever visible to anyone else.
-
-See the project page: [github.com](https://github.com/ajhockey88/ajhockey88.github.io)

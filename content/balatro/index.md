@@ -7,9 +7,9 @@ category: "game"
 media:
   - type: "image"
     url: "/content/balatro/preview.webp"
+source: "https://www.reddit.com/r/AynThor/comments/1vcz076/first_release_of_balatro_dual_screen_mod_for_the/"
+project_page: "https://github.com/rosbean/balatro-dualscreen"
 ---
-
-source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1vcz076/first_release_of_balatro_dual_screen_mod_for_the/)
 
 ## What it does
 
@@ -25,6 +25,3 @@ source: [reddit.com](https://www.reddit.com/r/AynThor/comments/1vcz076/first_rel
 - **Controller and touch** both work throughout.
 - **Single-screen safe** — with the second screen switched off, or on a device
   that has only one, the game behaves exactly like vanilla.
-
-## Requirements & Setup guide
-See the project page: [github.com](https://github.com/rosbean/balatro-dualscreen)
