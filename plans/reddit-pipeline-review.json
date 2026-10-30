@@ -1,57 +1,99 @@
 {
   "posts": [
     {
-      "id": "1xiep46",
-      "title": "Dual-screen Fallout 2 on the AYN Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiep46/dualscreen_fallout_2_on_the_ayn_thor/",
-      "createdUtc": 1793264081,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "approved",
-      "slug": "fallout-2-ce-mobile-dual-screen",
-      "decidedAt": "2026-10-30T11:33:43.685Z"
-    },
-    {
-      "id": "1xii9nh",
-      "title": "ARMADALive | Dual screen companion app for the AYN Thor on Armada OS",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/",
-      "createdUtc": 1793275939,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "approved",
-      "slug": "armadalive",
-      "decidedAt": "2026-10-30T11:33:43.685Z"
-    },
-    {
-      "id": "1xijzd3",
-      "title": "Plumemu: a launcher I made for my Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xijzd3/plumemu_a_launcher_i_made_for_my_thor/",
-      "createdUtc": 1793280508,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
+      "id": "1xhoim3",
+      "title": "I created  pocket-ui: a cozy, free game shelf for the Mini V2 on ROCKNIX (alpha out now)",
+      "permalink": "https://www.reddit.com/r/retroid/comments/1xhoim3/i_created_pocketui_a_cozy_free_game_shelf_for_the/",
+      "createdUtc": 1793195188,
+      "firstSeenAt": "2026-10-30T11:49:16.087Z",
       "status": "pending"
     },
     {
-      "id": "1xik9ei",
-      "title": "WalkThor Update: a free companion app for your bottom screen, now with screenshots, captions, and ES-DE support!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/",
-      "createdUtc": 1793281194,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "approved",
-      "slug": "walkthor",
-      "decidedAt": "2026-10-30T11:33:43.685Z"
-    },
-    {
-      "id": "1xiwnx0",
-      "title": "Loose Hinge/top Screen DIY repair",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiwnx0/loose_hingetop_screen_diy_repair/",
-      "createdUtc": 1793308991,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
+      "id": "1xhti52",
+      "title": "Minecraft LCE Wii u port on the rp5",
+      "permalink": "https://www.reddit.com/r/retroid/comments/1xhti52/minecraft_lce_wii_u_port_on_the_rp5/",
+      "createdUtc": 1793206247,
+      "firstSeenAt": "2026-10-30T11:49:16.087Z",
       "status": "pending"
     },
     {
-      "id": "1xj35vo",
-      "title": "Fate/Unlimited Codes PS2 Translation Complete + PSP costumes added",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xj35vo/fateunlimited_codes_ps2_translation_complete_psp/",
-      "createdUtc": 1793326059,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
+      "id": "1xii06k",
+      "title": "I couldn't find a keyboard I liked using with a gamepad, so I made PadBoard — free and open source",
+      "permalink": "https://www.reddit.com/r/retroid/comments/1xii06k/i_couldnt_find_a_keyboard_i_liked_using_with_a/",
+      "createdUtc": 1793275226,
+      "firstSeenAt": "2026-10-30T11:49:16.087Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xipr8w",
+      "title": "I modded Mario Odyssey to run at a native 4:3 on my Nova using Claude",
+      "permalink": "https://www.reddit.com/r/retroid/comments/1xipr8w/i_modded_mario_odyssey_to_run_at_a_native_43_on/",
+      "createdUtc": 1793293480,
+      "firstSeenAt": "2026-10-30T11:49:16.087Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xiqrg8",
+      "title": "Gamepass on ArmadaOS",
+      "permalink": "https://www.reddit.com/r/retroid/comments/1xiqrg8/gamepass_on_armadaos/",
+      "createdUtc": 1793295672,
+      "firstSeenAt": "2026-10-30T11:49:16.087Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xiw75x",
+      "title": "Wave Launcher 1.0.4 is out: faster startup, smoother library refreshing, iiDB as a new scraping source, new fonts, and more customization options for game titles and descriptions.",
+      "permalink": "https://www.reddit.com/r/retroid/comments/1xiw75x/wave_launcher_104_is_out_faster_startup_smoother/",
+      "createdUtc": 1793307909,
+      "firstSeenAt": "2026-10-30T11:49:16.087Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xh9nbu",
+      "title": "Port from Unreal games (including UT2004 and Unreal Championship 2) games to the Android",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xh9nbu/port_from_unreal_games_including_ut2004_and/",
+      "createdUtc": 1793147128,
+      "firstSeenAt": "2026-10-30T11:51:51.377Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xhb8db",
+      "title": "My Pico-8 Game Jurassic Chaos Reborn Might Go Great with Your Handheld.",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xhb8db/my_pico8_game_jurassic_chaos_reborn_might_go/",
+      "createdUtc": 1793151545,
+      "firstSeenAt": "2026-10-30T11:51:51.377Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xhkn28",
+      "title": "Zelda BoTW port running on a Mali-G610 with LPDDR4 8GB RAM (Orange Pi 5 - sub $100 SBC) at 720p ~30FPS with minimal graphical bugs on Linux",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xhkn28/zelda_botw_port_running_on_a_malig610_with_lpddr4/",
+      "createdUtc": 1793184236,
+      "firstSeenAt": "2026-10-30T11:51:51.377Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xhwv89",
+      "title": "muSudoku",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xhwv89/musudoku/",
+      "createdUtc": 1793213430,
+      "firstSeenAt": "2026-10-30T11:51:51.377Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xiahgc",
+      "title": "I converted a Pico-8 game into a GBA homebrew: Eight, a first-person murder mystery where you’re a jumping spider",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xiahgc/i_converted_a_pico8_game_into_a_gba_homebrew/",
+      "createdUtc": 1793248464,
+      "firstSeenAt": "2026-10-30T11:51:51.377Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xj9yei",
+      "title": "My dream Tower mode is now officially included in Apotris ❤️",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xj9yei/my_dream_tower_mode_is_now_officially_included_in/",
+      "createdUtc": 1793349588,
+      "firstSeenAt": "2026-10-30T11:51:51.377Z",
       "status": "pending"
     }
   ]
