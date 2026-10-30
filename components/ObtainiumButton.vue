@@ -4,7 +4,7 @@
     :href="deepLink"
     class="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-surface-200 border border-gray-700 text-gray-300 hover:text-purple-400 hover:border-purple-500/50 hover:bg-surface-100 transition-colors"
   >
-    <IconObtainium />
+    <IconComponent name="obtainium" />
     Add to Obtainium
   </a>
 </template>
