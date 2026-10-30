@@ -1,42 +1,60 @@
 {
   "posts": [
     {
-      "id": "1xhwnxm",
-      "title": "I Got MapleStory Classic World Running on the AYN Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xhwnxm/i_got_maplestory_classic_world_running_on_the_ayn/",
-      "createdUtc": 1793212979,
-      "firstSeenAt": "2026-10-29T06:12:10.013Z",
+      "id": "1xiep46",
+      "title": "Dual-screen Fallout 2 on the AYN Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiep46/dualscreen_fallout_2_on_the_ayn_thor/",
+      "createdUtc": 1793264081,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
       "status": "pending"
     },
     {
-      "id": "1xi1dit",
-      "title": "Zeewolf-style low-poly helicopter game using Thor’s two screens",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xi1dit/zeewolfstyle_lowpoly_helicopter_game_using_thors/",
-      "createdUtc": 1793223474,
-      "firstSeenAt": "2026-10-29T06:12:10.013Z",
-      "status": "approved",
-      "slug": "zeewolf-style-helicopter-game",
-      "decidedAt": "2026-10-29T07:01:02.043Z"
+      "id": "1xii9nh",
+      "title": "ARMADALive | Dual screen companion app for the AYN Thor on Armada OS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/",
+      "createdUtc": 1793275939,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
+      "status": "pending"
     },
     {
-      "id": "1xi1h1k",
-      "title": "Dave The Diver DS Mod for Eden Duo is out now! Enjoy your new diving companion",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xi1h1k/dave_the_diver_ds_mod_for_eden_duo_is_out_now/",
-      "createdUtc": 1793223718,
-      "firstSeenAt": "2026-10-29T06:12:10.013Z",
-      "status": "rejected",
-      "slug": "eden-duo",
-      "decidedAt": "2026-10-29T07:09:15.587Z"
+      "id": "1xijzd3",
+      "title": "Plumemu: a launcher I made for my Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xijzd3/plumemu_a_launcher_i_made_for_my_thor/",
+      "createdUtc": 1793280508,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
+      "status": "pending"
     },
     {
-      "id": "1xi7ttr",
-      "title": "POKEDAISY GEN 5 SUPPORT",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xi7ttr/pokedaisy_gen_5_support/",
-      "createdUtc": 1793240280,
-      "firstSeenAt": "2026-10-29T06:12:10.013Z",
-      "status": "approved",
-      "slug": "pokedaisy",
-      "decidedAt": "2026-10-29T07:01:02.043Z"
+      "id": "1xik9ei",
+      "title": "WalkThor Update: a free companion app for your bottom screen, now with screenshots, captions, and ES-DE support!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/",
+      "createdUtc": 1793281194,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xiqfy4",
+      "title": "TOTK port running stable on Android",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiqfy4/totk_port_running_stable_on_android/",
+      "createdUtc": 1793294962,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xiwnx0",
+      "title": "Loose Hinge/top Screen DIY repair",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiwnx0/loose_hingetop_screen_diy_repair/",
+      "createdUtc": 1793308991,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xj35vo",
+      "title": "Fate/Unlimited Codes PS2 Translation Complete + PSP costumes added",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xj35vo/fateunlimited_codes_ps2_translation_complete_psp/",
+      "createdUtc": 1793326059,
+      "firstSeenAt": "2026-10-30T07:50:52.097Z",
+      "status": "pending"
     }
   ]
 }
