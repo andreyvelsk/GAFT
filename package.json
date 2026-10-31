@@ -14,6 +14,7 @@
     "tsc": "tsc --noEmit",
     "typecheck": "nuxt typecheck",
     "test": "vitest run",
+    "test:errors": "node scripts/test-errors.mjs",
     "test:watch": "vitest",
     "convert:previews": "node scripts/convert-previews.js",
     "convert:previews:all": "node scripts/convert-previews.js --all",
