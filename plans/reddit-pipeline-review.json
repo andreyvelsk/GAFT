@@ -1,57 +1,67 @@
 {
   "posts": [
     {
-      "id": "1xiep46",
-      "title": "Dual-screen Fallout 2 on the AYN Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiep46/dualscreen_fallout_2_on_the_ayn_thor/",
-      "createdUtc": 1793264081,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "approved",
-      "slug": "fallout-2-ce-mobile-dual-screen",
-      "decidedAt": "2026-10-30T11:33:43.685Z"
-    },
-    {
-      "id": "1xii9nh",
-      "title": "ARMADALive | Dual screen companion app for the AYN Thor on Armada OS",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/",
-      "createdUtc": 1793275939,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "approved",
-      "slug": "armadalive",
-      "decidedAt": "2026-10-30T11:33:43.685Z"
-    },
-    {
-      "id": "1xijzd3",
-      "title": "Plumemu: a launcher I made for my Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xijzd3/plumemu_a_launcher_i_made_for_my_thor/",
-      "createdUtc": 1793280508,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
+      "id": "1xjksmv",
+      "title": "New Frontend: Game Log Tracker DS Launcher",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjksmv/new_frontend_game_log_tracker_ds_launcher/",
+      "createdUtc": 1793379344,
+      "firstSeenAt": "2026-10-31T09:29:35.591Z",
       "status": "pending"
     },
     {
-      "id": "1xik9ei",
-      "title": "WalkThor Update: a free companion app for your bottom screen, now with screenshots, captions, and ES-DE support!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/",
-      "createdUtc": 1793281194,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
-      "status": "approved",
-      "slug": "walkthor",
-      "decidedAt": "2026-10-30T11:33:43.685Z"
-    },
-    {
-      "id": "1xiwnx0",
-      "title": "Loose Hinge/top Screen DIY repair",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xiwnx0/loose_hingetop_screen_diy_repair/",
-      "createdUtc": 1793308991,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
+      "id": "1xjpynv",
+      "title": "Gacha TCG Launcher release + face reveal",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjpynv/gacha_tcg_launcher_release_face_reveal/",
+      "createdUtc": 1793390953,
+      "firstSeenAt": "2026-10-31T09:29:35.591Z",
       "status": "pending"
     },
     {
-      "id": "1xj35vo",
-      "title": "Fate/Unlimited Codes PS2 Translation Complete + PSP costumes added",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xj35vo/fateunlimited_codes_ps2_translation_complete_psp/",
-      "createdUtc": 1793326059,
-      "firstSeenAt": "2026-10-30T11:29:33.717Z",
+      "id": "1xjue12",
+      "title": "Thor Back Button Hero - v1.4.0 OUT NOW!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjue12/thor_back_button_hero_v140_out_now/",
+      "createdUtc": 1793401921,
+      "firstSeenAt": "2026-10-31T09:29:35.591Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xjw6mi",
+      "title": "Thor Back Button Hero - v1.4.0 OUT NOW!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjw6mi/thor_back_button_hero_v140_out_now/",
+      "createdUtc": 1793406726,
+      "firstSeenAt": "2026-10-31T09:29:35.591Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xk59px",
+      "title": "Blip 1.5.0 is out: a new console-style look, your music mid-game, and games on the second screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xk59px/blip_150_is_out_a_new_consolestyle_look_your/",
+      "createdUtc": 1793437047,
+      "firstSeenAt": "2026-10-31T09:29:35.591Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xjk9xj",
+      "title": "New Frontend: Game Log Tracker DS Launcher",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xjk9xj/new_frontend_game_log_tracker_ds_launcher/",
+      "createdUtc": 1793378191,
+      "firstSeenAt": "2026-10-31T09:29:55.420Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xjkrld",
+      "title": "New Frontend: Game Log Tracker DS Launcher",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xjkrld/new_frontend_game_log_tracker_ds_launcher/",
+      "createdUtc": 1793379281,
+      "firstSeenAt": "2026-10-31T09:29:55.420Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xjtb8n",
+      "title": "I made RetroForge, a free open-source frontend for Android. 0.7.1 beta is out with 6 languages and its own Switch player",
+      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xjtb8n/i_made_retroforge_a_free_opensource_frontend_for/",
+      "createdUtc": 1793399138,
+      "firstSeenAt": "2026-10-31T09:29:55.420Z",
       "status": "pending"
     }
   ]
