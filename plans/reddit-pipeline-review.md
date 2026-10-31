@@ -1,24 +1,26 @@
 # Reddit pipeline review
 
-> Pending: 3 · Approved: 3 · Rejected: 0
+> Pending: 7 · Approved: 1 · Rejected: 0
 
-## Pending (3)
+## Pending (7)
 
-- `1xijzd3` — Plumemu: a launcher I made for my Thor — [source](https://www.reddit.com/r/AynThor/comments/1xijzd3/plumemu_a_launcher_i_made_for_my_thor/)
-- `1xiwnx0` — Loose Hinge/top Screen DIY repair — [source](https://www.reddit.com/r/AynThor/comments/1xiwnx0/loose_hingetop_screen_diy_repair/)
-- `1xj35vo` — Fate/Unlimited Codes PS2 Translation Complete + PSP costumes added — [source](https://www.reddit.com/r/AynThor/comments/1xj35vo/fateunlimited_codes_ps2_translation_complete_psp/)
+- `1xjksmv` — New Frontend: Game Log Tracker DS Launcher — [source](https://www.reddit.com/r/AynThor/comments/1xjksmv/new_frontend_game_log_tracker_ds_launcher/)
+- `1xjpynv` — Gacha TCG Launcher release + face reveal — [source](https://www.reddit.com/r/AynThor/comments/1xjpynv/gacha_tcg_launcher_release_face_reveal/)
+- `1xjue12` — Thor Back Button Hero - v1.4.0 OUT NOW! — [source](https://www.reddit.com/r/AynThor/comments/1xjue12/thor_back_button_hero_v140_out_now/)
+- `1xk59px` — Blip 1.5.0 is out: a new console-style look, your music mid-game, and games on the second screen — [source](https://www.reddit.com/r/AynThor/comments/1xk59px/blip_150_is_out_a_new_consolestyle_look_your/)
+- `1xjk9xj` — New Frontend: Game Log Tracker DS Launcher — [source](https://www.reddit.com/r/SBCGaming/comments/1xjk9xj/new_frontend_game_log_tracker_ds_launcher/)
+- `1xjkrld` — New Frontend: Game Log Tracker DS Launcher — [source](https://www.reddit.com/r/SBCGaming/comments/1xjkrld/new_frontend_game_log_tracker_ds_launcher/)
+- `1xjtb8n` — I made RetroForge, a free open-source frontend for Android. 0.7.1 beta is out with 6 languages and its own Switch player — [source](https://www.reddit.com/r/SBCGaming/comments/1xjtb8n/i_made_retroforge_a_free_opensource_frontend_for/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xijzd3 1xiwnx0 1xj35vo
+/approved 1xjksmv 1xjpynv 1xjue12 1xk59px 1xjk9xj 1xjkrld 1xjtb8n
 ```
 
-## Approved (3)
+## Approved (1)
 
-- `1xiep46` → `fallout-2-ce-mobile-dual-screen` — Dual-screen Fallout 2 on the AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1xiep46/dualscreen_fallout_2_on_the_ayn_thor/)
-- `1xii9nh` → `armadalive` — ARMADALive | Dual screen companion app for the AYN Thor on Armada OS — [source](https://www.reddit.com/r/AynThor/comments/1xii9nh/armadalive_dual_screen_companion_app_for_the_ayn/)
-- `1xik9ei` → `walkthor` — WalkThor Update: a free companion app for your bottom screen, now with screenshots, captions, and ES-DE support! — [source](https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/)
+- `1xjw6mi` → `thor-back-button-hero` — Thor Back Button Hero - v1.4.0 OUT NOW! — [source](https://www.reddit.com/r/AynThor/comments/1xjw6mi/thor_back_button_hero_v140_out_now/)
 
 ## Rejected (0)
 
