@@ -1,26 +1,30 @@
 # Reddit pipeline review
 
-> Pending: 7 · Approved: 1 · Rejected: 0
+> Pending: 11 · Approved: 0 · Rejected: 0
 
-## Pending (7)
+## Pending (11)
 
-- `1xjksmv` — New Frontend: Game Log Tracker DS Launcher — [source](https://www.reddit.com/r/AynThor/comments/1xjksmv/new_frontend_game_log_tracker_ds_launcher/)
-- `1xjpynv` — Gacha TCG Launcher release + face reveal — [source](https://www.reddit.com/r/AynThor/comments/1xjpynv/gacha_tcg_launcher_release_face_reveal/)
-- `1xjue12` — Thor Back Button Hero - v1.4.0 OUT NOW! — [source](https://www.reddit.com/r/AynThor/comments/1xjue12/thor_back_button_hero_v140_out_now/)
 - `1xk59px` — Blip 1.5.0 is out: a new console-style look, your music mid-game, and games on the second screen — [source](https://www.reddit.com/r/AynThor/comments/1xk59px/blip_150_is_out_a_new_consolestyle_look_your/)
-- `1xjk9xj` — New Frontend: Game Log Tracker DS Launcher — [source](https://www.reddit.com/r/SBCGaming/comments/1xjk9xj/new_frontend_game_log_tracker_ds_launcher/)
-- `1xjkrld` — New Frontend: Game Log Tracker DS Launcher — [source](https://www.reddit.com/r/SBCGaming/comments/1xjkrld/new_frontend_game_log_tracker_ds_launcher/)
-- `1xjtb8n` — I made RetroForge, a free open-source frontend for Android. 0.7.1 beta is out with 6 languages and its own Switch player — [source](https://www.reddit.com/r/SBCGaming/comments/1xjtb8n/i_made_retroforge_a_free_opensource_frontend_for/)
+- `1xk8oze` — BetterDualScreen...Manager 1.1.0 Update! — [source](https://www.reddit.com/r/AynThor/comments/1xk8oze/betterdualscreenmanager_110_update/)
+- `1xkco46` — 𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿 𝟭.𝟱𝟴.5: 𝗰𝗹𝗶𝗽𝘀, 𝗽𝗹𝘂𝘀 𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿 𝗽𝗹𝗮𝘆 𝗱𝘂𝗿𝗶𝗻𝗴 𝗵𝗲𝗮𝘃𝘆 𝗴𝗮𝗺𝗲𝘀 — [source](https://www.reddit.com/r/AynThor/comments/1xkco46/𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿_𝟭𝟱𝟴5_𝗰𝗹𝗶𝗽𝘀_𝗽𝗹𝘂𝘀_𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿_𝗽𝗹𝗮𝘆_𝗱𝘂𝗿𝗶𝗻𝗴/)
+- `1xkcrj4` — 𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿 𝘃𝟭.𝟱𝟴.𝟱: 𝗰𝗹𝗶𝗽𝘀, 𝗽𝗹𝘂𝘀 𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿 𝗽𝗹𝗮𝘆 𝗱𝘂𝗿𝗶𝗻𝗴 𝗵𝗲𝗮𝘃𝘆 𝗴𝗮𝗺𝗲𝘀 — [source](https://www.reddit.com/r/AynThor/comments/1xkcrj4/𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿_𝘃𝟭𝟱𝟴𝟱_𝗰𝗹𝗶𝗽𝘀_𝗽𝗹𝘂𝘀_𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿_𝗽𝗹𝗮𝘆_𝗱𝘂𝗿𝗶𝗻𝗴/)
+- `1xkcvi3` — WalkThor v1.58.5: clips, plus smoother play during heavy games — [source](https://www.reddit.com/r/AynThor/comments/1xkcvi3/walkthor_v1585_clips_plus_smoother_play_during/)
+- `1xkddlr` — Docking Enhancer for the Thor — [source](https://www.reddit.com/r/AynThor/comments/1xkddlr/docking_enhancer_for_the_thor/)
+- `1xkgou1` — Dual Screen Mod for Stardew Valley — [source](https://www.reddit.com/r/AynThor/comments/1xkgou1/dual_screen_mod_for_stardew_valley/)
+- `1xknvnc` — Nintendo Switch 2 games are now running on the Ayn Thor (ArmadaOS) — [source](https://www.reddit.com/r/AynThor/comments/1xknvnc/nintendo_switch_2_games_are_now_running_on_the/)
+- `1xkq2vd` — Hakux now supports insignia allowing online play on classic Xbox live for FREE — [source](https://www.reddit.com/r/AynThor/comments/1xkq2vd/hakux_now_supports_insignia_allowing_online_play/)
+- `1xkqcnc` — CLOVER THE UnLUCKY DEMO - Ayn Thor Port — [source](https://www.reddit.com/r/AynThor/comments/1xkqcnc/clover_the_unlucky_demo_ayn_thor_port/)
+- `1xkrajs` — Best Halloween gaming: Bloodborne running dual-screen on my AYN Thor (free repo + setup guide) — [source](https://www.reddit.com/r/AynThor/comments/1xkrajs/best_halloween_gaming_bloodborne_running/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xjksmv 1xjpynv 1xjue12 1xk59px 1xjk9xj 1xjkrld 1xjtb8n
+/approved 1xk59px 1xk8oze 1xkco46 1xkcrj4 1xkcvi3 1xkddlr 1xkgou1 1xknvnc 1xkq2vd 1xkqcnc 1xkrajs
 ```
 
-## Approved (1)
+## Approved (0)
 
-- `1xjw6mi` → `thor-back-button-hero` — Thor Back Button Hero - v1.4.0 OUT NOW! — [source](https://www.reddit.com/r/AynThor/comments/1xjw6mi/thor_back_button_hero_v140_out_now/)
+_None._
 
 ## Rejected (0)
 

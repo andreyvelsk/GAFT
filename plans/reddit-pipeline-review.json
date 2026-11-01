@@ -1,69 +1,91 @@
 {
   "posts": [
     {
-      "id": "1xjksmv",
-      "title": "New Frontend: Game Log Tracker DS Launcher",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjksmv/new_frontend_game_log_tracker_ds_launcher/",
-      "createdUtc": 1793379344,
-      "firstSeenAt": "2026-10-31T09:29:35.591Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xjpynv",
-      "title": "Gacha TCG Launcher release + face reveal",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjpynv/gacha_tcg_launcher_release_face_reveal/",
-      "createdUtc": 1793390953,
-      "firstSeenAt": "2026-10-31T09:29:35.591Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xjue12",
-      "title": "Thor Back Button Hero - v1.4.0 OUT NOW!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjue12/thor_back_button_hero_v140_out_now/",
-      "createdUtc": 1793401921,
-      "firstSeenAt": "2026-10-31T09:29:35.591Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xjw6mi",
-      "title": "Thor Back Button Hero - v1.4.0 OUT NOW!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xjw6mi/thor_back_button_hero_v140_out_now/",
-      "createdUtc": 1793406726,
-      "firstSeenAt": "2026-10-31T09:29:35.591Z",
-      "status": "approved",
-      "slug": "thor-back-button-hero",
-      "decidedAt": "2026-10-31T09:38:21.728Z"
-    },
-    {
       "id": "1xk59px",
       "title": "Blip 1.5.0 is out: a new console-style look, your music mid-game, and games on the second screen",
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xk59px/blip_150_is_out_a_new_consolestyle_look_your/",
       "createdUtc": 1793437047,
-      "firstSeenAt": "2026-10-31T09:29:35.591Z",
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
       "status": "pending"
     },
     {
-      "id": "1xjk9xj",
-      "title": "New Frontend: Game Log Tracker DS Launcher",
-      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xjk9xj/new_frontend_game_log_tracker_ds_launcher/",
-      "createdUtc": 1793378191,
-      "firstSeenAt": "2026-10-31T09:29:55.420Z",
+      "id": "1xk8oze",
+      "title": "BetterDualScreen...Manager 1.1.0 Update!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xk8oze/betterdualscreenmanager_110_update/",
+      "createdUtc": 1793448930,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
       "status": "pending"
     },
     {
-      "id": "1xjkrld",
-      "title": "New Frontend: Game Log Tracker DS Launcher",
-      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xjkrld/new_frontend_game_log_tracker_ds_launcher/",
-      "createdUtc": 1793379281,
-      "firstSeenAt": "2026-10-31T09:29:55.420Z",
+      "id": "1xkco46",
+      "title": "𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿 𝟭.𝟱𝟴.5: 𝗰𝗹𝗶𝗽𝘀, 𝗽𝗹𝘂𝘀 𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿 𝗽𝗹𝗮𝘆 𝗱𝘂𝗿𝗶𝗻𝗴 𝗵𝗲𝗮𝘃𝘆 𝗴𝗮𝗺𝗲𝘀",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkco46/𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿_𝟭𝟱𝟴5_𝗰𝗹𝗶𝗽𝘀_𝗽𝗹𝘂𝘀_𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿_𝗽𝗹𝗮𝘆_𝗱𝘂𝗿𝗶𝗻𝗴/",
+      "createdUtc": 1793459402,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
       "status": "pending"
     },
     {
-      "id": "1xjtb8n",
-      "title": "I made RetroForge, a free open-source frontend for Android. 0.7.1 beta is out with 6 languages and its own Switch player",
-      "permalink": "https://www.reddit.com/r/SBCGaming/comments/1xjtb8n/i_made_retroforge_a_free_opensource_frontend_for/",
-      "createdUtc": 1793399138,
-      "firstSeenAt": "2026-10-31T09:29:55.420Z",
+      "id": "1xkcrj4",
+      "title": "𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿 𝘃𝟭.𝟱𝟴.𝟱: 𝗰𝗹𝗶𝗽𝘀, 𝗽𝗹𝘂𝘀 𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿 𝗽𝗹𝗮𝘆 𝗱𝘂𝗿𝗶𝗻𝗴 𝗵𝗲𝗮𝘃𝘆 𝗴𝗮𝗺𝗲𝘀",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkcrj4/𝗪𝗮𝗹𝗸𝗧𝗵𝗼𝗿_𝘃𝟭𝟱𝟴𝟱_𝗰𝗹𝗶𝗽𝘀_𝗽𝗹𝘂𝘀_𝘀𝗺𝗼𝗼𝘁𝗵𝗲𝗿_𝗽𝗹𝗮𝘆_𝗱𝘂𝗿𝗶𝗻𝗴/",
+      "createdUtc": 1793459633,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xkcvi3",
+      "title": "WalkThor v1.58.5: clips, plus smoother play during heavy games",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkcvi3/walkthor_v1585_clips_plus_smoother_play_during/",
+      "createdUtc": 1793459912,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xkddlr",
+      "title": "Docking Enhancer for the Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkddlr/docking_enhancer_for_the_thor/",
+      "createdUtc": 1793461138,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xkgou1",
+      "title": "Dual Screen Mod for Stardew Valley",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkgou1/dual_screen_mod_for_stardew_valley/",
+      "createdUtc": 1793469121,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xknvnc",
+      "title": "Nintendo Switch 2 games are now running on the Ayn Thor (ArmadaOS)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xknvnc/nintendo_switch_2_games_are_now_running_on_the/",
+      "createdUtc": 1793487701,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xkq2vd",
+      "title": "Hakux now supports insignia allowing online play on classic Xbox live for FREE",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkq2vd/hakux_now_supports_insignia_allowing_online_play/",
+      "createdUtc": 1793494204,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xkqcnc",
+      "title": "CLOVER THE UnLUCKY DEMO - Ayn Thor Port",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkqcnc/clover_the_unlucky_demo_ayn_thor_port/",
+      "createdUtc": 1793495060,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xkrajs",
+      "title": "Best Halloween gaming: Bloodborne running dual-screen on my AYN Thor (free repo + setup guide)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkrajs/best_halloween_gaming_bloodborne_running/",
+      "createdUtc": 1793498077,
+      "firstSeenAt": "2026-11-01T06:09:34.930Z",
       "status": "pending"
     }
   ]
