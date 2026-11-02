@@ -5,7 +5,7 @@
   >
     <!-- Back link -->
     <NuxtLink
-      to="/"
+      :to="backLink"
       class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors mb-4 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 rounded"
     >
       <svg
@@ -114,11 +114,22 @@ import type { Article } from '~/composables/useArticles'
 const { resolveUrl } = useResolveUrl()
 
 const route = useRoute()
+const router = useRouter()
 const rawSlug = route.params.slug
 const slug = (Array.isArray(rawSlug) ? rawSlug[0] : rawSlug) ?? ''
 
 const { getArticle } = useArticles()
 const article = ref<Article | null>(null)
+
+// Return to the previous in-app page when the user navigated here from within
+// the site (e.g. a category listing); otherwise fall back to the home page.
+const backLink = computed(() => {
+  const previous = router.options.history.state.back
+  if (typeof previous === 'string' && previous.startsWith('/') && previous !== route.fullPath) {
+    return previous
+  }
+  return '/'
+})
 
 // Load article
 const { data } = await useAsyncData(`article-${slug}`, () => getArticle(slug))
