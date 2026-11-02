@@ -14,7 +14,7 @@ media:
     url: "/content/eden-duo/screenshot-3.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=LaLfNIwAwHU"
-source: "https://www.reddit.com/r/AynThor/comments/1wrdk1j/eden_duo_a_switch_emulator_fork_with_second/"
+source: "https://www.reddit.com/r/AynThor/comments/1xlb9gj/eden_duo_pokémon_swordshield_fire_emblem_engage/"
 project_page: "https://github.com/igawa6/eden-duo"
 ---
 
@@ -22,7 +22,7 @@ project_page: "https://github.com/igawa6/eden-duo"
 
 Eden Duo is a fork of the Eden Nintendo Switch emulator for Android devices with two screens, such as the AYN Thor. The game runs on the top screen as usual, while the bottom screen shows a touch companion for the game you are playing: maps, party and inventory menus, status, and more, all driven by the running game's live state.
 
-Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for 21 games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, **Mario Kart 8 Deluxe**, **Super Mario Bros. Wonder**, **Animal Crossing: New Horizons**, **Fire Emblem: Three Houses**, **The Binding of Isaac: Afterbirth+ and Repentance DLC**, **Pokémon Brilliant Diamond**, **Pokémon Shining Pearl**, **Crash Team Racing Nitro-Fueled**, **Dragon Quest III HD-2D Remake**, **Chained Echoes**, **Yoru Tomosu**, **Diablo III: Eternal Collection**, **Farming Simulator: Nintendo Switch Edition**, **VA-11 Hall-A: Cyberpunk Bartender Action**, **The Legend of Zelda: Breath of the Wild**, **Castlevania: Belmont's Curse**, **Super Mario Odyssey**, and **The Legend of Zelda: Echoes of Wisdom**.
+Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for 27 games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, **Mario Kart 8 Deluxe**, **Super Mario Bros. Wonder**, **Animal Crossing: New Horizons**, **Fire Emblem: Three Houses**, **The Binding of Isaac: Afterbirth+ and Repentance DLC**, **Pokémon Brilliant Diamond**, **Pokémon Shining Pearl**, **Crash Team Racing Nitro-Fueled**, **Dragon Quest III HD-2D Remake**, **Chained Echoes**, **Yoru Tomosu**, **Diablo III: Eternal Collection**, **Farming Simulator: Nintendo Switch Edition**, **VA-11 Hall-A: Cyberpunk Bartender Action**, **The Legend of Zelda: Breath of the Wild**, **Castlevania: Belmont's Curse**, **Super Mario Odyssey**, **The Legend of Zelda: Echoes of Wisdom**, **Dave the Diver**, **Persona 3 Portable**, **Fire Emblem Engage**, **Octopath Traveler 0**, **Pokémon Sword**, and **Pokémon Shield**.
 
 ## Features
 
@@ -36,7 +36,7 @@ Companions are separate, installable `.dsmod.zip` packages, one per game, so a c
 - **Every dual-screen game listed** — the game list ends with every game that has a companion, so you can see what is supported.
 - **Hide the companion mid-game** — tap the game screen with four fingers (or use the Quick Settings tile) to free the second screen for another app; tap again to bring the companion back.
 - **Improved import** — a clearer "Import from another emulator" flow and a fixed save import from Eden.
-- **Follows Eden Nightly** — upstream fixes and improvements arrive sooner; version 1.3.2 is based on Eden's latest nightly.
+- **Follows Eden Nightly** — upstream fixes and improvements arrive sooner; version 1.3.3 is based on Eden's latest nightly.
 
 Requirements:
 
@@ -50,7 +50,7 @@ Requirements:
 - **Persona 5 Royal (1.0.2)** — the full start menu on the bottom screen: skills, items, equipment, Persona, stats, confidants, requests and the calendar with the Daily Log. You can use items and change equipment or Persona by tapping, and see enemy affinities in battle.
 - **Metroid Dread (2.1.0)** — a live area map with Samus's position, EMMI zones, water levels, and energy and missiles.
 - **The Legend of Zelda: Link's Awakening (1.0.1)** — a live map with your own pins, plus gear and items, with X/Y equip from the touch screen. [Watch a video showcase](https://www.youtube.com/watch?v=LaLfNIwAwHU).
-- **Mario Kart 8 Deluxe (4.0.0, 3.0.3)** — a live rank bar with every racer's items, a course map showing all racers, and a big horn button. Also works with CTGP-DX v1.1.1 custom tracks.
+- **Mario Kart 8 Deluxe (4.0.1, 4.0.0, 3.0.3)** — a live rank bar with every racer's items, a course map showing all racers, and a big horn button. Also works with CTGP-DX v1.1.1 custom tracks.
 - **Super Mario Bros. Wonder (1.2.1)** — a course page with a progress rail from start to goal, your 10-flower coins, world Wonder Seeds, current form and item balloon, and a world map page with the selected course and an Open Courses button.
 - **Animal Crossing: New Horizons (3.0.3)**
 - **Fire Emblem: Three Houses (1.2.0)** — combat information, maps, academy information and more on the second screen. [Watch a video showcase](https://www.youtube.com/watch?v=gt7DaUXBABY).
@@ -67,6 +67,12 @@ Requirements:
 - **Castlevania: Belmont's Curse (1.1.0)** — the pause-menu map always open with fog and landmarks, pins placed straight from the touch screen, and the equipment screen with arcana, weapons, relics and stats.
 - **Super Mario Odyssey (1.4.1)**
 - **The Legend of Zelda: Echoes of Wisdom (1.1.0)**
+- **Dave the Diver (1.0.6.1267)** — companion contributed by a community member.
+- **Persona 3 Portable (1.0.0)** — companion for the base game, contributed by a community member.
+- **Fire Emblem Engage (2.0.0)** — the War map with the danger zone on the second screen, unit details, Engage and Emblem bonds, the attack Matchup forecast, a live Somniel map with everyone's location, Units, Roster and the World Map.
+- **Octopath Traveler 0 (1.0.5)** — a live map, party status and equipment, items and quests, and a battle screen with BP forecast, shields, Break and revealed weaknesses.
+- **Pokémon Sword (1.3.2)** — Town Map with wild Pokémon and Fly, party (drag to reorder), Pokédex, Bag (use items right from the bottom screen), League Card, and touch battles with type matchups and Max Raids. Includes Isle of Armor and Crown Tundra; runs in multiple languages.
+- **Pokémon Shield (1.3.2)** — Town Map with wild Pokémon and Fly, party (drag to reorder), Pokédex, Bag (use items right from the bottom screen), League Card, and touch battles with type matchups and Max Raids. Includes Isle of Armor and Crown Tundra; runs in multiple languages.
 
 Compatibility is intentionally strict: each companion is written for one exact game build and checks the running build before it loads. On any other version it does not load and shows a notice, instead of reading memory it does not understand.
 
@@ -74,7 +80,7 @@ Details, screenshots and downloads for each companion: [Eden Duo Companions](htt
 
 ## Setup guide
 
-1. Download the latest EdenDuo APK (1.3.2 or newer) from the [Releases page](https://github.com/igawa6/eden-duo/releases/latest) and install it.
+1. Download the latest EdenDuo APK (1.3.3 or newer) from the [Releases page](https://github.com/igawa6/eden-duo/releases/latest) and install it.
 2. Set up the emulator as usual: keys, firmware, and your games folder.
 3. Download a companion package from the [Eden Duo Companions repository](https://github.com/igawa6/eden-duo-companions).
 4. In Eden Duo, long-press the game, open **Add-ons** and tap **Install**. In the **Content type** dialog choose **Dual screen mods**, tap **OK**, then select the `.dsmod.zip` file. The companion appears in the Add-ons list as `Name-version`, for example `MetroidDreadDS-1.0.0`.

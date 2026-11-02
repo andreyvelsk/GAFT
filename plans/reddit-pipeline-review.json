@@ -14,7 +14,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xl60a0/native_red_alert_port_for_the_thor_battlefield_on/",
       "createdUtc": 1793547203,
       "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-conquer",
+      "decidedAt": "2026-11-02T06:46:28.324Z"
     },
     {
       "id": "1xlb9gj",
@@ -22,7 +24,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xlb9gj/eden_duo_pokémon_swordshield_fire_emblem_engage/",
       "createdUtc": 1793559550,
       "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "eden-duo",
+      "decidedAt": "2026-11-02T06:46:28.324Z"
     },
     {
       "id": "1xldcqn",
@@ -38,7 +42,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xle019/pokemon_platinum_recomp_with_features_for_dual/",
       "createdUtc": 1793566090,
       "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "pokemon-platinum",
+      "decidedAt": "2026-11-02T06:46:28.324Z"
     },
     {
       "id": "1xleb4f",
