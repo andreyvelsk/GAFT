@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getProjectActionsState } from './useProjectActions'
+import { getProjectActionsState } from '../useProjectActions'
 
 describe('getProjectActionsState', () => {
   it('creates GitHub project, Obtainium, and source actions', () => {
