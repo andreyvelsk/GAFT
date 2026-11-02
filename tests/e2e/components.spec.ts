@@ -26,4 +26,20 @@ test.describe('component behavior through the real page', () => {
     await expect(filtersButton).toHaveAttribute('aria-expanded', 'true')
     await expect(page.getByText('Category:', { exact: true })).toBeVisible()
   })
+
+  test('ProjectActions exposes project, Obtainium, and source links', async ({ page }) => {
+    await page.goto('/project/bluejay')
+
+    const projectLink = page.getByRole('link', { name: 'Open project' })
+    const obtainiumLink = page.getByRole('link', { name: /Add to Obtainium/ })
+    const sourceLink = page.getByRole('link', { name: 'View source' })
+
+    await expect(projectLink).toHaveAttribute('href', 'https://github.com/tsutsen/bluejay')
+    await expect(projectLink).toHaveAttribute('target', '_blank')
+    await expect(projectLink).toHaveAttribute('rel', 'noopener noreferrer')
+    await expect(obtainiumLink).toHaveAttribute('href', 'obtainium://add/https://github.com/tsutsen/bluejay')
+    await expect(obtainiumLink).toHaveAttribute('aria-label', 'Add to Obtainium (opens Obtainium app)')
+    await expect(sourceLink).toHaveAttribute('href', /reddit\.com\/r\/AynThor/)
+    await expect(sourceLink).toHaveAttribute('target', '_blank')
+  })
 })

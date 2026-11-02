@@ -23,6 +23,22 @@ test.describe('catalog discovery flows', () => {
     await expect(page.getByRole('heading', { name: 'Games & Apps For Thor' })).toBeVisible()
   })
 
+  test('returns to the category page after clicking the project back link', async ({ page }) => {
+    const categoryPath = '/category/game'
+
+    await page.goto(categoryPath)
+    await expect(page).toHaveURL(new RegExp(`${categoryPath}$`))
+    await expect(page.getByText('Apps found:')).toBeVisible()
+
+    await page.getByRole('link', { name: firstArticleTitle, exact: true }).click()
+    await expect(page).toHaveURL(new RegExp(`/project/${firstArticleSlug}$`))
+    await expect(page.getByRole('heading', { name: firstArticleTitle, exact: true })).toBeVisible()
+
+    await page.getByRole('link', { name: 'Back' }).click()
+    await expect(page).toHaveURL(new RegExp(`${categoryPath}$`))
+    await expect(page.getByText('Apps found:')).toBeVisible()
+  })
+
   test('filters by every project category and can reset to all', async ({ page }) => {
     await page.goto('/')
     await openFilters(page)

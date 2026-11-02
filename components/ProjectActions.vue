@@ -43,61 +43,19 @@
 </template>
 
 <script setup lang="ts">
+import { getProjectActionsState } from '~/composables/useProjectActions'
+
 interface Props {
   source?: string | null | undefined
   projectPage?: string | null | undefined
 }
 
 const props = defineProps<Props>()
-
-const GITHUB_URL_RE = /^https?:\/\/(?:www\.)?github\.com\/([^/?#]+)\/([^/?#]+)/i
-
-const projectPage = computed(() => props.projectPage?.trim() ?? '')
-const source = computed(() => props.source?.trim() ?? '')
-
-/**
- * Build an Obtainium deep link for a GitHub project:
- * obtainium://add?url=<repo URL>
- */
-const deepLink = computed<string | null>(() => {
-  const url = projectPage.value
-  if (url === '') return null
-
-  // Only GitHub project pages are supported
-  const match = GITHUB_URL_RE.exec(url)
-  if (match === null) return null
-
-  const author: string = match[1] ?? ''
-  const repo: string = (match[2] ?? '').replace(/\.git$/i, '')
-  if (author === '' || repo === '') return null
-
-  return `obtainium://add/https://github.com/${author}/${repo}`
-})
-
-const primaryAction = computed<{ url: string; label: string } | null>(() => {
-  if (projectPage.value !== '') {
-    return { url: projectPage.value, label: 'Open project' }
-  }
-  if (source.value !== '') {
-    return { url: source.value, label: 'Open source' }
-  }
-  return null
-})
-
-const primaryIcon = computed(() =>
-  projectPage.value.includes('github.com') ? 'github' : 'external'
-)
-
-// Tertiary link: source, unless it is already the primary action
-const secondaryLinkUrl = computed(() =>
-  projectPage.value !== '' ? source.value : ''
-)
-const secondaryLinkLabel = 'View source'
-
-const hasActions = computed(
-  () =>
-    primaryAction.value !== null ||
-    deepLink.value !== null ||
-    secondaryLinkUrl.value !== ''
-)
+const state = computed(() => getProjectActionsState(props))
+const deepLink = computed(() => state.value.deepLink)
+const primaryAction = computed(() => state.value.primaryAction)
+const primaryIcon = computed(() => state.value.primaryIcon)
+const secondaryLinkUrl = computed(() => state.value.secondaryLinkUrl)
+const secondaryLinkLabel = state.value.secondaryLinkLabel
+const hasActions = computed(() => state.value.hasActions)
 </script>
