@@ -1,89 +1,69 @@
 {
   "posts": [
     {
-      "id": "1xkwdyk",
-      "title": "MinimaUI - A minimalistic and lightweight Android frontend",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xkwdyk/minimaui_a_minimalistic_and_lightweight_android/",
-      "createdUtc": 1793515999,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
+      "id": "1xlt4d8",
+      "title": "ArmadaLive 0.4.0 — bottom-screen companion for the AYN Thor on ArmadaOS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xlt4d8/armadalive_040_bottomscreen_companion_for_the_ayn/",
+      "createdUtc": 1793613293,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
       "status": "pending"
     },
     {
-      "id": "1xl60a0",
-      "title": "Native Red Alert port for the Thor: battlefield on top, the whole build sidebar on the bottom touch screen (open source, APK)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xl60a0/native_red_alert_port_for_the_thor_battlefield_on/",
-      "createdUtc": 1793547203,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
+      "id": "1xlxj87",
+      "title": "One Piece: Great Pirate Colosseum English Translation Complete",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xlxj87/one_piece_great_pirate_colosseum_english/",
+      "createdUtc": 1793627028,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xly1kf",
+      "title": "Tears of the Kingdom running natively on the AYN Thor Pro (aarch64 port of the TotK recomp, Armada OS)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xly1kf/tears_of_the_kingdom_running_natively_on_the_ayn/",
+      "createdUtc": 1793628246,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xm12ne",
+      "title": "TOTK and Legends Z-A on Android (AYN Thor tested) - first release after debugging and optimization",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xm12ne/totk_and_legends_za_on_android_ayn_thor_tested/",
+      "createdUtc": 1793635220,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xm2g0r",
+      "title": "Cemu-Plus (Cemu Fork with Framegen and new features)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xm2g0r/cemuplus_cemu_fork_with_framegen_and_new_features/",
+      "createdUtc": 1793638222,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xm390l",
+      "title": "Open Alpha: Dragon Age: Origins Recomp Android Duo",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xm390l/open_alpha_dragon_age_origins_recomp_android_duo/",
+      "createdUtc": 1793639942,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
       "status": "approved",
-      "slug": "thor-conquer",
-      "decidedAt": "2026-11-02T06:46:28.324Z"
+      "slug": "dragon-age-origins-recomp-android-duo",
+      "decidedAt": "2026-11-03T06:17:24.487Z"
     },
     {
-      "id": "1xlb9gj",
-      "title": "Eden Duo: Pokémon Sword/Shield, Fire Emblem Engage, Octopath Traveler 0 companions",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xlb9gj/eden_duo_pokémon_swordshield_fire_emblem_engage/",
-      "createdUtc": 1793559550,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "approved",
-      "slug": "eden-duo",
-      "decidedAt": "2026-11-02T06:46:28.324Z"
-    },
-    {
-      "id": "1xldcqn",
-      "title": "Better showcase of project \"Combodio\"",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xldcqn/better_showcase_of_project_combodio/",
-      "createdUtc": 1793564500,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
+      "id": "1xm5kvu",
+      "title": "[TOTK Android] I Ported and Optimized UltraCam 2.7.1 & 3.0.0 for Eden Nightly — 720p, FPS Improvements, Frame Generation & Installation Guide",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xm5kvu/totk_android_i_ported_and_optimized_ultracam_271/",
+      "createdUtc": 1793644874,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
       "status": "pending"
     },
     {
-      "id": "1xle019",
-      "title": "Pokemon Platinum recomp with features for dual screen handhelds",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xle019/pokemon_platinum_recomp_with_features_for_dual/",
-      "createdUtc": 1793566090,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "approved",
-      "slug": "pokemon-platinum",
-      "decidedAt": "2026-11-02T06:46:28.324Z"
-    },
-    {
-      "id": "1xleb4f",
-      "title": "ayn thor version of my free game out now -clover.dev",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xleb4f/ayn_thor_version_of_my_free_game_out_now_cloverdev/",
-      "createdUtc": 1793566837,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xleyr6",
-      "title": "Pokopia running on AYN Thor Max",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xleyr6/pokopia_running_on_ayn_thor_max/",
-      "createdUtc": 1793568453,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xlf2pw",
-      "title": "Pokopia running on AYN Thor max android",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xlf2pw/pokopia_running_on_ayn_thor_max_android/",
-      "createdUtc": 1793568729,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xlgl0h",
-      "title": "Wave Launcher on AYN Thor + (most of) My Games",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xlgl0h/wave_launcher_on_ayn_thor_most_of_my_games/",
-      "createdUtc": 1793572571,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xlpbh7",
-      "title": "Haku X is literal game changer",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xlpbh7/haku_x_is_literal_game_changer/",
-      "createdUtc": 1793598806,
-      "firstSeenAt": "2026-11-02T06:14:28.075Z",
+      "id": "1xmj69o",
+      "title": "Better Docking Experience for Thor!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xmj69o/better_docking_experience_for_thor/",
+      "createdUtc": 1793679191,
+      "firstSeenAt": "2026-11-03T06:10:46.321Z",
       "status": "pending"
     }
   ]
