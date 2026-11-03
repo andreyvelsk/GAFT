@@ -1,28 +1,27 @@
 # Reddit pipeline review
 
-> Pending: 7 · Approved: 3 · Rejected: 0
+> Pending: 8 · Approved: 0 · Rejected: 0
 
-## Pending (7)
+## Pending (8)
 
-- `1xkwdyk` — MinimaUI - A minimalistic and lightweight Android frontend — [source](https://www.reddit.com/r/AynThor/comments/1xkwdyk/minimaui_a_minimalistic_and_lightweight_android/)
-- `1xldcqn` — Better showcase of project "Combodio" — [source](https://www.reddit.com/r/AynThor/comments/1xldcqn/better_showcase_of_project_combodio/)
-- `1xleb4f` — ayn thor version of my free game out now -clover.dev — [source](https://www.reddit.com/r/AynThor/comments/1xleb4f/ayn_thor_version_of_my_free_game_out_now_cloverdev/)
-- `1xleyr6` — Pokopia running on AYN Thor Max — [source](https://www.reddit.com/r/AynThor/comments/1xleyr6/pokopia_running_on_ayn_thor_max/)
-- `1xlf2pw` — Pokopia running on AYN Thor max android — [source](https://www.reddit.com/r/AynThor/comments/1xlf2pw/pokopia_running_on_ayn_thor_max_android/)
-- `1xlgl0h` — Wave Launcher on AYN Thor + (most of) My Games — [source](https://www.reddit.com/r/AynThor/comments/1xlgl0h/wave_launcher_on_ayn_thor_most_of_my_games/)
-- `1xlpbh7` — Haku X is literal game changer — [source](https://www.reddit.com/r/AynThor/comments/1xlpbh7/haku_x_is_literal_game_changer/)
+- `1xlt4d8` — ArmadaLive 0.4.0 — bottom-screen companion for the AYN Thor on ArmadaOS — [source](https://www.reddit.com/r/AynThor/comments/1xlt4d8/armadalive_040_bottomscreen_companion_for_the_ayn/)
+- `1xlxj87` — One Piece: Great Pirate Colosseum English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xlxj87/one_piece_great_pirate_colosseum_english/)
+- `1xly1kf` — Tears of the Kingdom running natively on the AYN Thor Pro (aarch64 port of the TotK recomp, Armada OS) — [source](https://www.reddit.com/r/AynThor/comments/1xly1kf/tears_of_the_kingdom_running_natively_on_the_ayn/)
+- `1xm12ne` — TOTK and Legends Z-A on Android (AYN Thor tested) - first release after debugging and optimization — [source](https://www.reddit.com/r/AynThor/comments/1xm12ne/totk_and_legends_za_on_android_ayn_thor_tested/)
+- `1xm2g0r` — Cemu-Plus (Cemu Fork with Framegen and new features) — [source](https://www.reddit.com/r/AynThor/comments/1xm2g0r/cemuplus_cemu_fork_with_framegen_and_new_features/)
+- `1xm390l` — Open Alpha: Dragon Age: Origins Recomp Android Duo — [source](https://www.reddit.com/r/AynThor/comments/1xm390l/open_alpha_dragon_age_origins_recomp_android_duo/)
+- `1xm5kvu` — [TOTK Android] I Ported and Optimized UltraCam 2.7.1 & 3.0.0 for Eden Nightly — 720p, FPS Improvements, Frame Generation & Installation Guide — [source](https://www.reddit.com/r/AynThor/comments/1xm5kvu/totk_android_i_ported_and_optimized_ultracam_271/)
+- `1xmj69o` — Better Docking Experience for Thor! — [source](https://www.reddit.com/r/AynThor/comments/1xmj69o/better_docking_experience_for_thor/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xkwdyk 1xldcqn 1xleb4f 1xleyr6 1xlf2pw 1xlgl0h 1xlpbh7
+/approved 1xlt4d8 1xlxj87 1xly1kf 1xm12ne 1xm2g0r 1xm390l 1xm5kvu 1xmj69o
 ```
 
-## Approved (3)
+## Approved (0)
 
-- `1xl60a0` → `thor-conquer` — Native Red Alert port for the Thor: battlefield on top, the whole build sidebar on the bottom touch screen (open source, APK) — [source](https://www.reddit.com/r/AynThor/comments/1xl60a0/native_red_alert_port_for_the_thor_battlefield_on/)
-- `1xlb9gj` → `eden-duo` — Eden Duo: Pokémon Sword/Shield, Fire Emblem Engage, Octopath Traveler 0 companions — [source](https://www.reddit.com/r/AynThor/comments/1xlb9gj/eden_duo_pokémon_swordshield_fire_emblem_engage/)
-- `1xle019` → `pokemon-platinum` — Pokemon Platinum recomp with features for dual screen handhelds — [source](https://www.reddit.com/r/AynThor/comments/1xle019/pokemon_platinum_recomp_with_features_for_dual/)
+_None._
 
 ## Rejected (0)
 
