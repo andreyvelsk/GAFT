@@ -36,7 +36,7 @@ export interface MatchOptions {
   /** Injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** Number of repair attempts on invalid output (defaults to `1`). */
+  /** Number of self-repair attempts on invalid output (defaults to `2`). */
   maxRepairAttempts?: number;
 
   /** Directory holding the pages (defaults to the shared `CONTENT_DIR`). */
@@ -69,7 +69,7 @@ export interface MatchAgentOptions {
   /** LLM: injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** LLM: repair attempts after the first invalid output. */
+  /** LLM: self-repair attempts after the first invalid output. */
   maxRepairAttempts?: number;
 
   /** Directory holding the pages (defaults to the shared `CONTENT_DIR`). */

@@ -298,7 +298,7 @@ describe('generateStructured', () => {
     expect(attempts).toEqual([0]);
   });
 
-  it('throws an AgentError once the repair attempts are exhausted', async () => {
+  it('throws an AgentError once the self-repair attempts are exhausted', async () => {
     const { generate, calls } = staticGenerator({ ok: 'nope' });
 
     await expect(
@@ -312,7 +312,77 @@ describe('generateStructured', () => {
       }),
     ).rejects.toBeInstanceOf(AgentError);
 
-    expect(calls).toHaveLength(2);
+    // One initial attempt plus the two default self-repair attempts.
+    expect(calls).toHaveLength(3);
+  });
+
+  it('continues the same dialog on self-repair and replays the rejected answer', async () => {
+    const { generate, calls } = recordingGenerator((_options, index) =>
+      Promise.resolve(index === 0 ? { object: { ok: 'nope' } } : { object: { ok: true } }),
+    );
+
+    await generateStructured({
+      model: testModel(),
+      schema: okSchema,
+      system: 'SYS',
+      prompt: 'USER',
+      generate,
+    });
+
+    // The repair keeps the original request, replays the rejected answer and
+    // appends the error, instead of starting a brand new dialog.
+    const messages = calls[1]?.messages ?? [];
+    expect(messages).toHaveLength(3);
+    expect(messages[0]).toEqual({ role: 'user', content: 'USER' });
+    expect(messages[1]).toEqual({
+      role: 'assistant',
+      content: JSON.stringify({ ok: 'nope' }),
+    });
+    expect(messages[2]?.role).toBe('user');
+    expect(messages[2]?.content).toEqual(
+      expect.stringContaining(REPAIR_INSTRUCTION),
+    );
+  });
+
+  it('switches to JSON mode on self-repair attempts', async () => {
+    const { generate, calls } = recordingGenerator((_options, index) =>
+      Promise.resolve(index === 0 ? { object: { ok: 'nope' } } : { object: { ok: true } }),
+    );
+
+    await generateStructured({
+      model: testModel(),
+      schema: okSchema,
+      system: 'SYS',
+      prompt: 'USER',
+      generate,
+    });
+
+    expect(calls[0]?.mode).toBe('auto');
+    expect(calls[1]?.mode).toBe('json');
+  });
+
+  it('does not replay an assistant turn when the generator throws', async () => {
+    const { generate, calls } = recordingGenerator((_options, index) =>
+      index === 0
+        ? Promise.reject(new Error('No object generated: the tool was not called.'))
+        : Promise.resolve({ object: { ok: true } }),
+    );
+
+    await generateStructured({
+      model: testModel(),
+      schema: okSchema,
+      system: 'SYS',
+      prompt: 'USER',
+      generate,
+    });
+
+    const messages = calls[1]?.messages ?? [];
+    expect(messages).toHaveLength(2);
+    expect(messages[0]).toEqual({ role: 'user', content: 'USER' });
+    expect(messages[1]?.role).toBe('user');
+    expect(messages[1]?.content).toEqual(
+      expect.stringContaining('the tool was not called'),
+    );
   });
 
   it('makes a single attempt when repairs are disabled', async () => {

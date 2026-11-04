@@ -11,6 +11,7 @@ export type {
   GenerateObjectOptions,
   GenerateObjectResultLike,
   GenerateObjectUsageLike,
+  ObjectGenerationMode,
   OpenRouterProvider,
   OpenRouterProviderSettings,
   ProviderOptions,

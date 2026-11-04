@@ -37,7 +37,7 @@ export interface DecisionEngineOptions {
   /** LLM: injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** LLM: repair attempts after the first invalid answer. */
+  /** LLM: self-repair attempts after the first invalid answer. */
   maxRepairAttempts?: number;
 
   /** LLM: called after every model call with its token usage. */

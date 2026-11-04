@@ -1,5 +1,5 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
-import { generateObject } from 'ai';
+import { generateObject, type CoreMessage } from 'ai';
 
 import { config } from '../../../config';
 import { createLogger } from '../../../shared/lib/logger';
@@ -9,17 +9,26 @@ import type {
   GenerateObjectLike,
   GenerateObjectOptions,
   GenerateObjectResultLike,
+  ObjectGenerationMode,
   OpenRouterProvider,
   OpenRouterProviderSettings,
   ProviderOptions,
   StructuredGenerationOptions,
 } from './types';
 
-/** Instruction appended to the prompt on a repair attempt. */
+/** Instruction appended to the prompt on a self-repair attempt. */
 export const REPAIR_INSTRUCTION =
   '\n\nYour previous answer was not valid JSON matching the required schema. ' +
   'Reply again with ONLY a valid JSON document that matches the schema, ' +
   'without any commentary, markdown fences or extra text.';
+
+/**
+ * Object-generation mode used on self-repair attempts. The first attempt uses
+ * the provider default (`auto`, usually tool calling); when that fails the
+ * repair switches to JSON mode, which only needs the model to answer with a
+ * JSON document instead of calling a tool.
+ */
+const REPAIR_MODE: ObjectGenerationMode = 'json';
 
 /** Maximum length of a validation error embedded in a repair prompt. */
 const MAX_ERROR_LENGTH = 1200;
@@ -56,8 +65,8 @@ function describeError(error: unknown): string {
   return `\n\nThe previous answer was rejected with: ${trimmed}`;
 }
 
-/** Default number of repair attempts after the first invalid answer. */
-const DEFAULT_MAX_REPAIR_ATTEMPTS = 1;
+/** Default number of self-repair attempts after the first invalid answer. */
+const DEFAULT_MAX_REPAIR_ATTEMPTS = 2;
 
 /** Default sampling temperature for deterministic output. */
 const DEFAULT_TEMPERATURE = 0;
@@ -97,18 +106,48 @@ export function createProvider(
   return createOpenRouter(buildProviderSettings(options));
 }
 
+/** Text of the most recent user message of a conversation. */
+function latestUserText(messages: readonly CoreMessage[]): string {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (message?.role === 'user' && typeof message.content === 'string') {
+      return message.content;
+    }
+  }
+  return '';
+}
+
+/** Serialize a (possibly invalid) model answer so it can be replayed. */
+function stringifyObject(object: unknown): string {
+  try {
+    return JSON.stringify(object);
+  } catch {
+    return String(object);
+  }
+}
+
+/** Build the user message that reports a failed attempt (self-repair). */
+function buildRepairMessage(error: unknown): string {
+  return `${REPAIR_INSTRUCTION}${describeError(error)}`;
+}
+
 /** Build the argument object for the underlying generator call. */
 function buildCallOptions<T>(
   options: StructuredGenerationOptions<T>,
-  prompt: string,
+  messages: CoreMessage[],
   temperature: number,
+  mode: ObjectGenerationMode,
 ): GenerateObjectOptions {
   return {
     model: options.model,
     schema: options.schema,
     system: options.system,
-    prompt,
+    // Snapshot the conversation so a later attempt never mutates the history
+    // already handed to the generator.
+    messages: [...messages],
+    prompt: latestUserText(messages),
     temperature,
+    mode,
     ...(options.schemaName !== undefined
       ? { schemaName: options.schemaName }
       : {}),
@@ -124,8 +163,9 @@ export const defaultGenerateObject: GenerateObjectLike = async (options) => {
     model: options.model,
     schema: options.schema,
     system: options.system,
-    prompt: options.prompt,
+    messages: options.messages,
     temperature: options.temperature,
+    mode: options.mode ?? 'auto',
     ...(options.schemaName !== undefined
       ? { schemaName: options.schemaName }
       : {}),
@@ -163,8 +203,13 @@ export function normalizeGenerationUsage(
 
 /**
  * Generate a structured object validated with `schema`.
- * On invalid output (thrown error or a failed `schema.parse`) the call is
- * retried with a repair instruction appended to the prompt.
+ *
+ * On invalid output (a thrown error or a failed `schema.parse`) the model is
+ * asked to try again **within the same dialog**: the rejected answer (when one
+ * was produced) and the concrete error are appended to the conversation, so the
+ * agent can regenerate its response with full context. Self-repair attempts use
+ * JSON mode, which does not require a tool call. The number of self-repair
+ * attempts defaults to {@link DEFAULT_MAX_REPAIR_ATTEMPTS}.
  */
 export async function generateStructured<T>(
   options: StructuredGenerationOptions<T>,
@@ -175,37 +220,54 @@ export async function generateStructured<T>(
   const agent = options.agent ?? 'agent';
   const log: Logger = options.logger ?? createLogger();
 
+  const messages: CoreMessage[] = [{ role: 'user', content: options.prompt }];
   let lastError: unknown;
+  let lastObject: unknown;
+  let hasObject = false;
+
   for (let attempt = 0; attempt <= maxRepair; attempt += 1) {
+    const mode: ObjectGenerationMode =
+      attempt === 0 ? options.mode ?? 'auto' : REPAIR_MODE;
     if (attempt > 0) {
-      log.warn('structured generation: retrying after invalid output', {
+      log.warn('structured generation: self-repairing in the same dialog', {
         agent,
         attempt,
         maxAttempts: maxRepair + 1,
         error: errorToMessage(lastError),
       });
     }
-    const prompt =
-      attempt === 0
-        ? options.prompt
-        : `${options.prompt}${REPAIR_INSTRUCTION}${describeError(lastError)}`;
+    hasObject = false;
     try {
       log.info('structured generation: calling model', {
         agent,
         attempt,
         maxAttempts: maxRepair + 1,
+        mode,
       });
       const result = await generate(
-        buildCallOptions(options, prompt, temperature),
+        buildCallOptions(options, messages, temperature, mode),
       );
       const usage = normalizeGenerationUsage(result);
       if (usage !== undefined) {
         options.onUsage?.(usage);
       }
+      lastObject = result.object;
+      hasObject = true;
       return options.schema.parse(result.object);
     } catch (error) {
       lastError = error;
       options.onRepair?.(error, attempt);
+      if (attempt < maxRepair) {
+        // Continue the SAME dialog: replay the rejected answer (when the model
+        // produced one) and report the error, then ask it to answer again.
+        if (hasObject && lastObject !== undefined) {
+          messages.push({
+            role: 'assistant',
+            content: stringifyObject(lastObject),
+          });
+        }
+        messages.push({ role: 'user', content: buildRepairMessage(lastError) });
+      }
     }
   }
 

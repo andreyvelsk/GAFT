@@ -10,7 +10,7 @@ model backends can be swapped:
 
 - **`engines/`** — the low-level capabilities shared by the agents:
   - `generation/` — the LLM generation port (`createProvider`,
-    `generateStructured` with repair-retry);
+    `generateStructured` with same-dialog self-repair);
   - `decision/` — the decision port (`DecisionPort`) with two adapters: the Jev
     System One adapter and the legacy LLM adapter, wired by
     `createDecisionEngine`;

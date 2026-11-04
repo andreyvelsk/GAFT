@@ -226,7 +226,7 @@ describe('createLlmDecisionAdapter', () => {
     expect(calls).toHaveLength(2);
   });
 
-  it('throws an AgentError once the repair attempts are exhausted', async () => {
+  it('throws an AgentError once the self-repair attempts are exhausted', async () => {
     const { generate, calls } = staticGenerator({ not: 'an answers object' });
     const port = createLlmDecisionAdapter({ model: testModel(), generate });
 
@@ -234,7 +234,8 @@ describe('createLlmDecisionAdapter', () => {
       port.decide({ state: 'x', questions: {} }),
     ).rejects.toMatchObject({ name: 'AgentError', agent: 'decisions' });
 
-    expect(calls).toHaveLength(2);
+    // One initial attempt plus the two default self-repair attempts.
+    expect(calls).toHaveLength(3);
   });
 
   it('makes a single attempt when repairs are disabled', async () => {
