@@ -70,7 +70,7 @@ export interface FilterOptions {
   /** Injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** Number of repair attempts on invalid output (defaults to `1`). */
+  /** Number of self-repair attempts on invalid output (defaults to `2`). */
   maxRepairAttempts?: number;
 
   /** Number of posts sent per LLM request (defaults to the config value). */
@@ -103,7 +103,7 @@ export interface FilterAgentOptions {
   /** LLM: injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** LLM: repair attempts after the first invalid output. */
+  /** LLM: self-repair attempts after the first invalid output. */
   maxRepairAttempts?: number;
 
   /** Called after every model call with its token usage. */

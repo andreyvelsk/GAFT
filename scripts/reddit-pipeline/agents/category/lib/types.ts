@@ -39,7 +39,7 @@ export interface CategoryAgentOptions {
   /** LLM: injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** LLM: repair attempts after the first invalid output. */
+  /** LLM: self-repair attempts after the first invalid output. */
   maxRepairAttempts?: number;
 
   /** Called after every model call with its token usage. */

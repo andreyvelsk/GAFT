@@ -2,10 +2,21 @@ import type {
   OpenRouterProvider,
   OpenRouterProviderSettings,
 } from '@openrouter/ai-sdk-provider';
-import type { LanguageModel } from 'ai';
+import type { CoreMessage, LanguageModel } from 'ai';
 import type { z } from 'zod';
 
 import type { Logger, ModelUsage } from '../../../shared/lib/types';
+
+/**
+ * Object-generation mode handed to the provider.
+ *
+ * - `auto` — the provider picks the best strategy (usually tool calling);
+ * - `json` — the schema is described in the prompt and the answer is parsed
+ *   from the response text (no tool call required);
+ * - `tool` — a tool with the JSON schema as parameters is provided and the
+ *   model must call it.
+ */
+export type ObjectGenerationMode = 'auto' | 'json' | 'tool';
 
 /** Options accepted when creating the OpenRouter provider. */
 export interface ProviderOptions {
@@ -36,7 +47,19 @@ export interface GenerateObjectOptions {
   /** System instruction. */
   system: string;
 
-  /** User prompt. */
+  /**
+   * Conversation sent to the model, in order. The system instruction is passed
+   * separately. On a self-repair attempt this holds the original request, the
+   * answer the model already produced (when any) and the error report, so the
+   * model regenerates its answer within the SAME dialog.
+   */
+  messages: CoreMessage[];
+
+  /**
+   * Text of the most recent user turn (the original request on the first
+   * attempt, the repair instruction afterwards). Mirrors the last user message
+   * of {@link GenerateObjectOptions.messages} and is kept as a convenience.
+   */
   prompt: string;
 
   /** Sampling temperature. */
@@ -47,6 +70,9 @@ export interface GenerateObjectOptions {
 
   /** Optional schema description passed to the provider. */
   schemaDescription?: string;
+
+  /** Object-generation mode (defaults to the provider's `auto`). */
+  mode?: ObjectGenerationMode;
 }
 
 /** Token usage as reported by the underlying generator (AI SDK shape). */
@@ -98,7 +124,10 @@ export interface StructuredGenerationOptions<T> {
   /** Optional schema description passed to the provider. */
   schemaDescription?: string;
 
-  /** Repair attempts after the first invalid answer (defaults to `1`). */
+  /** Object-generation mode for the first attempt (defaults to `auto`). */
+  mode?: ObjectGenerationMode;
+
+  /** Self-repair attempts after the first invalid answer (defaults to `2`). */
   maxRepairAttempts?: number;
 
   /** Injected structured generator (used by tests). */
@@ -107,7 +136,7 @@ export interface StructuredGenerationOptions<T> {
   /** Agent name used in error messages. */
   agent?: string;
 
-  /** Called before each repair attempt. */
+  /** Called before each self-repair attempt. */
   onRepair?: (error: unknown, attempt: number) => void;
 
   /** Called after every model call with its token usage. */

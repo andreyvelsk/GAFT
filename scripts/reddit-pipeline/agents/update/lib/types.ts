@@ -137,7 +137,7 @@ export interface UpdateOptions {
   /** Injected structured generator (used by tests). */
   generate?: GenerateObjectLike;
 
-  /** Number of repair attempts on invalid output (defaults to `1`). */
+  /** Number of self-repair attempts on invalid output (defaults to `2`). */
   maxRepairAttempts?: number;
 
   /** Called after every model call with its token usage. */

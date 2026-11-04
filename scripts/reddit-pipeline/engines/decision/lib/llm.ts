@@ -44,7 +44,7 @@ export interface LlmDecisionAdapterOptions {
   /** Injected structured generator (used by tests to avoid the network). */
   generate?: GenerateObjectLike;
 
-  /** Repair attempts after the first invalid answer (defaults to `1`). */
+  /** Self-repair attempts after the first invalid answer (defaults to `2`). */
   maxRepairAttempts?: number;
 
   /** Called after every model call with its token usage. */
