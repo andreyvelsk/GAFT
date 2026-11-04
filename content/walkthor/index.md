@@ -12,7 +12,7 @@ media:
     url: "/content/walkthor/screenshot-2.webp"
   - type: "image"
     url: "/content/walkthor/screenshot-3.webp"
-source: "https://www.reddit.com/r/AynThor/comments/1xik9ei/walkthor_update_a_free_companion_app_for_your/"
+source: "https://www.reddit.com/r/AynThor/comments/1xn7y3f/walkthor_your_new_thor_drawer/"
 project_page: "https://github.com/nerf-herder-29/WalkThor"
 ---
 

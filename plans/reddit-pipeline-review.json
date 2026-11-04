@@ -22,7 +22,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xmnvqp/native_halflife_port_for_the_thor_the_game_on_the/",
       "createdUtc": 1793695775,
       "firstSeenAt": "2026-11-04T06:10:58.127Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-halflife",
+      "decidedAt": "2026-11-04T07:39:16.880Z"
     },
     {
       "id": "1xmvtcu",
@@ -46,7 +48,10 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xn0xr9/pokedaisy_140_monomyth_black_2_and_white_2_origin/",
       "createdUtc": 1793730571,
       "firstSeenAt": "2026-11-04T06:10:58.127Z",
-      "status": "pending"
+      "status": "pending",
+      "slug": "pokedaisy",
+      "decidedAt": "2026-11-04T07:39:16.880Z",
+      "error": "duplicate slug: pokedaisy"
     },
     {
       "id": "1xn2h7g",
@@ -78,7 +83,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xn7y3f/walkthor_your_new_thor_drawer/",
       "createdUtc": 1793746619,
       "firstSeenAt": "2026-11-04T06:10:58.127Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "walkthor",
+      "decidedAt": "2026-11-04T07:39:16.880Z"
     },
     {
       "id": "1xnb5er",
@@ -110,7 +117,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xngqbw/gta_sa_dual_screen_release/",
       "createdUtc": 1793772469,
       "firstSeenAt": "2026-11-04T06:10:58.127Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "sa-companion",
+      "decidedAt": "2026-11-04T07:39:16.880Z"
     }
   ]
 }
