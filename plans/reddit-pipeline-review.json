@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xnhbd3/the_legend_of_zelda_tears_of_the_kingdom_dual/",
       "createdUtc": 1793774556,
       "firstSeenAt": "2026-11-05T06:10:42.464Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "totk-native",
+      "decidedAt": "2026-11-05T06:50:29.498Z"
     },
     {
       "id": "1xno5g0",
@@ -14,7 +16,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xno5g0/diablo_2_lod_113d_on_the_thor_with_a_live_deck_on/",
       "createdUtc": 1793798785,
       "firstSeenAt": "2026-11-05T06:10:42.464Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-d2",
+      "decidedAt": "2026-11-05T06:50:29.498Z"
     },
     {
       "id": "1xo7knx",
