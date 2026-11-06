@@ -14,7 +14,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xofkqe/red_alert_2_on_the_thor_with_the_whole_map_on_top/",
       "createdUtc": 1793875559,
       "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-ra2",
+      "decidedAt": "2026-11-06T08:04:32.627Z"
     },
     {
       "id": "1xoj1rd",
@@ -46,7 +48,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xooizx/age_of_empires_ii_on_the_ayn_thor_full_map_on_top/",
       "createdUtc": 1793899391,
       "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-aok",
+      "decidedAt": "2026-11-06T08:04:32.627Z"
     },
     {
       "id": "1xool8x",
@@ -62,7 +66,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xow1hd/delphis_a_dolphincompanion_app_for_emulating/",
       "createdUtc": 1793917004,
       "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "delphis",
+      "decidedAt": "2026-11-06T08:04:32.627Z"
     },
     {
       "id": "1xozl9d",
@@ -78,7 +84,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xp0z3u/claude_ported_donkey_kong_64_recompiled_to/",
       "createdUtc": 1793930663,
       "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "donkey-kong-64-recompiled-android-ds",
+      "decidedAt": "2026-11-06T08:04:32.627Z"
     },
     {
       "id": "1xp1nke",
@@ -94,7 +102,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xp53zx/release_skyrimsedualscreen_10_skyrim_se_with_a/",
       "createdUtc": 1793943790,
       "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "skyrimse-dualscreen",
+      "decidedAt": "2026-11-06T08:04:32.627Z"
     }
   ]
 }
