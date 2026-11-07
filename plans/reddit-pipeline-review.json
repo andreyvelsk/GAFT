@@ -1,110 +1,46 @@
 {
   "posts": [
     {
-      "id": "1xoea6d",
-      "title": "I made GameFibre - A unified Steam, GOG, Epic & Xbox Android Library app",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xoea6d/i_made_gamefibre_a_unified_steam_gog_epic_xbox/",
-      "createdUtc": 1793870529,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
+      "id": "1xpeejt",
+      "title": "WinNative + Cocoon Frontend Integration – Launch Windows games directly from Cocoon!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xpeejt/winnative_cocoon_frontend_integration_launch/",
+      "createdUtc": 1793975939,
+      "firstSeenAt": "2026-11-07T06:09:05.865Z",
       "status": "pending"
     },
     {
-      "id": "1xofkqe",
-      "title": "Red Alert 2 on the Thor with the whole map on top and a touch command deck on the bottom screen (open source, no sidebar)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xofkqe/red_alert_2_on_the_thor_with_the_whole_map_on_top/",
-      "createdUtc": 1793875559,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
+      "id": "1xpg8in",
+      "title": "[TOTK & BOTW Android] I've made new 900p Docked Mode versions of my UltraCam optimizers! Only ~5 FPS difference in TOTK's overworld, still hitting 60 FPS in shrines",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xpg8in/totk_botw_android_ive_made_new_900p_docked_mode/",
+      "createdUtc": 1793980422,
+      "firstSeenAt": "2026-11-07T06:09:05.865Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xphz1k",
+      "title": "Switch 2 Joycons on Android - now with vibration support! Joycon2Android v3.1.0",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xphz1k/switch_2_joycons_on_android_now_with_vibration/",
+      "createdUtc": 1793984463,
+      "firstSeenAt": "2026-11-07T06:09:05.865Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xpmb14",
+      "title": "WoW Forever dual screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xpmb14/wow_forever_dual_screen/",
+      "createdUtc": 1793994567,
+      "firstSeenAt": "2026-11-07T06:09:05.865Z",
       "status": "approved",
-      "slug": "thor-ra2",
-      "decidedAt": "2026-11-06T08:04:32.627Z"
+      "slug": "ds-forever",
+      "decidedAt": "2026-11-07T07:06:05.020Z"
     },
     {
-      "id": "1xoj1rd",
-      "title": "WoW Forever on the Thor/ MMO rant (link below)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xoj1rd/wow_forever_on_the_thor_mmo_rant_link_below/",
-      "createdUtc": 1793886422,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
+      "id": "1xppngq",
+      "title": "Playing my Switch 2 remotely from my AYN Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xppngq/playing_my_switch_2_remotely_from_my_ayn_thor/",
+      "createdUtc": 1794002883,
+      "firstSeenAt": "2026-11-07T06:09:05.865Z",
       "status": "pending"
-    },
-    {
-      "id": "1xokl99",
-      "title": "GBA Duo V0.1.12: Extra Widescreen, New Layout, New Packs",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xokl99/gba_duo_v0112_extra_widescreen_new_layout_new/",
-      "createdUtc": 1793890289,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xomdqz",
-      "title": "Factorio is now running on more Android devices",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xomdqz/factorio_is_now_running_on_more_android_devices/",
-      "createdUtc": 1793894496,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xooizx",
-      "title": "Age of Empires II on the AYN Thor – full map on top, touch command deck on the bottom screen (free, open source)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xooizx/age_of_empires_ii_on_the_ayn_thor_full_map_on_top/",
-      "createdUtc": 1793899391,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "approved",
-      "slug": "thor-aok",
-      "decidedAt": "2026-11-06T08:04:32.627Z"
-    },
-    {
-      "id": "1xool8x",
-      "title": "Fate/Tiger Colosseum English Translation Complete",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xool8x/fatetiger_colosseum_english_translation_complete/",
-      "createdUtc": 1793899534,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xow1hd",
-      "title": "Delphis: A Dolphin-companion app for emulating Wii/GC on the Ayn Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xow1hd/delphis_a_dolphincompanion_app_for_emulating/",
-      "createdUtc": 1793917004,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "approved",
-      "slug": "delphis",
-      "decidedAt": "2026-11-06T08:04:32.627Z"
-    },
-    {
-      "id": "1xozl9d",
-      "title": "BoxShelf Officially On Thor! (Beta)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xozl9d/boxshelf_officially_on_thor_beta/",
-      "createdUtc": 1793926606,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xp0z3u",
-      "title": "Claude ported Donkey Kong 64: Recompiled to Android, with full dual-screen support for the AYN Thor.",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xp0z3u/claude_ported_donkey_kong_64_recompiled_to/",
-      "createdUtc": 1793930663,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "approved",
-      "slug": "donkey-kong-64-recompiled-android-ds",
-      "decidedAt": "2026-11-06T08:04:32.627Z"
-    },
-    {
-      "id": "1xp1nke",
-      "title": "Future Diary: The 13th owner RE:WRITE English Translation Complete",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xp1nke/future_diary_the_13th_owner_rewrite_english/",
-      "createdUtc": 1793932698,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xp53zx",
-      "title": "[Release] SkyrimSE-DualScreen 1.0: Skyrim SE with a dual-screen companion made for the Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xp53zx/release_skyrimsedualscreen_10_skyrim_se_with_a/",
-      "createdUtc": 1793943790,
-      "firstSeenAt": "2026-11-06T06:10:44.575Z",
-      "status": "approved",
-      "slug": "skyrimse-dualscreen",
-      "decidedAt": "2026-11-06T08:04:32.627Z"
     }
   ]
 }
