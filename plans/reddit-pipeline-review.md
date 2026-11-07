@@ -1,30 +1,24 @@
 # Reddit pipeline review
 
-> Pending: 7 · Approved: 5 · Rejected: 0
+> Pending: 5 · Approved: 0 · Rejected: 0
 
-## Pending (7)
+## Pending (5)
 
-- `1xoea6d` — I made GameFibre - A unified Steam, GOG, Epic & Xbox Android Library app — [source](https://www.reddit.com/r/AynThor/comments/1xoea6d/i_made_gamefibre_a_unified_steam_gog_epic_xbox/)
-- `1xoj1rd` — WoW Forever on the Thor/ MMO rant (link below) — [source](https://www.reddit.com/r/AynThor/comments/1xoj1rd/wow_forever_on_the_thor_mmo_rant_link_below/)
-- `1xokl99` — GBA Duo V0.1.12: Extra Widescreen, New Layout, New Packs — [source](https://www.reddit.com/r/AynThor/comments/1xokl99/gba_duo_v0112_extra_widescreen_new_layout_new/)
-- `1xomdqz` — Factorio is now running on more Android devices — [source](https://www.reddit.com/r/AynThor/comments/1xomdqz/factorio_is_now_running_on_more_android_devices/)
-- `1xool8x` — Fate/Tiger Colosseum English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xool8x/fatetiger_colosseum_english_translation_complete/)
-- `1xozl9d` — BoxShelf Officially On Thor! (Beta) — [source](https://www.reddit.com/r/AynThor/comments/1xozl9d/boxshelf_officially_on_thor_beta/)
-- `1xp1nke` — Future Diary: The 13th owner RE:WRITE English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xp1nke/future_diary_the_13th_owner_rewrite_english/)
+- `1xpeejt` — WinNative + Cocoon Frontend Integration – Launch Windows games directly from Cocoon! — [source](https://www.reddit.com/r/AynThor/comments/1xpeejt/winnative_cocoon_frontend_integration_launch/)
+- `1xpg8in` — [TOTK & BOTW Android] I've made new 900p Docked Mode versions of my UltraCam optimizers! Only ~5 FPS difference in TOTK's overworld, still hitting 60 FPS in shrines — [source](https://www.reddit.com/r/AynThor/comments/1xpg8in/totk_botw_android_ive_made_new_900p_docked_mode/)
+- `1xphz1k` — Switch 2 Joycons on Android - now with vibration support! Joycon2Android v3.1.0 — [source](https://www.reddit.com/r/AynThor/comments/1xphz1k/switch_2_joycons_on_android_now_with_vibration/)
+- `1xpmb14` — WoW Forever dual screen — [source](https://www.reddit.com/r/AynThor/comments/1xpmb14/wow_forever_dual_screen/)
+- `1xppngq` — Playing my Switch 2 remotely from my AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1xppngq/playing_my_switch_2_remotely_from_my_ayn_thor/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xoea6d 1xoj1rd 1xokl99 1xomdqz 1xool8x 1xozl9d 1xp1nke
+/approved 1xpeejt 1xpg8in 1xphz1k 1xpmb14 1xppngq
 ```
 
-## Approved (5)
+## Approved (0)
 
-- `1xofkqe` → `thor-ra2` — Red Alert 2 on the Thor with the whole map on top and a touch command deck on the bottom screen (open source, no sidebar) — [source](https://www.reddit.com/r/AynThor/comments/1xofkqe/red_alert_2_on_the_thor_with_the_whole_map_on_top/)
-- `1xooizx` → `thor-aok` — Age of Empires II on the AYN Thor – full map on top, touch command deck on the bottom screen (free, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xooizx/age_of_empires_ii_on_the_ayn_thor_full_map_on_top/)
-- `1xow1hd` → `delphis` — Delphis: A Dolphin-companion app for emulating Wii/GC on the Ayn Thor — [source](https://www.reddit.com/r/AynThor/comments/1xow1hd/delphis_a_dolphincompanion_app_for_emulating/)
-- `1xp0z3u` → `donkey-kong-64-recompiled-android-ds` — Claude ported Donkey Kong 64: Recompiled to Android, with full dual-screen support for the AYN Thor. — [source](https://www.reddit.com/r/AynThor/comments/1xp0z3u/claude_ported_donkey_kong_64_recompiled_to/)
-- `1xp53zx` → `skyrimse-dualscreen` — [Release] SkyrimSE-DualScreen 1.0: Skyrim SE with a dual-screen companion made for the Thor — [source](https://www.reddit.com/r/AynThor/comments/1xp53zx/release_skyrimsedualscreen_10_skyrim_se_with_a/)
+_None._
 
 ## Rejected (0)
 
