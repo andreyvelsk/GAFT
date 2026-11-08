@@ -1,45 +1,51 @@
 {
   "posts": [
     {
-      "id": "1xpeejt",
-      "title": "WinNative + Cocoon Frontend Integration – Launch Windows games directly from Cocoon!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xpeejt/winnative_cocoon_frontend_integration_launch/",
-      "createdUtc": 1793975939,
-      "firstSeenAt": "2026-11-07T06:09:05.865Z",
+      "id": "1xq0r82",
+      "title": "Diablo III on the Thor: game on top, a touch skill deck on the bottom screen (native ARM64, 60 fps, open source)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xq0r82/diablo_iii_on_the_thor_game_on_top_a_touch_skill/",
+      "createdUtc": 1794037421,
+      "firstSeenAt": "2026-11-08T06:10:25.632Z",
       "status": "pending"
     },
     {
-      "id": "1xpg8in",
-      "title": "[TOTK & BOTW Android] I've made new 900p Docked Mode versions of my UltraCam optimizers! Only ~5 FPS difference in TOTK's overworld, still hitting 60 FPS in shrines",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xpg8in/totk_botw_android_ive_made_new_900p_docked_mode/",
-      "createdUtc": 1793980422,
-      "firstSeenAt": "2026-11-07T06:09:05.865Z",
+      "id": "1xq232y",
+      "title": "GBA DS YUGIOH",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xq232y/gba_ds_yugioh/",
+      "createdUtc": 1794042567,
+      "firstSeenAt": "2026-11-08T06:10:25.632Z",
       "status": "pending"
     },
     {
-      "id": "1xphz1k",
-      "title": "Switch 2 Joycons on Android - now with vibration support! Joycon2Android v3.1.0",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xphz1k/switch_2_joycons_on_android_now_with_vibration/",
-      "createdUtc": 1793984463,
-      "firstSeenAt": "2026-11-07T06:09:05.865Z",
+      "id": "1xq5iux",
+      "title": "I cleaned the HUD and added more slang shaders to GBA Duo",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xq5iux/i_cleaned_the_hud_and_added_more_slang_shaders_to/",
+      "createdUtc": 1794055499,
+      "firstSeenAt": "2026-11-08T06:10:25.632Z",
       "status": "pending"
     },
     {
-      "id": "1xpmb14",
-      "title": "WoW Forever dual screen",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xpmb14/wow_forever_dual_screen/",
-      "createdUtc": 1793994567,
-      "firstSeenAt": "2026-11-07T06:09:05.865Z",
-      "status": "approved",
-      "slug": "ds-forever",
-      "decidedAt": "2026-11-07T07:06:05.020Z"
+      "id": "1xqh4gn",
+      "title": "Recompa, a free app to find, install and update Android native ports, and it uses the Thor's second screen!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqh4gn/recompa_a_free_app_to_find_install_and_update/",
+      "createdUtc": 1794086087,
+      "firstSeenAt": "2026-11-08T06:10:25.632Z",
+      "status": "pending"
     },
     {
-      "id": "1xppngq",
-      "title": "Playing my Switch 2 remotely from my AYN Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xppngq/playing_my_switch_2_remotely_from_my_ayn_thor/",
-      "createdUtc": 1794002883,
-      "firstSeenAt": "2026-11-07T06:09:05.865Z",
+      "id": "1xqkfou",
+      "title": "AYN Thor Wallpaper Studio – Create and Preview Dual-Screen Wallpapers",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqkfou/ayn_thor_wallpaper_studio_create_and_preview/",
+      "createdUtc": 1794095397,
+      "firstSeenAt": "2026-11-08T06:10:25.632Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xqo4re",
+      "title": "Unofficial Azahar build with added support for post processing shaders",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqo4re/unofficial_azahar_build_with_added_support_for/",
+      "createdUtc": 1794106716,
+      "firstSeenAt": "2026-11-08T06:10:25.632Z",
       "status": "pending"
     }
   ]

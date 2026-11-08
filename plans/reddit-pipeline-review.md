@@ -1,23 +1,25 @@
 # Reddit pipeline review
 
-> Pending: 4 · Approved: 1 · Rejected: 0
+> Pending: 6 · Approved: 0 · Rejected: 0
 
-## Pending (4)
+## Pending (6)
 
-- `1xpeejt` — WinNative + Cocoon Frontend Integration – Launch Windows games directly from Cocoon! — [source](https://www.reddit.com/r/AynThor/comments/1xpeejt/winnative_cocoon_frontend_integration_launch/)
-- `1xpg8in` — [TOTK & BOTW Android] I've made new 900p Docked Mode versions of my UltraCam optimizers! Only ~5 FPS difference in TOTK's overworld, still hitting 60 FPS in shrines — [source](https://www.reddit.com/r/AynThor/comments/1xpg8in/totk_botw_android_ive_made_new_900p_docked_mode/)
-- `1xphz1k` — Switch 2 Joycons on Android - now with vibration support! Joycon2Android v3.1.0 — [source](https://www.reddit.com/r/AynThor/comments/1xphz1k/switch_2_joycons_on_android_now_with_vibration/)
-- `1xppngq` — Playing my Switch 2 remotely from my AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1xppngq/playing_my_switch_2_remotely_from_my_ayn_thor/)
+- `1xq0r82` — Diablo III on the Thor: game on top, a touch skill deck on the bottom screen (native ARM64, 60 fps, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xq0r82/diablo_iii_on_the_thor_game_on_top_a_touch_skill/)
+- `1xq232y` — GBA DS YUGIOH — [source](https://www.reddit.com/r/AynThor/comments/1xq232y/gba_ds_yugioh/)
+- `1xq5iux` — I cleaned the HUD and added more slang shaders to GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1xq5iux/i_cleaned_the_hud_and_added_more_slang_shaders_to/)
+- `1xqh4gn` — Recompa, a free app to find, install and update Android native ports, and it uses the Thor's second screen! — [source](https://www.reddit.com/r/AynThor/comments/1xqh4gn/recompa_a_free_app_to_find_install_and_update/)
+- `1xqkfou` — AYN Thor Wallpaper Studio – Create and Preview Dual-Screen Wallpapers — [source](https://www.reddit.com/r/AynThor/comments/1xqkfou/ayn_thor_wallpaper_studio_create_and_preview/)
+- `1xqo4re` — Unofficial Azahar build with added support for post processing shaders — [source](https://www.reddit.com/r/AynThor/comments/1xqo4re/unofficial_azahar_build_with_added_support_for/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xpeejt 1xpg8in 1xphz1k 1xppngq
+/approved 1xq0r82 1xq232y 1xq5iux 1xqh4gn 1xqkfou 1xqo4re
 ```
 
-## Approved (1)
+## Approved (0)
 
-- `1xpmb14` → `ds-forever` — WoW Forever dual screen — [source](https://www.reddit.com/r/AynThor/comments/1xpmb14/wow_forever_dual_screen/)
+_None._
 
 ## Rejected (0)
 
