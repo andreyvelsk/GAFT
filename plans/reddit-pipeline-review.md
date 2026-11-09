@@ -1,24 +1,26 @@
 # Reddit pipeline review
 
-> Pending: 5 · Approved: 1 · Rejected: 0
+> Pending: 7 · Approved: 0 · Rejected: 0
 
-## Pending (5)
+## Pending (7)
 
-- `1xq232y` — GBA DS YUGIOH — [source](https://www.reddit.com/r/AynThor/comments/1xq232y/gba_ds_yugioh/)
-- `1xq5iux` — I cleaned the HUD and added more slang shaders to GBA Duo — [source](https://www.reddit.com/r/AynThor/comments/1xq5iux/i_cleaned_the_hud_and_added_more_slang_shaders_to/)
-- `1xqh4gn` — Recompa, a free app to find, install and update Android native ports, and it uses the Thor's second screen! — [source](https://www.reddit.com/r/AynThor/comments/1xqh4gn/recompa_a_free_app_to_find_install_and_update/)
-- `1xqkfou` — AYN Thor Wallpaper Studio – Create and Preview Dual-Screen Wallpapers — [source](https://www.reddit.com/r/AynThor/comments/1xqkfou/ayn_thor_wallpaper_studio_create_and_preview/)
-- `1xqo4re` — Unofficial Azahar build with added support for post processing shaders — [source](https://www.reddit.com/r/AynThor/comments/1xqo4re/unofficial_azahar_build_with_added_support_for/)
+- `1xqtew7` — Heroes of Might and Magic III on the Thor: adventure map full screen on top, a touch deck on the bottom (works with the Steam HD Edition, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xqtew7/heroes_of_might_and_magic_iii_on_the_thor/)
+- `1xqv305` — Just added AYN Thor support for my game... Like? — [source](https://www.reddit.com/r/AynThor/comments/1xqv305/just_added_ayn_thor_support_for_my_game_like/)
+- `1xqvqte` — Donkey Kong Bananza on a stable 30 fps — [source](https://www.reddit.com/r/AynThor/comments/1xqvqte/donkey_kong_bananza_on_a_stable_30_fps/)
+- `1xqxkmw` — Pokopia Running 60fps — [source](https://www.reddit.com/r/AynThor/comments/1xqxkmw/pokopia_running_60fps/)
+- `1xqybtn` — KKND2 Krossfire on the Thor: battlefield full screen on top, the complete build menu on the bottom screen (native arm64, OpenRA-based, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xqybtn/kknd2_krossfire_on_the_thor_battlefield_full/)
+- `1xrc4aq` — Banana Native 0.2.4 & Turnip Gen8 V38 — [source](https://www.reddit.com/r/AynThor/comments/1xrc4aq/banana_native_024_turnip_gen8_v38/)
+- `1xrd0hw` — Emulating wii and gamecube has never been easier :) — [source](https://www.reddit.com/r/AynThor/comments/1xrd0hw/emulating_wii_and_gamecube_has_never_been_easier/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xq232y 1xq5iux 1xqh4gn 1xqkfou 1xqo4re
+/approved 1xqtew7 1xqv305 1xqvqte 1xqxkmw 1xqybtn 1xrc4aq 1xrd0hw
 ```
 
-## Approved (1)
+## Approved (0)
 
-- `1xq0r82` → `thor-edition-for-d3` — Diablo III on the Thor: game on top, a touch skill deck on the bottom screen (native ARM64, 60 fps, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xq0r82/diablo_iii_on_the_thor_game_on_top_a_touch_skill/)
+_None._
 
 ## Rejected (0)
 
