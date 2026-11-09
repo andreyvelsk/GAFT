@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xqtew7/heroes_of_might_and_magic_iii_on_the_thor/",
       "createdUtc": 1794125666,
       "firstSeenAt": "2026-11-09T06:14:06.835Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "heroes-of-might-and-magic-iii",
+      "decidedAt": "2026-11-09T07:15:59.705Z"
     },
     {
       "id": "1xqv305",
@@ -38,7 +40,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xqybtn/kknd2_krossfire_on_the_thor_battlefield_full/",
       "createdUtc": 1794144205,
       "firstSeenAt": "2026-11-09T06:14:06.835Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "kknd2-krossfire",
+      "decidedAt": "2026-11-09T07:15:59.705Z"
     },
     {
       "id": "1xrc4aq",
