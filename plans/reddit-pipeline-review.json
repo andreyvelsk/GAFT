@@ -1,63 +1,51 @@
 {
   "posts": [
     {
-      "id": "1xqtew7",
-      "title": "Heroes of Might and Magic III on the Thor: adventure map full screen on top, a touch deck on the bottom (works with the Steam HD Edition, open source)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqtew7/heroes_of_might_and_magic_iii_on_the_thor/",
-      "createdUtc": 1794125666,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
-      "status": "approved",
-      "slug": "heroes-of-might-and-magic-iii",
-      "decidedAt": "2026-11-09T07:15:59.705Z"
-    },
-    {
-      "id": "1xqv305",
-      "title": "Just added AYN Thor support for my game... Like?",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqv305/just_added_ayn_thor_support_for_my_game_like/",
-      "createdUtc": 1794132427,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
+      "id": "1xrkc10",
+      "title": "Android port launcher - Recompa",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrkc10/android_port_launcher_recompa/",
+      "createdUtc": 1794205281,
+      "firstSeenAt": "2026-11-10T06:10:18.830Z",
       "status": "pending"
     },
     {
-      "id": "1xqvqte",
-      "title": "Donkey Kong Bananza on a stable 30 fps",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqvqte/donkey_kong_bananza_on_a_stable_30_fps/",
-      "createdUtc": 1794135056,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
+      "id": "1xrln1b",
+      "title": "Tears of the Kingdom - Android port (30-60 fps)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrln1b/tears_of_the_kingdom_android_port_3060_fps/",
+      "createdUtc": 1794210116,
+      "firstSeenAt": "2026-11-10T06:10:18.830Z",
       "status": "pending"
     },
     {
-      "id": "1xqxkmw",
-      "title": "Pokopia Running 60fps",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqxkmw/pokopia_running_60fps/",
-      "createdUtc": 1794141798,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
+      "id": "1xrm7l2",
+      "title": "Fallout 4 on the Thor with a live Pip-Boy on the bottom screen – tap to equip, quick keys as tiles (open source, F4SE plugin)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrm7l2/fallout_4_on_the_thor_with_a_live_pipboy_on_the/",
+      "createdUtc": 1794212219,
+      "firstSeenAt": "2026-11-10T06:10:18.830Z",
       "status": "pending"
     },
     {
-      "id": "1xqybtn",
-      "title": "KKND2 Krossfire on the Thor: battlefield full screen on top, the complete build menu on the bottom screen (native arm64, OpenRA-based, open source)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xqybtn/kknd2_krossfire_on_the_thor_battlefield_full/",
-      "createdUtc": 1794144205,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
-      "status": "approved",
-      "slug": "kknd2-krossfire",
-      "decidedAt": "2026-11-09T07:15:59.705Z"
-    },
-    {
-      "id": "1xrc4aq",
-      "title": "Banana Native 0.2.4 & Turnip Gen8 V38",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrc4aq/banana_native_024_turnip_gen8_v38/",
-      "createdUtc": 1794179911,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
+      "id": "1xs4cn3",
+      "title": "FF7Recomp: Final Fantasy VII (PC) recompiled to native Android, with a dual-screen HUD on the AYN Thor and 7th Heaven mods",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xs4cn3/ff7recomp_final_fantasy_vii_pc_recompiled_to/",
+      "createdUtc": 1794259747,
+      "firstSeenAt": "2026-11-10T06:10:18.830Z",
       "status": "pending"
     },
     {
-      "id": "1xrd0hw",
-      "title": "Emulating wii and gamecube has never been easier :)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrd0hw/emulating_wii_and_gamecube_has_never_been_easier/",
-      "createdUtc": 1794182438,
-      "firstSeenAt": "2026-11-09T06:14:06.835Z",
+      "id": "1xs4jq0",
+      "title": "Eclipse launcher",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xs4jq0/eclipse_launcher/",
+      "createdUtc": 1794260203,
+      "firstSeenAt": "2026-11-10T06:10:18.830Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xscwhq",
+      "title": "Made a laptop powered by the thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xscwhq/made_a_laptop_powered_by_the_thor/",
+      "createdUtc": 1794282617,
+      "firstSeenAt": "2026-11-10T06:10:18.830Z",
       "status": "pending"
     }
   ]
