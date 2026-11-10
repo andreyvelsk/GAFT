@@ -1,25 +1,24 @@
 # Reddit pipeline review
 
-> Pending: 5 · Approved: 2 · Rejected: 0
+> Pending: 4 · Approved: 2 · Rejected: 0
 
-## Pending (5)
+## Pending (4)
 
-- `1xqv305` — Just added AYN Thor support for my game... Like? — [source](https://www.reddit.com/r/AynThor/comments/1xqv305/just_added_ayn_thor_support_for_my_game_like/)
-- `1xqvqte` — Donkey Kong Bananza on a stable 30 fps — [source](https://www.reddit.com/r/AynThor/comments/1xqvqte/donkey_kong_bananza_on_a_stable_30_fps/)
-- `1xqxkmw` — Pokopia Running 60fps — [source](https://www.reddit.com/r/AynThor/comments/1xqxkmw/pokopia_running_60fps/)
-- `1xrc4aq` — Banana Native 0.2.4 & Turnip Gen8 V38 — [source](https://www.reddit.com/r/AynThor/comments/1xrc4aq/banana_native_024_turnip_gen8_v38/)
-- `1xrd0hw` — Emulating wii and gamecube has never been easier :) — [source](https://www.reddit.com/r/AynThor/comments/1xrd0hw/emulating_wii_and_gamecube_has_never_been_easier/)
+- `1xrkc10` — Android port launcher - Recompa — [source](https://www.reddit.com/r/AynThor/comments/1xrkc10/android_port_launcher_recompa/)
+- `1xrln1b` — Tears of the Kingdom - Android port (30-60 fps) — [source](https://www.reddit.com/r/AynThor/comments/1xrln1b/tears_of_the_kingdom_android_port_3060_fps/)
+- `1xs4jq0` — Eclipse launcher — [source](https://www.reddit.com/r/AynThor/comments/1xs4jq0/eclipse_launcher/)
+- `1xscwhq` — Made a laptop powered by the thor — [source](https://www.reddit.com/r/AynThor/comments/1xscwhq/made_a_laptop_powered_by_the_thor/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xqv305 1xqvqte 1xqxkmw 1xrc4aq 1xrd0hw
+/approved 1xrkc10 1xrln1b 1xs4jq0 1xscwhq
 ```
 
 ## Approved (2)
 
-- `1xqtew7` → `heroes-of-might-and-magic-iii` — Heroes of Might and Magic III on the Thor: adventure map full screen on top, a touch deck on the bottom (works with the Steam HD Edition, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xqtew7/heroes_of_might_and_magic_iii_on_the_thor/)
-- `1xqybtn` → `kknd2-krossfire` — KKND2 Krossfire on the Thor: battlefield full screen on top, the complete build menu on the bottom screen (native arm64, OpenRA-based, open source) — [source](https://www.reddit.com/r/AynThor/comments/1xqybtn/kknd2_krossfire_on_the_thor_battlefield_full/)
+- `1xrm7l2` → `thor-pip-boy` — Fallout 4 on the Thor with a live Pip-Boy on the bottom screen – tap to equip, quick keys as tiles (open source, F4SE plugin) — [source](https://www.reddit.com/r/AynThor/comments/1xrm7l2/fallout_4_on_the_thor_with_a_live_pipboy_on_the/)
+- `1xs4cn3` → `ff7recomp` — FF7Recomp: Final Fantasy VII (PC) recompiled to native Android, with a dual-screen HUD on the AYN Thor and 7th Heaven mods — [source](https://www.reddit.com/r/AynThor/comments/1xs4cn3/ff7recomp_final_fantasy_vii_pc_recompiled_to/)
 
 ## Rejected (0)
 
