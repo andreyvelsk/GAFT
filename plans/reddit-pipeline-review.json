@@ -22,7 +22,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xrm7l2/fallout_4_on_the_thor_with_a_live_pipboy_on_the/",
       "createdUtc": 1794212219,
       "firstSeenAt": "2026-11-10T06:10:18.830Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-pip-boy",
+      "decidedAt": "2026-11-10T06:58:22.326Z"
     },
     {
       "id": "1xs4cn3",
@@ -30,7 +32,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xs4cn3/ff7recomp_final_fantasy_vii_pc_recompiled_to/",
       "createdUtc": 1794259747,
       "firstSeenAt": "2026-11-10T06:10:18.830Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "ff7recomp",
+      "decidedAt": "2026-11-10T06:58:22.326Z"
     },
     {
       "id": "1xs4jq0",
