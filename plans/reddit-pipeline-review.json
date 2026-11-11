@@ -1,55 +1,43 @@
 {
   "posts": [
     {
-      "id": "1xrkc10",
-      "title": "Android port launcher - Recompa",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrkc10/android_port_launcher_recompa/",
-      "createdUtc": 1794205281,
-      "firstSeenAt": "2026-11-10T06:10:18.830Z",
+      "id": "1xsk7e7",
+      "title": "I made an app for better Cocoon and dual-screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsk7e7/i_made_an_app_for_better_cocoon_and_dualscreen/",
+      "createdUtc": 1794308982,
+      "firstSeenAt": "2026-11-11T06:11:04.554Z",
       "status": "pending"
     },
     {
-      "id": "1xrln1b",
-      "title": "Tears of the Kingdom - Android port (30-60 fps)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrln1b/tears_of_the_kingdom_android_port_3060_fps/",
-      "createdUtc": 1794210116,
-      "firstSeenAt": "2026-11-10T06:10:18.830Z",
+      "id": "1xsp5fr",
+      "title": "[ACTUALIZACIÓN] ¡Ya está disponible la versión 5 de WinNative × Cocoon — AUTO-RETURN!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsp5fr/actualización_ya_está_disponible_la_versión_5_de/",
+      "createdUtc": 1794323012,
+      "firstSeenAt": "2026-11-11T06:11:04.554Z",
       "status": "pending"
     },
     {
-      "id": "1xrm7l2",
-      "title": "Fallout 4 on the Thor with a live Pip-Boy on the bottom screen – tap to equip, quick keys as tiles (open source, F4SE plugin)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xrm7l2/fallout_4_on_the_thor_with_a_live_pipboy_on_the/",
-      "createdUtc": 1794212219,
-      "firstSeenAt": "2026-11-10T06:10:18.830Z",
-      "status": "approved",
-      "slug": "thor-pip-boy",
-      "decidedAt": "2026-11-10T06:58:22.326Z"
-    },
-    {
-      "id": "1xs4cn3",
-      "title": "FF7Recomp: Final Fantasy VII (PC) recompiled to native Android, with a dual-screen HUD on the AYN Thor and 7th Heaven mods",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xs4cn3/ff7recomp_final_fantasy_vii_pc_recompiled_to/",
-      "createdUtc": 1794259747,
-      "firstSeenAt": "2026-11-10T06:10:18.830Z",
-      "status": "approved",
-      "slug": "ff7recomp",
-      "decidedAt": "2026-11-10T06:58:22.326Z"
-    },
-    {
-      "id": "1xs4jq0",
-      "title": "Eclipse launcher",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xs4jq0/eclipse_launcher/",
-      "createdUtc": 1794260203,
-      "firstSeenAt": "2026-11-10T06:10:18.830Z",
+      "id": "1xsr758",
+      "title": "My little Thor project: Caesar III dual-screen version",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsr758/my_little_thor_project_caesar_iii_dualscreen/",
+      "createdUtc": 1794327708,
+      "firstSeenAt": "2026-11-11T06:11:04.554Z",
       "status": "pending"
     },
     {
-      "id": "1xscwhq",
-      "title": "Made a laptop powered by the thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xscwhq/made_a_laptop_powered_by_the_thor/",
-      "createdUtc": 1794282617,
-      "firstSeenAt": "2026-11-10T06:10:18.830Z",
+      "id": "1xsra5r",
+      "title": "My little Thor project: Caesar III dual-screen version",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsra5r/my_little_thor_project_caesar_iii_dualscreen/",
+      "createdUtc": 1794327888,
+      "firstSeenAt": "2026-11-11T06:11:04.554Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xst29i",
+      "title": "Pokopia Ayn Thor Pro",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xst29i/pokopia_ayn_thor_pro/",
+      "createdUtc": 1794331887,
+      "firstSeenAt": "2026-11-11T06:11:04.554Z",
       "status": "pending"
     }
   ]

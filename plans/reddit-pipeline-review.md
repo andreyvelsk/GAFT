@@ -1,24 +1,24 @@
 # Reddit pipeline review
 
-> Pending: 4 · Approved: 2 · Rejected: 0
+> Pending: 5 · Approved: 0 · Rejected: 0
 
-## Pending (4)
+## Pending (5)
 
-- `1xrkc10` — Android port launcher - Recompa — [source](https://www.reddit.com/r/AynThor/comments/1xrkc10/android_port_launcher_recompa/)
-- `1xrln1b` — Tears of the Kingdom - Android port (30-60 fps) — [source](https://www.reddit.com/r/AynThor/comments/1xrln1b/tears_of_the_kingdom_android_port_3060_fps/)
-- `1xs4jq0` — Eclipse launcher — [source](https://www.reddit.com/r/AynThor/comments/1xs4jq0/eclipse_launcher/)
-- `1xscwhq` — Made a laptop powered by the thor — [source](https://www.reddit.com/r/AynThor/comments/1xscwhq/made_a_laptop_powered_by_the_thor/)
+- `1xsk7e7` — I made an app for better Cocoon and dual-screen — [source](https://www.reddit.com/r/AynThor/comments/1xsk7e7/i_made_an_app_for_better_cocoon_and_dualscreen/)
+- `1xsp5fr` — [ACTUALIZACIÓN] ¡Ya está disponible la versión 5 de WinNative × Cocoon — AUTO-RETURN! — [source](https://www.reddit.com/r/AynThor/comments/1xsp5fr/actualización_ya_está_disponible_la_versión_5_de/)
+- `1xsr758` — My little Thor project: Caesar III dual-screen version — [source](https://www.reddit.com/r/AynThor/comments/1xsr758/my_little_thor_project_caesar_iii_dualscreen/)
+- `1xsra5r` — My little Thor project: Caesar III dual-screen version — [source](https://www.reddit.com/r/AynThor/comments/1xsra5r/my_little_thor_project_caesar_iii_dualscreen/)
+- `1xst29i` — Pokopia Ayn Thor Pro — [source](https://www.reddit.com/r/AynThor/comments/1xst29i/pokopia_ayn_thor_pro/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xrkc10 1xrln1b 1xs4jq0 1xscwhq
+/approved 1xsk7e7 1xsp5fr 1xsr758 1xsra5r 1xst29i
 ```
 
-## Approved (2)
+## Approved (0)
 
-- `1xrm7l2` → `thor-pip-boy` — Fallout 4 on the Thor with a live Pip-Boy on the bottom screen – tap to equip, quick keys as tiles (open source, F4SE plugin) — [source](https://www.reddit.com/r/AynThor/comments/1xrm7l2/fallout_4_on_the_thor_with_a_live_pipboy_on_the/)
-- `1xs4cn3` → `ff7recomp` — FF7Recomp: Final Fantasy VII (PC) recompiled to native Android, with a dual-screen HUD on the AYN Thor and 7th Heaven mods — [source](https://www.reddit.com/r/AynThor/comments/1xs4cn3/ff7recomp_final_fantasy_vii_pc_recompiled_to/)
+_None._
 
 ## Rejected (0)
 
