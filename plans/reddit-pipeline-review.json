@@ -30,7 +30,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xsra5r/my_little_thor_project_caesar_iii_dualscreen/",
       "createdUtc": 1794327888,
       "firstSeenAt": "2026-11-11T06:11:04.554Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "caesar-iii-thor",
+      "decidedAt": "2026-11-12T06:30:16.011Z"
     },
     {
       "id": "1xst29i",
@@ -54,7 +56,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xti8he/appupdate_betterdualscreenassistant_120_rp_duo/",
       "createdUtc": 1794405040,
       "firstSeenAt": "2026-11-12T06:11:21.955Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "better-dual-screen-assistant",
+      "decidedAt": "2026-11-12T06:30:16.011Z"
     },
     {
       "id": "1xtld7f",
