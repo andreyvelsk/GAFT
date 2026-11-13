@@ -22,7 +22,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xudlg0/final_fantasy_ix_on_the_thor_moguri_on_top_a_live/",
       "createdUtc": 1794492268,
       "firstSeenAt": "2026-11-13T06:12:53.772Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-ffix",
+      "decidedAt": "2026-11-13T13:02:56.513Z"
     },
     {
       "id": "1xueouc",
@@ -30,7 +32,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xueouc/dark_cloud_dual_screen_apk/",
       "createdUtc": 1794494942,
       "firstSeenAt": "2026-11-13T06:12:53.772Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "dark-cloud-dual-screen",
+      "decidedAt": "2026-11-13T13:02:56.513Z"
     },
     {
       "id": "1xuf27x",
@@ -46,7 +50,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xujisj/i_turned_terraria_into_a_true_dualscreen_game_on/",
       "createdUtc": 1794505856,
       "firstSeenAt": "2026-11-13T06:12:53.772Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "terraria-dual-screen-companion",
+      "decidedAt": "2026-11-13T13:02:56.513Z"
     },
     {
       "id": "1xummrk",
