@@ -1,33 +1,29 @@
 # Reddit pipeline review
 
-> Pending: 13 · Approved: 2 · Rejected: 0
+> Pending: 10 · Approved: 0 · Rejected: 0
 
-## Pending (13)
+## Pending (10)
 
-- `1xsk7e7` — I made an app for better Cocoon and dual-screen — [source](https://www.reddit.com/r/AynThor/comments/1xsk7e7/i_made_an_app_for_better_cocoon_and_dualscreen/)
-- `1xsp5fr` — [ACTUALIZACIÓN] ¡Ya está disponible la versión 5 de WinNative × Cocoon — AUTO-RETURN! — [source](https://www.reddit.com/r/AynThor/comments/1xsp5fr/actualización_ya_está_disponible_la_versión_5_de/)
-- `1xsr758` — My little Thor project: Caesar III dual-screen version — [source](https://www.reddit.com/r/AynThor/comments/1xsr758/my_little_thor_project_caesar_iii_dualscreen/)
-- `1xst29i` — Pokopia Ayn Thor Pro — [source](https://www.reddit.com/r/AynThor/comments/1xst29i/pokopia_ayn_thor_pro/)
-- `1xtd2sb` — Pokémon Legends: Z-A Android Optimization Pack | 45–60 FPS with Frame Generation | Eden Nightly — [source](https://www.reddit.com/r/AynThor/comments/1xtd2sb/pokémon_legends_za_android_optimization_pack_4560/)
-- `1xtld7f` — TrainerOS — The First Public Alpha Is Here! 😁 — [source](https://www.reddit.com/r/AynThor/comments/1xtld7f/traineros_the_first_public_alpha_is_here/)
-- `1xtlzq1` — Thor Ergo - ergonomic KB+Mousepad — [source](https://www.reddit.com/r/AynThor/comments/1xtlzq1/thor_ergo_ergonomic_kbmousepad/)
-- `1xtowou` — Pocket DS - Zelda LTTP Dual Screen — [source](https://www.reddit.com/r/AynThor/comments/1xtowou/pocket_ds_zelda_lttp_dual_screen/)
-- `1xtp90j` — I made a Magisk module that makes LineageOS on the Thor feel like native software — [source](https://www.reddit.com/r/AynThor/comments/1xtp90j/i_made_a_magisk_module_that_makes_lineageos_on/)
-- `1xtq3ln` — Higurashi Daybreak Portable Mega Edition English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xtq3ln/higurashi_daybreak_portable_mega_edition_english/)
-- `1xtqmff` — Looking for AYN Thor owners to test my arcade football game (5 free Steam keys!) — [source](https://www.reddit.com/r/AynThor/comments/1xtqmff/looking_for_ayn_thor_owners_to_test_my_arcade/)
-- `1xtrdtt` — Free AYN Thor lid designer: preview your crop, then share it or sell it in the gallery — [source](https://www.reddit.com/r/AynThor/comments/1xtrdtt/free_ayn_thor_lid_designer_preview_your_crop_then/)
-- `1xtso3c` — Sakura Wars 1 & 2 English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xtso3c/sakura_wars_1_2_english_translation_complete/)
+- `1xua7i2` — MEGAMAN BATTLE NETWORK ROGUE LIKE — [source](https://www.reddit.com/r/AynThor/comments/1xua7i2/megaman_battle_network_rogue_like/)
+- `1xuczn5` — AYN Thor Blank Skin Template — [source](https://www.reddit.com/r/AynThor/comments/1xuczn5/ayn_thor_blank_skin_template/)
+- `1xudlg0` — Final Fantasy IX on the Thor: Moguri on top, a live deck in the game's own look on the bottom screen (steal list, AP tracker, boosters by touch) — [source](https://www.reddit.com/r/AynThor/comments/1xudlg0/final_fantasy_ix_on_the_thor_moguri_on_top_a_live/)
+- `1xueouc` — Dark Cloud Dual Screen APK — [source](https://www.reddit.com/r/AynThor/comments/1xueouc/dark_cloud_dual_screen_apk/)
+- `1xuf27x` — Cocoon 3.12 Preview Deep Dive — [source](https://www.reddit.com/r/AynThor/comments/1xuf27x/cocoon_312_preview_deep_dive/)
+- `1xujisj` — I turned Terraria into a true dual-screen game on the AYN Thor — and made it open source! — [source](https://www.reddit.com/r/AynThor/comments/1xujisj/i_turned_terraria_into_a_true_dualscreen_game_on/)
+- `1xummrk` — Game Browser that uses the Second Screen — [source](https://www.reddit.com/r/AynThor/comments/1xummrk/game_browser_that_uses_the_second_screen/)
+- `1xuss5h` — Peanuts Native is out: Nintendo Switch 1 games running natively on Android, with a live companion on your second screen, like Eden Duo — [source](https://www.reddit.com/r/AynThor/comments/1xuss5h/peanuts_native_is_out_nintendo_switch_1_games/)
+- `1xuyilq` — DS-Forever keyboard as Systemwide keyboard — [source](https://www.reddit.com/r/AynThor/comments/1xuyilq/dsforever_keyboard_as_systemwide_keyboard/)
+- `1xuzai1` — Dualscreen Launcher for AYN Thor: Source Code Released, Development Officially Discontinued — [source](https://www.reddit.com/r/AynThor/comments/1xuzai1/dualscreen_launcher_for_ayn_thor_source_code/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xsk7e7 1xsp5fr 1xsr758 1xst29i 1xtd2sb 1xtld7f 1xtlzq1 1xtowou 1xtp90j 1xtq3ln 1xtqmff 1xtrdtt 1xtso3c
+/approved 1xua7i2 1xuczn5 1xudlg0 1xueouc 1xuf27x 1xujisj 1xummrk 1xuss5h 1xuyilq 1xuzai1
 ```
 
-## Approved (2)
+## Approved (0)
 
-- `1xsra5r` → `caesar-iii-thor` — My little Thor project: Caesar III dual-screen version — [source](https://www.reddit.com/r/AynThor/comments/1xsra5r/my_little_thor_project_caesar_iii_dualscreen/)
-- `1xti8he` → `better-dual-screen-assistant` — App-Update: BetterDualScreenAssistant 1.2.0 (RP Duo Support, Screen recording) — [source](https://www.reddit.com/r/AynThor/comments/1xti8he/appupdate_betterdualscreenassistant_120_rp_duo/)
+_None._
 
 ## Rejected (0)
 
