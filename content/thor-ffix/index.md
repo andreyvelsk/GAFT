@@ -49,3 +49,4 @@ The window frames, portraits and icons are read from your own game while it runs
 - DroidDeck opens its own control panel on the bottom screen; the deck puts itself in front of it as soon as the game is running. If you need DroidDeck's panel (Steam menu, trackpads), hold the deck's header for a second — closing the panel with ✕ brings the deck back
 - Optional: run the mod installer script to download the community-recommended mods (Moguri 9.0, 30 fps FMVs, PSX sounds, and more) from their authors and copy them to the device
 - To bring a save from your PC: drop your SavedData_ww.dat into a folder next to the game; at the next start it is moved into the save folder. If the save is not your own, also create an empty file no-achievements so the game reports no achievements or stats to Steam
+- Watch the [install guide](https://youtu.be/cU4BpiBhWHk) for a step-by-step walkthrough
