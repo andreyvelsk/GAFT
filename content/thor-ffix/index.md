@@ -6,9 +6,13 @@ slug: "thor-ffix"
 category: "companion"
 generated: "ai"
 media:
+  - type: "image"
+    url: "/content/thor-ffix/preview.webp"
+  - type: "image"
+    url: "/content/thor-ffix/screenshot-2.webp"
   - type: "video"
     url: "https://youtu.be/7KjomDMhI4s"
-source: "https://www.reddit.com/r/AynThor/comments/1xudlg0/final_fantasy_ix_on_the_thor_moguri_on_top_a_live/"
+source: "https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/"
 project_page: "https://github.com/harmssi/thor-ffix"
 ---
 

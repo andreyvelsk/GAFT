@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/",
       "createdUtc": 1794551912,
       "firstSeenAt": "2026-11-14T06:09:11.168Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thors-lightning",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     },
     {
       "id": "1xv2hif",
@@ -14,7 +16,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xv2hif/dragon_ball_z_legacy_trilogy_for_android_buus/",
       "createdUtc": 1794558397,
       "firstSeenAt": "2026-11-14T06:09:11.168Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "dragon-ball-z-buus-fury",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     },
     {
       "id": "1xv3bzo",
@@ -30,7 +34,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/",
       "createdUtc": 1794563972,
       "firstSeenAt": "2026-11-14T06:09:11.168Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-ffix",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     },
     {
       "id": "1xv50nj",
@@ -62,7 +68,8 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xvfih9/stardual_valley_a_dual_screen_mod_for_stardew/",
       "createdUtc": 1794594219,
       "firstSeenAt": "2026-11-14T06:09:11.168Z",
-      "status": "pending"
+      "status": "pending",
+      "error": "content page not found: stardew"
     },
     {
       "id": "1xvh9on",
@@ -70,7 +77,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xvh9on/ive_spent_a_year_building_game_twin_an_app_for/",
       "createdUtc": 1794598173,
       "firstSeenAt": "2026-11-14T06:09:11.168Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "game-twin",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     }
   ]
 }
