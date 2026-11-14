@@ -1,6 +1,6 @@
 # Reddit pipeline review
 
-> Pending: 5 · Approved: 4 · Rejected: 0
+> Pending: 5 · Approved: 3 · Rejected: 1
 
 ## Pending (5)
 
@@ -17,13 +17,12 @@ To approve, comment on this pull request:
 /approved 1xv3bzo 1xv50nj 1xv5lgh 1xvfh07 1xvfih9
 ```
 
-## Approved (4)
+## Approved (3)
 
-- `1xv0qff` → `thors-lightning` — Lightning Returns: FFXIII on the Thor (Xbox 360 recomp, Dual Screen) - My first project — [source](https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/)
 - `1xv2hif` → `dragon-ball-z-buus-fury` — 🐉 Dragon Ball Z: Legacy Trilogy for Android — Buu's Fury is DONE! The Legacy of Goku I & II are coming next! — [source](https://www.reddit.com/r/AynThor/comments/1xv2hif/dragon_ball_z_legacy_trilogy_for_android_buus/)
 - `1xv3xl8` → `thor-ffix` — FF9 AND FF13 THOR — [source](https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/)
 - `1xvh9on` → `game-twin` — I've spent a year building Game Twin, an app for game guides, maps and achievements. It's now open source! — [source](https://www.reddit.com/r/AynThor/comments/1xvh9on/ive_spent_a_year_building_game_twin_an_app_for/)
 
-## Rejected (0)
+## Rejected (1)
 
-_None._
+- `1xv0qff` — Lightning Returns: FFXIII on the Thor (Xbox 360 recomp, Dual Screen) - My first project — [source](https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/)
