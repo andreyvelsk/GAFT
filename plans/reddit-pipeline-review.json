@@ -1,89 +1,75 @@
 {
   "posts": [
     {
-      "id": "1xua7i2",
-      "title": "MEGAMAN BATTLE NETWORK ROGUE LIKE",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xua7i2/megaman_battle_network_rogue_like/",
-      "createdUtc": 1794482270,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xv0qff",
+      "title": "Lightning Returns: FFXIII on the Thor (Xbox 360 recomp, Dual Screen) - My first project",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/",
+      "createdUtc": 1794551912,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xuczn5",
-      "title": "AYN Thor Blank Skin Template",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xuczn5/ayn_thor_blank_skin_template/",
-      "createdUtc": 1794490741,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xv2hif",
+      "title": "🐉 Dragon Ball Z: Legacy Trilogy for Android — Buu's Fury is DONE! The Legacy of Goku I & II are coming next!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv2hif/dragon_ball_z_legacy_trilogy_for_android_buus/",
+      "createdUtc": 1794558397,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xudlg0",
-      "title": "Final Fantasy IX on the Thor: Moguri on top, a live deck in the game's own look on the bottom screen (steal list, AP tracker, boosters by touch)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xudlg0/final_fantasy_ix_on_the_thor_moguri_on_top_a_live/",
-      "createdUtc": 1794492268,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
-      "status": "approved",
-      "slug": "thor-ffix",
-      "decidedAt": "2026-11-13T16:03:17.932Z"
-    },
-    {
-      "id": "1xueouc",
-      "title": "Dark Cloud Dual Screen APK",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xueouc/dark_cloud_dual_screen_apk/",
-      "createdUtc": 1794494942,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
-      "status": "approved",
-      "slug": "dark-cloud-dual-screen",
-      "decidedAt": "2026-11-13T16:03:17.932Z"
-    },
-    {
-      "id": "1xuf27x",
-      "title": "Cocoon 3.12 Preview Deep Dive",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xuf27x/cocoon_312_preview_deep_dive/",
-      "createdUtc": 1794495810,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xv3bzo",
+      "title": "ZomboidDS: a dual-screen mod for Android, version 1.6.0 - Ovens, newspapers, exercise and more on the bottom screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv3bzo/zomboidds_a_dualscreen_mod_for_android_version/",
+      "createdUtc": 1794561630,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xujisj",
-      "title": "I turned Terraria into a true dual-screen game on the AYN Thor — and made it open source!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xujisj/i_turned_terraria_into_a_true_dualscreen_game_on/",
-      "createdUtc": 1794505856,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
-      "status": "approved",
-      "slug": "terraria-dual-screen-companion",
-      "decidedAt": "2026-11-13T16:03:17.932Z"
-    },
-    {
-      "id": "1xummrk",
-      "title": "Game Browser that uses the Second Screen",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xummrk/game_browser_that_uses_the_second_screen/",
-      "createdUtc": 1794512708,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xv3xl8",
+      "title": "FF9 AND FF13 THOR",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/",
+      "createdUtc": 1794563972,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xuss5h",
-      "title": "Peanuts Native is out: Nintendo Switch 1 games running natively on Android, with a live companion on your second screen, like Eden Duo",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xuss5h/peanuts_native_is_out_nintendo_switch_1_games/",
-      "createdUtc": 1794527826,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xv50nj",
+      "title": "The bottom screen on the Thor does nothing on Armada OS, so I built something for it",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv50nj/the_bottom_screen_on_the_thor_does_nothing_on/",
+      "createdUtc": 1794567879,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xuyilq",
-      "title": "DS-Forever keyboard as Systemwide keyboard",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xuyilq/dsforever_keyboard_as_systemwide_keyboard/",
-      "createdUtc": 1794544479,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xv5lgh",
+      "title": "Bottom screen keyboard and touchpad for ArmadaOS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv5lgh/bottom_screen_keyboard_and_touchpad_for_armadaos/",
+      "createdUtc": 1794569828,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xuzai1",
-      "title": "Dualscreen Launcher for AYN Thor: Source Code Released, Development Officially Discontinued",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xuzai1/dualscreen_launcher_for_ayn_thor_source_code/",
-      "createdUtc": 1794546973,
-      "firstSeenAt": "2026-11-13T06:12:53.772Z",
+      "id": "1xvfh07",
+      "title": "Stardual Valley - a Stardew Valley dual screen mod. Would love help testing!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xvfh07/stardual_valley_a_stardew_valley_dual_screen_mod/",
+      "createdUtc": 1794594127,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xvfih9",
+      "title": "Stardual Valley - a dual screen mod for Stardew",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xvfih9/stardual_valley_a_dual_screen_mod_for_stardew/",
+      "createdUtc": 1794594219,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xvh9on",
+      "title": "I've spent a year building Game Twin, an app for game guides, maps and achievements. It's now open source!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xvh9on/ive_spent_a_year_building_game_twin_an_app_for/",
+      "createdUtc": 1794598173,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     }
   ]

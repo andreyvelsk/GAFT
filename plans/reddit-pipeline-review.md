@@ -1,28 +1,28 @@
 # Reddit pipeline review
 
-> Pending: 7 · Approved: 3 · Rejected: 0
+> Pending: 9 · Approved: 0 · Rejected: 0
 
-## Pending (7)
+## Pending (9)
 
-- `1xua7i2` — MEGAMAN BATTLE NETWORK ROGUE LIKE — [source](https://www.reddit.com/r/AynThor/comments/1xua7i2/megaman_battle_network_rogue_like/)
-- `1xuczn5` — AYN Thor Blank Skin Template — [source](https://www.reddit.com/r/AynThor/comments/1xuczn5/ayn_thor_blank_skin_template/)
-- `1xuf27x` — Cocoon 3.12 Preview Deep Dive — [source](https://www.reddit.com/r/AynThor/comments/1xuf27x/cocoon_312_preview_deep_dive/)
-- `1xummrk` — Game Browser that uses the Second Screen — [source](https://www.reddit.com/r/AynThor/comments/1xummrk/game_browser_that_uses_the_second_screen/)
-- `1xuss5h` — Peanuts Native is out: Nintendo Switch 1 games running natively on Android, with a live companion on your second screen, like Eden Duo — [source](https://www.reddit.com/r/AynThor/comments/1xuss5h/peanuts_native_is_out_nintendo_switch_1_games/)
-- `1xuyilq` — DS-Forever keyboard as Systemwide keyboard — [source](https://www.reddit.com/r/AynThor/comments/1xuyilq/dsforever_keyboard_as_systemwide_keyboard/)
-- `1xuzai1` — Dualscreen Launcher for AYN Thor: Source Code Released, Development Officially Discontinued — [source](https://www.reddit.com/r/AynThor/comments/1xuzai1/dualscreen_launcher_for_ayn_thor_source_code/)
+- `1xv0qff` — Lightning Returns: FFXIII on the Thor (Xbox 360 recomp, Dual Screen) - My first project — [source](https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/)
+- `1xv2hif` — 🐉 Dragon Ball Z: Legacy Trilogy for Android — Buu's Fury is DONE! The Legacy of Goku I & II are coming next! — [source](https://www.reddit.com/r/AynThor/comments/1xv2hif/dragon_ball_z_legacy_trilogy_for_android_buus/)
+- `1xv3bzo` — ZomboidDS: a dual-screen mod for Android, version 1.6.0 - Ovens, newspapers, exercise and more on the bottom screen — [source](https://www.reddit.com/r/AynThor/comments/1xv3bzo/zomboidds_a_dualscreen_mod_for_android_version/)
+- `1xv3xl8` — FF9 AND FF13 THOR — [source](https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/)
+- `1xv50nj` — The bottom screen on the Thor does nothing on Armada OS, so I built something for it — [source](https://www.reddit.com/r/AynThor/comments/1xv50nj/the_bottom_screen_on_the_thor_does_nothing_on/)
+- `1xv5lgh` — Bottom screen keyboard and touchpad for ArmadaOS — [source](https://www.reddit.com/r/AynThor/comments/1xv5lgh/bottom_screen_keyboard_and_touchpad_for_armadaos/)
+- `1xvfh07` — Stardual Valley - a Stardew Valley dual screen mod. Would love help testing! — [source](https://www.reddit.com/r/AynThor/comments/1xvfh07/stardual_valley_a_stardew_valley_dual_screen_mod/)
+- `1xvfih9` — Stardual Valley - a dual screen mod for Stardew — [source](https://www.reddit.com/r/AynThor/comments/1xvfih9/stardual_valley_a_dual_screen_mod_for_stardew/)
+- `1xvh9on` — I've spent a year building Game Twin, an app for game guides, maps and achievements. It's now open source! — [source](https://www.reddit.com/r/AynThor/comments/1xvh9on/ive_spent_a_year_building_game_twin_an_app_for/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xua7i2 1xuczn5 1xuf27x 1xummrk 1xuss5h 1xuyilq 1xuzai1
+/approved 1xv0qff 1xv2hif 1xv3bzo 1xv3xl8 1xv50nj 1xv5lgh 1xvfh07 1xvfih9 1xvh9on
 ```
 
-## Approved (3)
+## Approved (0)
 
-- `1xudlg0` → `thor-ffix` — Final Fantasy IX on the Thor: Moguri on top, a live deck in the game's own look on the bottom screen (steal list, AP tracker, boosters by touch) — [source](https://www.reddit.com/r/AynThor/comments/1xudlg0/final_fantasy_ix_on_the_thor_moguri_on_top_a_live/)
-- `1xueouc` → `dark-cloud-dual-screen` — Dark Cloud Dual Screen APK — [source](https://www.reddit.com/r/AynThor/comments/1xueouc/dark_cloud_dual_screen_apk/)
-- `1xujisj` → `terraria-dual-screen-companion` — I turned Terraria into a true dual-screen game on the AYN Thor — and made it open source! — [source](https://www.reddit.com/r/AynThor/comments/1xujisj/i_turned_terraria_into_a_true_dualscreen_game_on/)
+_None._
 
 ## Rejected (0)
 
