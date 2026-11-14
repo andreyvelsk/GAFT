@@ -1,128 +1,85 @@
 {
   "posts": [
     {
-      "id": "1xsk7e7",
-      "title": "I made an app for better Cocoon and dual-screen",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsk7e7/i_made_an_app_for_better_cocoon_and_dualscreen/",
-      "createdUtc": 1794308982,
-      "firstSeenAt": "2026-11-11T06:11:04.554Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xsp5fr",
-      "title": "[ACTUALIZACIÓN] ¡Ya está disponible la versión 5 de WinNative × Cocoon — AUTO-RETURN!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsp5fr/actualización_ya_está_disponible_la_versión_5_de/",
-      "createdUtc": 1794323012,
-      "firstSeenAt": "2026-11-11T06:11:04.554Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xsr758",
-      "title": "My little Thor project: Caesar III dual-screen version",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsr758/my_little_thor_project_caesar_iii_dualscreen/",
-      "createdUtc": 1794327708,
-      "firstSeenAt": "2026-11-11T06:11:04.554Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xsra5r",
-      "title": "My little Thor project: Caesar III dual-screen version",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xsra5r/my_little_thor_project_caesar_iii_dualscreen/",
-      "createdUtc": 1794327888,
-      "firstSeenAt": "2026-11-11T06:11:04.554Z",
+      "id": "1xv0qff",
+      "title": "Lightning Returns: FFXIII on the Thor (Xbox 360 recomp, Dual Screen) - My first project",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/",
+      "createdUtc": 1794551912,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "approved",
-      "slug": "caesar-iii-thor",
-      "decidedAt": "2026-11-12T06:30:16.011Z"
+      "slug": "thors-lightning",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     },
     {
-      "id": "1xst29i",
-      "title": "Pokopia Ayn Thor Pro",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xst29i/pokopia_ayn_thor_pro/",
-      "createdUtc": 1794331887,
-      "firstSeenAt": "2026-11-11T06:11:04.554Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xtd2sb",
-      "title": "Pokémon Legends: Z-A Android Optimization Pack | 45–60 FPS with Frame Generation | Eden Nightly",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtd2sb/pokémon_legends_za_android_optimization_pack_4560/",
-      "createdUtc": 1794387775,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xti8he",
-      "title": "App-Update: BetterDualScreenAssistant 1.2.0 (RP Duo Support, Screen recording)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xti8he/appupdate_betterdualscreenassistant_120_rp_duo/",
-      "createdUtc": 1794405040,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
+      "id": "1xv2hif",
+      "title": "🐉 Dragon Ball Z: Legacy Trilogy for Android — Buu's Fury is DONE! The Legacy of Goku I & II are coming next!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv2hif/dragon_ball_z_legacy_trilogy_for_android_buus/",
+      "createdUtc": 1794558397,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "approved",
-      "slug": "better-dual-screen-assistant",
-      "decidedAt": "2026-11-12T06:30:16.011Z"
+      "slug": "dragon-ball-z-buus-fury",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     },
     {
-      "id": "1xtld7f",
-      "title": "TrainerOS — The First Public Alpha Is Here! 😁",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtld7f/traineros_the_first_public_alpha_is_here/",
-      "createdUtc": 1794412577,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
+      "id": "1xv3bzo",
+      "title": "ZomboidDS: a dual-screen mod for Android, version 1.6.0 - Ovens, newspapers, exercise and more on the bottom screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv3bzo/zomboidds_a_dualscreen_mod_for_android_version/",
+      "createdUtc": 1794561630,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xtlzq1",
-      "title": "Thor Ergo - ergonomic KB+Mousepad",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtlzq1/thor_ergo_ergonomic_kbmousepad/",
-      "createdUtc": 1794413954,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
+      "id": "1xv3xl8",
+      "title": "FF9 AND FF13 THOR",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/",
+      "createdUtc": 1794563972,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
+      "status": "approved",
+      "slug": "thor-ffix",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
+    },
+    {
+      "id": "1xv50nj",
+      "title": "The bottom screen on the Thor does nothing on Armada OS, so I built something for it",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv50nj/the_bottom_screen_on_the_thor_does_nothing_on/",
+      "createdUtc": 1794567879,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xtowou",
-      "title": "Pocket DS - Zelda LTTP Dual Screen",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtowou/pocket_ds_zelda_lttp_dual_screen/",
-      "createdUtc": 1794420322,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
+      "id": "1xv5lgh",
+      "title": "Bottom screen keyboard and touchpad for ArmadaOS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xv5lgh/bottom_screen_keyboard_and_touchpad_for_armadaos/",
+      "createdUtc": 1794569828,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xtp90j",
-      "title": "I made a Magisk module that makes LineageOS on the Thor feel like native software",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtp90j/i_made_a_magisk_module_that_makes_lineageos_on/",
-      "createdUtc": 1794421069,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
+      "id": "1xvfh07",
+      "title": "Stardual Valley - a Stardew Valley dual screen mod. Would love help testing!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xvfh07/stardual_valley_a_stardew_valley_dual_screen_mod/",
+      "createdUtc": 1794594127,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
       "status": "pending"
     },
     {
-      "id": "1xtq3ln",
-      "title": "Higurashi Daybreak Portable Mega Edition English Translation Complete",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtq3ln/higurashi_daybreak_portable_mega_edition_english/",
-      "createdUtc": 1794422982,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
-      "status": "pending"
+      "id": "1xvfih9",
+      "title": "Stardual Valley - a dual screen mod for Stardew",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xvfih9/stardual_valley_a_dual_screen_mod_for_stardew/",
+      "createdUtc": 1794594219,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
+      "status": "pending",
+      "error": "content page not found: stardew"
     },
     {
-      "id": "1xtqmff",
-      "title": "Looking for AYN Thor owners to test my arcade football game (5 free Steam keys!)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtqmff/looking_for_ayn_thor_owners_to_test_my_arcade/",
-      "createdUtc": 1794424141,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xtrdtt",
-      "title": "Free AYN Thor lid designer: preview your crop, then share it or sell it in the gallery",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtrdtt/free_ayn_thor_lid_designer_preview_your_crop_then/",
-      "createdUtc": 1794425841,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xtso3c",
-      "title": "Sakura Wars 1 & 2 English Translation Complete",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xtso3c/sakura_wars_1_2_english_translation_complete/",
-      "createdUtc": 1794428800,
-      "firstSeenAt": "2026-11-12T06:11:21.955Z",
-      "status": "pending"
+      "id": "1xvh9on",
+      "title": "I've spent a year building Game Twin, an app for game guides, maps and achievements. It's now open source!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xvh9on/ive_spent_a_year_building_game_twin_an_app_for/",
+      "createdUtc": 1794598173,
+      "firstSeenAt": "2026-11-14T06:09:11.168Z",
+      "status": "approved",
+      "slug": "game-twin",
+      "decidedAt": "2026-11-14T07:17:27.812Z"
     }
   ]
 }
