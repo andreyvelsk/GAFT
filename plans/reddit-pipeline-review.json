@@ -6,7 +6,8 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xwea27/back_button_hero_150_exactly_what_you_asked_for/",
       "createdUtc": 1794692963,
       "firstSeenAt": "2026-11-15T06:09:44.176Z",
-      "status": "pending"
+      "status": "pending",
+      "error": "agent \"update\" failed to produce valid structured output after 3 attempt(s)"
     },
     {
       "id": "1xweus0",
@@ -22,7 +23,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xwfi0s/ff7recomp_10_final_fantasy_vii_steam_running/",
       "createdUtc": 1794696296,
       "firstSeenAt": "2026-11-15T06:09:44.176Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "ff7recomp",
+      "decidedAt": "2026-11-15T12:07:25.131Z"
     },
     {
       "id": "1xwifrf",
