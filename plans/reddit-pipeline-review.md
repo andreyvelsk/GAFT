@@ -1,28 +1,26 @@
 # Reddit pipeline review
 
-> Pending: 5 · Approved: 3 · Rejected: 1
+> Pending: 5 · Approved: 1 · Rejected: 0
 
 ## Pending (5)
 
-- `1xv3bzo` — ZomboidDS: a dual-screen mod for Android, version 1.6.0 - Ovens, newspapers, exercise and more on the bottom screen — [source](https://www.reddit.com/r/AynThor/comments/1xv3bzo/zomboidds_a_dualscreen_mod_for_android_version/)
-- `1xv50nj` — The bottom screen on the Thor does nothing on Armada OS, so I built something for it — [source](https://www.reddit.com/r/AynThor/comments/1xv50nj/the_bottom_screen_on_the_thor_does_nothing_on/)
-- `1xv5lgh` — Bottom screen keyboard and touchpad for ArmadaOS — [source](https://www.reddit.com/r/AynThor/comments/1xv5lgh/bottom_screen_keyboard_and_touchpad_for_armadaos/)
-- `1xvfh07` — Stardual Valley - a Stardew Valley dual screen mod. Would love help testing! — [source](https://www.reddit.com/r/AynThor/comments/1xvfh07/stardual_valley_a_stardew_valley_dual_screen_mod/)
-- `1xvfih9` — Stardual Valley - a dual screen mod for Stardew — [source](https://www.reddit.com/r/AynThor/comments/1xvfih9/stardual_valley_a_dual_screen_mod_for_stardew/)
-  - error: content page not found: stardew
+- `1xwea27` — Back Button Hero 1.5.0: Exactly what you asked for - Thanks for the support! — [source](https://www.reddit.com/r/AynThor/comments/1xwea27/back_button_hero_150_exactly_what_you_asked_for/)
+  - error: agent "update" failed to produce valid structured output after 3 attempt(s)
+- `1xweus0` — XRecomp - xbox, N64, PS1 & GBA — [source](https://www.reddit.com/r/AynThor/comments/1xweus0/xrecomp_xbox_n64_ps1_gba/)
+- `1xwifrf` — Genso Suikoden I & II English Translation Complete + Saturn Content — [source](https://www.reddit.com/r/AynThor/comments/1xwifrf/genso_suikoden_i_ii_english_translation_complete/)
+- `1xwisv0` — Circadia English Translation Complete — [source](https://www.reddit.com/r/AynThor/comments/1xwisv0/circadia_english_translation_complete/)
+- `1xwli1o` — Star Fox!!! — [source](https://www.reddit.com/r/AynThor/comments/1xwli1o/star_fox/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1xv3bzo 1xv50nj 1xv5lgh 1xvfh07 1xvfih9
+/approved 1xwea27 1xweus0 1xwifrf 1xwisv0 1xwli1o
 ```
 
-## Approved (3)
+## Approved (1)
 
-- `1xv2hif` → `dragon-ball-z-buus-fury` — 🐉 Dragon Ball Z: Legacy Trilogy for Android — Buu's Fury is DONE! The Legacy of Goku I & II are coming next! — [source](https://www.reddit.com/r/AynThor/comments/1xv2hif/dragon_ball_z_legacy_trilogy_for_android_buus/)
-- `1xv3xl8` → `thor-ffix` — FF9 AND FF13 THOR — [source](https://www.reddit.com/r/AynThor/comments/1xv3xl8/ff9_and_ff13_thor/)
-- `1xvh9on` → `game-twin` — I've spent a year building Game Twin, an app for game guides, maps and achievements. It's now open source! — [source](https://www.reddit.com/r/AynThor/comments/1xvh9on/ive_spent_a_year_building_game_twin_an_app_for/)
+- `1xwfi0s` → `ff7recomp` — FF7Recomp 1.0 — FINAL FANTASY VII (Steam) running natively on Android, with 7th Heaven mods, 120 FPS and Thor dual-screen support — [source](https://www.reddit.com/r/AynThor/comments/1xwfi0s/ff7recomp_10_final_fantasy_vii_steam_running/)
 
-## Rejected (1)
+## Rejected (0)
 
-- `1xv0qff` — Lightning Returns: FFXIII on the Thor (Xbox 360 recomp, Dual Screen) - My first project — [source](https://www.reddit.com/r/AynThor/comments/1xv0qff/lightning_returns_ffxiii_on_the_thor_xbox_360/)
+_None._
