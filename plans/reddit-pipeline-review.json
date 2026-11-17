@@ -1,55 +1,160 @@
 {
   "posts": [
     {
-      "id": "1xwea27",
-      "title": "Back Button Hero 1.5.0: Exactly what you asked for - Thanks for the support!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwea27/back_button_hero_150_exactly_what_you_asked_for/",
-      "createdUtc": 1794692963,
-      "firstSeenAt": "2026-11-15T06:09:44.176Z",
-      "status": "pending",
-      "error": "agent \"update\" failed to produce valid structured output after 3 attempt(s)"
-    },
-    {
-      "id": "1xweus0",
-      "title": "XRecomp - xbox, N64, PS1 & GBA",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xweus0/xrecomp_xbox_n64_ps1_gba/",
-      "createdUtc": 1794694520,
-      "firstSeenAt": "2026-11-15T06:09:44.176Z",
+      "id": "1xwu1bp",
+      "title": "FreeDualScreen – DualScreen Launcher Without the Patreon Lock",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwu1bp/freedualscreen_dualscreen_launcher_without_the/",
+      "createdUtc": 1794744879,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
       "status": "pending"
     },
     {
-      "id": "1xwfi0s",
-      "title": "FF7Recomp 1.0 — FINAL FANTASY VII (Steam) running natively on Android, with 7th Heaven mods, 120 FPS and Thor dual-screen support",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwfi0s/ff7recomp_10_final_fantasy_vii_steam_running/",
-      "createdUtc": 1794696296,
-      "firstSeenAt": "2026-11-15T06:09:44.176Z",
+      "id": "1xwunup",
+      "title": "What's new in GBA Duo v0.1.15? Pokémon Hack Companions, and other features",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwunup/whats_new_in_gba_duo_v0115_pokémon_hack/",
+      "createdUtc": 1794746851,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xx11hp",
+      "title": "Eden Duo 1.4.0 is here: companions now work on one screen, and five new companions join",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xx11hp/eden_duo_140_is_here_companions_now_work_on_one/",
+      "createdUtc": 1794763100,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xx1cz9",
+      "title": "Final Fantasy 7 Recomp",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xx1cz9/final_fantasy_7_recomp/",
+      "createdUtc": 1794763839,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xx36h6",
+      "title": "Final Fantasy 7 with mods now on android",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xx36h6/final_fantasy_7_with_mods_now_on_android/",
+      "createdUtc": 1794768105,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xxbyq2",
+      "title": "Auto dim screen during wireless screen cast",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxbyq2/auto_dim_screen_during_wireless_screen_cast/",
+      "createdUtc": 1794790646,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xxd7xo",
+      "title": "FF9Recomp: FINAL FANTASY IX running natively on Android (AYN Thor), with Memoria and Moguri Mod",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxd7xo/ff9recomp_final_fantasy_ix_running_natively_on/",
+      "createdUtc": 1794794324,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
       "status": "approved",
-      "slug": "ff7recomp",
-      "decidedAt": "2026-11-15T12:07:25.131Z"
+      "slug": "ff9recomp",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     },
     {
-      "id": "1xwifrf",
-      "title": "Genso Suikoden I & II English Translation Complete + Saturn Content",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwifrf/genso_suikoden_i_ii_english_translation_complete/",
-      "createdUtc": 1794704599,
-      "firstSeenAt": "2026-11-15T06:09:44.176Z",
+      "id": "1xxdwjw",
+      "title": "WalkThor: v1.80.2",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxdwjw/walkthor_v1802/",
+      "createdUtc": 1794796323,
+      "firstSeenAt": "2026-11-16T06:15:01.122Z",
       "status": "pending"
     },
     {
-      "id": "1xwisv0",
-      "title": "Circadia English Translation Complete",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwisv0/circadia_english_translation_complete/",
-      "createdUtc": 1794705732,
-      "firstSeenAt": "2026-11-15T06:09:44.176Z",
+      "id": "1xxk7nh",
+      "title": "The wait begins",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxk7nh/the_wait_begins/",
+      "createdUtc": 1794817859,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
       "status": "pending"
     },
     {
-      "id": "1xwli1o",
-      "title": "Star Fox!!!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xwli1o/star_fox/",
-      "createdUtc": 1794714218,
-      "firstSeenAt": "2026-11-15T06:09:44.176Z",
+      "id": "1xxkjh0",
+      "title": "DDDs Declassify - Decrypt .3ds and .cia files natively on Android",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxkjh0/ddds_declassify_decrypt_3ds_and_cia_files/",
+      "createdUtc": 1794819183,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
       "status": "pending"
+    },
+    {
+      "id": "1xxll89",
+      "title": "FNVDS - Fallout New Vegas Dual Screen Companion App",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxll89/fnvds_fallout_new_vegas_dual_screen_companion_app/",
+      "createdUtc": 1794823246,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "approved",
+      "slug": "fnvds",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
+    },
+    {
+      "id": "1xxoqq6",
+      "title": "Giraffic: dual screen comic reader with controller support",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxoqq6/giraffic_dual_screen_comic_reader_with_controller/",
+      "createdUtc": 1794834018,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "approved",
+      "slug": "giraffic",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
+    },
+    {
+      "id": "1xxpxoa",
+      "title": "DELOS: a controller-first game streaming client based on Artemis for Android handhelds, with PyroWave, SGSR2 for video, a link test and per-app settings",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxpxoa/delos_a_controllerfirst_game_streaming_client/",
+      "createdUtc": 1794837304,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xxwcgc",
+      "title": "Blasphemous 2 / Recomp / Android",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxwcgc/blasphemous_2_recomp_android/",
+      "createdUtc": 1794852127,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xxxlxb",
+      "title": "New update to Stardual Valley - massive visual overhaul, new features, and more. Thank you all so much for the feedback!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxxlxb/new_update_to_stardual_valley_massive_visual/",
+      "createdUtc": 1794854922,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "approved",
+      "slug": "stardual-valley",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
+    },
+    {
+      "id": "1xxzvlg",
+      "title": "Theme Hospital DS for AYN Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xxzvlg/theme_hospital_ds_for_ayn_thor/",
+      "createdUtc": 1794860004,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "approved",
+      "slug": "theme-hospital-ds-for-thor",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
+    },
+    {
+      "id": "1xy0g7w",
+      "title": "Made a little game log for all my platforms, with a companion app for the Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xy0g7w/made_a_little_game_log_for_all_my_platforms_with/",
+      "createdUtc": 1794861295,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "pending"
+    },
+    {
+      "id": "1xy2sx0",
+      "title": "Dragon Ball Z Legacy Trilogy – Legacy of Goku II & Buu's Fury now completed for Android / AYN Thor!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1xy2sx0/dragon_ball_z_legacy_trilogy_legacy_of_goku_ii/",
+      "createdUtc": 1794866812,
+      "firstSeenAt": "2026-11-17T06:11:17.900Z",
+      "status": "approved",
+      "slug": "dragon-ball-z-the-legacy-of-goku-ii",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     }
   ]
 }
