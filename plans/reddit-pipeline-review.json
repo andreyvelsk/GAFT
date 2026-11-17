@@ -54,7 +54,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xxd7xo/ff9recomp_final_fantasy_ix_running_natively_on/",
       "createdUtc": 1794794324,
       "firstSeenAt": "2026-11-16T06:15:01.122Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "ff9recomp",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     },
     {
       "id": "1xxdwjw",
@@ -86,7 +88,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xxll89/fnvds_fallout_new_vegas_dual_screen_companion_app/",
       "createdUtc": 1794823246,
       "firstSeenAt": "2026-11-17T06:11:17.900Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "fnvds",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     },
     {
       "id": "1xxoqq6",
@@ -94,7 +98,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xxoqq6/giraffic_dual_screen_comic_reader_with_controller/",
       "createdUtc": 1794834018,
       "firstSeenAt": "2026-11-17T06:11:17.900Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "giraffic",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     },
     {
       "id": "1xxpxoa",
@@ -118,7 +124,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xxxlxb/new_update_to_stardual_valley_massive_visual/",
       "createdUtc": 1794854922,
       "firstSeenAt": "2026-11-17T06:11:17.900Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "stardual-valley",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     },
     {
       "id": "1xxzvlg",
@@ -126,7 +134,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xxzvlg/theme_hospital_ds_for_ayn_thor/",
       "createdUtc": 1794860004,
       "firstSeenAt": "2026-11-17T06:11:17.900Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "theme-hospital-ds-for-thor",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     },
     {
       "id": "1xy0g7w",
@@ -142,7 +152,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xy2sx0/dragon_ball_z_legacy_trilogy_legacy_of_goku_ii/",
       "createdUtc": 1794866812,
       "firstSeenAt": "2026-11-17T06:11:17.900Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "dragon-ball-z-the-legacy-of-goku-ii",
+      "decidedAt": "2026-11-17T16:57:44.936Z"
     }
   ]
 }
