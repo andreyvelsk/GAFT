@@ -46,7 +46,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xyurny/ship_of_harkinian_dual_screen_build_for_randomizer/",
       "createdUtc": 1794946065,
       "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "soh-dual-screen-rando",
+      "decidedAt": "2026-11-18T13:50:54.245Z"
     },
     {
       "id": "1xyzzkq",
@@ -70,7 +72,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xz5gi3/tactics_ogre_the_knight_of_lodis_enhanced_static/",
       "createdUtc": 1794974345,
       "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "knight-of-lodis-recomp",
+      "decidedAt": "2026-11-18T13:50:54.245Z"
     },
     {
       "id": "1xz6v8b",
@@ -78,7 +82,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xz6v8b/vibecoded_motherload_flash_game_port/",
       "createdUtc": 1794978838,
       "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "drillpod",
+      "decidedAt": "2026-11-18T13:50:54.245Z"
     }
   ]
 }
