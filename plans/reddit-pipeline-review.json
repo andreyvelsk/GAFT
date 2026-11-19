@@ -92,7 +92,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xzjvt4/thor_command_panel_a_fully_customizable_assistant/",
       "createdUtc": 1795020028,
       "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-command-panel",
+      "decidedAt": "2026-11-19T10:25:18.933Z"
     },
     {
       "id": "1xzl6xw",
@@ -116,7 +118,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1xzn949/terraria_dual_screen_companion_huge_update/",
       "createdUtc": 1795027587,
       "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "terraria-dual-screen-companion",
+      "decidedAt": "2026-11-19T10:25:18.933Z"
     },
     {
       "id": "1xzsa3o",
