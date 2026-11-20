@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y02pu3/digimon_world_2003_harmony_beta_v20_terriermon/",
       "createdUtc": 1795070528,
       "firstSeenAt": "2026-11-20T06:10:55.766Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "digimon-world-2003",
+      "decidedAt": "2026-11-20T07:32:52.109Z"
     },
     {
       "id": "1y06zmz",
@@ -54,7 +56,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y0vyek/big_delphis_update/",
       "createdUtc": 1795154764,
       "firstSeenAt": "2026-11-20T06:10:55.766Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "delphis",
+      "decidedAt": "2026-11-20T07:32:52.109Z"
     }
   ]
 }

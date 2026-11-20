@@ -4,14 +4,16 @@ description: "An Android DS companion for Digimon World 2003 (PAL) + Flawe's Mod
 date: "2026-09-05 12:40"
 slug: "digimon-world-2003"
 category: "game"
+generated: "ai"
 media:
   - type: "image"
     url: "/content/digimon-world-2003/preview.webp"
-source: "https://www.reddit.com/r/AynThor/comments/1w7jiau/android_ds_companion_for_digimon_world_2003_pal/"
+source: "https://www.reddit.com/r/AynThor/comments/1y02pu3/digimon_world_2003_harmony_beta_v20_terriermon/"
 project_page: "https://github.com/rsigristc/DW3-DS-Android"
 ---
 
 ## Description
+
 DW2003 Dual Screen runs the PAL version of Digimon World 2003 (`SLES-03936`) through PCSX-ReARMed on Android and shows a live companion pane on a second display — the AYN Thor's second screen, a Galaxy Z Fold (hinge or split), or a tablet.
 
 The companion reads the emulated RAM and updates in real time while you play:
