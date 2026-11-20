@@ -1,6 +1,6 @@
 ---
 title: "Delphis"
-description: "A companion app for the Dolphin emulator that auto-maps your controller and turns the Thor's bottom screen into a live button guide."
+description: "A companion app for the Dolphin emulator that auto-maps your controller, turns the Thor's bottom screen into a live button guide, and now also supports single-screen devices and up to 4 external controllers."
 date: "2026-11-06 08:03"
 slug: "delphis"
 category: "companion"
@@ -12,7 +12,7 @@ media:
     url: "/content/delphis/screenshot-2.webp"
   - type: "image"
     url: "/content/delphis/screenshot-3.webp"
-source: "https://www.reddit.com/r/AynThor/comments/1xow1hd/delphis_a_dolphincompanion_app_for_emulating/"
+source: "https://www.reddit.com/r/AynThor/comments/1y0vyek/big_delphis_update/"
 project_page: "https://github.com/HiramRG/Delphis"
 ---
 
@@ -26,6 +26,11 @@ Pick a game and Delphis sets up the controls that suit it (pointer, sideways Wii
 - **Gyro aiming (Experimental).** Aim the Wii pointer by moving the Thor, with two styles: *Gyro aiming* and *Precision gyro*, which moves finely when you move slowly and far when you move fast, and lets you hold R1 to freeze the pointer and re-position. Invert up/down or left/right in Settings, and try it on the built-in test screen.
 - **Edit any preset.** Change what any button does for one game; your version is saved for that game.
 - **Change controls mid-game.** Pick another layout from the bottom screen; the game restarts with it and, with autosave on, continues from the same spot.
+- **Single-screen devices.** Delphis now also runs on single-screen devices (like a Galaxy Tab), not just dual-screen handhelds such as the Thor.
+- **Up to 4 external controllers.** Connect up to 4 external controllers at the same time.
+- **Rumble.** Rumble on the Thor and on eligible external controllers.
+- **RetroAchievements.** RetroAchievements support.
+- **Autoload.** Autoload support.
 - **Top screen.** Delphis' menus, then the game in Dolphin.
 - **Bottom screen in the menus.** Quick tiles, a touch picker for control styles, and details for the game you're on.
 - **Bottom screen while playing.** Big tiles for the main buttons (colour-coded A, B, X, Y), the rest in a short list, plus *Change controls*, *Edit preset* and *Main menu*. A thin bar shows the time and battery.

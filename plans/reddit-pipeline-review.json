@@ -1,158 +1,64 @@
 {
   "posts": [
     {
-      "id": "1xydye1",
-      "title": "Fire Emblem: Awakening Recomp, specifically built for Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xydye1/fire_emblem_awakening_recomp_specifically_built/",
-      "createdUtc": 1794899559,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xyfyrq",
-      "title": "Sonic Colors Ultimate — 720p/60FPS Android Optimization | Eden Stable | Snapdragon 8 Gen 2",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xyfyrq/sonic_colors_ultimate_720p60fps_android/",
-      "createdUtc": 1794907279,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xyk557",
-      "title": "Rollercoaster Tycoon Dual-Screen",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xyk557/rollercoaster_tycoon_dualscreen/",
-      "createdUtc": 1794921269,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xym3og",
-      "title": "Bifrost Link MacOS App",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xym3og/bifrost_link_macos_app/",
-      "createdUtc": 1794926357,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xymx50",
-      "title": "Toravo Tandem 0.2: a dual-screen front end for ArmadaOS on the Thor – game on top, a companion made for it on the bottom screen (open source, now in English)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xymx50/toravo_tandem_02_a_dualscreen_front_end_for/",
-      "createdUtc": 1794928321,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xyurny",
-      "title": "Ship of Harkinian dual screen build for randomizer",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xyurny/ship_of_harkinian_dual_screen_build_for_randomizer/",
-      "createdUtc": 1794946065,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
+      "id": "1y02pu3",
+      "title": "Digimon World 2003 Harmony Beta v2.0 — Terriermon, seven languages, and DS Companion 1.6.1",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y02pu3/digimon_world_2003_harmony_beta_v20_terriermon/",
+      "createdUtc": 1795070528,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
       "status": "approved",
-      "slug": "soh-dual-screen-rando",
-      "decidedAt": "2026-11-18T13:50:54.245Z"
+      "slug": "digimon-world-2003",
+      "decidedAt": "2026-11-20T07:32:52.109Z"
     },
     {
-      "id": "1xyzzkq",
-      "title": "I made a curved corners app",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xyzzkq/i_made_a_curved_corners_app/",
-      "createdUtc": 1794958836,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
+      "id": "1y06zmz",
+      "title": "A better way to fix oversaturated colors",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y06zmz/a_better_way_to_fix_oversaturated_colors/",
+      "createdUtc": 1795087320,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
       "status": "pending"
     },
     {
-      "id": "1xz569y",
-      "title": "PeanutsNative 0.1.4 - BOTW",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xz569y/peanutsnative_014_botw/",
-      "createdUtc": 1794973463,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
+      "id": "1y0c4vf",
+      "title": "It's crazy what a few hours of Claude can give you (Sneaky Sasquatch)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y0c4vf/its_crazy_what_a_few_hours_of_claude_can_give_you/",
+      "createdUtc": 1795102024,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
       "status": "pending"
     },
     {
-      "id": "1xz5gi3",
-      "title": "Tactics Ogre: The Knight of Lodis ENHANCED static recomp Android release. Best played on AYN Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xz5gi3/tactics_ogre_the_knight_of_lodis_enhanced_static/",
-      "createdUtc": 1794974345,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
+      "id": "1y0cdu9",
+      "title": "Sneaky recomp on the Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y0cdu9/sneaky_recomp_on_the_thor/",
+      "createdUtc": 1795102631,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y0gqme",
+      "title": "Lightweight speaker booster + EQ app for the AYN Thor  ( JamesDSP alternative, no root)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y0gqme/lightweight_speaker_booster_eq_app_for_the_ayn/",
+      "createdUtc": 1795112553,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y0oxx6",
+      "title": "Free Lid designer I made for Ayn Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y0oxx6/free_lid_designer_i_made_for_ayn_thor/",
+      "createdUtc": 1795133095,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y0vyek",
+      "title": "Big Delphis update!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y0vyek/big_delphis_update/",
+      "createdUtc": 1795154764,
+      "firstSeenAt": "2026-11-20T06:10:55.766Z",
       "status": "approved",
-      "slug": "knight-of-lodis-recomp",
-      "decidedAt": "2026-11-18T13:50:54.245Z"
-    },
-    {
-      "id": "1xz6v8b",
-      "title": "[VibeCoded] Motherload Flash Game Port",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xz6v8b/vibecoded_motherload_flash_game_port/",
-      "createdUtc": 1794978838,
-      "firstSeenAt": "2026-11-18T06:10:31.335Z",
-      "status": "approved",
-      "slug": "drillpod",
-      "decidedAt": "2026-11-18T13:50:54.245Z"
-    },
-    {
-      "id": "1xzjvt4",
-      "title": "Thor Command Panel: a fully customizable assistant for the AYN Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzjvt4/thor_command_panel_a_fully_customizable_assistant/",
-      "createdUtc": 1795020028,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "approved",
-      "slug": "thor-command-panel",
-      "decidedAt": "2026-11-19T10:25:18.933Z"
-    },
-    {
-      "id": "1xzl6xw",
-      "title": "Borderlands 2 dual screen mod",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzl6xw/borderlands_2_dual_screen_mod/",
-      "createdUtc": 1795022976,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xzn1el",
-      "title": "Nori Launcher | Best dual screen launcher",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzn1el/nori_launcher_best_dual_screen_launcher/",
-      "createdUtc": 1795027101,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xzn949",
-      "title": "Terraria Dual Screen Companion — HUGE update! Bestiary, NPC interactions, search, easier installation & more! (v1.0.8)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzn949/terraria_dual_screen_companion_huge_update/",
-      "createdUtc": 1795027587,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "approved",
-      "slug": "terraria-dual-screen-companion",
-      "decidedAt": "2026-11-19T10:25:18.933Z"
-    },
-    {
-      "id": "1xzsa3o",
-      "title": "This is just so cool",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzsa3o/this_is_just_so_cool/",
-      "createdUtc": 1795039490,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xzvqdh",
-      "title": "Awesome Frontend: Game Log Tracker DS Launcher",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzvqdh/awesome_frontend_game_log_tracker_ds_launcher/",
-      "createdUtc": 1795048605,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
-    },
-    {
-      "id": "1xzzxdz",
-      "title": "FlokiStore an Ayn Thor Appstore",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1xzzxdz/flokistore_an_ayn_thor_appstore/",
-      "createdUtc": 1795061000,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y01n69",
-      "title": "Praise the Sun! Dark Souls II @ ~60fps ~8w",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y01n69/praise_the_sun_dark_souls_ii_60fps_8w/",
-      "createdUtc": 1795066649,
-      "firstSeenAt": "2026-11-19T06:10:48.142Z",
-      "status": "pending"
+      "slug": "delphis",
+      "decidedAt": "2026-11-20T07:32:52.109Z"
     }
   ]
 }
