@@ -6,13 +6,13 @@ slug: "thor-back-button-hero"
 category: "tool"
 generated: "ai"
 media: []
-source: "https://www.reddit.com/r/AynThor/comments/1xjw6mi/thor_back_button_hero_v140_out_now/"
+source: "https://www.reddit.com/r/AynThor/comments/1y25k26/back_button_hero_20_just_released_its_finally/"
 project_page: "https://github.com/denissteinhorst/thor-back-button-hero"
 ---
 
 ## Description
 
-Back Button Hero is a customizable back-button utility for the AYN Thor Android handheld. It gets more out of the Back button: double-tap for an app switcher on the bottom screen, hold to swap both screens, and put your favorite actions on L1, L2, R1, R2 and the D-pad — screenshots, volume, brightness, controller focus, minimizing or closing the app in front and more. No rooting is needed, and the app is free and open source.
+Back Button Hero is a customizable back-button and shortcut utility for the AYN Thor Android handheld. It gets more out of the Back button: double-tap for an app switcher on the bottom screen, hold to swap both screens, and put your favorite actions on L1, L2, R1, R2, the D-pad, the face buttons (A, B, X, Y), Start, Select and Home — screenshots, volume, brightness, controller focus, minimizing or closing the app in front, recording gameplay, macros, gyro control and more. No rooting is needed, and the app is free and open source.
 
 The four Back gestures:
 
@@ -23,19 +23,31 @@ The four Back gestures:
 
 Each gesture can be switched off in the app's settings. Hold L2 + R2 together for 300 ms to deactivate all Back gestures and shortcuts; hold again to reactivate them. While deactivated, Back and its combinations reach your game normally. Stick clicks always reach the game. Settings also offer L3 + R3 or L1 + R1, and a hold time from 100 to 3000 ms. A message confirms each change. Back Button Hero starts active after a device or service restart.
 
-Hold Back and press another button to run a shortcut. The shoulder buttons L1, L2, R1, R2 and the four D-pad directions can each be assigned any action from the list below. A button without an assignment is left alone, so games and apps still receive its normal input.
+Hold Back and press another button to run a shortcut. The shoulder buttons L1, L2, R1, R2, the face buttons A, B, X, Y, the keys Home, Start, Select and the four D-pad directions can each be assigned any action from the list below. A button without an assignment is left alone, so games and apps still receive its normal input.
 
 Available actions:
 
 - Launch an app on the top or bottom screen
 - Navigation flick to the previous or next app
 - Home
+- Back
 - Recents
+- Switch both apps
+- Switch to last app
 - Screenshot of the top screen, the bottom screen, or both
-- Volume up / down on both screens, only the top, or only the bottom
+- Record video of the top screen, the bottom screen, or both, with optional microphone and push-to-talk
+- Macro: play a recorded button sequence
+- Gyro on/off: steer a stick by turning the handheld
+- Volume up / down / mute on both screens, only the top, or only the bottom
 - Brightness up / down on both screens, only the top, or only the bottom
+- Media control: play/pause, next/previous track
 - Set controller focus to the top or bottom screen, either as a toggle or fixed to one screen
-- Active App Control: minimizes the app in front or force-closes it, on the top screen, the bottom screen, both, or asks each time
+- Switch active app
+- Active App Control: minimize, force-close, or restart the app in front
+- Close Apps: end every app on the chosen screens
+- Power Menu, Standby
+- Status Overlay: battery, time, temperature
+- AYN controls: Performance Mode, Fan Control, Handle Style, Toggle Display Power, Refresh Rate, Stick Lighting, Direct Power Supply, Vibration, Force Landscape, Virtual Mouse, Do Not Disturb, Mute Microphone
 - Quick Settings and notifications
 - System settings pages: Wi-Fi and internet, Bluetooth, Night Light, Extra Dim, Display, Sound, Location, Cast, Do Not Disturb, Battery Saver
 - Not set
@@ -44,30 +56,24 @@ The app is completely free, with no ads, no tracking, no account and no root req
 
 ## Features
 
-New in v1.4.0:
+New in v2.0:
 
-- **Frontend compatibility:** ES-DE Companion and NeoStation let their bottom screen step aside while you use another app there, and come back from their own card in bottom Recents. Cocoon keeps running out of sight, so its top screen stays in dual-screen layout. Swap a game away and quit it, and the other app returns to its screen, so ES-DE and Companion end up where they started. RetroArch keeps the controller after a swap (experimental). iiSU is not supported yet; Hero leaves it alone instead of fighting it.
-- **A new bottom Recents:** looks like the system's own Recents, with real previews and light/dark theme. Fully D-pad navigable, including Screenshot and Close all. Optionally lists the apps from both screens.
-- **Smoother swaps:** hold-to-swap now moves the running apps instead of restarting them, so games keep their state.
-- **Active App Control shortcut:** minimize or force-close the app in front, on top, bottom or both.
-- **Pause shortcut:** hold L2 + R2 to switch Hero off (e.g. when an emulator needs Back), hold again to resume.
-- **Per-app exceptions:** choose which gestures and shortcuts each app keeps for itself.
-- **Redesigned settings:** grouped pages, plus defaults and unbind per page with a preview.
+- **Two independent shortcut layers:** Dual mode gives Home its own gestures and button combinations, so Back + R1 and Home + R1 can run different actions.
+- **More buttons to make your own:** A, B, X, Y, Start, Select and Home now join the shoulder buttons, D-pad and sticks as shortcut options.
+- **Gameplay recording:** Record the top screen, bottom screen or both, with game audio and optional microphone commentary. Push-to-talk is available, including an option to lower game audio while you speak.
+- **Record and edit your own macros:** Save a button sequence, adjust its inputs and pauses, and replay it with one shortcut. Named macros can be reused across different bindings.
+- **Gyro control — Beta:** Tilt or turn your Thor to control either stick, with adjustable sensitivity, calibration and an optional hold-to-aim button.
+- **An easier way to set everything up:** A visual overview of your bindings, searchable actions, guided options and a welcome setup with suggested shortcuts or a blank start. Updating keeps your existing settings.
 
-Default hotkey assignments:
+There are also new shortcuts for media playback, switching to your last app, restarting apps, closing background apps, standby, refresh rate, stick lighting and more.
 
-- L1: Navigation flick left
-- R1: Navigation flick right
-- L2: Screenshot, top screen only
-- R2: Set controller focus: toggle between the screens
-- D-pad up: Brightness up, both screens
-- D-pad down: Brightness down, both screens
-- D-pad left: Volume down, both screens
-- D-pad right: Volume up, both screens
+The bottom-screen app switcher, screen swapping and your existing shortcuts are still there.
 
-On a fresh install, or after Reset settings, a single tap opens the launcher on the bottom screen, a double tap opens the app switcher (300 ms window), tap then hold opens Recents on the top screen (1000 ms), and hold swaps both screens (1000 ms).
+On a fresh install, nothing is assigned: no Back gesture, no shoulder button, no D-pad direction, no stick direction or press, and no on/off shortcut. Back Button Hero does nothing until you assign something. Updating from an earlier version keeps the settings you had.
 
 ## Requirements
+
+Requirements:
 
 - AYN Thor handheld. Tested on an AYN Thor Max 16GB/1TB (Rainbow), 1st Batch, Android 13, firmware Thor_V1.0.0.377_20260206_165408_user. The app uses no model-specific features, so other Thor variants (Base, Pro, Max512) should work too.
 - Android 11 (min SDK 30) or later.
@@ -77,6 +83,8 @@ On a fresh install, or after Reset settings, a single tap opens the launcher on 
 
 ## Setup guide
 
+Setup guide:
+
 - Download the latest APK from the [Releases page](https://github.com/denissteinhorst/thor-back-button-hero/releases/latest).
 - Install the APK on your Thor.
 - Open Back Button Hero once and tap **Turn on accessibility service**.
@@ -84,3 +92,4 @@ On a fresh install, or after Reset settings, a single tap opens the launcher on 
 - Return to Back Button Hero and check that the service status shows as on.
 - On Android 13 and later, allow notifications if you want update alerts.
 - The app checks GitHub Releases for updates and notifies you when a newer one is available — no auto-install, it just links to the release page.
+- For details, setup and an interactive App-Simulation, visit the [website](https://denissteinhorst.github.io/thor-back-button-hero/).
