@@ -1,89 +1,67 @@
 {
   "posts": [
     {
-      "id": "1y1tthx",
-      "title": "Cleaner iOS style volume slider",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y1tthx/cleaner_ios_style_volume_slider/",
-      "createdUtc": 1795256435,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y2nmcz",
+      "title": "GBADuo release v1.0.1: New style, new features, new companion packs, new targets",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2nmcz/gbaduo_release_v101_new_style_new_features_new/",
+      "createdUtc": 1795348418,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     },
     {
-      "id": "1y1vkxq",
-      "title": "Dragon Ball Z: Legacy Trilogy for AYN Thor is complete – dual-screen Android launcher + 3 playable games",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y1vkxq/dragon_ball_z_legacy_trilogy_for_ayn_thor_is/",
-      "createdUtc": 1795262904,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
-      "status": "approved",
-      "slug": "dragon-ball-z-buus-fury",
-      "decidedAt": "2026-11-22T06:41:17.100Z"
-    },
-    {
-      "id": "1y22liq",
-      "title": "Screenshot and video",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y22liq/screenshot_and_video/",
-      "createdUtc": 1795282457,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y2pvua",
+      "title": "Dark Souls II SOTF - Xbox 360 - Dual Screen - 60fps on Ayn Thor @8W",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2pvua/dark_souls_ii_sotf_xbox_360_dual_screen_60fps_on/",
+      "createdUtc": 1795355739,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     },
     {
-      "id": "1y24lad",
-      "title": "Pokemon Z-A - Peanuts Native 1.6",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y24lad/pokemon_za_peanuts_native_16/",
-      "createdUtc": 1795287486,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y2red1",
+      "title": "Releases · Zerotss/MotionPad",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2red1/releases_zerotssmotionpad/",
+      "createdUtc": 1795359907,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     },
     {
-      "id": "1y25k26",
-      "title": "Back Button Hero 2.0 just released. It's finally \"final\".",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y25k26/back_button_hero_20_just_released_its_finally/",
-      "createdUtc": 1795289966,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
-      "status": "approved",
-      "slug": "thor-back-button-hero",
-      "decidedAt": "2026-11-22T06:41:17.100Z"
-    },
-    {
-      "id": "1y28qsd",
-      "title": "You asked for it — Terraria Dual Screen Companion now has a fully Android-based installer! No PC required! 🎉",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y28qsd/you_asked_for_it_terraria_dual_screen_companion/",
-      "createdUtc": 1795298442,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
-      "status": "approved",
-      "slug": "terraria-dual-screen-companion",
-      "decidedAt": "2026-11-22T06:41:17.100Z"
-    },
-    {
-      "id": "1y2ab8k",
-      "title": "Got tired of doing all my roms manually. So I automated it (AI)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2ab8k/got_tired_of_doing_all_my_roms_manually_so_i/",
-      "createdUtc": 1795302885,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y2rgqn",
+      "title": "FF8Recomp: FINAL FANTASY VIII running natively on Android (AYN Thor), with the Remastered and Junction VIII mods",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2rgqn/ff8recomp_final_fantasy_viii_running_natively_on/",
+      "createdUtc": 1795360080,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     },
     {
-      "id": "1y2cti5",
-      "title": "Ported Pokemon Stadium to Android with dual screen controls",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2cti5/ported_pokemon_stadium_to_android_with_dual/",
-      "createdUtc": 1795310329,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y2vbow",
+      "title": "Asgard OS: a Linux OS for the AYN Thor that uses both screens all the time (free, open source, based on ROCKNIX)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2vbow/asgard_os_a_linux_os_for_the_ayn_thor_that_uses/",
+      "createdUtc": 1795369914,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     },
     {
-      "id": "1y2eep0",
-      "title": "NeoStation hits 1.0 RC after 14 months. Thank you all!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2eep0/neostation_hits_10_rc_after_14_months_thank_you/",
-      "createdUtc": 1795315284,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y30aj0",
+      "title": "I made a second-screen companion app for Pokémon Fire Ash on the AYN Thor (live encounters, map, battle helper, guide, cheats + 16:9 widescreen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y30aj0/i_made_a_secondscreen_companion_app_for_pokémon/",
+      "createdUtc": 1795382476,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     },
     {
-      "id": "1y2h6su",
-      "title": "Update: Lexicart now runs on the Thor. Learn on the bottom screen while you play (video)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2h6su/update_lexicart_now_runs_on_the_thor_learn_on_the/",
-      "createdUtc": 1795324345,
-      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "id": "1y31owi",
+      "title": "ShulkDS — Minecraft Java for dual-screen Android handhelds — Need Thor Testers!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y31owi/shulkds_minecraft_java_for_dualscreen_android/",
+      "createdUtc": 1795386206,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y32kn2",
+      "title": "ThorSport: a free live sports scoreboard app made for the Thor's bottom screen (Made with AI)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y32kn2/thorsport_a_free_live_sports_scoreboard_app_made/",
+      "createdUtc": 1795388636,
+      "firstSeenAt": "2026-11-23T06:14:05.137Z",
       "status": "pending"
     }
   ]
