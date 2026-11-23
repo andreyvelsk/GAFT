@@ -1,28 +1,26 @@
 # Reddit pipeline review
 
-> Pending: 7 · Approved: 3 · Rejected: 0
+> Pending: 5 · Approved: 3 · Rejected: 0
 
-## Pending (7)
+## Pending (5)
 
-- `1y1tthx` — Cleaner iOS style volume slider — [source](https://www.reddit.com/r/AynThor/comments/1y1tthx/cleaner_ios_style_volume_slider/)
-- `1y22liq` — Screenshot and video — [source](https://www.reddit.com/r/AynThor/comments/1y22liq/screenshot_and_video/)
-- `1y24lad` — Pokemon Z-A - Peanuts Native 1.6 — [source](https://www.reddit.com/r/AynThor/comments/1y24lad/pokemon_za_peanuts_native_16/)
-- `1y2ab8k` — Got tired of doing all my roms manually. So I automated it (AI) — [source](https://www.reddit.com/r/AynThor/comments/1y2ab8k/got_tired_of_doing_all_my_roms_manually_so_i/)
-- `1y2cti5` — Ported Pokemon Stadium to Android with dual screen controls — [source](https://www.reddit.com/r/AynThor/comments/1y2cti5/ported_pokemon_stadium_to_android_with_dual/)
-- `1y2eep0` — NeoStation hits 1.0 RC after 14 months. Thank you all! — [source](https://www.reddit.com/r/AynThor/comments/1y2eep0/neostation_hits_10_rc_after_14_months_thank_you/)
-- `1y2h6su` — Update: Lexicart now runs on the Thor. Learn on the bottom screen while you play (video) — [source](https://www.reddit.com/r/AynThor/comments/1y2h6su/update_lexicart_now_runs_on_the_thor_learn_on_the/)
+- `1y2nmcz` — GBADuo release v1.0.1: New style, new features, new companion packs, new targets — [source](https://www.reddit.com/r/AynThor/comments/1y2nmcz/gbaduo_release_v101_new_style_new_features_new/)
+- `1y2red1` — Releases · Zerotss/MotionPad — [source](https://www.reddit.com/r/AynThor/comments/1y2red1/releases_zerotssmotionpad/)
+- `1y2vbow` — Asgard OS: a Linux OS for the AYN Thor that uses both screens all the time (free, open source, based on ROCKNIX) — [source](https://www.reddit.com/r/AynThor/comments/1y2vbow/asgard_os_a_linux_os_for_the_ayn_thor_that_uses/)
+- `1y30aj0` — I made a second-screen companion app for Pokémon Fire Ash on the AYN Thor (live encounters, map, battle helper, guide, cheats + 16:9 widescreen — [source](https://www.reddit.com/r/AynThor/comments/1y30aj0/i_made_a_secondscreen_companion_app_for_pokémon/)
+- `1y32kn2` — ThorSport: a free live sports scoreboard app made for the Thor's bottom screen (Made with AI) — [source](https://www.reddit.com/r/AynThor/comments/1y32kn2/thorsport_a_free_live_sports_scoreboard_app_made/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1y1tthx 1y22liq 1y24lad 1y2ab8k 1y2cti5 1y2eep0 1y2h6su
+/approved 1y2nmcz 1y2red1 1y2vbow 1y30aj0 1y32kn2
 ```
 
 ## Approved (3)
 
-- `1y1vkxq` → `dragon-ball-z-buus-fury` — Dragon Ball Z: Legacy Trilogy for AYN Thor is complete – dual-screen Android launcher + 3 playable games — [source](https://www.reddit.com/r/AynThor/comments/1y1vkxq/dragon_ball_z_legacy_trilogy_for_ayn_thor_is/)
-- `1y25k26` → `thor-back-button-hero` — Back Button Hero 2.0 just released. It's finally "final". — [source](https://www.reddit.com/r/AynThor/comments/1y25k26/back_button_hero_20_just_released_its_finally/)
-- `1y28qsd` → `terraria-dual-screen-companion` — You asked for it — Terraria Dual Screen Companion now has a fully Android-based installer! No PC required! 🎉 — [source](https://www.reddit.com/r/AynThor/comments/1y28qsd/you_asked_for_it_terraria_dual_screen_companion/)
+- `1y2pvua` → `dark-souls-ii-scholar-of-the-first-sin` — Dark Souls II SOTF - Xbox 360 - Dual Screen - 60fps on Ayn Thor @8W — [source](https://www.reddit.com/r/AynThor/comments/1y2pvua/dark_souls_ii_sotf_xbox_360_dual_screen_60fps_on/)
+- `1y2rgqn` → `ff8recomp` — FF8Recomp: FINAL FANTASY VIII running natively on Android (AYN Thor), with the Remastered and Junction VIII mods — [source](https://www.reddit.com/r/AynThor/comments/1y2rgqn/ff8recomp_final_fantasy_viii_running_natively_on/)
+- `1y31owi` → `minecraft` — ShulkDS — Minecraft Java for dual-screen Android handhelds — Need Thor Testers! — [source](https://www.reddit.com/r/AynThor/comments/1y31owi/shulkds_minecraft_java_for_dualscreen_android/)
 
 ## Rejected (0)
 
