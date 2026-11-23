@@ -12,7 +12,9 @@ media:
     url: "/content/terraria-dual-screen-companion/screenshot-2.webp"
   - type: "image"
     url: "/content/terraria-dual-screen-companion/screenshot-3.webp"
-source: "https://www.reddit.com/r/AynThor/comments/1xzn949/terraria_dual_screen_companion_huge_update/"
+  - type: "video"
+    url: "https://youtube.com/shorts/JQWyCvnienA?si=8dIx0ru2Xu9_fjn2"
+source: "https://www.reddit.com/r/AynThor/comments/1y28qsd/you_asked_for_it_terraria_dual_screen_companion/"
 project_page: "https://github.com/Skifchara/terraria-dualscreen-companion"
 ---
 

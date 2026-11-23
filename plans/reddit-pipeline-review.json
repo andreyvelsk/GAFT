@@ -1,21 +1,89 @@
 {
   "posts": [
     {
-      "id": "1y12wmv",
-      "title": "Faster Than Light - Dual Screen Edition",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y12wmv/faster_than_light_dual_screen_edition/",
-      "createdUtc": 1795179717,
-      "firstSeenAt": "2026-11-21T06:09:18.652Z",
-      "status": "approved",
-      "slug": "faster-than-light-dual-screen-edition",
-      "decidedAt": "2026-11-21T10:39:20.409Z"
+      "id": "1y1tthx",
+      "title": "Cleaner iOS style volume slider",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y1tthx/cleaner_ios_style_volume_slider/",
+      "createdUtc": 1795256435,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "pending"
     },
     {
-      "id": "1y1h8tj",
-      "title": "DualScreenValley",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y1h8tj/dualscreenvalley/",
-      "createdUtc": 1795215001,
-      "firstSeenAt": "2026-11-21T06:09:18.652Z",
+      "id": "1y1vkxq",
+      "title": "Dragon Ball Z: Legacy Trilogy for AYN Thor is complete – dual-screen Android launcher + 3 playable games",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y1vkxq/dragon_ball_z_legacy_trilogy_for_ayn_thor_is/",
+      "createdUtc": 1795262904,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "approved",
+      "slug": "dragon-ball-z-buus-fury",
+      "decidedAt": "2026-11-22T06:41:17.100Z"
+    },
+    {
+      "id": "1y22liq",
+      "title": "Screenshot and video",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y22liq/screenshot_and_video/",
+      "createdUtc": 1795282457,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y24lad",
+      "title": "Pokemon Z-A - Peanuts Native 1.6",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y24lad/pokemon_za_peanuts_native_16/",
+      "createdUtc": 1795287486,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y25k26",
+      "title": "Back Button Hero 2.0 just released. It's finally \"final\".",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y25k26/back_button_hero_20_just_released_its_finally/",
+      "createdUtc": 1795289966,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "approved",
+      "slug": "thor-back-button-hero",
+      "decidedAt": "2026-11-22T06:41:17.100Z"
+    },
+    {
+      "id": "1y28qsd",
+      "title": "You asked for it — Terraria Dual Screen Companion now has a fully Android-based installer! No PC required! 🎉",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y28qsd/you_asked_for_it_terraria_dual_screen_companion/",
+      "createdUtc": 1795298442,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "approved",
+      "slug": "terraria-dual-screen-companion",
+      "decidedAt": "2026-11-22T06:41:17.100Z"
+    },
+    {
+      "id": "1y2ab8k",
+      "title": "Got tired of doing all my roms manually. So I automated it (AI)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2ab8k/got_tired_of_doing_all_my_roms_manually_so_i/",
+      "createdUtc": 1795302885,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y2cti5",
+      "title": "Ported Pokemon Stadium to Android with dual screen controls",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2cti5/ported_pokemon_stadium_to_android_with_dual/",
+      "createdUtc": 1795310329,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y2eep0",
+      "title": "NeoStation hits 1.0 RC after 14 months. Thank you all!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2eep0/neostation_hits_10_rc_after_14_months_thank_you/",
+      "createdUtc": 1795315284,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y2h6su",
+      "title": "Update: Lexicart now runs on the Thor. Learn on the bottom screen while you play (video)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y2h6su/update_lexicart_now_runs_on_the_thor_learn_on_the/",
+      "createdUtc": 1795324345,
+      "firstSeenAt": "2026-11-22T06:09:24.706Z",
       "status": "pending"
     }
   ]
