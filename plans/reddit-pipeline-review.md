@@ -1,26 +1,25 @@
 # Reddit pipeline review
 
-> Pending: 5 · Approved: 3 · Rejected: 0
+> Pending: 6 · Approved: 1 · Rejected: 0
 
-## Pending (5)
+## Pending (6)
 
-- `1y2nmcz` — GBADuo release v1.0.1: New style, new features, new companion packs, new targets — [source](https://www.reddit.com/r/AynThor/comments/1y2nmcz/gbaduo_release_v101_new_style_new_features_new/)
-- `1y2red1` — Releases · Zerotss/MotionPad — [source](https://www.reddit.com/r/AynThor/comments/1y2red1/releases_zerotssmotionpad/)
-- `1y2vbow` — Asgard OS: a Linux OS for the AYN Thor that uses both screens all the time (free, open source, based on ROCKNIX) — [source](https://www.reddit.com/r/AynThor/comments/1y2vbow/asgard_os_a_linux_os_for_the_ayn_thor_that_uses/)
-- `1y30aj0` — I made a second-screen companion app for Pokémon Fire Ash on the AYN Thor (live encounters, map, battle helper, guide, cheats + 16:9 widescreen — [source](https://www.reddit.com/r/AynThor/comments/1y30aj0/i_made_a_secondscreen_companion_app_for_pokémon/)
-- `1y32kn2` — ThorSport: a free live sports scoreboard app made for the Thor's bottom screen (Made with AI) — [source](https://www.reddit.com/r/AynThor/comments/1y32kn2/thorsport_a_free_live_sports_scoreboard_app_made/)
+- `1y3d8pw` — Fanmake Pokémon Maps v8.0…. 3 Months, 47 New Games, and a LOT of New Features! — [source](https://www.reddit.com/r/AynThor/comments/1y3d8pw/fanmake_pokémon_maps_v80_3_months_47_new_games/)
+- `1y3qt20` — NeoStation 1.0 RC Deep Dive — [source](https://www.reddit.com/r/AynThor/comments/1y3qt20/neostation_10_rc_deep_dive/)
+- `1y3tqqm` — I recompiled TOTK for native Android on my AYN Thor- I think I like it more than in Eden — [source](https://www.reddit.com/r/AynThor/comments/1y3tqqm/i_recompiled_totk_for_native_android_on_my_ayn/)
+- `1y3x6xt` — ThorSport 3.18 is out: live sports on your Thor — [source](https://www.reddit.com/r/AynThor/comments/1y3x6xt/thorsport_318_is_out_live_sports_on_your_thor/)
+- `1y3xmsj` — iiSU Themes Batch 1 — [source](https://www.reddit.com/r/AynThor/comments/1y3xmsj/iisu_themes_batch_1/)
+- `1y43o88` — Built an open-source launcher that runs WoW Forever on a community server directly on Ayn Thor (native ARM64, no PC) — [source](https://www.reddit.com/r/AynThor/comments/1y43o88/built_an_opensource_launcher_that_runs_wow/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1y2nmcz 1y2red1 1y2vbow 1y30aj0 1y32kn2
+/approved 1y3d8pw 1y3qt20 1y3tqqm 1y3x6xt 1y3xmsj 1y43o88
 ```
 
-## Approved (3)
+## Approved (1)
 
-- `1y2pvua` → `dark-souls-ii-scholar-of-the-first-sin` — Dark Souls II SOTF - Xbox 360 - Dual Screen - 60fps on Ayn Thor @8W — [source](https://www.reddit.com/r/AynThor/comments/1y2pvua/dark_souls_ii_sotf_xbox_360_dual_screen_60fps_on/)
-- `1y2rgqn` → `ff8recomp` — FF8Recomp: FINAL FANTASY VIII running natively on Android (AYN Thor), with the Remastered and Junction VIII mods — [source](https://www.reddit.com/r/AynThor/comments/1y2rgqn/ff8recomp_final_fantasy_viii_running_natively_on/)
-- `1y31owi` → `minecraft` — ShulkDS — Minecraft Java for dual-screen Android handhelds — Need Thor Testers! — [source](https://www.reddit.com/r/AynThor/comments/1y31owi/shulkds_minecraft_java_for_dualscreen_android/)
+- `1y44ky6` → `fightnight3ogx` — FightNight3OGX: A Fight Night Round 3 (Original Xbox) Dual-Screen Recomp — [source](https://www.reddit.com/r/AynThor/comments/1y44ky6/fightnight3ogx_a_fight_night_round_3_original/)
 
 ## Rejected (0)
 
