@@ -62,7 +62,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y4qjbv/ratchet_and_clank_future_a_crack_in_time_is_now/",
       "createdUtc": 1795558564,
       "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "racit",
+      "decidedAt": "2026-11-25T10:27:38.731Z"
     },
     {
       "id": "1y4uxsa",
@@ -70,7 +72,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y4uxsa/star_ocean_the_second_story_r_dsmod_for_eden_duo/",
       "createdUtc": 1795570806,
       "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "eden-duo",
+      "decidedAt": "2026-11-25T10:27:38.731Z"
     },
     {
       "id": "1y4vow1",
@@ -78,7 +82,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y4vow1/thor_reader_beta_02_search_and_other_qol_features/",
       "createdUtc": 1795573035,
       "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "thor-reader",
+      "decidedAt": "2026-11-25T10:27:38.731Z"
     },
     {
       "id": "1y4xj9h",
