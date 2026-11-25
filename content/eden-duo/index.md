@@ -14,15 +14,15 @@ media:
     url: "/content/eden-duo/screenshot-3.webp"
   - type: "video"
     url: "https://www.youtube.com/watch?v=LaLfNIwAwHU"
-source: "https://www.reddit.com/r/AynThor/comments/1xlb9gj/eden_duo_pokémon_swordshield_fire_emblem_engage/"
-project_page: "https://github.com/igawa6/eden-duo"
+source: "https://www.reddit.com/r/AynThor/comments/1y4uxsa/star_ocean_the_second_story_r_dsmod_for_eden_duo/"
+project_page: "https://github.com/igawa6/eden-duo-companions"
 ---
 
 ## Description
 
 Eden Duo is a fork of the Eden Nintendo Switch emulator for Android devices with two screens, such as the AYN Thor. The game runs on the top screen as usual, while the bottom screen shows a touch companion for the game you are playing: maps, party and inventory menus, status, and more, all driven by the running game's live state.
 
-Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for 27 games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, **Mario Kart 8 Deluxe**, **Super Mario Bros. Wonder**, **Animal Crossing: New Horizons**, **Fire Emblem: Three Houses**, **The Binding of Isaac: Afterbirth+ and Repentance DLC**, **Pokémon Brilliant Diamond**, **Pokémon Shining Pearl**, **Crash Team Racing Nitro-Fueled**, **Dragon Quest III HD-2D Remake**, **Chained Echoes**, **Yoru Tomosu**, **Diablo III: Eternal Collection**, **Farming Simulator: Nintendo Switch Edition**, **VA-11 Hall-A: Cyberpunk Bartender Action**, **The Legend of Zelda: Breath of the Wild**, **Castlevania: Belmont's Curse**, **Super Mario Odyssey**, **The Legend of Zelda: Echoes of Wisdom**, **Dave the Diver**, **Persona 3 Portable**, **Fire Emblem Engage**, **Octopath Traveler 0**, **Pokémon Sword**, and **Pokémon Shield**.
+Companions are separate, installable `.dsmod.zip` packages, one per game, so a companion can be updated without updating the emulator. They ship no game assets — all art and text comes from your own game files. Dual-screen support is available for 28 games: **Persona 5 Royal**, **Metroid Dread**, **Link's Awakening**, **Mario Kart 8 Deluxe**, **Super Mario Bros. Wonder**, **Animal Crossing: New Horizons**, **Fire Emblem: Three Houses**, **The Binding of Isaac: Afterbirth+ and Repentance DLC**, **Pokémon Brilliant Diamond**, **Pokémon Shining Pearl**, **Crash Team Racing Nitro-Fueled**, **Dragon Quest III HD-2D Remake**, **Chained Echoes**, **Yoru Tomosu**, **Diablo III: Eternal Collection**, **Farming Simulator: Nintendo Switch Edition**, **VA-11 Hall-A: Cyberpunk Bartender Action**, **The Legend of Zelda: Breath of the Wild**, **Castlevania: Belmont's Curse**, **Super Mario Odyssey**, **The Legend of Zelda: Echoes of Wisdom**, **Dave the Diver**, **Persona 3 Portable**, **Fire Emblem Engage**, **Octopath Traveler 0**, **Pokémon Sword**, **Pokémon Shield**, and **Star Ocean: The Second Story R**.
 
 ## Features
 
@@ -73,6 +73,7 @@ Requirements:
 - **Octopath Traveler 0 (1.0.5)** — a live map, party status and equipment, items and quests, and a battle screen with BP forecast, shields, Break and revealed weaknesses.
 - **Pokémon Sword (1.3.2)** — Town Map with wild Pokémon and Fly, party (drag to reorder), Pokédex, Bag (use items right from the bottom screen), League Card, and touch battles with type matchups and Max Raids. Includes Isle of Armor and Crown Tundra; runs in multiple languages.
 - **Pokémon Shield (1.3.2)** — Town Map with wild Pokémon and Fly, party (drag to reorder), Pokédex, Bag (use items right from the bottom screen), League Card, and touch battles with type matchups and Max Raids. Includes Isle of Armor and Crown Tundra; runs in multiple languages.
+- **Star Ocean: The Second Story R (1.0.1)** — the party in the game's Party Formation look with level, HP and MP, status, equipment, Special Arts/Spells and Skills; the Guide Map with the game's minimap and world map; Missions; and battle controls with the other members' cards, ailments, the bonus gauge and Assault Actions. An optional Hide HUD switch hides the top screen's shortcut list, minimaps, place names and field icons. Use NCE, not JIT. Companion contributed by a community member (jadesigns.).
 
 Compatibility is intentionally strict: each companion is written for one exact game build and checks the running build before it loads. On any other version it does not load and shows a notice, instead of reading memory it does not understand.
 
