@@ -1,105 +1,37 @@
 {
   "posts": [
     {
-      "id": "1y48hzm",
-      "title": "Thor Reader beta 0.1 // Read your digital books, comics and manga on your Thor",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y48hzm/thor_reader_beta_01_read_your_digital_books/",
-      "createdUtc": 1795510799,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y48trw",
-      "title": "MacOS running on Ubuntu 26 running on Ayn Thor (not streaming)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y48trw/macos_running_on_ubuntu_26_running_on_ayn_thor/",
-      "createdUtc": 1795512029,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y49jg3",
-      "title": "Dragon Ball Z Extreme Butōden English Crossover Update",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y49jg3/dragon_ball_z_extreme_butōden_english_crossover/",
-      "createdUtc": 1795514709,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y49ocu",
-      "title": "Elden Ring on ArchLinux Ayn Thor at stable 20-30 FPS with CachyOS Proton + FEX + Mesa 27 dev",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y49ocu/elden_ring_on_archlinux_ayn_thor_at_stable_2030/",
-      "createdUtc": 1795515222,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y4g5ro",
-      "title": "PlayTranslate v4.0.0 released, dual screen support with many improvements to language learning with games!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4g5ro/playtranslate_v400_released_dual_screen_support/",
-      "createdUtc": 1795534183,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y4ie0a",
-      "title": "Less than 2 months ago I posted about PokeDaisy for the Thor here. Today it passed 100,000 downloads",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4ie0a/less_than_2_months_ago_i_posted_about_pokedaisy/",
-      "createdUtc": 1795539380,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y4pv25",
-      "title": "ShulkDS v1.0.2 is out! (In-game updates from here on out)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4pv25/shulkds_v102_is_out_ingame_updates_from_here_on/",
-      "createdUtc": 1795556878,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y4qjbv",
-      "title": "Ratchet and clank Future: A crack in Time is now available as an apk with the 0.1.0 version. Would love to get more feedback on it as I’m looking to improve performance as much as I can",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4qjbv/ratchet_and_clank_future_a_crack_in_time_is_now/",
-      "createdUtc": 1795558564,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
+      "id": "1y5kuyn",
+      "title": "RetroDS 1.0: SNES and PS1 with the game's own map/menu on the top screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5kuyn/retrods_10_snes_and_ps1_with_the_games_own/",
+      "createdUtc": 1795646173,
+      "firstSeenAt": "2026-11-26T06:10:57.274Z",
       "status": "approved",
-      "slug": "racit",
-      "decidedAt": "2026-11-25T10:27:38.731Z"
+      "slug": "retrods",
+      "decidedAt": "2026-11-26T06:34:44.572Z"
     },
     {
-      "id": "1y4uxsa",
-      "title": "Star Ocean: The Second Story R DSmod for Eden Duo is out!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4uxsa/star_ocean_the_second_story_r_dsmod_for_eden_duo/",
-      "createdUtc": 1795570806,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "approved",
-      "slug": "eden-duo",
-      "decidedAt": "2026-11-25T10:27:38.731Z"
-    },
-    {
-      "id": "1y4vow1",
-      "title": "Thor Reader beta 0.2 (Search and other QOL features)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4vow1/thor_reader_beta_02_search_and_other_qol_features/",
-      "createdUtc": 1795573035,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
-      "status": "approved",
-      "slug": "thor-reader",
-      "decidedAt": "2026-11-25T10:27:38.731Z"
-    },
-    {
-      "id": "1y4xj9h",
-      "title": "Free first-person dungeon crawler with two-screen support for the Thor, but I don't own one. Could a Thor owner test it?",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4xj9h/free_firstperson_dungeon_crawler_with_twoscreen/",
-      "createdUtc": 1795578748,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
+      "id": "1y5nfrf",
+      "title": "Thor Reader beta 0.3 (animations, series detect, OPDS, Crosspoint sync & more)",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5nfrf/thor_reader_beta_03_animations_series_detect_opds/",
+      "createdUtc": 1795653388,
+      "firstSeenAt": "2026-11-26T06:10:57.274Z",
       "status": "pending"
     },
     {
-      "id": "1y4y2u3",
-      "title": "Forked DS-Forever and made a few tweaks, changelog on Github",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y4y2u3/forked_dsforever_and_made_a_few_tweaks_changelog/",
-      "createdUtc": 1795580481,
-      "firstSeenAt": "2026-11-25T06:11:41.288Z",
+      "id": "1y5o9sf",
+      "title": "My Thor as a live scoreboard at the rink",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5o9sf/my_thor_as_a_live_scoreboard_at_the_rink/",
+      "createdUtc": 1795655839,
+      "firstSeenAt": "2026-11-26T06:10:57.274Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y5osnv",
+      "title": "I'm not a programmer, but I made my own game library for the Thor with AI – Repisa",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5osnv/im_not_a_programmer_but_i_made_my_own_game/",
+      "createdUtc": 1795657453,
+      "firstSeenAt": "2026-11-26T06:10:57.274Z",
       "status": "pending"
     }
   ]
