@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y60epk/betterdualscreenassistant_update_130_clustertune/",
       "createdUtc": 1795697352,
       "firstSeenAt": "2026-11-27T06:11:02.270Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "better-dual-screen-assistant",
+      "decidedAt": "2026-11-27T06:37:49.199Z"
     },
     {
       "id": "1y60qqm",
@@ -14,7 +16,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y60qqm/megingiard_update_0110_true_onetap_system_service/",
       "createdUtc": 1795698329,
       "firstSeenAt": "2026-11-27T06:11:02.270Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "megingiard",
+      "decidedAt": "2026-11-27T06:37:49.199Z"
     },
     {
       "id": "1y657w2",

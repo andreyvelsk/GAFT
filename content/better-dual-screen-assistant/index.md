@@ -8,7 +8,7 @@ generated: "ai"
 media:
   - type: "image"
     url: "/content/better-dual-screen-assistant/preview.webp"
-source: "https://www.reddit.com/r/AynThor/comments/1xti8he/appupdate_betterdualscreenassistant_120_rp_duo/"
+source: "https://www.reddit.com/r/AynThor/comments/1y60epk/betterdualscreenassistant_update_130_clustertune/"
 project_page: "https://github.com/stormpanda/better-dual-screen-assistant"
 ---
 
