@@ -1,22 +1,24 @@
 # Reddit pipeline review
 
-> Pending: 3 · Approved: 1 · Rejected: 0
+> Pending: 4 · Approved: 2 · Rejected: 0
 
-## Pending (3)
+## Pending (4)
 
-- `1y5nfrf` — Thor Reader beta 0.3 (animations, series detect, OPDS, Crosspoint sync & more) — [source](https://www.reddit.com/r/AynThor/comments/1y5nfrf/thor_reader_beta_03_animations_series_detect_opds/)
-- `1y5o9sf` — My Thor as a live scoreboard at the rink — [source](https://www.reddit.com/r/AynThor/comments/1y5o9sf/my_thor_as_a_live_scoreboard_at_the_rink/)
-- `1y5osnv` — I'm not a programmer, but I made my own game library for the Thor with AI – Repisa — [source](https://www.reddit.com/r/AynThor/comments/1y5osnv/im_not_a_programmer_but_i_made_my_own_game/)
+- `1y657w2` — Start up intro I made — [source](https://www.reddit.com/r/AynThor/comments/1y657w2/start_up_intro_i_made/)
+- `1y69776` — Xbox 360 Godfather working great with xendroid — [source](https://www.reddit.com/r/AynThor/comments/1y69776/xbox_360_godfather_working_great_with_xendroid/)
+- `1y6g32k` — Current best way to play Mewgenics (Winlator-ludashi). + Bonus silksong — [source](https://www.reddit.com/r/AynThor/comments/1y6g32k/current_best_way_to_play_mewgenics/)
+- `1y6l7gt` — Since there is no realtime position tracker on Android for Genshin, I use AI to make one. — [source](https://www.reddit.com/r/AynThor/comments/1y6l7gt/since_there_is_no_realtime_position_tracker_on/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1y5nfrf 1y5o9sf 1y5osnv
+/approved 1y657w2 1y69776 1y6g32k 1y6l7gt
 ```
 
-## Approved (1)
+## Approved (2)
 
-- `1y5kuyn` → `retrods` — RetroDS 1.0: SNES and PS1 with the game's own map/menu on the top screen — [source](https://www.reddit.com/r/AynThor/comments/1y5kuyn/retrods_10_snes_and_ps1_with_the_games_own/)
+- `1y60epk` → `better-dual-screen-assistant` — BetterDualScreenAssistant Update 1.3.0 - ClusterTune and 3rd Party Plugin Support! — [source](https://www.reddit.com/r/AynThor/comments/1y60epk/betterdualscreenassistant_update_130_clustertune/)
+- `1y60qqm` → `megingiard` — Megingiard Update 0.11.0 - True one-tap system service setup, new button shapes, virtual analog sticks and more — [source](https://www.reddit.com/r/AynThor/comments/1y60qqm/megingiard_update_0110_true_onetap_system_service/)
 
 ## Rejected (0)
 
