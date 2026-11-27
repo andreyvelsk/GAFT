@@ -1,37 +1,51 @@
 {
   "posts": [
     {
-      "id": "1y5kuyn",
-      "title": "RetroDS 1.0: SNES and PS1 with the game's own map/menu on the top screen",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5kuyn/retrods_10_snes_and_ps1_with_the_games_own/",
-      "createdUtc": 1795646173,
-      "firstSeenAt": "2026-11-26T06:10:57.274Z",
-      "status": "approved",
-      "slug": "retrods",
-      "decidedAt": "2026-11-26T06:34:44.572Z"
-    },
-    {
-      "id": "1y5nfrf",
-      "title": "Thor Reader beta 0.3 (animations, series detect, OPDS, Crosspoint sync & more)",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5nfrf/thor_reader_beta_03_animations_series_detect_opds/",
-      "createdUtc": 1795653388,
-      "firstSeenAt": "2026-11-26T06:10:57.274Z",
+      "id": "1y60epk",
+      "title": "BetterDualScreenAssistant Update 1.3.0 - ClusterTune and 3rd Party Plugin Support!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y60epk/betterdualscreenassistant_update_130_clustertune/",
+      "createdUtc": 1795697352,
+      "firstSeenAt": "2026-11-27T06:11:02.270Z",
       "status": "pending"
     },
     {
-      "id": "1y5o9sf",
-      "title": "My Thor as a live scoreboard at the rink",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5o9sf/my_thor_as_a_live_scoreboard_at_the_rink/",
-      "createdUtc": 1795655839,
-      "firstSeenAt": "2026-11-26T06:10:57.274Z",
+      "id": "1y60qqm",
+      "title": "Megingiard Update 0.11.0 - True one-tap system service setup, new button shapes, virtual analog sticks and more",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y60qqm/megingiard_update_0110_true_onetap_system_service/",
+      "createdUtc": 1795698329,
+      "firstSeenAt": "2026-11-27T06:11:02.270Z",
       "status": "pending"
     },
     {
-      "id": "1y5osnv",
-      "title": "I'm not a programmer, but I made my own game library for the Thor with AI – Repisa",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y5osnv/im_not_a_programmer_but_i_made_my_own_game/",
-      "createdUtc": 1795657453,
-      "firstSeenAt": "2026-11-26T06:10:57.274Z",
+      "id": "1y657w2",
+      "title": "Start up intro I made",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y657w2/start_up_intro_i_made/",
+      "createdUtc": 1795710046,
+      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y69776",
+      "title": "Xbox 360 Godfather working great with xendroid",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y69776/xbox_360_godfather_working_great_with_xendroid/",
+      "createdUtc": 1795720158,
+      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y6g32k",
+      "title": "Current best way to play Mewgenics (Winlator-ludashi). + Bonus silksong",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6g32k/current_best_way_to_play_mewgenics/",
+      "createdUtc": 1795740149,
+      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "status": "pending"
+    },
+    {
+      "id": "1y6l7gt",
+      "title": "Since there is no realtime position tracker on Android for Genshin, I use AI to make one.",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6l7gt/since_there_is_no_realtime_position_tracker_on/",
+      "createdUtc": 1795757303,
+      "firstSeenAt": "2026-11-27T06:11:02.270Z",
       "status": "pending"
     }
   ]
