@@ -1,24 +1,22 @@
 # Reddit pipeline review
 
-> Pending: 4 · Approved: 2 · Rejected: 0
+> Pending: 2 · Approved: 2 · Rejected: 0
 
-## Pending (4)
+## Pending (2)
 
-- `1y657w2` — Start up intro I made — [source](https://www.reddit.com/r/AynThor/comments/1y657w2/start_up_intro_i_made/)
-- `1y69776` — Xbox 360 Godfather working great with xendroid — [source](https://www.reddit.com/r/AynThor/comments/1y69776/xbox_360_godfather_working_great_with_xendroid/)
-- `1y6g32k` — Current best way to play Mewgenics (Winlator-ludashi). + Bonus silksong — [source](https://www.reddit.com/r/AynThor/comments/1y6g32k/current_best_way_to_play_mewgenics/)
-- `1y6l7gt` — Since there is no realtime position tracker on Android for Genshin, I use AI to make one. — [source](https://www.reddit.com/r/AynThor/comments/1y6l7gt/since_there_is_no_realtime_position_tracker_on/)
+- `1y6yrkm` — Breath of the Wild DS — [source](https://www.reddit.com/r/AynThor/comments/1y6yrkm/breath_of_the_wild_ds/)
+- `1y6zmo0` — I customized Thor Control for my AYN Thor with the help of ChatGPT! — [source](https://www.reddit.com/r/AynThor/comments/1y6zmo0/i_customized_thor_control_for_my_ayn_thor_with/)
 
 To approve, comment on this pull request:
 
 ```
-/approved 1y657w2 1y69776 1y6g32k 1y6l7gt
+/approved 1y6yrkm 1y6zmo0
 ```
 
 ## Approved (2)
 
-- `1y60epk` → `better-dual-screen-assistant` — BetterDualScreenAssistant Update 1.3.0 - ClusterTune and 3rd Party Plugin Support! — [source](https://www.reddit.com/r/AynThor/comments/1y60epk/betterdualscreenassistant_update_130_clustertune/)
-- `1y60qqm` → `megingiard` — Megingiard Update 0.11.0 - True one-tap system service setup, new button shapes, virtual analog sticks and more — [source](https://www.reddit.com/r/AynThor/comments/1y60qqm/megingiard_update_0110_true_onetap_system_service/)
+- `1y6ni7k` → `eden-duo` — Time Stranger Field Guide: a live second-screen companion for Digimon Story Time Stranger on the AYN Thor — [source](https://www.reddit.com/r/AynThor/comments/1y6ni7k/time_stranger_field_guide_a_live_secondscreen/)
+- `1y6q7wq` → `flycast-dual-screen` — Flycast now has a Dual Screen fork by ItsRetroPup on GitHub. VMU Screen set to the bottom screen — [source](https://www.reddit.com/r/AynThor/comments/1y6q7wq/flycast_now_has_a_dual_screen_fork_by_itsretropup/)
 
 ## Rejected (0)
 

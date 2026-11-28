@@ -1,55 +1,39 @@
 {
   "posts": [
     {
-      "id": "1y60epk",
-      "title": "BetterDualScreenAssistant Update 1.3.0 - ClusterTune and 3rd Party Plugin Support!",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y60epk/betterdualscreenassistant_update_130_clustertune/",
-      "createdUtc": 1795697352,
-      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "id": "1y6ni7k",
+      "title": "Time Stranger Field Guide: a live second-screen companion for Digimon Story Time Stranger on the AYN Thor",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6ni7k/time_stranger_field_guide_a_live_secondscreen/",
+      "createdUtc": 1795765507,
+      "firstSeenAt": "2026-11-28T06:09:59.695Z",
       "status": "approved",
-      "slug": "better-dual-screen-assistant",
-      "decidedAt": "2026-11-27T06:37:49.199Z"
+      "slug": "eden-duo",
+      "decidedAt": "2026-11-28T06:24:01.058Z"
     },
     {
-      "id": "1y60qqm",
-      "title": "Megingiard Update 0.11.0 - True one-tap system service setup, new button shapes, virtual analog sticks and more",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y60qqm/megingiard_update_0110_true_onetap_system_service/",
-      "createdUtc": 1795698329,
-      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "id": "1y6q7wq",
+      "title": "Flycast now has a Dual Screen fork by ItsRetroPup on GitHub. VMU Screen set to the bottom screen",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6q7wq/flycast_now_has_a_dual_screen_fork_by_itsretropup/",
+      "createdUtc": 1795775875,
+      "firstSeenAt": "2026-11-28T06:09:59.695Z",
       "status": "approved",
-      "slug": "megingiard",
-      "decidedAt": "2026-11-27T06:37:49.199Z"
+      "slug": "flycast-dual-screen",
+      "decidedAt": "2026-11-28T06:24:01.058Z"
     },
     {
-      "id": "1y657w2",
-      "title": "Start up intro I made",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y657w2/start_up_intro_i_made/",
-      "createdUtc": 1795710046,
-      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "id": "1y6yrkm",
+      "title": "Breath of the Wild DS",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6yrkm/breath_of_the_wild_ds/",
+      "createdUtc": 1795800126,
+      "firstSeenAt": "2026-11-28T06:09:59.695Z",
       "status": "pending"
     },
     {
-      "id": "1y69776",
-      "title": "Xbox 360 Godfather working great with xendroid",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y69776/xbox_360_godfather_working_great_with_xendroid/",
-      "createdUtc": 1795720158,
-      "firstSeenAt": "2026-11-27T06:11:02.270Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y6g32k",
-      "title": "Current best way to play Mewgenics (Winlator-ludashi). + Bonus silksong",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6g32k/current_best_way_to_play_mewgenics/",
-      "createdUtc": 1795740149,
-      "firstSeenAt": "2026-11-27T06:11:02.270Z",
-      "status": "pending"
-    },
-    {
-      "id": "1y6l7gt",
-      "title": "Since there is no realtime position tracker on Android for Genshin, I use AI to make one.",
-      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6l7gt/since_there_is_no_realtime_position_tracker_on/",
-      "createdUtc": 1795757303,
-      "firstSeenAt": "2026-11-27T06:11:02.270Z",
+      "id": "1y6zmo0",
+      "title": "I customized Thor Control for my AYN Thor with the help of ChatGPT!",
+      "permalink": "https://www.reddit.com/r/AynThor/comments/1y6zmo0/i_customized_thor_control_for_my_ayn_thor_with/",
+      "createdUtc": 1795802282,
+      "firstSeenAt": "2026-11-28T06:09:59.695Z",
       "status": "pending"
     }
   ]
