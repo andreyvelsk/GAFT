@@ -6,7 +6,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y6ni7k/time_stranger_field_guide_a_live_secondscreen/",
       "createdUtc": 1795765507,
       "firstSeenAt": "2026-11-28T06:09:59.695Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "eden-duo",
+      "decidedAt": "2026-11-28T06:24:01.058Z"
     },
     {
       "id": "1y6q7wq",
@@ -14,7 +16,9 @@
       "permalink": "https://www.reddit.com/r/AynThor/comments/1y6q7wq/flycast_now_has_a_dual_screen_fork_by_itsretropup/",
       "createdUtc": 1795775875,
       "firstSeenAt": "2026-11-28T06:09:59.695Z",
-      "status": "pending"
+      "status": "approved",
+      "slug": "flycast-dual-screen",
+      "decidedAt": "2026-11-28T06:24:01.058Z"
     },
     {
       "id": "1y6yrkm",
